@@ -46,10 +46,13 @@
   <ItemGroup>
     <Compile Include="Airplanes\Airplane.cs" />
     <Compile Include="Airport\Airport.cs" />
+    <Compile Include="Airport\Building.cs" />
     <Compile Include="Airport\Gate.cs" />
+    <Compile Include="Airport\Gateway.cs" />
     <Compile Include="Airport\Runway.cs" />
     <Compile Include="Airport\Taxiway.cs" />
     <Compile Include="Companies\Company.cs" />
+    <Compile Include="Simulation\Planner.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="Simulation\TimeKeeper.cs" />
     <Compile Include="UI\Controls\EditMapControl.cs">

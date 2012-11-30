@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Introductieproject.Airport
 {
-    class Taxiway
-    {
-        public int[] startLocation = int[2];
-        public int[] endLocation = int[2];
-        
+    class Gateway
+    {                                                    
+        public int[] startLocation = int[2];             
+        public int[] endLocation = int[2];               
+                                                         
         public List<Airplane> airplanes = new List<Airplane>();
-        public List<Runway> connectedRunways = new List<Runway>();
-        public List<Taxiway> connectedTaxiway = new List<Taxiway>();
+        public List<Taxiway> connectedTaxiways = new List<Taxiway>();
+        public List<Gate> connectedGates = new List<Gate>();
 
         /*
          * berekent de lengte van de baan (vanuit de coords)
@@ -23,4 +23,3 @@ namespace Introductieproject.Airport
         }
     }
 }
-

@@ -7,8 +7,8 @@ namespace Introductieproject.Airport
 {
     class Taxiway
     {
-        public int[] startLocation = int[2];
-        public int[] endLocation = int[2];
+        public int[] startLocation = new int[2];
+        public int[] endLocation = new int[2];
         
         public List<Airplane> airplanes = new List<Airplane>();
         public List<Runway> connectedRunways = new List<Runway>();

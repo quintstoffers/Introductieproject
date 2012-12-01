@@ -14,5 +14,7 @@ namespace Introductieproject.Airport
         public double waitingLuggageKg;
 
         public Airplane airplane;
+
+        public string gateName;
     }
 }

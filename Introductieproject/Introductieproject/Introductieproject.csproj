@@ -45,13 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Airplanes\Airplane.cs" />
+    <Compile Include="Airplanes\Airplanes.cs" />
+    <Compile Include="Airplanes\BO_747.cs" />
     <Compile Include="Airport\Airport.cs" />
     <Compile Include="Airport\Building.cs" />
     <Compile Include="Airport\Gate.cs" />
     <Compile Include="Airport\Gateway.cs" />
     <Compile Include="Airport\Runway.cs" />
     <Compile Include="Airport\Taxiway.cs" />
+    <Compile Include="Companies\Companies.cs" />
     <Compile Include="Companies\Company.cs" />
+    <Compile Include="Companies\KLM.cs" />
     <Compile Include="Simulation\Planner.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="Simulation\TimeKeeper.cs" />

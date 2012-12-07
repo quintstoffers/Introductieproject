@@ -14,6 +14,15 @@ namespace Introductieproject.Airport
         public List<Gateway> gateways = new List<Gateway>();
         public List<Building> buildings = new List<Building>();
 
+        public void bla()
+        {
+            foreach (Runway r in this.runways)
+            {
+                foreach (Taxiway p in this.taxiways)
+                    if (r.connected(p)) doeiets;
+            }
+        }
+
         Planner planner;
 
         public Airport(Planner planner)

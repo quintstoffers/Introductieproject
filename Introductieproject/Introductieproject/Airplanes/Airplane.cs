@@ -48,8 +48,8 @@ namespace Introductieproject.Objects
         }
 
         /*
-         * Simuleer een stap van grootte realTime milliseconden
-         */
+        * Simuleer een stap van grootte realTime milliseconden
+        */
         public void simulate(int realTime)
         {
             if (currentGoal == null)

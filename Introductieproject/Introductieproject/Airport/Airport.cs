@@ -14,7 +14,7 @@ namespace Introductieproject.Airport
         public List<Gateway> gateways = new List<Gateway>();
         public List<Building> buildings = new List<Building>();
 
-        public Airport(Planner planner)
+        public Airport()
         {
         }
     }

@@ -7,12 +7,18 @@ namespace Introductieproject.Airport
 {
     class Taxiway
     {
-        public int[] startLocation = new int[2];
-        public int[] endLocation = new int[2];
+        public int[] startLocation;
+        public int[] endLocation;
         
         public List<Airplane> airplanes = new List<Airplane>();
         public List<Runway> connectedRunways = new List<Runway>();
         public List<Taxiway> connectedTaxiway = new List<Taxiway>();
+
+        public Taxiway(int[] startLocation, int[] endLocation)
+        {
+            this.startLocation = startLocation;
+            this.endLocation = endLocation;
+        }
 
         /*
         * berekent de lengte van de baan (vanuit de coords)
@@ -24,32 +30,39 @@ namespace Introductieproject.Airport
             return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
         }
 
-        public void isConnectedWithRunway(int[] startLoc, int[] endLoc)
+        public bool isConnectedWithRunway(int[] startLoc, int[] endLoc, Runway runway)
         {
             if (startLoc[0] == startLocation[0] && endLoc[0] == endLocation[0])
             {
-                connectedRunways.Add(Runway);   //Wat moet hier komen?
+                connectedRunways.Add(runway);   //Wat moet hier komen?
+                return true;
             }
+            return false;
         }
 
-        public void isConnectedWithTaxiway(int[] startLoc, int[] endLoc)
+        public bool isConnectedWithTaxiway(int[] startLoc, int[] endLoc, Taxiway taxiway)
         {
             if (startLoc[0] == startLocation[0] && startLoc[1] == startLocation[1])
             {
-                connectedTaxiway.Add(Taxiway); //OOk deze is niet goed, wat moet hier komen?
+                connectedTaxiway.Add(taxiway); 
+                return true;
             }
             if (startLoc[0] == endLocation[0] && startLoc[1] == endLocation[1])
             {
-                connectedTaxiway.Add(Taxiway); //OOk deze is niet goed, wat moet hier komen?
+                connectedTaxiway.Add(taxiway); 
+                return true;
             }
             if (endLoc[0] == startLocation[0] && endLoc[1] == startLocation[1])
             {
-                connectedTaxiway.Add(Taxiway); //OOk deze is niet goed, wat moet hier komen?
+                connectedTaxiway.Add(taxiway); 
+                return true;
             }
             if (endLoc[0] == endLocation[0] && endLoc[1] == endLocation[1])
             {
-                connectedTaxiway.Add(Taxiway); //OOk deze is niet goed, wat moet hier komen?
+                connectedTaxiway.Add(taxiway); 
+                return true;
             }
+            return false;
         }
     }
 }

@@ -24,32 +24,39 @@ namespace Introductieproject.Airport
             return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
         }
 
-        public void isConnectedWithTaxiway(int[] startLoc, int[] endLoc)
+        public bool isConnectedWithTaxiway(int[] startLoc, int[] endLoc, Taxiway taxiway)
         {
             if (startLoc[0] == startLocation[0] && startLoc[1] == startLocation[1])
             {
-                connectedTaxiways.Add(Taxiway); //OOk deze is niet goed, wat moet hier komen?
+                connectedTaxiways.Add(taxiway);
+                return true;
             }
             if (startLoc[0] == endLocation[0] && startLoc[1] == endLocation[1])
             {
-                connectedTaxiways.Add(Taxiway); //OOk deze is niet goed, wat moet hier komen?
+                connectedTaxiways.Add(taxiway);
+                return true;
             }
             if (endLoc[0] == startLocation[0] && endLoc[1] == startLocation[1])
             {
-                connectedTaxiways.Add(Taxiway); //OOk deze is niet goed, wat moet hier komen?
+                connectedTaxiways.Add(taxiway);
+                return true;
             }
             if (endLoc[0] == endLocation[0] && endLoc[1] == endLocation[1])
             {
-                connectedTaxiways.Add(Taxiway); //OOk deze is niet goed, wat moet hier komen?
+                connectedTaxiways.Add(taxiway);
+                return true;
             }
+            return false;
         }
 
-        public void isConnectedWithGate(int[] Location)
+        public bool isConnectedWithGate(int[] Location, Gate gate)
         {
             if ((startLocation[0] == Location[0] && startLocation[1] == Location[1]) || (endLocation[0] == Location[0] && endLocation[1] == Location[1]))
             {
-                connectedGates.Add(Gate);   //Ook deze is niet goed, wat moet hier komen?
+                connectedGates.Add(gate);
+                return true;
             }
+            return false;
         }
     }
 }

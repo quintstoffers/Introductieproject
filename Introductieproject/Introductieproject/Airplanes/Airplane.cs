@@ -33,6 +33,8 @@ namespace Introductieproject.Objects
         public int[] currentGoal;           // Punt waar het ding heen wilt
         public Gate assignedGate;           // Gate waar het vliegtuig heen moet
 
+        public int[] location;              // De huidige locatie van het vliegtuig
+
         /*
          * Initialiseer variabelen
          */

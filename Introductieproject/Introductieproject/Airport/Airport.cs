@@ -32,16 +32,33 @@ namespace Introductieproject.Airport
             //Routeplanner zelf
             //Om aan te roepen, geef een vliegtuig mee. Vliegtuig weet huidige coordinaten
             //Stap 1, waar is het vliegtuig nu?
-            bool locFound = false;
+            Way start;
+            int locFound = 0; //Integer. 0 = nee. 1 = runway. 2 = gate.
             foreach (Runway r in this.runways)
-                if (LocationCheck(vliegtuig.location, r.startLocation, r.endLocation)) locFound = true;
+                if (LocationCheck(vliegtuig.location, r.startLocation, r.endLocation))
+                {
+                    start = r; //Het beginpunt opslaan als Way. Aangezien r een verwijzing naar een object is, is start een verwijzing naar hetzelfde object.
+                    locFound = 1;
+                }
             //als er geen locatie gevonden is, wordt de routeplanner niet aangeroepen bij het landen, maar bij het vertrek. Probeer opnieuw met Gates ipv Runways
-            if (!locFound)
+            if (locFound == 0)
                 foreach (Gate g in this.gates)
-                    if (LocationCheck(vliegtuig.location, g.location, g.location)) locFound = true;
-            if (locFound) //Om zeker te weten dat een beginlocatie bepaald is
+                    if (LocationCheck(vliegtuig.location, g.location, g.location))
+                    {
+                        start = g;
+                        locFound = 2;
+                    }
+            if (locFound > 0) //Om zeker te weten dat een beginlocatie bepaald is
             {
-
+                //Stap 2, waar moet het vliegtuig heen? Zoek een vrije gate als start een runway is, en vice versa
+                if (locFound == 1)
+                    //Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
+                    //Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
+                    //Optie 2 leidt vrijwel altijd tot alle nieuwe vliegtuigen naar dezelfde gate -> file.
+                    ;
+                else if (locFound == 2)
+                    //Check de runways - dichtstbijzijnde Runway, want je kunt er van uit gaan dat als hij nu bezet is, hij dat niet meer zal zijn als je aankomt.
+                    ;
             }
         }
 

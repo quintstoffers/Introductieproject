@@ -6,7 +6,7 @@ using Introductieproject.Objects;
 
 namespace Introductieproject.Airport
 {
-    class Gate
+    class Gate:Way
     {
         public int[] location = new int[2];
 

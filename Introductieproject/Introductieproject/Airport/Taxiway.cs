@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Introductieproject.Airport
 {
-    class Taxiway
+    class Taxiway:Way
     {
         public int[] startLocation;
         public int[] endLocation;

@@ -15,34 +15,44 @@ namespace Introductieproject.Airport
         public List<Taxiway> connectedTaxiways = new List<Taxiway>();
         public List<Gate> connectedGates = new List<Gate>();
 
+        public Gateway(int[] startLocation, int[] endLocation)
+        {
+            this.startLocation = startLocation;
+            this.endLocation = endLocation;
+        }
+
         /*
         * berekent de lengte van de baan (vanuit de coords)
         */
-        public double getLength()
+        public double length
         {
-            int deltaX = Math.Max(endLocation[0], startLocation[0]) - Math.Min(endLocation[0], startLocation[0]);
-            int deltaY = Math.Max(endLocation[1], startLocation[1]) - Math.Min(endLocation[1], startLocation[1]);
-            return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
+            get
+            {
+                int deltaX = Math.Max(this.endLocation[0], this.startLocation[0]) - Math.Min(this.endLocation[0], this.startLocation[0]);
+                int deltaY = Math.Max(this.endLocation[1], this.startLocation[1]) - Math.Min(this.endLocation[1], this.startLocation[1]);
+                return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
+            }
         }
 
-        public bool isConnectedWithTaxiway(int[] startLoc, int[] endLoc, Taxiway taxiway)
+        public bool isConnectedWithTaxiway(Taxiway taxiway)
         {
-            if (startLoc[0] == startLocation[0] && startLoc[1] == startLocation[1])
+            //Als er 1tje direction 0 heeft heb je altijd alle mogelijkheden aangezien je de banen naar eigen inzicht kunt draaien etc
+            if (taxiway.startLocation[0] == this.startLocation[0] && taxiway.startLocation[1] == this.startLocation[1])
             {
                 connectedTaxiways.Add(taxiway);
                 return true;
             }
-            if (startLoc[0] == endLocation[0] && startLoc[1] == endLocation[1])
+            if (taxiway.startLocation[0] == this.endLocation[0] && taxiway.startLocation[1] == this.endLocation[1])
             {
                 connectedTaxiways.Add(taxiway);
                 return true;
             }
-            if (endLoc[0] == startLocation[0] && endLoc[1] == startLocation[1])
+            if (taxiway.endLocation[0] == this.startLocation[0] && taxiway.endLocation[1] == this.startLocation[1])
             {
                 connectedTaxiways.Add(taxiway);
                 return true;
             }
-            if (endLoc[0] == endLocation[0] && endLoc[1] == endLocation[1])
+            if (taxiway.endLocation[0] == this.endLocation[0] && taxiway.endLocation[1] == this.endLocation[1])
             {
                 connectedTaxiways.Add(taxiway);
                 return true;

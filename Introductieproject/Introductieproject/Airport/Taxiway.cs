@@ -15,8 +15,8 @@ namespace Introductieproject.Airport
         {
             get
             {
-                int deltaX = Math.Max(endLocation[0], startLocation[0]) - Math.Min(endLocation[0], startLocation[0]);
-                int deltaY = Math.Max(endLocation[1], startLocation[1]) - Math.Min(endLocation[1], startLocation[1]);
+                int deltaX = Math.Max(this.endLocation[0], this.startLocation[0]) - Math.Min(this.endLocation[0], this.startLocation[0]);
+                int deltaY = Math.Max(this.endLocation[1], this.startLocation[1]) - Math.Min(this.endLocation[1], this.startLocation[1]);
                 return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
             }
         }
@@ -31,12 +31,51 @@ namespace Introductieproject.Airport
             this.endLocation = endLocation;
         }
 
-        public bool isConnectedWithRunway(int[] startLoc, int[] endLoc, Runway runway)
+        public bool isConnectedWithRunway(Runway runway)
         {
-            if (startLoc[0] == startLocation[0] && endLoc[0] == endLocation[0])
+            // -1 direction is van eind naar begin
+            if (this.direction == -1)
             {
-                connectedRunways.Add(runway);   //Wat moet hier komen?
-                return true;
+                if (runway.endLocation[0] == this.endLocation[0] && runway.endLocation[1] == this.endLocation[1])
+                {
+                    connectedRunways.Add(runway);
+                    return true;
+                }
+            }
+
+            //0 direction is beide kanten
+            if (this.direction == 0)
+            {
+                if (runway.startLocation[0] == this.startLocation[0] && runway.startLocation[1] == this.startLocation[1])
+                {
+                    connectedRunways.Add(runway);
+                    return true;
+                }
+                if (runway.startLocation[0] == this.endLocation[0] && runway.startLocation[1] == this.endLocation[1])
+                {
+                    connectedRunways.Add(runway);
+                    return true;
+                }
+                if (runway.endLocation[0] == this.startLocation[0] && runway.endLocation[1] == this.startLocation[1])
+                {
+                    connectedRunways.Add(runway);
+                    return true;
+                }
+                if (runway.endLocation[0] == this.endLocation[0] && runway.endLocation[1] == this.endLocation[1])
+                {
+                    connectedRunways.Add(runway);
+                    return true;
+                }
+            }
+
+            //1 direction is begin naar eind
+            if (this.direction == 1)
+            {
+                if (runway.startLocation[0] == this.endLocation[0] && runway.startLocation[1] == this.endLocation[1])
+                {
+                    connectedRunways.Add(runway);
+                    return true;
+                }
             }
             return false;
         }
@@ -47,25 +86,58 @@ namespace Introductieproject.Airport
             {
                 return false;
             }
-            if (taxiway.startLocation[0] == this.startLocation[0] && taxiway.startLocation[1] == this.startLocation[1])
+
+            //Voor allebei moet je nu met de directions rekening houden dus je hebt 9 mogelijkheden.
+            if ((this.direction == -1 && taxiway.direction == -1) || (this.direction == 1 && taxiway.direction == 1))
             {
-                connectedTaxiway.Add(taxiway); 
-                return true;
+                if (taxiway.endLocation[0] == this.startLocation[0] && taxiway.endLocation[1] == this.startLocation[1])
+                {
+                    connectedTaxiway.Add(taxiway);
+                    return true;
+                }
+                if (taxiway.startLocation[0] == this.endLocation[0] && taxiway.startLocation[1] == this.endLocation[1])
+                {
+                    connectedTaxiway.Add(taxiway);
+                    return true;
+                }
             }
-            if (taxiway.endLocation[0] == this.endLocation[0] && taxiway.endLocation[1] == this.endLocation[1])
+
+            if ((this.direction == -1 && taxiway.direction == 1) || (this.direction == 1 && taxiway.direction == -1))
             {
-                connectedTaxiway.Add(taxiway); 
-                return true;
+                if (taxiway.endLocation[0] == this.endLocation[0] && taxiway.endLocation[1] == this.endLocation[1])
+                {
+                    connectedTaxiway.Add(taxiway);
+                    return true;
+                }
+                if (taxiway.startLocation[0] == this.startLocation[0] && taxiway.startLocation[1] == this.startLocation[1])
+                {
+                    connectedTaxiway.Add(taxiway);
+                    return true;
+                }
             }
-            if (taxiway.endLocation[0] == this.startLocation[0] && taxiway.endLocation[1] == this.startLocation[1])
+
+            if ((this.direction == 0 && (taxiway.direction == -1 || taxiway.direction == 0 || taxiway.direction == 1)) || (this.direction == 1 && taxiway.direction == 0) || (this.direction == -1 && taxiway.direction == 0))
             {
-                connectedTaxiway.Add(taxiway); 
-                return true;
-            }
-            if (taxiway.endLocation[0] == endLocation[0] && taxiway.endLocation[1] == endLocation[1])
-            {
-                connectedTaxiway.Add(taxiway); 
-                return true;
+                if (taxiway.startLocation[0] == this.startLocation[0] && taxiway.startLocation[1] == this.startLocation[1])
+                {
+                    connectedTaxiway.Add(taxiway);
+                    return true;
+                }
+                if (taxiway.startLocation[0] == this.endLocation[0] && taxiway.startLocation[1] == this.endLocation[1])
+                {
+                    connectedTaxiway.Add(taxiway);
+                    return true;
+                }
+                if (taxiway.endLocation[0] == this.endLocation[0] && taxiway.endLocation[1] == this.endLocation[1])
+                {
+                    connectedTaxiway.Add(taxiway);
+                    return true;
+                }
+                if (taxiway.endLocation[0] == this.startLocation[0] && taxiway.endLocation[1] == this.startLocation[1])
+                {
+                    connectedTaxiway.Add(taxiway);
+                    return true;
+                } 
             }
             return false;
         }

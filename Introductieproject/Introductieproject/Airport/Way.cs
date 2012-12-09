@@ -9,6 +9,9 @@ namespace Introductieproject.Airport
     {
         public int[] startLocation = new int[2];
         public int[] endLocation = new int[2];
+        
+        //Bepalen in welke richting moet rijden
+        public int direction;
 
         public Way()
         {

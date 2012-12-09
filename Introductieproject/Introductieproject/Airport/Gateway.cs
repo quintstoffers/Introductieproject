@@ -8,8 +8,8 @@ namespace Introductieproject.Airport
 {
     class Gateway:Way
     {                                                    
-        public int[] startLocation = new int[2];             
-        public int[] endLocation = new int[2];               
+        //public int[] startLocation = new int[2];             
+        //public int[] endLocation = new int[2];               
                                                          
         public List<Airplane> airplanes = new List<Airplane>();
         public List<Taxiway> connectedTaxiways = new List<Taxiway>();

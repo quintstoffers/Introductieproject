@@ -8,8 +8,8 @@ namespace Introductieproject.Airport
 {
     class Runway:Way
     {
-        public int[] startLocation = new int[2];
-        public int[] endLocation = new int[2];
+        //public int[] startLocation = new int[2];
+        //public int[] endLocation = new int[2];
 
         public Airplane airplane;
 

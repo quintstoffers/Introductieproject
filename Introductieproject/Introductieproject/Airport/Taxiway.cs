@@ -8,8 +8,8 @@ namespace Introductieproject.Airport
 {
     class Taxiway:Way
     {
-        public int[] startLocation;
-        public int[] endLocation;
+        //public int[] startLocation;
+        //public int[] endLocation;
 
         public double length
         {

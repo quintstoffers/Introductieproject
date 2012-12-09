@@ -1,6 +1,7 @@
 ﻿using Introductieproject.Objects;
 using Introductieproject.Simulation;
 using System.Collections.Generic;
+using System;
 
 namespace Introductieproject.Airport
 {
@@ -32,7 +33,7 @@ namespace Introductieproject.Airport
             //Routeplanner zelf
             //Om aan te roepen, geef een vliegtuig mee. Vliegtuig weet huidige coordinaten
             //Stap 1, waar is het vliegtuig nu?
-            Way start;
+            Way start = null; //op null gezet omdat de compiler anders klaagt
             int locFound = 0; //Integer. 0 = nee. 1 = runway. 2 = gate.
             foreach (Runway r in this.runways)
                 if (LocationCheck(vliegtuig.location, r.startLocation, r.endLocation))
@@ -50,14 +51,49 @@ namespace Introductieproject.Airport
                     }
             if (locFound > 0) //Om zeker te weten dat een beginlocatie bepaald is
             {
+                Way end;
                 //Stap 2, waar moet het vliegtuig heen? Zoek een vrije gate als start een runway is, en vice versa
                 if (locFound == 1)
+                {
                     //Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
                     //Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
                     //Optie 2 leidt vrijwel altijd tot alle nieuwe vliegtuigen naar dezelfde gate -> file.
-                    ;
+                    int t = 0;
+                    foreach (Gate g in this.gates) if (g.airplane == null) t++;
+                    if (t == 1)
+                    {
+                        //1 gate vrij, makkelijkste geval. Deze gate is doel
+                        foreach (Gate g in this.gates) if (g.airplane == null) end = g;
+                    }
+                    else if (t==0)
+                    {
+                        //geen gates vrij. Ga na welke het dichtste bij is
+                        //Dichtste bij kan hemelsbreed zijn of via banen. Voor het gemak nu hemelsbreed
+                        double d = 100000; //Groot getal eerst
+                        double temp;
+                        foreach (Gate g in this.gates)
+                        {
+                            temp = Distance(start.endLocation, g.location);
+                            if (temp < d) d = temp;
+                        }
+                        foreach (Gate g in this.gates) if (Distance(start.endLocation, g.location) == d) end = g;
+                    }
+                    else if (t > 1)
+                    {
+                        //meerdere mogelijkheden. Dichtstbijzijnde open gate. Lijkt erg op t=0, maar met kleine aanpassingen
+                        double d = 100000;
+                        double temp;
+                        foreach (Gate g in this.gates)
+                        {
+                            temp = Distance(start.endLocation, g.location);
+                            if (temp < d && g.airplane == null) d = temp; //Alleen lege gates nagaan
+                        }
+                        foreach (Gate g in this.gates) if (Distance(start.endLocation, g.location) == d && g.airplane == null) end = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
+                    }
+                }
                 else if (locFound == 2)
                     //Check de runways - dichtstbijzijnde Runway, want je kunt er van uit gaan dat als hij nu bezet is, hij dat niet meer zal zijn als je aankomt.
+                    //Dichtstbijzijnde als in degene die de minste reistijd kost.
                     ;
             }
         }
@@ -70,6 +106,12 @@ namespace Introductieproject.Airport
             double xRes = (double)((planeLoc[0] - wayLoc1[0]) / (wayLoc2[0] - wayLoc1[0]));
             double yRes = (double)((planeLoc[1] - wayLoc1[1]) / (wayLoc2[1] - wayLoc1[1]));
             return xRes == yRes;
+        }
+
+        public double Distance(int[] point1, int[] point2)
+        {
+            //berekent afstand tussen twee punten: wortel((x1-x2)^2+(y1-y2)^2)
+            return Math.Sqrt((double)((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1])));
         }
     }
 }

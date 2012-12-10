@@ -12,7 +12,7 @@ namespace Introductieproject
         
         static void Main(string[] args)
         {
-             Application.Run(new Forms.MainForm());  
+            Simulation.Simulation simulation = new Simulation.Simulation();  
             
         }
     }

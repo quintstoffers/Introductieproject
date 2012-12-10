@@ -1,6 +1,6 @@
 ﻿namespace Introductieproject.UI.Controls
 {
-    partial class tijdcontrol
+    partial class timecontrol
     {
         /// <summary> 
         /// Required designer variable.

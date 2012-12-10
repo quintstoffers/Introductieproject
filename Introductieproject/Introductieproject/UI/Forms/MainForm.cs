@@ -12,8 +12,8 @@ namespace Introductieproject.Forms
 {
     public partial class MainForm : Form
     {
-        UI.Controls.tijdcontrol tijdcontrol = new UI.Controls.tijdcontrol();
-        Simulation.Simulation simulatie = new Simulation.Simulation();
+        UI.Controls.timecontrol tijdcontrol = new UI.Controls.timecontrol();
+
         public MainForm()
         {
             InitializeComponent();

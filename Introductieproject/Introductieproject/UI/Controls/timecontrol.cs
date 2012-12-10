@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace Introductieproject.UI.Controls
 {
-    public partial class tijdcontrol : UserControl
+    public partial class timecontrol : UserControl
     {
-        public tijdcontrol()
+        public timecontrol()
         {
             
             InitializeComponent();

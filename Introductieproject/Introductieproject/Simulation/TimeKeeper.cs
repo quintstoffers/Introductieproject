@@ -10,10 +10,10 @@ namespace Introductieproject.Simulation
     
     class TimeKeeper
     {
-        public DateTime simtijd(TimeSpan simulatietijd, DateTime starttijd, int versnelling)
+        public DateTime simtijd(TimeSpan simulatietijd, DateTime opgeslagentijd, int versnelling)
         {
             double verstrekentijd = simulatietijd.TotalSeconds * versnelling;
-           return  starttijd.AddSeconds(verstrekentijd);
+            return opgeslagentijd.AddSeconds(verstrekentijd);
             
 
             

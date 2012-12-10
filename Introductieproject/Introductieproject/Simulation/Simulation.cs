@@ -15,15 +15,16 @@ namespace Introductieproject.Simulation
         Stopwatch simulatieklok = new Stopwatch();
         Thread simulatietijd;
         int aantalstappen = -60; //snelheid waarmee de simulatie draait, realtime = 1 stap per keer. Dit is anders dan de update snelheid!
-       TimeKeeper timekeeper = new TimeKeeper();
+        TimeKeeper timekeeper = new TimeKeeper();
         DateTime huidigetijd;
+        parser parse = new parser();
         Forms.MainForm mainform = new Forms.MainForm();
         public Simulation()
         {
             simulatietijd = new Thread(simtijd);
             mainform.Show();
-          startsimulatie(); 
-           
+          startsimulatie();
+          Console.WriteLine(parse.getallplanes());
 
         }
       void startsimulatie()
@@ -47,7 +48,6 @@ namespace Introductieproject.Simulation
           {
               rekentijd.Restart();
               huidigetijd = huidigetijd.AddSeconds(aantalstappen);
-              Console.WriteLine(huidigetijd);
               Thread.Sleep(updateinterval * 1000);
           }
          

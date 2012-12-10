@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+  <planes>
+    <carrier1>
+      <plane>id:test 1 arrival:12:00</plane>
+      <plane>id:test 2 arrival:13:00</plane>
+      <plane>id:test 3 arrival:14:00</plane>
+    </carrier1>
+  </planes>
+</data>

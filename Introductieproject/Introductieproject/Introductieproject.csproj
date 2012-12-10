@@ -8,7 +8,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5BE25BD2-F33C-4C27-ACEF-6E01BB361521}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Introductieproject</RootNamespace>
     <AssemblyName>Introductieproject</AssemblyName>
@@ -86,6 +86,12 @@
     <Compile Include="UI\Controls\StatsControl.Designer.cs">
       <DependentUpon>StatsControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\tijdcontrol.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\tijdcontrol.Designer.cs">
+      <DependentUpon>tijdcontrol.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controls\ToolboxControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -108,11 +114,19 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\Controls\SimulationMapControl.resx">
       <DependentUpon>SimulationMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\tijdcontrol.resx">
+      <DependentUpon>tijdcontrol.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

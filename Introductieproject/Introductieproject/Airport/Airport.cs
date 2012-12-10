@@ -7,6 +7,7 @@ namespace Introductieproject.Airport
 {
     class Airport
     {
+        
         public List<Airplane> airplanes = new List<Airplane>();
         private List<Airplane> knownAirplanes = new List<Airplane>();
         public List<Gate> gates = new List<Gate>();

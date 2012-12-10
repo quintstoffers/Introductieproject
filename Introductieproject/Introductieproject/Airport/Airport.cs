@@ -7,7 +7,6 @@ namespace Introductieproject.Airport
 {
     class Airport
     {
-        
         public List<Airplane> airplanes = new List<Airplane>();
         private List<Airplane> knownAirplanes = new List<Airplane>();
         public List<Gate> gates = new List<Gate>();
@@ -35,26 +34,31 @@ namespace Introductieproject.Airport
             //Om aan te roepen, geef een vliegtuig mee. Vliegtuig weet huidige coordinaten
             //Stap 1, waar is het vliegtuig nu?
             Way start = null; //op null gezet omdat de compiler anders klaagt
-            int locFound = 0; //Integer. 0 = nee. 1 = runway. 2 = gate.
             foreach (Runway r in this.runways)
-                if (LocationCheck(vliegtuig.location, r.startLocation, r.endLocation))
+            {
+                if (Utils.isPointInWay(vliegtuig.location, r))
                 {
                     start = r; //Het beginpunt opslaan als Way. Aangezien r een verwijzing naar een object is, is start een verwijzing naar hetzelfde object.
-                    locFound = 1;
+                    break;
                 }
+            }
             //als er geen locatie gevonden is, wordt de routeplanner niet aangeroepen bij het landen, maar bij het vertrek. Probeer opnieuw met Gates ipv Runways
-            if (locFound == 0)
+            if (start == null)
+            {
                 foreach (Gate g in this.gates)
-                    if (LocationCheck(vliegtuig.location, g.startLocation, g.endLocation))
+                {
+                    if (Utils.isPointInWay(vliegtuig.location, g))
                     {
                         start = g;
-                        locFound = 2;
+                        break;
                     }
-            if (locFound > 0) //Om zeker te weten dat een beginlocatie bepaald is
+                    }
+            }
+            if (start != null) //Om zeker te weten dat een beginlocatie bepaald is
             {
-                Way end;
+                Way end = null;
                 //Stap 2, waar moet het vliegtuig heen? Zoek een vrije gate als start een runway is, en vice versa
-                if (locFound == 1)
+                if (start is Runway)
                 {
                     //Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
                     //Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
@@ -74,10 +78,10 @@ namespace Introductieproject.Airport
                         double temp;
                         foreach (Gate g in this.gates)
                         {
-                            temp = Distance(start.endLocation, g.startLocation);
+                            temp = Utils.getDistanceBetweenPoints(start.endLocation, g.location);
                             if (temp < d) d = temp;
                         }
-                        foreach (Gate g in this.gates) if (Distance(start.endLocation, g.startLocation) == d) end = g;
+                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(start.endLocation, g.location) == d) end = g;
                     }
                     else if (t > 1)
                     {
@@ -86,47 +90,18 @@ namespace Introductieproject.Airport
                         double temp;
                         foreach (Gate g in this.gates)
                         {
-                            temp = Distance(start.endLocation, g.startLocation);
+                            temp = Utils.getDistanceBetweenPoints(start.endLocation, g.location);
                             if (temp < d && g.airplane == null) d = temp; //Alleen lege gates nagaan
                         }
-                        foreach (Gate g in this.gates) if (Distance(start.endLocation, g.startLocation) == d && g.airplane == null) end = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
+                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(start.endLocation, g.location) == d && g.airplane == null) end = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
                     }
                 }
-                else if (locFound == 2)
+                else if (start is Gate)
                 {
                     //Check de runways - dichtstbijzijnde Runway, want je kunt er van uit gaan dat als hij nu bezet is, hij dat niet meer zal zijn als je aankomt.
                     //Dichtstbijzijnde als in degene die de minste reistijd kost.
-                    double d = 100000;
-                    double temp;
-                    foreach (Runway r in this.runways)
-                    {
-                        temp = Distance(start.endLocation, r.startLocation);
-                        if (temp < d) d = temp;
-                    }
-                    foreach (Runway r in this.runways) if (Distance(start.endLocation, r.startLocation) == d) end = r; //bij meerdere runways op zelfde afstand schrijft de laatste de vorigen over
-
-
-                    //Er is een startlocatie en een eindlocatie opgeslagen. Nu tijd om route te vinden ertussen
-
-
                 }
             }
-        }
-
-        public bool LocationCheck(int[] planeLoc, int[] wayLoc1, int[] wayLoc2)
-        {
-            //Kijk of een vliegtuig zich bevindt tussen twee punten (van een way)
-            //http://stackoverflow.com/questions/7050186/find-if-point-lay-on-line-segment
-            //(x-x1)/(x2-x1)==(y-y1)/(y2-y1) voor (x,y) op lijn (x1,y1),(x2,y2)
-            double xRes = (double)((planeLoc[0] - wayLoc1[0]) / (wayLoc2[0] - wayLoc1[0]));
-            double yRes = (double)((planeLoc[1] - wayLoc1[1]) / (wayLoc2[1] - wayLoc1[1]));
-            return xRes == yRes;
-        }
-
-        public double Distance(int[] point1, int[] point2)
-        {
-            //berekent afstand tussen twee punten: wortel((x1-x2)^2+(y1-y2)^2)
-            return Math.Sqrt((double)((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1])));
         }
     }
 }

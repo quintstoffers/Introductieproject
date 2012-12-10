@@ -45,7 +45,7 @@ namespace Introductieproject.Airport
             //als er geen locatie gevonden is, wordt de routeplanner niet aangeroepen bij het landen, maar bij het vertrek. Probeer opnieuw met Gates ipv Runways
             if (locFound == 0)
                 foreach (Gate g in this.gates)
-                    if (LocationCheck(vliegtuig.location, g.location, g.location))
+                    if (LocationCheck(vliegtuig.location, g.startLocation, g.endLocation))
                     {
                         start = g;
                         locFound = 2;
@@ -74,10 +74,10 @@ namespace Introductieproject.Airport
                         double temp;
                         foreach (Gate g in this.gates)
                         {
-                            temp = Distance(start.endLocation, g.location);
+                            temp = Distance(start.endLocation, g.startLocation);
                             if (temp < d) d = temp;
                         }
-                        foreach (Gate g in this.gates) if (Distance(start.endLocation, g.location) == d) end = g;
+                        foreach (Gate g in this.gates) if (Distance(start.endLocation, g.startLocation) == d) end = g;
                     }
                     else if (t > 1)
                     {
@@ -86,16 +86,30 @@ namespace Introductieproject.Airport
                         double temp;
                         foreach (Gate g in this.gates)
                         {
-                            temp = Distance(start.endLocation, g.location);
+                            temp = Distance(start.endLocation, g.startLocation);
                             if (temp < d && g.airplane == null) d = temp; //Alleen lege gates nagaan
                         }
-                        foreach (Gate g in this.gates) if (Distance(start.endLocation, g.location) == d && g.airplane == null) end = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
+                        foreach (Gate g in this.gates) if (Distance(start.endLocation, g.startLocation) == d && g.airplane == null) end = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
                     }
                 }
                 else if (locFound == 2)
+                {
                     //Check de runways - dichtstbijzijnde Runway, want je kunt er van uit gaan dat als hij nu bezet is, hij dat niet meer zal zijn als je aankomt.
                     //Dichtstbijzijnde als in degene die de minste reistijd kost.
-                    ;
+                    double d = 100000;
+                    double temp;
+                    foreach (Runway r in this.runways)
+                    {
+                        temp = Distance(start.endLocation, r.startLocation);
+                        if (temp < d) d = temp;
+                    }
+                    foreach (Runway r in this.runways) if (Distance(start.endLocation, r.startLocation) == d) end = r; //bij meerdere runways op zelfde afstand schrijft de laatste de vorigen over
+
+
+                    //Er is een startlocatie en een eindlocatie opgeslagen. Nu tijd om route te vinden ertussen
+
+
+                }
             }
         }
 

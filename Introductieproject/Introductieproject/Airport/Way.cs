@@ -16,5 +16,15 @@ namespace Introductieproject.Airport
         public Way()
         {
         }
+
+        public double length
+        {
+            get
+            {
+                int deltaX = Math.Max(this.endLocation[0], this.startLocation[0]) - Math.Min(this.endLocation[0], this.startLocation[0]);
+                int deltaY = Math.Max(this.endLocation[1], this.startLocation[1]) - Math.Min(this.endLocation[1], this.startLocation[1]);
+                return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
+            }
+        }
     }
 }

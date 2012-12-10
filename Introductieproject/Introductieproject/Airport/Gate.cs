@@ -8,7 +8,7 @@ namespace Introductieproject.Airport
 {
     class Gate:Way
     {
-        public int[] location = new int[2];
+        //public int[] location = new int[2]; startlocation en endlocation ipv location want subklasse van Way. Consistentie
 
         public int waitingPassengers;
         public int waitingLuggage;

@@ -12,7 +12,7 @@ namespace Introductieproject.Simulation
     {
         public DateTime simtijd(TimeSpan simulatietijd, DateTime opgeslagentijd, int versnelling)
         {
-            double verstrekentijd = simulatietijd.TotalSeconds * versnelling;
+            Int32 verstrekentijd = (Int32)(simulatietijd.TotalSeconds * versnelling);
             return opgeslagentijd.AddSeconds(verstrekentijd);
             
 

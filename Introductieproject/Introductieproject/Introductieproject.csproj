@@ -86,11 +86,11 @@
     <Compile Include="UI\Controls\StatsControl.Designer.cs">
       <DependentUpon>StatsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\tijdcontrol.cs">
+    <Compile Include="UI\Controls\timecontrol.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI\Controls\tijdcontrol.Designer.cs">
-      <DependentUpon>tijdcontrol.cs</DependentUpon>
+    <Compile Include="UI\Controls\timecontrol.Designer.cs">
+      <DependentUpon>timecontrol.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\ToolboxControl.cs">
       <SubType>UserControl</SubType>
@@ -122,8 +122,8 @@
     <EmbeddedResource Include="UI\Controls\SimulationMapControl.resx">
       <DependentUpon>SimulationMapControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\tijdcontrol.resx">
-      <DependentUpon>tijdcontrol.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Controls\timecontrol.resx">
+      <DependentUpon>timecontrol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

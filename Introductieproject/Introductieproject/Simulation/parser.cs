@@ -8,20 +8,29 @@ namespace Introductieproject.Simulation
 {
     class parser
     {
-        XmlDocument vliegtuigen = new XmlDocument();
+        XmlDocument database = new XmlDocument();
      public  parser()
         {
-            vliegtuigen.Load(@"Simulation\vliegtuigen.xml");
+            database.Load(@"Simulation\vliegtuigen.xml");
         }
        public string getallplanes()
         {
             string planes = null;
-            XmlNodeList vliegtuig = vliegtuigen.GetElementsByTagName("plane");
-            for (int i = 0; i < vliegtuig.Count; i++)
+            XmlNodeList plane = database.GetElementsByTagName("plane");
+            for (int i = 0; i < plane.Count; i++)
             {
-               planes += (vliegtuig[i].InnerText + Environment.NewLine);
+               planes += (plane[i].InnerText + Environment.NewLine);
             }
             return planes;
         }
+       public string getcarrier(int id)
+       {
+           string planes = null;
+           XmlNodeList plane = database.GetElementsByTagName("plane");
+           plane[0].
+
+           return planes;
+       }
+       
     }
 }

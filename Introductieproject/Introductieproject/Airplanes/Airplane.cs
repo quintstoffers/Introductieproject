@@ -34,6 +34,7 @@ namespace Introductieproject.Objects
         public Gate assignedGate;           // Gate waar het vliegtuig heen moet
 
         public int[] location;              // De huidige locatie van het vliegtuig
+        public IList<int[]> waypoints;      // De lijst met toekomstige waypoints voor het vliegtuig
 
         /*
          * Initialiseer variabelen

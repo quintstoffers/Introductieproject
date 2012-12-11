@@ -52,7 +52,7 @@ namespace Introductieproject.Airport
                         start = g;
                         break;
                     }
-                    }
+                }
             }
             if (start != null) //Om zeker te weten dat een beginlocatie bepaald is
             {
@@ -78,10 +78,10 @@ namespace Introductieproject.Airport
                         double temp;
                         foreach (Gate g in this.gates)
                         {
-                            temp = Utils.getDistanceBetweenPoints(start.endLocation, g.location);
+                            temp = Utils.getDistanceBetweenPoints(start.endLocation, g.startLocation);
                             if (temp < d) d = temp;
                         }
-                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(start.endLocation, g.location) == d) end = g;
+                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(start.endLocation, g.startLocation) == d) end = g;
                     }
                     else if (t > 1)
                     {
@@ -90,10 +90,10 @@ namespace Introductieproject.Airport
                         double temp;
                         foreach (Gate g in this.gates)
                         {
-                            temp = Utils.getDistanceBetweenPoints(start.endLocation, g.location);
+                            temp = Utils.getDistanceBetweenPoints(start.endLocation, g.startLocation);
                             if (temp < d && g.airplane == null) d = temp; //Alleen lege gates nagaan
                         }
-                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(start.endLocation, g.location) == d && g.airplane == null) end = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
+                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(start.endLocation, g.startLocation) == d && g.airplane == null) end = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
                     }
                 }
                 else if (start is Gate)
@@ -103,5 +103,45 @@ namespace Introductieproject.Airport
                 }
             }
         }
+        public Route findRoute(Way startWay, Way endWay)
+        {
+            /*Deze methode maakt een stapel aan met routes. Het pakt de bovenste route van deze stapel. 
+            //Route heeft een locale Way, een totale lengte en een verwijzing naar de volgende verbinding
+            //Zolang er nog routes op de stapel zijn, blijft het algoritme de bovenste route van de stapel pakken.
+            //Eerste wordt gekeken of deze route het eindpunt bevat, en zo ja of het korter is dan de kortste route. Als ja, dan deze route nieuwe beste route
+            //Dan wordt een lijst opgeslagen. Daarin staan alle Ways waar de locale Way mee in verbinding staat.
+            //Eerst wordt per connectie gekeken of deze zich al in de route bevindt, om rondjes tegen te gaan.
+            //Als de route nog niet het eindpunt bevat, wordt gekeken of de route+lengte van verbonden Way kleiner is dan kortste Way.
+            //Als dat zo is, wordt nieuwe Route gepusht op stapel, met daarin de verbonden Way, diens lengte en de route van het beginpunt.
+            //Route van punt 1, via 2 en 4 naar 6 -> R1 Pop. R2 Push. R3 Push. R3 Pop. R5 Push. R5 Pop. R2 Pop. R4 Push. R4 Pop. R6 Push. R6 Pop. BestR = R6. Return R6>R4>R2>R1
+            */
+            Stack<Route> routes = new Stack<Route>();
+            Route bestRoute = null;
+            routes.Push(new Route(startWay, null, 0)); //Het eerste routedeel gaat van start naar zichzelf
+            while (routes.Count > 0) //Zolang er nog routes op de stack staan, volg deze loop
+            {
+                //Haal de bovenste route van de stack en sla deze op. Als de route het doel bevat en het korter is dan de vorige korste route, dan route = kortste route
+                Route route = routes.Pop();
+                if (route.HasWay(endWay))
+                {
+                    if (bestRoute == null || route.length < bestRoute.length)
+                        bestRoute = route;
+                }
+                //Maak een verzameling van connecties tussen lokale Way en andere Ways
+                IList<Way> connections;
+                connections = route.local.connectedWays;
+                foreach (Way connection in connections)
+                {
+                    if (!route.HasWay(connection))
+                        if (!route.HasWay(endWay) && (bestRoute == null || route.length + connection.length <= bestRoute.length))
+                            //Als de route nog niet het eindpunt bevat en de beste weg ofwel nog niet bestaat ofwel grotere kosten heeft dan de huidige
+                            //Dan Push nieuwe route op de stack met waar de connectie mee verbindt, de huidige route die gepopt is en de lengte van de connectie
+                            routes.Push(new Route(connection, route, connection.length));
+                }
+            }
+
+            return bestRoute;
+        }
     }
 }
+

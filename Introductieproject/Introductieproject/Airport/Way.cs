@@ -9,6 +9,8 @@ namespace Introductieproject.Airport
     {
         public int[] startLocation = new int[2];
         public int[] endLocation = new int[2];
+
+        public List<Way> connectedWays = new List<Way>(); //Algemene lijst met alle connecties
         
         //Bepalen in welke richting moet rijden
         public int direction;

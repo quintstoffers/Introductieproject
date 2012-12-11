@@ -10,13 +10,13 @@ namespace Introductieproject.Airport
     {
         //public int[] startLocation;
         //public int[] endLocation;
-
+        /*
         public double length
         {
             get
             {
-                int deltaX = Math.Max(this.endLocation[0], this.startLocation[0]) - Math.Min(this.endLocation[0], this.startLocation[0]);
-                int deltaY = Math.Max(this.endLocation[1], this.startLocation[1]) - Math.Min(this.endLocation[1], this.startLocation[1]);
+                int deltaX = Math.Max(this.connections[1].x, this.connections[0].x) - Math.Min(this.connections[1].x, this.connections[0].x);
+                int deltaY = Math.Max(this.connections[1].y, this.connections[0].y) - Math.Min(this.connections[1].y, this.connections[0].y);
                 return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
             }
         }
@@ -141,6 +141,7 @@ namespace Introductieproject.Airport
             }
             return false;
         }
+         */
     }
 }
 

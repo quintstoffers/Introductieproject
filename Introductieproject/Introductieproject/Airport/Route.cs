@@ -8,11 +8,11 @@ namespace Introductieproject.Airport
     class Route
     {
         //Class Route, gebaseerd op Pad in Imperatief Programmeren Listing 65
-        public Way local;
+        public Node local;
         public Route previous; //De voorafgaande Route. Is null voor de eerste
         public double length;
 
-        public Route(Way newlocal, Route newPrevious, double newLength)
+        public Route(Node newlocal, Route newPrevious, double newLength)
         {
             this.local = newlocal;
             this.previous = newPrevious;
@@ -21,26 +21,26 @@ namespace Introductieproject.Airport
                 this.length += previous.length;
         }
 
-        public bool HasWay(Way checkWay)
+        public bool hasNode(Node checkNode)
         {
-            //Kijk of een way al in de route zit, tegengaan van circulaire routes
-            if (this.local == checkWay) return true;
+            //Kijk of een node al in de route zit, tegengaan van circulaire routes
+            if (this.local == checkNode) return true;
             if (this.previous == null) return false;
-            return previous.HasWay(checkWay);
+            return previous.hasNode(checkNode);
         }
 
-        public IList<int[]> RouteList()
+        public IList<Way> RouteList()
         {
-            //Maak een lijst aan met coordinaten. Voeg eerst punten van voorafgaande Routes toe, voeg dan startlocatie toe van bijbehorende Way
-            //Gaat dus alle voorafgaande routes af naar 1e. Vanaf dat punt bouwt het een lijst op van coordinaten, de waypoints voor een vliegtuig
-            IList<int[]> routeList = new List<int[]>();
+            //Maak een lijst aan met ways voor een Airplane
+            //Belangrijk: Zorg er voor dat een lijst met Ways daadwerkelijk wordt aangemaakt. Vindt manier om van Node naar bijbehorende en correcte Way te gaan
+            IList<Way> routeList = new List<Way>();
             if (this.previous != null)
             {
-                IList<int[]> tempList = previous.RouteList();
+                IList<Way> tempList = previous.RouteList();
                 for (int t = 0; t < tempList.Count; t++)
                     routeList.Add(tempList[t]);
             }
-            routeList.Add(local.startLocation);
+            //routeList.Add();
             return routeList;
         }
     }

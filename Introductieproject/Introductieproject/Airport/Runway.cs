@@ -8,28 +8,28 @@ namespace Introductieproject.Airport
 {
     class Runway:Way
     {
+        
         //public int[] startLocation = new int[2];
         //public int[] endLocation = new int[2];
 
-        public Airplane airplane;
+        /*public Airplane airplane;
 
         public List<Taxiway> connectedTaxiway = new List<Taxiway>();
 
-        public Runway(int[] startLocation, int[] endLocation)
+        public Runway()
         {
-            this.startLocation = startLocation;
-            this.endLocation = endLocation;
         }
-
+        */
         /*
         * berekent de lengte van de baan (vanuit de coords)
         */
+        /*
         public double length
         {
             get
             {
-                int deltaX = Math.Max(this.endLocation[0], this.startLocation[0]) - Math.Min(this.endLocation[0], this.startLocation[0]);
-                int deltaY = Math.Max(this.endLocation[1], this.startLocation[1]) - Math.Min(this.endLocation[1], this.startLocation[1]);
+                int deltaX = Math.Max(this.connections[1].x, this.connections[0].x) - Math.Min(this.connections[1].x, this.connections[0].x);
+                int deltaY = Math.Max(this.connections[1].y, this.connections[0].y) - Math.Min(this.connections[1].y, this.connections[0].y);
                 return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
             }
         }
@@ -86,5 +86,6 @@ namespace Introductieproject.Airport
             }
             return false;
         }
+        */
     }
 }

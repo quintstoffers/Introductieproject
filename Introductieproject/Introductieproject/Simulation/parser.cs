@@ -6,14 +6,15 @@ using System.Xml;
 
 namespace Introductieproject.Simulation
 {
-    class parser
+    class Parser
     {
         XmlDocument database = new XmlDocument();
-     public  parser()
+        public  Parser()
         {
             database.Load(@"Simulation\vliegtuigen.xml");
         }
-       public string getallplanes()
+        
+        public string getallplanes()
         {
             string planes = null;
             XmlNodeList plane = database.GetElementsByTagName("plane");
@@ -23,14 +24,15 @@ namespace Introductieproject.Simulation
             }
             return planes;
         }
-       public string getcarrier(int id)
-       {
+
+        public string getcarrier(int id)
+        {
            string planes = null;
            XmlNodeList plane = database.GetElementsByTagName("plane");
-           plane[0].
+           //plane[0].
 
            return planes;
-       }
+        }
        
     }
 }

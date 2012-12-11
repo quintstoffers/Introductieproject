@@ -29,18 +29,17 @@ namespace Introductieproject.Airport
             return previous.hasNode(checkNode);
         }
 
-        public IList<Way> RouteList()
+        public IList<Node> RouteList()
         {
-            //Maak een lijst aan met ways voor een Airplane
-            //Belangrijk: Zorg er voor dat een lijst met Ways daadwerkelijk wordt aangemaakt. Vindt manier om van Node naar bijbehorende en correcte Way te gaan
-            IList<Way> routeList = new List<Way>();
+            //Maak een lijst aan met Nodes van eerste Node t/m laatste
+            IList<Node> routeList = new List<Node>();
             if (this.previous != null)
             {
-                IList<Way> tempList = previous.RouteList();
+                IList<Node> tempList = previous.RouteList();
                 for (int t = 0; t < tempList.Count; t++)
                     routeList.Add(tempList[t]);
             }
-            //routeList.Add();
+            routeList.Add(local);
             return routeList;
         }
     }

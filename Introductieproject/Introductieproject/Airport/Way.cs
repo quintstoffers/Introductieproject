@@ -18,7 +18,6 @@ namespace Introductieproject.Airport
             this.nodeConnections.Add(node1);
             this.nodeConnections.Add(node2);
             this.direction = dir;
-            connectWays();
         }
 
         public double length

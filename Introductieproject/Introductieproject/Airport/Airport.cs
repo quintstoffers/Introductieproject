@@ -21,47 +21,28 @@ namespace Introductieproject.Airport
         {
         }
 
-        public void Routeplanner(Airplane vliegtuig)
+        public void Routeplanner(Airplane airplane)
         {
-            /*Deze methode moet met de locatie van een vliegtuig een route bepalen naar een gate of een runway.
-            Deze route wordt dan opgeslagen en wordt door het vliegtuig stap voor stap gevolgd.
-            Het lijkt mij het handigste om een route een lijst te maken van Gates, Runways, Gateways en Taxiways.
-            Om /1/ lijst te maken van deze dingen, lijkt het mij het verstandigste om al deze classes subklasses te maken van hoofdklasse "Way".
-            Daarna wordt er een algoritme gedraaid dat lijkt op het algoritme in de routeplanner zoals gezien in het vak Imperatief Programmeren.
-            Uiteindelijk wordt de lijst meegegeven aan het vliegtuig. (momenteel nog geen variabele in Airplane, maar hoe anders bijhouden per vliegtuig?)
-            Stap 1: maak Gate, Gateway, Runway en Taxiway subklasses van Way. [Gedaan, kan waarschijnlijk nog netter door gelijksoortige methodes in Way onder te brengen]
-            Stap 2: verzin een routeringsalgoritme, gebruikmakend van een begin-Way en eind-Way [Nog niet gedaan]
-            
+            /*
             Routeplanner zelf
             Om aan te roepen, geef een vliegtuig mee. Vliegtuig weet huidige coordinaten
             Stap 1, waar is het vliegtuig nu?
             */
-            Node startNode = null;
-            foreach (Node n in this.nodes)
+            Way startWay = null;
+            foreach (Way w in this.ways)
             {
-                if (Utils.isPointInWay(vliegtuig.location, n))
+                if (Utils.isPointInWay(airplane.location, w))
                 {
-                    startNode = r; //Het beginpunt opslaan als Way. Aangezien r een verwijzing naar een object is, is start een verwijzing naar hetzelfde object.
+                    //Kijkt of het vliegtuig zich op een weg bevindt en als dat zo is zet de startWay als die weg
+                    startWay = w;
                     break;
                 }
             }
-            //als er geen locatie gevonden is, wordt de routeplanner niet aangeroepen bij het landen, maar bij het vertrek. Probeer opnieuw met Gates ipv Runways
-            if (start == null)
+            if (startWay != null) //Om zeker te weten dat een beginlocatie bepaald is
             {
-                foreach (Gate g in this.gates)
-                {
-                    if (Utils.isPointInWay(vliegtuig.location, g))
-                    {
-                        start = g;
-                        break;
-                    }
-                }
-            }
-            if (start != null) //Om zeker te weten dat een beginlocatie bepaald is
-            {
-                Way end = null;
+                Way endWay = null;
                 //Stap 2, waar moet het vliegtuig heen? Zoek een vrije gate als start een runway is, en vice versa
-                if (start is Runway)
+                if (!airplane.hasDocked)
                 {
                     //Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
                     //Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
@@ -71,7 +52,7 @@ namespace Introductieproject.Airport
                     if (t == 1)
                     {
                         //1 gate vrij, makkelijkste geval. Deze gate is doel
-                        foreach (Gate g in this.gates) if (g.airplane == null) end = g;
+                        foreach (Gate g in this.gates) if (g.airplane == null) endWay = g;
                     }
                     else if (t==0)
                     {
@@ -81,10 +62,11 @@ namespace Introductieproject.Airport
                         double temp;
                         foreach (Gate g in this.gates)
                         {
-                            temp = Utils.getDistanceBetweenPoints(start.nodeConnections[1].location, g.nodeConnections[0].location);
+                            temp = Utils.getDistanceBetweenPoints(startWay.nodeConnections[1].location, g.nodeConnections[0].location);
                             if (temp < d) d = temp;
                         }
-                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(start.nodeConnections[1].location, g.nodeConnections[0].location) == d) end = g;
+                        foreach (Gate g in this.gates) 
+                            if (Utils.getDistanceBetweenPoints(startWay.nodeConnections[1].location, g.nodeConnections[0].location) == d) endWay = g;
                     }
                     else if (t > 1)
                     {
@@ -93,58 +75,106 @@ namespace Introductieproject.Airport
                         double temp;
                         foreach (Gate g in this.gates)
                         {
-                            temp = Utils.getDistanceBetweenPoints(start.nodeConnections[1].location, g.nodeConnections[0].location);
+                            temp = Utils.getDistanceBetweenPoints(startWay.nodeConnections[1].location, g.nodeConnections[0].location);
                             if (temp < d && g.airplane == null) d = temp; //Alleen lege gates nagaan
                         }
-                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(start.nodeConnections[1].location, g.nodeConnections[0].location) == d 
-                            && g.airplane == null) end = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
+                        foreach (Gate g in this.gates) if (Utils.getDistanceBetweenPoints(airplane.location, g.nodeConnections[0].location) == d 
+                            && g.airplane == null) endWay = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
                     }
                 }
-                else if (start is Gate)
+                else if (airplane.hasDocked)
                 {
                     //Check de runways - dichtstbijzijnde Runway, want je kunt er van uit gaan dat als hij nu bezet is, hij dat niet meer zal zijn als je aankomt.
                     //Dichtstbijzijnde als in degene die de minste reistijd kost.
+                    double d = 100000;
+                    double temp;
+                    foreach (Runway r in this.runways)
+                    {
+                        temp = Utils.getDistanceBetweenPoints(airplane.location, r.nodeConnections[0].location); //Berekent afstand hemelsbreed tussen vliegtuig en begin runway
+                        if (temp < d) d = temp;
+                    }
                 }
+                Node startNode = findStartNode(startWay, airplane);
+                Node endNode = endWay.nodeConnections[0]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
+                Route bestRoute = findRoute(startNode, endNode);
+                airplane.waypoints = makeWay(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
             }
         }
-        public Route findRoute(Way startWay, Way endWay)
+        public Route findRoute(Node startNode, Node endNode)
         {
-            /*Deze methode maakt een stapel aan met routes. Het pakt de bovenste route van deze stapel. 
-            Route heeft een locale Way, een totale lengte en een verwijzing naar de volgende verbinding
-            Zolang er nog routes op de stapel zijn, blijft het algoritme de bovenste route van de stapel pakken.
-            Eerste wordt gekeken of deze route het eindpunt bevat, en zo ja of het korter is dan de kortste route. Als ja, dan deze route nieuwe beste route
-            Dan wordt een lijst opgeslagen. Daarin staan alle Ways waar de locale Way mee in verbinding staat.
-            Eerst wordt per connectie gekeken of deze zich al in de route bevindt, om rondjes tegen te gaan.
-            Als de route nog niet het eindpunt bevat, wordt gekeken of de route+lengte van verbonden Way kleiner is dan kortste Way.
-            Als dat zo is, wordt nieuwe Route gepusht op stapel, met daarin de verbonden Way, diens lengte en de route van het beginpunt.
-            Route van punt 1, via 2 en 4 naar 6 -> R1 Pop. R2 Push. R3 Push. R3 Pop. R5 Push. R5 Pop. R2 Pop. R4 Push. R4 Pop. R6 Push. R6 Pop. BestR = R6. Return R6>R4>R2>R1
+            /*
+             * Deze methode maakt een stapel aan met routes. Het pakt de bovenste route van deze stapel. Route heeft Node, vorige Route en lengte.
+             * Zolang routes op stapel, blijf draaien. Voor iedere route check Node. Is Node endNode? Ja + lengte < kortste Route dan nieuwe kortste Route.
+             * Anders kijk Ways bij Node. Als Node = Endnote of lengte Route > lengte beste Route niet opnieuw pushen. 
+             * Anders nieuwe Route maken met Node andere kant van Way. Resultaat is kortste Route van beginNode naar endNode.
             */
             Stack<Route> routes = new Stack<Route>();
             Route bestRoute = null;
-            routes.Push(new Route(startNode, null, 0)); //Het eerste routedeel gaat van start naar zichzelf
-            while (routes.Count > 0) //Zolang er nog routes op de stack staan, volg deze loop
+            routes.Push(new Route(startNode, null, 0));
+            while (routes.Count > 0)
             {
-                //Haal de bovenste route van de stack en sla deze op. Als de route het doel bevat en het korter is dan de vorige korste route, dan route = kortste route
                 Route route = routes.Pop();
-                if (route.HasWay(endWay))
+                if (route.hasNode(endNode))
                 {
                     if (bestRoute == null || route.length < bestRoute.length)
                         bestRoute = route;
                 }
-                //Maak een verzameling van connecties tussen lokale Way en andere Ways
                 IList<Way> connections;
-                connections = route.local.connectedWays;
+                connections = route.local.connections;
                 foreach (Way connection in connections)
                 {
-                    if (!route.HasWay(connection))
-                        if (!route.HasWay(endWay) && (bestRoute == null || route.length + connection.length <= bestRoute.length))
-                            //Als de route nog niet het eindpunt bevat en de beste weg ofwel nog niet bestaat ofwel grotere kosten heeft dan de huidige
-                            //Dan Push nieuwe route op de stack met waar de connectie mee verbindt, de huidige route die gepopt is en de lengte van de connectie
-                            routes.Push(new Route(connection, route, connection.length));
+                    if (!route.hasNode(endNode) && (bestRoute == null || route.length + connection.length <= bestRoute.length))
+                        routes.Push(new Route(otherNode(connection, route.local), route, connection.length)); //Zet nieuwe Route op stack met Node andere kant connection
                 }
             }
 
             return bestRoute;
+        }
+
+        public Node findStartNode(Way w, Airplane a)
+        {
+            if (w.direction == 1) return w.nodeConnections[0]; //Als richting 1, dan de Node waar de baan eindigt is beginpunt
+            if (w.direction == -1) return w.nodeConnections[1]; //Andersom voor richting -1
+            if (w.direction == 0)                               //Dichtstbijzijnde op dubbelbaansweg
+            {
+                double d = 1000000; double temp;
+                foreach (Node n in w.nodeConnections)
+                {
+                    temp = Utils.getDistanceBetweenPoints(a.location, n.location);
+                    if (temp < d) d = temp;
+                }
+                foreach (Node n in w.nodeConnections) if (Utils.getDistanceBetweenPoints(a.location, n.location) == d) return n;
+            }
+            return null;
+        }
+        public Node otherNode(Way w, Node n)
+        {
+            foreach (Node node in w.nodeConnections)
+                if (node != n) return node;
+            return null;
+        }
+        public IList<Way> makeWay(IList<Node> nodeList)
+        {
+            //Deze methode neemt een lijst met nodes en construeert daaruit een lijst met de ways die deze nodes verbinden
+            IList<Way> wayList = new List<Way>();
+            for (int t = 0; t < nodeList.Count - 1; t++)
+            {
+                foreach (Way w in nodeList[t].connections)
+                {
+                    if (w.nodeConnections.Contains(nodeList[t + 1]))
+                    {
+                        if (w.nodeConnections[0] == nodeList[t] && w.nodeConnections[1] == nodeList[t + 1] && w.direction == 1)
+                            wayList.Add(w);
+                        if (w.nodeConnections[0] == nodeList[t + 1] && w.nodeConnections[1] == nodeList[t] && w.direction == -1)
+                            wayList.Add(w);
+                        if (w.direction == 0)
+                            wayList.Add(w);
+                        //Checks om te kijken of de Way de goede richting opgaat
+                    }
+                }
+            }
+
+            return wayList;
         }
     }
 }

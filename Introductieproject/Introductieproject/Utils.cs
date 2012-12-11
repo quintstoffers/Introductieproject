@@ -13,8 +13,8 @@ namespace Introductieproject
             //Kijk of een vliegtuig zich bevindt tussen twee punten (van een way)
             //http://stackoverflow.com/questions/7050186/find-if-point-lay-on-line-segment
             //(x-x1)/(x2-x1)==(y-y1)/(y2-y1) voor (x,y) op lijn (x1,y1),(x2,y2)
-            double xRes = (double)((planeLoc[0] - way.startLocation[0]) / (way.endLocation[0] - way.startLocation[0]));
-            double yRes = (double)((planeLoc[1] - way.startLocation[1]) / (way.endLocation[1] - way.startLocation[1]));
+            double xRes = (double)((planeLoc[0] - way.nodeConnections[0].location[0]) / (way.nodeConnections[1].location[0] - way.nodeConnections[0].location[0]));
+            double yRes = (double)((planeLoc[1] - way.nodeConnections[0].location[1]) / (way.nodeConnections[1].location[1] - way.nodeConnections[0].location[1]));
             return xRes == yRes;
         }
 

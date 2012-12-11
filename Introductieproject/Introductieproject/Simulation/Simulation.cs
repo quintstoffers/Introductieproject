@@ -23,9 +23,8 @@ namespace Introductieproject.Simulation
         {
             simulatietijd = new Thread(simtijd);
             mainform.Show();
-          startsimulatie();
-          Console.WriteLine(parse.getallplanes());
-
+            startsimulatie();
+            Console.WriteLine(parse.getallplanes());
         }
       void startsimulatie()
       {

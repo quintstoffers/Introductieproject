@@ -62,7 +62,7 @@
     <Compile Include="Companies\Companies.cs" />
     <Compile Include="Companies\Company.cs" />
     <Compile Include="Companies\KLM.cs" />
-    <Compile Include="Simulation\parser.cs" />
+    <Compile Include="Simulation\Parser.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="Simulation\TimeKeeper.cs" />
     <Compile Include="UI\Controls\EditMapControl.cs">

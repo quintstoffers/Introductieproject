@@ -6,8 +6,7 @@ using System.Threading;
 using System.Diagnostics;
 namespace Introductieproject.Simulation
 {
-    class Simulation
-       
+    class Simulation  
     {
         bool simrunning;    //of de simulatie draait of niet(bijv. pauze of gestopt)
         int updateinterval = 1; //update interval van simulatie in sec.
@@ -17,8 +16,9 @@ namespace Introductieproject.Simulation
         int aantalstappen = -60; //snelheid waarmee de simulatie draait, realtime = 1 stap per keer. Dit is anders dan de update snelheid!
         TimeKeeper timekeeper = new TimeKeeper();
         DateTime huidigetijd;
-        parser parse = new parser();
+        Parser parse = new Parser();
         Forms.MainForm mainform = new Forms.MainForm();
+
         public Simulation()
         {
             simulatietijd = new Thread(simtijd);
@@ -26,35 +26,34 @@ namespace Introductieproject.Simulation
             startsimulatie();
             Console.WriteLine(parse.getallplanes());
         }
-      void startsimulatie()
-      {
-          simulatieklok.Start();
-          simrunning = true;
-          simulatietijd.Start();
-          huidigetijd = DateTime.Now;
-      }
-      void stopsimulatie()
-      {
-          simulatieklok.Stop();
-          simrunning = false;
-          simulatietijd.Suspend();
-      }
+        void startsimulatie()
+        {
+            simulatieklok.Start();
+            simrunning = true;
+            simulatietijd.Start();
+            huidigetijd = DateTime.Now;
+        }
+        void stopsimulatie()
+        {
+            simulatieklok.Stop();
+            simrunning = false;
+            simulatietijd.Suspend();
+        }
 
     
-      void simtijd()
-      {
-          while (simrunning == true)
-          {
-              rekentijd.Restart();
-              huidigetijd = huidigetijd.AddSeconds(aantalstappen);
-              Thread.Sleep(updateinterval * 1000);
-          }
-         
-      }
+        void simtijd()
+        {
+            while (simrunning == true)
+            {
+                rekentijd.Restart();
+                huidigetijd = huidigetijd.AddSeconds(aantalstappen);
+                Thread.Sleep(updateinterval * 1000);
+            } 
+        }
 
-      void updatesimulatie(int aantalstappen)
-      {
-          //hierkomen de .simulate methodes
-      }
+        void updatesimulatie(int aantalstappen)
+        {
+            //hierkomen de .simulate methodes
+        }
     }
 }

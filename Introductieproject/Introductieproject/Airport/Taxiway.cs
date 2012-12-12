@@ -8,6 +8,12 @@ namespace Introductieproject.Airport
 {
     class Taxiway:Way
     {
+        public Taxiway(Node node1, Node node2, int dir)
+        {
+            this.nodeConnections.Add(node1);
+            this.nodeConnections.Add(node2);
+            this.direction = dir;
+        }
         //public int[] startLocation;
         //public int[] endLocation;
         /*

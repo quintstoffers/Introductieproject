@@ -1,4 +1,5 @@
-﻿using Introductieproject.Airport;
+﻿using Introductieproject.Airplanes;
+using Introductieproject.Airport;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,12 +31,12 @@ namespace Introductieproject.Objects
         public int luggage;                // Aantal stukken baggage
         public double luggageKg;           // Baggage in kilogram
 
-        public int[] currentGoal;           // Punt waar het ding heen wilt
         public Gate assignedGate;           // Gate waar het vliegtuig heen moet
 
         public int[] location;              // De huidige locatie van het vliegtuig
-        public IList<Way> waypoints;      // De lijst met toekomstige waypoints voor het vliegtuig
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
+
+        public Navigator navigator;                // Object dat aangeeft waar het vliegtuig heen moet
 
         /*
          * Initialiseer variabelen
@@ -54,11 +55,11 @@ namespace Introductieproject.Objects
         /*
         * Simuleer een stap van grootte realTime milliseconden
         */
-        public void simulate(int realTime)
+        public void simulate(int elapsedMillis)
         {
-            if (currentGoal == null)
+            if (navigator == null)
             {
-
+                // vliegtuig heeft nog geen route gekregen
             }
             else
             {

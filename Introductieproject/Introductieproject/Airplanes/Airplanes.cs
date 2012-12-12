@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Introductieproject.Objects
 {
-    class Airplanes
+    public class Airplanes
     {
         public const int NUM_AIRPLANES = 2;
 

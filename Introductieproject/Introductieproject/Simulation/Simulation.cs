@@ -8,52 +8,99 @@ namespace Introductieproject.Simulation
 {
     class Simulation  
     {
-        bool simrunning;    //of de simulatie draait of niet(bijv. pauze of gestopt)
-        int updateinterval = 1; //update interval van simulatie in sec.
+        Airport.Airport airport;    // Het vliegveld dat bewerkt wordt door deze simulatie
+
+        bool runSimulation;    // of de simulatie draait of niet
+        bool pauseSimulation;  // of de simulatie gepauzeert is
+
+        int updateinterval = 1; // update interval van simulatie in sec.
+
         Stopwatch rekentijd = new Stopwatch();
+
         Stopwatch simulatieklok = new Stopwatch();
-        Thread simulatietijd;
+
+        Thread simulationThread;
+
         int aantalstappen = -60; //snelheid waarmee de simulatie draait, realtime = 1 stap per keer. Dit is anders dan de update snelheid!
+
         TimeKeeper timekeeper = new TimeKeeper();
         DateTime huidigetijd;
-        Parser parse = new Parser();
-        Forms.MainForm mainform = new Forms.MainForm();
+        Parser parser = new Parser();
 
-        public Simulation()
+        public Simulation(Airport.Airport airport)
         {
-            simulatietijd = new Thread(simtijd);
-            mainform.Show();
-            startsimulatie();
-            Console.WriteLine(parse.getallplanes());
+            Console.WriteLine("Simulation created");
+            this.airport = airport;
+
+            simulationThread = new Thread(simulation);
+
+            startSimulation();
+
+            Console.WriteLine(parser.getallplanes());
         }
-        void startsimulatie()
+
+        void startSimulation()
         {
+            Console.WriteLine("Simulation started");
+
             simulatieklok.Start();
-            simrunning = true;
-            simulatietijd.Start();
+            simulationThread.Start();
+
             huidigetijd = DateTime.Now;
         }
+
         void stopsimulatie()
         {
+            Console.WriteLine("Simulation stopped");
+
             simulatieklok.Stop();
-            simrunning = false;
-            simulatietijd.Suspend();
+            runSimulation = false;
         }
 
-    
-        void simtijd()
+        void pauseSimulationToggle()
         {
-            while (simrunning == true)
+            pauseSimulation = !pauseSimulation;
+            if (pauseSimulation)
             {
+                Console.WriteLine("Simulation paused");
+                simulatieklok.Stop();
+            }
+            else
+            {
+                Console.WriteLine("Simulation unpaused");
+                simulatieklok.Start();
+            }
+        }
+    
+        void simulation()
+        {
+            pauseSimulation = false;
+            runSimulation = true;
+
+            while (runSimulation == true)       // Simulatie draait terwijl runSimulation true is
+            {
+                while (pauseSimulation)         // Slapen terwijl de simulatie gepauzeert is.
+                {
+                    Thread.Sleep(1000);
+                }
+
                 rekentijd.Restart();
                 huidigetijd = huidigetijd.AddSeconds(aantalstappen);
+
+                updateSimulation(aantalstappen);
+
                 Thread.Sleep(updateinterval * 1000);
             } 
         }
 
-        void updatesimulatie(int aantalstappen)
+        void updateSimulation(int aantalstappen)
         {
-            //hierkomen de .simulate methodes
+            Console.WriteLine("Simulation clocktick");
+
+
+            double ellapsedSimTime = aantalstappen * updateinterval * 1000; // Verlopen echte tijd omrekenen naar verlopen sim tijd
+
+            airport.simulate(ellapsedSimTime);
         }
     }
 }

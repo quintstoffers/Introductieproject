@@ -7,7 +7,13 @@ using Introductieproject.Objects;
 namespace Introductieproject.Airport
 {
     class Gateway:Way
-    {                                                    
+    {             
+        public Gateway(Node node1, Node node2, int dir)
+        {
+            this.nodeConnections.Add(node1);
+            this.nodeConnections.Add(node2);
+            this.direction = dir;
+        }                               
         /*
         public bool isConnectedWithTaxiway(Taxiway taxiway)
         {

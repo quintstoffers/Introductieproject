@@ -27,5 +27,22 @@ namespace Introductieproject.Airport
                 if (w == checkWay) return true;
             return false;
         }
+
+        public Node getConnectedNode(Way currentWay)
+        {
+            foreach (Node node in currentWay.nodeConnections)
+            {
+                if (node != this)
+                {
+                    return node;
+                }
+            }
+            return null;
+        }
+
+        public override string ToString()
+        {
+            return "NODE, location (" + location[0] + "," + location[1] + ")";
+        }
     }
 }

@@ -7,13 +7,22 @@ namespace Introductieproject.Airport
 {
     class Way
     {
+        public const int DIRECTION_BOTH = 0;
+        public const int DIRECTION_ENDTOSTART = -1;
+        public const int DIRECTION_STARTTOEND = 1;
+
         public IList<Node> nodeConnections;
         public IList<Way> wayConnections;
 
         //Bepalen in welke richting moet rijden
         public int direction;
 
-        public Way(Node node1,Node node2,int dir)
+        public Way()
+        {
+
+        }
+
+        public Way(Node node1, Node node2, int dir)
         {
             this.nodeConnections.Add(node1);
             this.nodeConnections.Add(node2);
@@ -35,22 +44,44 @@ namespace Introductieproject.Airport
         public void connectWays()
         {
             //richting 1 betekent van node 1 naar 2. Richting -1 andersom en Ricthing 0 beide kanten.
-            if (this.direction >= 0)
+
+            if (this.direction == DIRECTION_BOTH || this.direction == DIRECTION_STARTTOEND)
             {
                 foreach (Way w in nodeConnections[1].connections)
+                {
                     this.wayConnections.Add(w);
+                }
             }
-            if (this.direction <= 0)
+            if (this.direction == DIRECTION_BOTH || this.direction == DIRECTION_ENDTOSTART)
             {
                 foreach (Way w in nodeConnections[0].connections)
+                {
                     this.wayConnections.Add(w);
+                }
             }
         }
 
         public bool checkConnected(Way checkWay)
         {
-            foreach (Way w in wayConnections) if (checkWay == w) return true;
+            foreach (Way w in wayConnections)
+            {
+                if (checkWay == w)
+                {
+                    return true;
+                }
+            }
             return false;
+        }
+
+        public override string ToString()
+        {
+            String returnStr = "--\nWay, direction: " + direction;
+            foreach(Node node in nodeConnections)
+            {
+                returnStr += "\n" + node.ToString();
+            }
+            returnStr += "\n--";
+            return returnStr;
         }
     }
 }

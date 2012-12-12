@@ -34,6 +34,7 @@ namespace Introductieproject.Objects
         public Gate assignedGate;           // Gate waar het vliegtuig heen moet
 
         public int[] location;              // De huidige locatie van het vliegtuig
+        public int[] speed;
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
 
         public Navigator navigator;                // Object dat aangeeft waar het vliegtuig heen moet
@@ -41,10 +42,10 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void initVariables(int[] location, Company company, int state, int passengers, int luggage, int luggageKg)
+        public void initVariables(int[] location, int[] speed, Company company, int state, int passengers, int luggage, int luggageKg)
         {
             this.location = location;
-
+            this.speed = speed;
             this.company = company;
 
             this.state = state;
@@ -67,6 +68,11 @@ namespace Introductieproject.Objects
             {
 
             }
+        }
+
+        public override string ToString()
+        {
+            return "AIRPLANE: " + typeName + ". x=" + location[0] + ",y=" + location[1] + "...xV" + speed[0] + ",yV";
         }
     }
 }

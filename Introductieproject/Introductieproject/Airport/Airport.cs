@@ -15,8 +15,6 @@ namespace Introductieproject.Airport
         public List<Taxiway> taxiways = new List<Taxiway>();
         public List<Gateway> gateways = new List<Gateway>();
 
-        public List<Building> buildings = new List<Building>();
-
         public List<Way> ways = new List<Way>();
         public List<Node> nodes = new List<Node>();
 
@@ -36,6 +34,11 @@ namespace Introductieproject.Airport
                     currentAirplane.navigator = navigator;
                 }
             }
+        }
+
+        public override string ToString()
+        {
+            return "AIRPORT: airplanes=" + airplanes.Count;
         }
     }
 }

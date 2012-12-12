@@ -75,12 +75,11 @@ namespace Introductieproject.Airport
 
         public override string ToString()
         {
-            String returnStr = "--\nWay, direction: " + direction + " ";
+            String returnStr = "WAY: direction: " + direction;
             foreach(Node node in nodeConnections)
             {
-                returnStr += "\n" + node.ToString();
+                returnStr += " " + node.ToString();
             }
-            returnStr += "\n--";
             return returnStr;
         }
     }

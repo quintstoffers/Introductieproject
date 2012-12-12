@@ -52,7 +52,6 @@
     <Compile Include="Airplanes\BO_747.cs" />
     <Compile Include="Airplanes\Navigator.cs" />
     <Compile Include="Airport\Airport.cs" />
-    <Compile Include="Airport\Building.cs" />
     <Compile Include="Airport\Node.cs" />
     <Compile Include="Airport\Route.cs" />
     <Compile Include="Airport\Way.cs" />

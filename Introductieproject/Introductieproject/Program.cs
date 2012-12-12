@@ -30,7 +30,7 @@ namespace Introductieproject
         static Airplane createAirplane()
         {
             Airplane newAirPlane = new BO_747();
-            newAirPlane.initVariables(new int[]{1000, 0}, new KLM(), 0, 200, 220, 4400);    // Nieuw vliegtuig op einde linker landingsbaan
+            newAirPlane.initVariables(new int[]{1000, 0}, new int[]{0, 0}, new KLM(), 0, 200, 220, 4400);    // Nieuw vliegtuig op einde linker landingsbaan zonder snelheid
             return newAirPlane;
         }
 

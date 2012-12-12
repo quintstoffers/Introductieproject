@@ -97,7 +97,7 @@ namespace Introductieproject.Airport
                 Node startNode = findStartNode(startWay, airplane);
                 Node endNode = endWay.nodeConnections[0]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
                 Route bestRoute = findRoute(startNode, endNode);
-                airplane.waypoints = makeWay(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
+                airplane.waypoints = convertNodeToWay(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
             }
         }
         public Route findRoute(Node startNode, Node endNode)
@@ -153,7 +153,7 @@ namespace Introductieproject.Airport
                 if (node != n) return node;
             return null;
         }
-        public IList<Way> makeWay(IList<Node> nodeList)
+        public IList<Way> convertNodeToWay(IList<Node> nodeList)
         {
             //Deze methode neemt een lijst met nodes en construeert daaruit een lijst met de ways die deze nodes verbinden
             IList<Way> wayList = new List<Way>();

@@ -10,7 +10,7 @@ namespace Introductieproject.Airport
     {
         public List<Airplane> airplanes = new List<Airplane>();
 
-        public List<Gate> gates = new List<Gate>();
+        public List<Gate> gates = new List<Gate>();             // DEZE LIJSTEN MOETEN WORDEN VERVANGEN DOOR "ways"
         public List<Runway> runways = new List<Runway>();
         public List<Taxiway> taxiways = new List<Taxiway>();
         public List<Gateway> gateways = new List<Gateway>();

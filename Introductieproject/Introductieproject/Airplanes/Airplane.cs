@@ -41,8 +41,10 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void initVariables(Company company, int state, int passengers, int luggage, int luggageKg)
+        public void initVariables(int[] location, Company company, int state, int passengers, int luggage, int luggageKg)
         {
+            this.location = location;
+
             this.company = company;
 
             this.state = state;

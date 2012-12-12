@@ -11,8 +11,8 @@ namespace Introductieproject.Airport
         public const int DIRECTION_ENDTOSTART = -1;
         public const int DIRECTION_STARTTOEND = 1;
 
-        public IList<Node> nodeConnections;
-        public IList<Way> wayConnections;
+        public IList<Node> nodeConnections = new List<Node>();
+        public IList<Way> wayConnections = new List<Way>();
 
         //Bepalen in welke richting moet rijden
         public int direction;

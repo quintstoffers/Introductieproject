@@ -75,7 +75,7 @@ namespace Introductieproject.Airport
 
         public override string ToString()
         {
-            String returnStr = "--\nWay, direction: " + direction;
+            String returnStr = "--\nWay, direction: " + direction + " ";
             foreach(Node node in nodeConnections)
             {
                 returnStr += "\n" + node.ToString();

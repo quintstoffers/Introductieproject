@@ -114,23 +114,29 @@ namespace Introductieproject.Airplanes
              * Anders kijk Ways bij Node. Als Node = Endnote of lengte Route > lengte beste Route niet opnieuw pushen. 
              * Anders nieuwe Route maken met Node andere kant van Way. Resultaat is kortste Route van beginNode naar endNode.
             */
+            Console.WriteLine("Finding route to " + endNode.ToString());
+            Console.WriteLine("            from " + startNode.ToString());
+
             Stack<Route> routes = new Stack<Route>();
             Route bestRoute = null;
             routes.Push(new Route(startNode, null, 0));
             while (routes.Count > 0)
             {
+                Console.WriteLine("Check route");
                 Route route = routes.Pop();
                 if (route.hasNode(endNode))
                 {
+                    Console.WriteLine("Route has endnode");
                     if (bestRoute == null || route.length < bestRoute.length)
                     {
+                        Console.WriteLine("ew bestroute assigned");
                         bestRoute = route;
                     }
                 }
-                IList<Way> connections;
-                connections = route.local.connections;
+                IList<Way> connections = route.local.connections;
                 foreach (Way connection in connections)
                 {
+                    Console.WriteLine("Checking connection: " + connection.ToString());
                     if (!route.hasNode(endNode) && (bestRoute == null || route.length + connection.length <= bestRoute.length))
                     {
                         Node connectedNode = route.local.getConnectedNode(connection);

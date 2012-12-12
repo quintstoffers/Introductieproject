@@ -89,6 +89,11 @@ namespace Introductieproject
             airport.ways.Add(gateway1);
             airport.ways.Add(gateway2);
 
+            foreach(Way currentWay in airport.ways)
+            {
+                currentWay.connectWays();
+            }
+
             return airport;
         }
     }

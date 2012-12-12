@@ -8,17 +8,12 @@ namespace Introductieproject.Airport
     class Node
     {
         public int[] location = new int[2];
-        public IList<Way> connections;
+        public IList<Way> connections = new List<Way>();
 
         public Node(int x, int y)
         {
             this.location[0] = x;
             this.location[1] = y;
-        }
-
-        public void addConnection(Way newWay)
-        {
-            this.connections.Add(newWay);
         }
 
         public bool checkConnection(Way checkWay)

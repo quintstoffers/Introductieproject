@@ -137,7 +137,7 @@ namespace Introductieproject.Airplanes
                     Console.WriteLine("Route has endnode");
                     if (bestRoute == null || route.length < bestRoute.length)
                     {
-                        Console.WriteLine("ew bestroute assigned");
+                        Console.WriteLine("New bestroute assigned");
                         bestRoute = route;
                     }
                 }
@@ -147,9 +147,12 @@ namespace Introductieproject.Airplanes
                     Console.WriteLine("Checking connection: " + connection.ToString());
                     if (!route.hasNode(endNode) && (bestRoute == null || route.length + connection.length <= bestRoute.length))
                     {
-                        Node connectedNode = route.local.getConnectedNode(connection);
-                        Route newRoute = new Route(connectedNode, route, connection.length);
-                        routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
+                        if (route.local.isDirectionAllowed(connection))
+                        {
+                            Node connectedNode = route.local.getConnectedNode(connection);
+                            Route newRoute = new Route(connectedNode, route, connection.length);
+                            routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
+                        }
                     }
                 }
             }

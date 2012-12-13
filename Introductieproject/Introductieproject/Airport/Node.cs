@@ -35,6 +35,15 @@ namespace Introductieproject.Airport
             return null;
         }
 
+        public bool isDirectionAllowed(Way w)
+        {
+            //Geeft aan of je een way langs mag. this zit op de way.
+            if (w.direction == 0) return true;
+            if (w.direction == 1 && w.nodeConnections[0] == this) return true;
+            if (w.direction == -1 && w.nodeConnections[1] == this) return true;
+            return false;
+        }
+
         public override string ToString()
         {
             return "NODE: location (" + location[0] + "," + location[1] + "), connections=" + this.connections.Count();

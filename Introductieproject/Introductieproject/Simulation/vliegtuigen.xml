@@ -3,23 +3,13 @@
   <planes>
     <plane id="1" >
       <number> 742334</number>
-      <carrier> borat air</carrier>
+      <company> borat air</company>
       <arrivaldate>12-12-12</arrivaldate>
-      <arrivaltime>12:12</arrivaltime>
       <origin> kazachstan</origin>
       <depaturedate>12-12-12</depaturedate>
       <depaturetime>18:00</depaturetime>
       <destination>mars</destination>
-    </plane>
-    <plane id="2">
-      <number> 742334</number>
-      <carrier> borat air</carrier>
-      <arrivaldate>12-12-12</arrivaldate>
-      <arrivaltime>12:12</arrivaltime>
-      <origin> kazachstan</origin>
-      <depaturedate>12-12-12</depaturedate>
-      <depaturetime>18:00</depaturetime>
-      <destination>mars</destination>
+      <type>747</type>
     </plane>
   </planes>
 </data>

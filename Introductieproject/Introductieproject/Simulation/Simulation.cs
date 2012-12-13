@@ -37,8 +37,9 @@ namespace Introductieproject.Simulation
             simulationThread = new Thread(simulation);
 
             startSimulation();
-
-            Console.WriteLine(parser.getallplanes());
+            Console.ForegroundColor = ConsoleColor.Blue;
+            parser.update();
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         void startSimulation()

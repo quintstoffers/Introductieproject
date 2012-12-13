@@ -13,7 +13,10 @@ namespace Introductieproject.Objects
         public int type;                   // int gedefinieert in enumeratie
         public String manufacturerName;    // Maker vliegtuig
         public String typeName;            // Leesbare string voor weergave
-
+        public DateTime arrivaldate;
+        public DateTime depaturedate;
+        public string destination;
+        public string orgin;
         public int maxSpeed;               // Snelheden in m/s
         public int cruisingSpeed;
         public int takeofSpeed;
@@ -47,9 +50,7 @@ namespace Introductieproject.Objects
             this.location = location;
             this.speed = speed;
             this.company = company;
-
             this.state = state;
-
             this.passengers = passengers;
             this.luggage = luggage;
             this.luggageKg = luggageKg;
@@ -75,4 +76,5 @@ namespace Introductieproject.Objects
             return "AIRPLANE: " + typeName + ". x=" + location[0] + ",y=" + location[1] + "...xV" + speed[0] + ",yV";
         }
     }
+
 }

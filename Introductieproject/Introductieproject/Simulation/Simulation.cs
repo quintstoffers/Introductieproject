@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+
+
 namespace Introductieproject.Simulation
 {
     class Simulation  
     {
         Airport.Airport airport;    // Het vliegveld dat bewerkt wordt door deze simulatie
 
-        bool runSimulation;    // of de simulatie draait of niet
-        bool pauseSimulation;  // of de simulatie gepauzeert is
+        public static bool runSimulation;    // of de simulatie draait of niet
+        public static bool pauseSimulation;  // of de simulatie gepauzeert is
 
         int updateinterval = 1; // update interval van simulatie in sec.
 

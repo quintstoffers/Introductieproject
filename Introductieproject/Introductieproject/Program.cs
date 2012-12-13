@@ -21,10 +21,11 @@ namespace Introductieproject
 
             airport = createAirport();
             airport.airplanes.Add(createAirplane());
+            mainform.Show();
 
             Simulation.Simulation simulation = new Simulation.Simulation(airport);
-
-            mainform.Show();
+            
+            Application.Run(mainform);
         }
 
         static Airplane createAirplane()

@@ -17,8 +17,7 @@ namespace Introductieproject.Airport
         public int waitingPassengers;
         public int waitingLuggage;
         public double waitingLuggageKg;
-
-        public Airplane airplane;
+        public bool isReserved = false;
 
         public string gateName;
     }

@@ -14,7 +14,7 @@ namespace Introductieproject.Airplanes
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
         private int currentWayPont = 0;     // Huidige waypoint
 
-        public Navigator(Airplane airplane, List<Way> ways, List<Gate> gates, List<Runway> runways)
+        public Navigator(Airplane airplane, List<Way> ways)
         {
             Console.WriteLine("Creating new navigator");
             /*
@@ -41,57 +41,72 @@ namespace Introductieproject.Airplanes
                     //Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
                     //Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
                     //Optie 2 leidt vrijwel altijd tot alle nieuwe vliegtuigen naar dezelfde gate -> file.
-                    int t = 0;
-                    foreach (Gate g in gates) if (g.airplane == null) t++;
-                    if (t == 1)
+                    IList<Gate> availableGates = new List<Gate>();
+                    IList<Gate> occupiedGates = new List<Gate>();
+                    IList<Gate> reservedGates = new List<Gate>();
+                    foreach (Way w in ways)
                     {
-                        //1 gate vrij, makkelijkste geval. Deze gate is doel
-                        foreach (Gate g in gates) if (g.airplane == null) endWay = g;
-                    }
-                    else if (t == 0)
-                    {
-                        //geen gates vrij. Ga na welke het dichtste bij is
-                        //Dichtste bij kan hemelsbreed zijn of via banen. Voor het gemak nu hemelsbreed
-                        double d = 100000; //Groot getal eerst
-                        double temp;
-                        foreach (Gate g in gates)
+                        if (w is Gate)
                         {
-                            temp = Utils.getDistanceBetweenPoints(startWay.nodeConnections[1].location, g.nodeConnections[0].location);
-                            if (temp < d)
+                            Gate newGate = (Gate)w;
+                            if (newGate.isReserved)
                             {
-                                d = temp;
+                                reservedGates.Add(newGate);
+                            }
+                            else if (newGate.airplane != null)
+                            {
+                                occupiedGates.Add(newGate);
+                            }
+                            else
+                            {
+                                availableGates.Add(newGate);
                             }
                         }
-                        foreach (Gate g in gates)
+                    }
+                    if (availableGates.Count == 1)
+                    {
+                        //1 gate vrij, makkelijkste geval. Deze gate is doel
+                        endWay = availableGates[0];
+                    }
+                    else if (availableGates.Count == 0)
+                    {
+                        //Geen gates vrij, occupiedGates heeft voorrang, dan reservedGates
+                        if (occupiedGates.Count > 0)
                         {
-                            if (Utils.getDistanceBetweenPoints(startWay.nodeConnections[1].location, g.nodeConnections[0].location) == d) endWay = g;
+                            if (occupiedGates.Count == 1)
+                                endWay = occupiedGates[0];
+                            else
+                            {
+                                IList<Way> occupiedWays = (IList<Way>)occupiedGates;
+                                endWay = Utils.getClosestWay(airplane.location, occupiedWays);
+                            }
+                        }
+                        else if (reservedGates.Count > 0)
+                        {
+                            if (reservedGates.Count == 1)
+                                endWay = reservedGates[0];
+                            else
+                            {
+                                IList<Way> reservedWays = (IList<Way>)reservedGates;
+                                endWay = Utils.getClosestWay(airplane.location, reservedWays);
+                            }
                         }
                     }
-                    else if (t > 1)
+                    else if (availableGates.Count > 1)
                     {
-                        //meerdere mogelijkheden. Dichtstbijzijnde open gate. Lijkt erg op t=0, maar met kleine aanpassingen
-                        double d = 100000;
-                        double temp;
-                        foreach (Gate g in gates)
-                        {
-                            temp = Utils.getDistanceBetweenPoints(startWay.nodeConnections[1].location, g.nodeConnections[0].location);
-                            if (temp < d && g.airplane == null) d = temp; //Alleen lege gates nagaan
-                        }
-                        foreach (Gate g in gates) if (Utils.getDistanceBetweenPoints(airplane.location, g.nodeConnections[0].location) == d
-                            && g.airplane == null) endWay = g; //&& g.airplane == null is voor het geval dat er 2 gates precies even ver zijn, en er maar 1 open is
+                        IList<Way> availableWays = (IList<Way>)availableGates;
+                        endWay = Utils.getClosestWay(airplane.location, availableWays);
                     }
                 }
                 else if (airplane.hasDocked)
                 {
-                    //Check de runways - dichtstbijzijnde Runway, want je kunt er van uit gaan dat als hij nu bezet is, hij dat niet meer zal zijn als je aankomt.
-                    //Dichtstbijzijnde als in degene die de minste reistijd kost.
-                    double d = 100000;
-                    double temp;
-                    foreach (Runway r in runways)
+                    IList<Way> runWays = new List<Way>();
+                    foreach(Way w in ways)
                     {
-                        temp = Utils.getDistanceBetweenPoints(airplane.location, r.nodeConnections[0].location); //Berekent afstand hemelsbreed tussen vliegtuig en begin runway
-                        if (temp < d) d = temp;
+                        if(w is Runway)
+                            runWays.Add(w);
                     }
+                    endWay = Utils.getClosestWay(airplane.location, runWays);
                 }
                 Node startNode = findStartNode(startWay, airplane);
                 Node endNode = endWay.nodeConnections[0]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate

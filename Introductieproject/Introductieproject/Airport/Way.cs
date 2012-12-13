@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Introductieproject.Objects;
 
 namespace Introductieproject.Airport
 {
@@ -15,6 +16,8 @@ namespace Introductieproject.Airport
 
         //Bepalen in welke richting moet rijden
         public int direction;
+
+        public Airplane airplane;
 
         public Way()
         {

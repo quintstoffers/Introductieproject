@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Introductieproject.Objects;
 
 namespace Introductieproject
 {
@@ -22,6 +23,26 @@ namespace Introductieproject
         {
             //berekent afstand tussen twee punten: wortel((x1-x2)^2+(y1-y2)^2)
             return Math.Sqrt((double)((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1])));
+        }
+
+        public static Way getClosestWay(int[] startLocation, IList<Way> ways)
+        {
+            double distance = 1000000;
+            Way closestWay = null;
+            foreach (Way w in ways)
+            {
+                double newDistance = getDistanceBetweenPoints(startLocation,w.nodeConnections[0].location);
+                if (newDistance<distance)
+                {
+                    distance = newDistance;
+                }
+            }
+            foreach (Way w in ways)
+            {
+                if (distance == getDistanceBetweenPoints(startLocation,w.nodeConnections[0].location))
+                    closestWay = w;
+            }
+            return closestWay;
         }
     }
 }

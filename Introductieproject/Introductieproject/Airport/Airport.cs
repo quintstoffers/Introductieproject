@@ -30,7 +30,7 @@ namespace Introductieproject.Airport
                 if (currentAirplane.navigator == null)       // Vliegtuig heeft nog geen navigator gekregen, ofwel net geland, of klaar om te vertrekken
                 {
                     Console.WriteLine("Found airplane without navigator");
-                    Navigator navigator = new Navigator(currentAirplane, ways, gates, runways);
+                    Navigator navigator = new Navigator(currentAirplane, ways);
                     currentAirplane.navigator = navigator;
                 }
             }

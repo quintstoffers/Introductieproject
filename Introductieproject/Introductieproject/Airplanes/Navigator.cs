@@ -108,7 +108,7 @@ namespace Introductieproject.Airplanes
                     endWay = Utils.getClosestWay(airplane.location, runWays);
                 }
                 Node startNode = findStartNode(startWay, airplane);
-                Node endNode = endWay.nodeConnections[0]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
+                Node endNode = endWay.nodeConnections[1]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
                 Route bestRoute = findRoute(startNode, endNode);
                 this.nodepoints = bestRoute.RouteList();
                 Console.WriteLine("Created list of Nodes");

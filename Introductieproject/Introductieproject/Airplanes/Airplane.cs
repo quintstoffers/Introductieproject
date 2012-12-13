@@ -1,5 +1,6 @@
 ﻿using Introductieproject.Airplanes;
 using Introductieproject.Airport;
+using Introductieproject.Simulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,9 @@ namespace Introductieproject.Objects
         public Gate assignedGate;           // Gate waar het vliegtuig heen moet
 
         public int[] location;              // De huidige locatie van het vliegtuig
-        public int[] speed;
+        public double speed;                // Snelheid van het vliegtuig
+        public int angle;                   // hoek van het vliegtuig ten opzichte van noord
+
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
 
         public Navigator navigator;                // Object dat aangeeft waar het vliegtuig heen moet
@@ -45,7 +48,7 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void initVariables(int[] location, int[] speed, Company company, int state, int passengers, int luggage, int luggageKg)
+        public void initVariables(int[] location, double speed, int angle, Company company, int state, int passengers, int luggage, int luggageKg)
         {
             this.location = location;
             this.speed = speed;
@@ -59,7 +62,7 @@ namespace Introductieproject.Objects
         /*
         * Simuleer een stap van grootte realTime milliseconden
         */
-        public void simulate(int elapsedMillis)
+        public void simulate()
         {
             if (navigator == null)
             {
@@ -67,13 +70,52 @@ namespace Introductieproject.Objects
             }
             else
             {
+                //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
+                double maxSpeed = 10;
+                double cornerSpeed = 3;
+                /*
+                 * if(location is binnen 20m? van waypoint && !angle == angleNaarVolgendeWaypoint)
+                 *      roteer in richting van nieuwe angle
+                */
 
+                /*  else if(location == closeToWayPoint)
+                 *      deaccelerate naar bochtsnelheid
+                */
+
+                if(speed < maxSpeed)
+                {
+                    accelerate(maxSpeed);
+                }                
             }
+        }
+
+        private void rotate(int targetAngle)
+        {
+
+        }
+
+        private void accelerate(double targetSpeed)
+        {
+
+        }
+
+        private void deaccelerate(double targetSpeed)
+        {
+
+        }
+
+        private void move()
+        {
+            double movement = TimeKeeper.elapsedSimTime.Seconds * speed;
+
+            int movementX = (int) (Math.Cos(angle) * movement);
+            int movementY = (int) (Math.Sin(angle) * movement);
+            
         }
 
         public override string ToString()
         {
-            return "AIRPLANE: " + typeName + ". x=" + location[0] + ",y=" + location[1] + "...xV" + speed[0] + ",yV";
+            return "AIRPLANE: " + typeName + ". location=(" + location[0] + ", " + location[1] + "), speed=" + speed;
         }
     }
 

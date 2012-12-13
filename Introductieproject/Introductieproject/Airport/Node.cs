@@ -37,7 +37,7 @@ namespace Introductieproject.Airport
 
         public override string ToString()
         {
-            return "NODE: location (" + location[0] + "," + location[1] + ")";
+            return "NODE: location (" + location[0] + "," + location[1] + "), connections=" + this.connections.Count();
         }
     }
 }

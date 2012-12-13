@@ -10,6 +10,7 @@ namespace Introductieproject.Airplanes
     class Navigator
     {
         private Route route;                // Kale route
+        public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
         private int currentWayPont = 0;     // Huidige waypoint
 
@@ -95,14 +96,21 @@ namespace Introductieproject.Airplanes
                 Node startNode = findStartNode(startWay, airplane);
                 Node endNode = endWay.nodeConnections[0]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
                 Route bestRoute = findRoute(startNode, endNode);
+                this.nodepoints = bestRoute.RouteList();
+                Console.WriteLine("Created list of Nodes");
+                foreach (Node node in nodepoints)
+                {
+                    Console.WriteLine(node.ToString());
+                }
                 waypoints = convertNodesToWaypoints(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
 
                 Console.WriteLine("Created new list of waypoints");
-                foreach (Way way in waypoints)
+                /*foreach (Way way in waypoints)
                 {
                     Console.WriteLine(way.ToString());
                 }
                 Console.WriteLine("End of waypoints");
+                */
             }
         }
 

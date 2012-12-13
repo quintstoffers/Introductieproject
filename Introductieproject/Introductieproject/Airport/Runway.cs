@@ -8,11 +8,8 @@ namespace Introductieproject.Airport
 {
     class Runway:Way
     {
-        public Runway(Node node1, Node node2, int dir)
+        public Runway(Node node1, Node node2, int dir) : base(node1, node2, dir)
         {
-            this.nodeConnections.Add(node1);
-            this.nodeConnections.Add(node2);
-            this.direction = dir;
         }
         //public int[] startLocation = new int[2];
         //public int[] endLocation = new int[2];

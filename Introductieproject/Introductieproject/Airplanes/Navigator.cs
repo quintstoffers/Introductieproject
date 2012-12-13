@@ -164,8 +164,11 @@ namespace Introductieproject.Airplanes
                         if (route.local.isDirectionAllowed(connection))
                         {
                             Node connectedNode = route.local.getConnectedNode(connection);
-                            Route newRoute = new Route(connectedNode, route, connection.length);
-                            routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
+                            if (!route.hasNode(connectedNode))
+                            {
+                                Route newRoute = new Route(connectedNode, route, connection.length);
+                                routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
+                            }
                         }
                     }
                 }

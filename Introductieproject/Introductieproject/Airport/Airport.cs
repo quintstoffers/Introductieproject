@@ -23,7 +23,7 @@ namespace Introductieproject.Airport
             Console.WriteLine("Creating airport");
         }
 
-        public void simulate(double elapsedMillis)
+        public void simulate()
         {
             foreach (Airplane currentAirplane in airplanes)
             {

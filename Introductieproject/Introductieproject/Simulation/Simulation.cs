@@ -8,74 +8,66 @@ using System.Diagnostics;
 
 namespace Introductieproject.Simulation
 {
-    class Simulation  
+    static class Simulation  
     {
-        Airport.Airport airport;    // Het vliegveld dat bewerkt wordt door deze simulatie
+        private static Airport.Airport airport;            // Het vliegveld dat bewerkt wordt door deze simulatie
 
-        public static bool runSimulation;    // of de simulatie draait of niet
-        public static bool pauseSimulation;  // of de simulatie gepauzeert is
+        private static bool runSimulation;   // of de simulatie draait of niet
+        private static bool pauseSimulation; // of de simulatie gepauzeert is
 
-        int updateinterval = 1; // update interval van simulatie in sec.
+        public static int updateInterval = 1000;          // update interval van simulatie in milliseconden
 
-        Stopwatch rekentijd = new Stopwatch();
+        private static Thread simulationThread;
 
-        Stopwatch simulatieklok = new Stopwatch();
+        private static Parser parser = new Parser();
 
-        Thread simulationThread;
-
-        int aantalstappen = -60; //snelheid waarmee de simulatie draait, realtime = 1 stap per keer. Dit is anders dan de update snelheid!
-
-        TimeKeeper timekeeper = new TimeKeeper();
-        DateTime huidigetijd;
-        Parser parser = new Parser();
-
-        public Simulation(Airport.Airport airport)
+        public static void initSimulation(Airport.Airport airport)
         {
+            Simulation.airport = airport;
+
             Console.WriteLine("Simulation created");
-            this.airport = airport;
 
-            simulationThread = new Thread(simulation);
-
-            startSimulation();
             Console.ForegroundColor = ConsoleColor.Blue;
             parser.update();
             Console.ForegroundColor = ConsoleColor.White;
         }
 
-        void startSimulation()
+        public static void startSimulation()        // Start de simulatie als deze nog niet gestart is
         {
-            Console.WriteLine("Simulation started");
-
-            simulatieklok.Start();
-            simulationThread.Start();
-
-            huidigetijd = DateTime.Now;
+            if (!runSimulation)
+            {
+                if (simulationThread == null)
+                {
+                    simulationThread = new Thread(simulation);
+                }
+                runSimulation = true;
+                simulationThread.Start();
+            }
+            else
+            {
+                Console.WriteLine("Attempted to start already running simulationThread");
+            }
         }
-
-        void stopsimulatie()
+        
+        public static void stopSimulation()         // Stop de simulatie, no matter what
         {
-            Console.WriteLine("Simulation stopped");
-
-            simulatieklok.Stop();
             runSimulation = false;
         }
 
-        void pauseSimulationToggle()
+        public static void pauseSimulationToggle()  // Pauzeert of hervat de simulatie
         {
             pauseSimulation = !pauseSimulation;
             if (pauseSimulation)
             {
                 Console.WriteLine("Simulation paused");
-                simulatieklok.Stop();
             }
             else
             {
                 Console.WriteLine("Simulation unpaused");
-                simulatieklok.Start();
             }
         }
     
-        void simulation()
+        private static void simulation()
         {
             pauseSimulation = false;
             runSimulation = true;
@@ -87,23 +79,20 @@ namespace Introductieproject.Simulation
                     Thread.Sleep(1000);
                 }
 
-                rekentijd.Restart();
-                huidigetijd = huidigetijd.AddSeconds(aantalstappen);
+                TimeKeeper.updateTime();
 
-                updateSimulation(aantalstappen);
+                updateSimulation();
 
-                Thread.Sleep(updateinterval * 1000);
-            } 
+                Thread.Sleep(updateInterval);
+            }
+
+
+            Console.WriteLine("Simulation stopped");
         }
 
-        void updateSimulation(int aantalstappen)
+        private static void updateSimulation()
         {
-            Console.WriteLine("Simulation clocktick");
-
-
-            double ellapsedSimTime = aantalstappen * updateinterval * 1000; // Verlopen echte tijd omrekenen naar verlopen sim tijd
-
-            airport.simulate(ellapsedSimTime);
+            airport.simulate();
         }
     }
 }

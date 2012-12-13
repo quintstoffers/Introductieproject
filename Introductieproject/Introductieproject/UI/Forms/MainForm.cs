@@ -38,18 +38,18 @@ namespace Introductieproject.Forms
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Simulation.Simulation.pauseSimulation = true;
+            Simulation.Simulation.stopSimulation();
             Application.Exit();
         }
 
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Simulation.Simulation.runSimulation = false;
+            Simulation.Simulation.pauseSimulationToggle();
         }
 
         private void continueToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            Simulation.Simulation.pauseSimulation = false;
+            Simulation.Simulation.pauseSimulationToggle();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

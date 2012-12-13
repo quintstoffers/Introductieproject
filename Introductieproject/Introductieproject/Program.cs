@@ -23,8 +23,12 @@ namespace Introductieproject
             airport.airplanes.Add(createAirplane());
             mainform.Show();
 
-            Simulation.Simulation simulation = new Simulation.Simulation(airport);
-            
+            TimeKeeper.initTime();      // TimeKeeper instellen op huidige tijd
+            TimeKeeper.scale = 1;       // Verhouding tussen real en simtime is 1, dus gelijk.
+
+            Simulation.Simulation.initSimulation(airport);
+            Simulation.Simulation.startSimulation();
+
             Application.Run(mainform);
         }
 
@@ -58,8 +62,6 @@ namespace Introductieproject
             Gateway gateway2 = new Gateway(gateStartNode, txRightNode, Way.DIRECTION_BOTH);         // Van gate naar rechts
 
             Gate mainGate = new Gate(gateStartNode, gateEndNode, Way.DIRECTION_BOTH);               // Daadwerkelijke gate
-
-
 
             airport.nodes.Add(rwLeftNode);
             airport.nodes.Add(rwRightNode);

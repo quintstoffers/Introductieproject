@@ -9,7 +9,6 @@ namespace Introductieproject.Airplanes
 {
     class Navigator
     {
-        private Route route;                // Kale route
         public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
         private int currentWayPont = 0;     // Huidige waypoint

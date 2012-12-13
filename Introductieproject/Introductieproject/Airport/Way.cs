@@ -16,6 +16,7 @@ namespace Introductieproject.Airport
 
         //Bepalen in welke richting moet rijden
         public int direction;
+        public int angle;
 
         public Airplane airplane;
 

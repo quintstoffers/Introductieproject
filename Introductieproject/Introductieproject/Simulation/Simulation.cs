@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using Introductieproject.Objects;
 
 
 namespace Introductieproject.Simulation
@@ -93,6 +94,11 @@ namespace Introductieproject.Simulation
         private static void updateSimulation()
         {
             airport.simulate();
+
+            foreach(Airplane currentAirplane in airport.airplanes)
+            {
+                currentAirplane.simulate();
+            }
         }
     }
 }

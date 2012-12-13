@@ -11,7 +11,7 @@ namespace Introductieproject.Airplanes
     {
         public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
-        private int currentWayPont = 0;     // Huidige waypoint
+        private int currentTargetNode = 0;  
 
         public Navigator(Airplane airplane, List<Way> ways)
         {
@@ -222,21 +222,23 @@ namespace Introductieproject.Airplanes
             return wayList;
         }
 
-
-
-        public Way getCurrentWayPoint()
+        public Node getTargetNode()
         {
-            return waypoints[currentWayPont];
+            return nodepoints[currentTargetNode];
         }
-        public Way getNextWayPoint()
+        public double getDistanceToTargetNode(int[] location)
         {
-            currentWayPont++;
-            return waypoints[currentWayPont];
+            return Utils.getDistanceBetweenPoints(location, nodepoints[currentTargetNode].location);
         }
-        public Way getPreviousWayPoint()
+
+        public void setNextTarget()
         {
-            currentWayPont--;
-            return waypoints[currentWayPont];
+            currentTargetNode++;
+        }
+
+        public int getAngleToTarget(int[] location)
+        {
+            return Utils.getAngleBetweenPoints(location, nodepoints[currentTargetNode].location);
         }
     }
 }

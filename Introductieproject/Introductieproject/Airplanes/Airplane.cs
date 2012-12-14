@@ -37,7 +37,7 @@ namespace Introductieproject.Objects
 
         public Gate assignedGate;           // Gate waar het vliegtuig heen moet
 
-        public int[] location;              // De huidige locatie van het vliegtuig
+        public double[] location;              // De huidige locatie van het vliegtuig
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
 
@@ -48,7 +48,7 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void initVariables(int[] location, double speed, int angle, Company company, int state, int passengers, int luggage, int luggageKg)
+        public void initVariables(double[] location, double speed, int angle, Company company, int state, int passengers, int luggage, int luggageKg)
         {
             this.location = location;
             this.speed = speed;
@@ -118,7 +118,8 @@ namespace Introductieproject.Objects
         private void rotate(double targetAngle)
         {
             Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);
-            int rotation = 2 * TimeKeeper.elapsedSimTime.Seconds;           // Rotatie per seconde in graden
+            Console.WriteLine("Ticks:" + TimeKeeper.elapsedSimTime.Ticks);
+            double rotation = rotationSpeed(angle, targetAngle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
             if(targetAngle < angle)
             {
                 if (angle - targetAngle > 180) //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien
@@ -156,6 +157,15 @@ namespace Introductieproject.Objects
                 Console.WriteLine("Airplane rotate done");
                 angle = targetAngle;
             }
+        }
+
+        private double rotationSpeed(double targetAngle, double angle)
+        {
+            double angleDifference = Math.Abs(angle - targetAngle);
+            if (angleDifference > 180)
+                angleDifference = 360 - angleDifference;
+            double rotation = (180 / angleDifference);
+            return rotation;
         }
 
         private void accelerate(double targetSpeed)

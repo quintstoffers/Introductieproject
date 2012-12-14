@@ -16,7 +16,7 @@ namespace Introductieproject.Simulation
         private static bool runSimulation;   // of de simulatie draait of niet
         private static bool pauseSimulation; // of de simulatie gepauzeert is
 
-        public static int updateInterval = 1000;          // update interval van simulatie in milliseconden
+        public static int updateInterval = 500;          // update interval van simulatie in milliseconden
 
         private static Thread simulationThread;
 

@@ -9,7 +9,7 @@ namespace Introductieproject
 {
     static class Utils
     {
-        public static bool isPointInWay(int[] planeLoc, Way way)
+        public static bool isPointInWay(double[] planeLoc, Way way)
         {
             //Kijk of een vliegtuig zich bevindt tussen twee punten (van een way)
             //http://stackoverflow.com/questions/7050186/find-if-point-lay-on-line-segment
@@ -19,24 +19,24 @@ namespace Introductieproject
                 == (double)((planeLoc[1] - way.nodeConnections[0].location[1]) * (way.nodeConnections[1].location[0] - way.nodeConnections[0].location[0]));
         }
 
-        public static double getDistanceBetweenPoints(int[] point1, int[] point2)
+        public static double getDistanceBetweenPoints(double[] point1, double[] point2)
         {
             //berekent afstand tussen twee punten: wortel((x1-x2)^2+(y1-y2)^2)
             return Math.Sqrt((double)((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1])));
         }
 
-        public static double getAngleBetweenPoints(int[] point1, int[] point2)
+        public static double getAngleBetweenPoints(double[] point1, double[] point2)
         {
 
-            int deltaX = point2[0] - point1[0];
-            int deltaY = point2[1] - point1[1];
+            double deltaX = point2[0] - point1[0];
+            double deltaY = point2[1] - point1[1];
 
             Console.WriteLine("Angle calculation, deltaX: " + deltaX + ", deltaY: " + deltaY);
 
             return Math.Atan2(deltaY, deltaX) * 180 / Math.PI;
         }
 
-        public static Way getClosestWay(int[] startLocation, IList<Way> ways)
+        public static Way getClosestWay(double[] startLocation, IList<Way> ways)
         {
             double distance = 1000000;
             Way closestWay = null;

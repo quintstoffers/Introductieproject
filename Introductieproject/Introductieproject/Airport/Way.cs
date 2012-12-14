@@ -38,9 +38,9 @@ namespace Introductieproject.Airport
         {
             get
             {
-                int deltaX = Math.Max(this.nodeConnections[1].location[0], this.nodeConnections[0].location[0])
+                double deltaX = Math.Max(this.nodeConnections[1].location[0], this.nodeConnections[0].location[0])
                     - Math.Min(this.nodeConnections[1].location[0], this.nodeConnections[0].location[0]);
-                int deltaY = Math.Max(this.nodeConnections[1].location[1], this.nodeConnections[0].location[1]) 
+                double deltaY = Math.Max(this.nodeConnections[1].location[1], this.nodeConnections[0].location[1]) 
                     - Math.Min(this.nodeConnections[1].location[1], this.nodeConnections[0].location[1]);
                 return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
             }

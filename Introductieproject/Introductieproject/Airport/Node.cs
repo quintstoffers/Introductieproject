@@ -7,10 +7,10 @@ namespace Introductieproject.Airport
 {
     class Node
     {
-        public int[] location = new int[2];
+        public double[] location = new double[2];
         public IList<Way> connections = new List<Way>();
 
-        public Node(int x, int y)
+        public Node(double x, double y)
         {
             this.location[0] = x;
             this.location[1] = y;

@@ -37,7 +37,7 @@ namespace Introductieproject
         {
             Airplane newAirPlane = new BO_747();
 
-            newAirPlane.initVariables(new int[]{1000, 0}, 80, 315, new KLM(), 0, 200, 220, 4400);    // Nieuw vliegtuig op einde linker landingsbaan zonder snelheid en richting het noorden gericht
+            newAirPlane.initVariables(new double[]{1000, 0}, 0, 315, new KLM(), 0, 200, 220, 4400);    // Nieuw vliegtuig op einde linker landingsbaan zonder snelheid en richting het noorden gericht
             return newAirPlane;
         }
 

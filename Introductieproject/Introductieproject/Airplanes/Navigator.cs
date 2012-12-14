@@ -179,8 +179,8 @@ namespace Introductieproject.Airplanes
 
         private Node findStartNode(Way w, Airplane a)
         {
-            if (w.direction == 1) return w.nodeConnections[0]; //Als richting 1, dan de Node waar de baan eindigt is beginpunt
-            if (w.direction == -1) return w.nodeConnections[1]; //Andersom voor richting -1
+            if (w.direction == 1) return w.nodeConnections[1]; //Als richting 1, dan de Node waar de baan eindigt is beginpunt
+            if (w.direction == -1) return w.nodeConnections[0]; //Andersom voor richting -1
             if (w.direction == 0)                               //Dichtstbijzijnde op dubbelbaansweg
             {
                 double d = 1000000; double temp;
@@ -224,10 +224,13 @@ namespace Introductieproject.Airplanes
 
         public Node getTargetNode()
         {
+            Console.WriteLine("CURRENTTARGETNODE IS: " + currentTargetNode);
             return nodepoints[currentTargetNode];
         }
-        public double getDistanceToTargetNode(int[] location)
+        public double getDistanceToTargetNode(double[] location)
         {
+            Console.WriteLine("LOCATION IS:" + location[0] +"," + location[1]);
+            Console.WriteLine("CURRENT NODE IS:" + nodepoints[currentTargetNode].location[0] + "," + nodepoints[currentTargetNode].location[1]);
             return Utils.getDistanceBetweenPoints(location, nodepoints[currentTargetNode].location);
         }
 
@@ -236,7 +239,7 @@ namespace Introductieproject.Airplanes
             currentTargetNode++;
         }
 
-        public double getAngleToTarget(int[] location)
+        public double getAngleToTarget(double[] location)
         {
             return Utils.getAngleBetweenPoints(location, nodepoints[currentTargetNode].location) + 180;
         }

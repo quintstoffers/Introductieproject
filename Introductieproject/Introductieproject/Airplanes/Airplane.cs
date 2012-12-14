@@ -115,13 +115,35 @@ namespace Introductieproject.Objects
             int rotation = 5;               // Rotatie per seconde in graden
             if(targetAngle < angle)
             {
+                if (angle - targetAngle > 180) //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien
+                {
+                    Console.WriteLine("Airplane rotate +");
+                    angle += rotation;
+                    if (angle > 360)
+                        angle = angle - 360;    //Als je een heel rondje hebt gedraaid is het tijd om weer bij 0 te beginnen
+                }
+
                 Console.WriteLine("Airplane rotate -");
                 angle -= rotation;
+                if (angle < targetAngle)
+                    angle = targetAngle; //Op het moment dat je je targetAngle voorbij gaat omdat je niet met stappen van 1 gaat, moet je daarvoor compenseren
             }
             else if (targetAngle > angle)
             {
-                Console.WriteLine("Airplane rotate +");
-                angle += rotation;
+                if (targetAngle - angle > 180)  //Als angle = 10 && targetAngle = 350 bijv, wil je - draaien, niet +
+                {
+                    Console.WriteLine("Airplane rotate -");
+                    angle -= rotation;
+                    if (angle < 0)
+                        angle = 360 + angle;    //Als je langs de 0 komt, dan ga je van bovenaf naar beneden
+                }
+                else
+                {
+                    Console.WriteLine("Airplane rotate +");
+                    angle += rotation;
+                    if (angle > targetAngle)
+                        angle = targetAngle;
+                }
             }
             else
             {

@@ -236,9 +236,9 @@ namespace Introductieproject.Airplanes
             currentTargetNode++;
         }
 
-        public int getAngleToTarget(int[] location)
+        public double getAngleToTarget(int[] location)
         {
-            return Utils.getAngleBetweenPoints(location, nodepoints[currentTargetNode].location);
+            return Utils.getAngleBetweenPoints(location, nodepoints[currentTargetNode].location) + 180;
         }
     }
 }

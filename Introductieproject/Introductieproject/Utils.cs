@@ -25,11 +25,15 @@ namespace Introductieproject
             return Math.Sqrt((double)((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1])));
         }
 
-        public static int getAngleBetweenPoints(int[] point1, int[] point2)
+        public static double getAngleBetweenPoints(int[] point1, int[] point2)
         {
-            int deltaX = point2[1] - point1[0];
+
+            int deltaX = point2[0] - point1[0];
             int deltaY = point2[1] - point1[1];
-            return (int)(Math.Atan2(deltaY, deltaX) * 180 / Math.PI);
+
+            Console.WriteLine("Angle calculation, deltaX: " + deltaX + ", deltaY: " + deltaY);
+
+            return Math.Atan2(deltaY, deltaX) * 180 / Math.PI;
         }
 
         public static Way getClosestWay(int[] startLocation, IList<Way> ways)

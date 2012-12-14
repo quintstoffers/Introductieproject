@@ -39,7 +39,7 @@ namespace Introductieproject.Objects
 
         public int[] location;              // De huidige locatie van het vliegtuig
         public double speed;                // Snelheid van het vliegtuig
-        public int angle;                   // hoek van het vliegtuig ten opzichte van noord
+        public double angle;                // hoek van het vliegtuig ten opzichte van noord
 
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
 
@@ -72,9 +72,11 @@ namespace Introductieproject.Objects
             {
                 Node targetNode = navigator.getTargetNode();
                 double distanceToTarget = navigator.getDistanceToTargetNode(location);
+                double targetAngle = navigator.getAngleToTarget(location);
 
-                Console.WriteLine("Airplane target: " + targetNode.ToString());
-                Console.WriteLine("       distance: " + distanceToTarget);
+                Console.WriteLine("Airplane target  : " + targetNode.ToString());
+                Console.WriteLine("  target distance: " + distanceToTarget);
+                Console.WriteLine("     target angle: " + targetAngle);
 
                 //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
                 double maxSpeed = 10;
@@ -91,12 +93,16 @@ namespace Introductieproject.Objects
                  *      deaccelerate naar bochtsnelheid
                 */
 
-                int targetAngle = navigator.getAngleToTarget(location);
+                /*  if(! middenOpBaan)
+                 *      roteer richting midden van baan (prioriteit over rijden naar target!
+                */
+                 
                 if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
                 {
                     rotate(targetAngle);
                 }
-                else if (speed < maxSpeed)
+
+                if (speed < maxSpeed)
                 {
                     accelerate(maxSpeed);
                 }
@@ -109,10 +115,10 @@ namespace Introductieproject.Objects
             }
         }
 
-        private void rotate(int targetAngle)
+        private void rotate(double targetAngle)
         {
             Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);
-            int rotation = 5;               // Rotatie per seconde in graden
+            int rotation = 2 * TimeKeeper.elapsedSimTime.Seconds;           // Rotatie per seconde in graden
             if(targetAngle < angle)
             {
                 if (angle - targetAngle > 180) //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien
@@ -150,8 +156,6 @@ namespace Introductieproject.Objects
                 Console.WriteLine("Airplane rotate done");
                 angle = targetAngle;
             }
-
-            move();
         }
 
         private void accelerate(double targetSpeed)
@@ -168,11 +172,11 @@ namespace Introductieproject.Objects
                 speed = targetSpeed;
             }
 
-            double averageSpeed = (oldSpeed + speed) / 2;
-
             Console.WriteLine("Airplane accelerate to " + speed + " m/s");
 
-            moveBy(acceleration);
+            double averageSpeed = (oldSpeed + speed) / 2;
+            double distanceTraveled = TimeKeeper.elapsedSimTime.Seconds * averageSpeed;
+            moveBy(distanceTraveled);
         }
 
         private void deaccelerate(double targetSpeed)
@@ -189,11 +193,12 @@ namespace Introductieproject.Objects
                 speed = targetSpeed;
             }
 
-            double averageSpeed = (oldSpeed + speed) / 2;
 
             Console.WriteLine("Airplane deaccelerate to " + speed + " m/s");
 
-            moveBy(acceleration);
+            double averageSpeed = (oldSpeed + speed) / 2;
+            double distanceTraveled = TimeKeeper.elapsedSimTime.Seconds * averageSpeed;
+            moveBy(distanceTraveled);
         }
 
         private void move()
@@ -210,11 +215,13 @@ namespace Introductieproject.Objects
 
             location[0] += movementX;
             location[1] += movementY;
+
+            Console.WriteLine("Airplane moved by: " + movement);
         }
 
         public override string ToString()
         {
-            return "AIRPLANE: " + typeName + ". location=(" + location[0] + ", " + location[1] + "), speed=" + speed;
+            return "AIRPLANE: " + typeName + ". location=(" + location[0] + ", " + location[1] + "), speed=" + speed + ", angle=" + angle;
         }
     }
 

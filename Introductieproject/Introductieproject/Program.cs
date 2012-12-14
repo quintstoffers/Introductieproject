@@ -25,7 +25,7 @@ namespace Introductieproject
             mainform.Show();
 
             TimeKeeper.initTime();      // TimeKeeper instellen op huidige tijd
-            TimeKeeper.scale = 1;       // Verhouding tussen real en simtime is 1, dus gelijk.
+            TimeKeeper.scale = 2;       // Verhouding tussen real en simtime is 1, dus gelijk.
 
             Simulation.Simulation.initSimulation(airport);
             Simulation.Simulation.startSimulation();
@@ -37,7 +37,7 @@ namespace Introductieproject
         {
             Airplane newAirPlane = new BO_747();
 
-            newAirPlane.initVariables(new int[]{1000, 0}, 0, 0, new KLM(), 0, 200, 220, 4400);    // Nieuw vliegtuig op einde linker landingsbaan zonder snelheid en richting het noorden gericht
+            newAirPlane.initVariables(new int[]{1000, 0}, 80, 315, new KLM(), 0, 200, 220, 4400);    // Nieuw vliegtuig op einde linker landingsbaan zonder snelheid en richting het noorden gericht
             return newAirPlane;
         }
 

@@ -40,15 +40,16 @@ namespace Introductieproject.Simulation
         XmlNodeList planes = database.GetElementsByTagName("plane");
         int amount = planes.Count;
         for (int i = 0; i < amount; i++)
-        {
-            
+        {   
             int amountvar = planes.Item(i).ChildNodes.Count;
             for (int x = 0; x < amountvar; x++)
             {
                 airplanes.Add(airplane);
                 string variable = (planes.Item(i).ChildNodes.Item(x).Name);
                 string value = (planes.Item(i).ChildNodes.Item(x).InnerText);
-                Console.WriteLine(variable + value);
+              
+
+            
             }
         }
 

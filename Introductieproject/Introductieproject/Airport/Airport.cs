@@ -32,6 +32,7 @@ namespace Introductieproject.Airport
                     Console.WriteLine("Found airplane without navigator");
                     Navigator navigator = new Navigator(currentAirplane, ways);
                     currentAirplane.navigator = navigator;
+                    Console.WriteLine(airplanes.Count);
                 }
             }
         }

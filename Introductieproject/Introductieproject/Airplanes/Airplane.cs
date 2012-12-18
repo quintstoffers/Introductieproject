@@ -8,21 +8,22 @@ using System.Text;
 
 namespace Introductieproject.Objects
 {
-    abstract class Airplane
+    class Airplane
     {
         // "Vaste" variabelen die per type zullen verschillen
         public int type;                   // int gedefinieert in enumeratie
         public String manufacturerName;    // Maker vliegtuig
-        public String typeName;            // Leesbare string voor weergave
+        public String typeName;  // Leesbare string voor weergave
         public DateTime arrivaldate;
         public DateTime depaturedate;
+        public string carrier;
         public string destination;
         public string orgin;
         public int maxSpeed;               // Snelheden in m/s
         public int cruisingSpeed;
         public int takeofSpeed;
         public int taxiSpeed;
-
+        public int id;
         public int maxCapacityKg;
 
         // Vanaf hier èchte variabelen, per vliegtuig verschillend

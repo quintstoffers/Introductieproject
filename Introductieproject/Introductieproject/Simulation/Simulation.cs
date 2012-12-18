@@ -28,8 +28,9 @@ namespace Introductieproject.Simulation
 
             Console.WriteLine("Simulation created");
 
-            Console.ForegroundColor = ConsoleColor.Blue;
-            parser.update();
+            Console.ForegroundColor = ConsoleColor.Blue; //kleur veranderingen heb ik gedaan voor debuggen van parser
+            parser.Airplanelist();
+            parser.Airplanelist();
             Console.ForegroundColor = ConsoleColor.White;
         }
 

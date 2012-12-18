@@ -5,22 +5,31 @@ using System.Text;
 using System.Xml;
 using Introductieproject.Objects;
 using System.Reflection;
+using System.IO;
 
 namespace Introductieproject.Simulation
 {
     class Parser
     {
         XmlDocument database = new XmlDocument();
-        BO_747 B747 = new BO_747();
         List<Airplane> airplanes = new List<Airplane>();
-        
+        XmlNodeList planes;
+        bool firstupdate = true;
         public Parser()
         {
-          
-            database.Load(@"Simulation\vliegtuigen.xml");
-
+            try
+            {
+                database.Load(@"Simulation\Airplanes.xml");
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("XML not found");
+            }
+            planes = database.GetElementsByTagName("plane");
         }
 
+          
+        
         public string getallplanes()
         {
             string planes = null;
@@ -39,33 +48,60 @@ namespace Introductieproject.Simulation
             return planes;
         }
 
-        public void update()
+        public void updateAirplanelist()
     {
-        XmlNodeList planes = database.GetElementsByTagName("plane");
-        switch (planes.Item(0).SelectSingleNode("type").InnerText)
+        if (firstupdate == false)
         {
-            case "747": Console.WriteLine(747);
-                fill747();
-                break;
-            default: Console.WriteLine("unknown planetype");
-                break;
-
-            
+            saveairplane();
 
         }
-    }
-        private void fill747()
-        {
-             XmlNodeList planes = database.GetElementsByTagName("plane");
-             Type type = typeof(BO_747);
-             FieldInfo variable = type.GetField("taxiSpeed");
-             variable.SetValue(B747, 3);
-             Console.WriteLine(variable.GetValue(B747).ToString());
-             foreach (XmlNode plane in planes)
+            airplanes.Clear();
+             foreach (XmlElement plane in planes)
              {
-
+                 Console.WriteLine(planes.Count + " Airplanes in xml");
+                 try
+                 {
+                     Airplane airplane = new Airplane();
+                     airplane.arrivaldate = DateTime.Parse(plane.SelectSingleNode("arrivaldate").InnerText);
+                     airplane.carrier = plane.SelectSingleNode("carrier").InnerText;
+                     airplane.orgin = plane.SelectSingleNode("origin").InnerText;
+                     airplane.depaturedate = DateTime.Parse(plane.SelectSingleNode("depaturedate").InnerText);
+                     airplane.destination = plane.SelectSingleNode("destination").InnerText;
+                     airplane.type = int.Parse(plane.SelectSingleNode("type").InnerText);
+                     airplane.id = int.Parse(plane.SelectSingleNode("ID").InnerText);
+                     Console.WriteLine("new Airplane loaded:" + Environment.NewLine + "arrival date:" + airplane.arrivaldate + Environment.NewLine + "carrier:" + airplane.carrier + Environment.NewLine + "origin:" + airplane.orgin
+                         + Environment.NewLine + "departure date:" + airplane.depaturedate + Environment.NewLine + "destination:" + airplane.destination + Environment.NewLine + "type:" + airplane.type + Environment.NewLine + "ID:" + airplane.id);
+                     airplanes.Add(airplane);
+                 }
+                 catch (NullReferenceException)
+                 {
+                     Console.WriteLine("error loading Airplanes, please check Airplanes.XML");
+                 }
+                 catch (FormatException)
+                 {
+                     Console.WriteLine("error loading Airplanes, please check Airplanes.XML");
+                 }
+             }
+             Console.WriteLine(airplanes.Count + " Airplanes loaded");
+             firstupdate = false;
+        }
+        public void saveairplane() {
+            int i = 0;
+            foreach(Airplane airplane in airplanes)
+            {
+                if (airplane.arrivaldate.CompareTo(DateTime.Parse(planes.Item(i).SelectSingleNode("arrivaldate").InnerText)) != 0)
+                {
+                    Console.Write("airplane" + i.ToString() + "arrivaldate changed");
+                    planes.Item(i).SelectSingleNode("arrivaldate").InnerText = airplane.arrivaldate.ToString();
+                }
+                
+                i++;
+            }
+            database.Save(@"Simulation\Airplanes.xml");
+        }
+                 
+             
              }
         }
 
-    }
-}
+    

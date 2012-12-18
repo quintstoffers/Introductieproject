@@ -11,7 +11,8 @@ namespace Introductieproject.Airplanes
     {
         public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
-        private int currentTargetNode = 0;  
+        private int currentTargetNode = 0;
+        private bool hasEnded = false;
 
         public Navigator(Airplane airplane, List<Way> ways)
         {
@@ -224,8 +225,11 @@ namespace Introductieproject.Airplanes
 
         public Node getTargetNode()
         {
-            Console.WriteLine("CURRENTTARGETNODE IS: " + currentTargetNode);
-            return nodepoints[currentTargetNode];
+            //Console.WriteLine("CURRENTTARGETNODE IS: " + currentTargetNode);
+            if (!hasEnded)
+                return nodepoints[currentTargetNode];
+            else
+                return null;
         }
         public double getDistanceToTargetNode(double[] location)
         {
@@ -233,15 +237,19 @@ namespace Introductieproject.Airplanes
             Console.WriteLine("CURRENT NODE IS:" + nodepoints[currentTargetNode].location[0] + "," + nodepoints[currentTargetNode].location[1]);
             return Utils.getDistanceBetweenPoints(location, nodepoints[currentTargetNode].location);
         }
-
         public void setNextTarget()
         {
-            currentTargetNode++;
+            if (nodepoints.Count != currentTargetNode + 1)
+                currentTargetNode++;
+            else
+            {
+                hasEnded = true;
+            }
         }
 
         public double getAngleToTarget(double[] location)
         {
-            return Utils.getAngleBetweenPoints(location, nodepoints[currentTargetNode].location) + 180;
+            return Utils.getAngleBetweenPoints(location, nodepoints[currentTargetNode].location);
         }
     }
 }

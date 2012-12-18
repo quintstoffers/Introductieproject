@@ -72,47 +72,77 @@ namespace Introductieproject.Objects
             else
             {
                 Node targetNode = navigator.getTargetNode();
-                double distanceToTarget = navigator.getDistanceToTargetNode(location);
-                double targetAngle = navigator.getAngleToTarget(location);
-
-                Console.WriteLine("Airplane target  : " + targetNode.ToString());
-                Console.WriteLine("  target distance: " + distanceToTarget);
-                Console.WriteLine("     target angle: " + targetAngle);
-
-                //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
-                double maxSpeed = 10;
-                double cornerSpeed = 3;
-
-                if(Utils.getDistanceBetweenPoints(location, targetNode.location) < 50) // In de toekomst is het netter als als navigator dit doet!
+                if (targetNode == null)
                 {
-                    navigator.setNextTarget();
-                    targetNode = navigator.getTargetNode();
-                    distanceToTarget = navigator.getDistanceToTargetNode(location);
-                }
-
-                /*  else if(location == closeToWayPoint)
-                 *      deaccelerate naar bochtsnelheid
-                */
-
-                /*  if(! middenOpBaan)
-                 *      roteer richting midden van baan (prioriteit over rijden naar target!
-                */
-                 
-                if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
-                {
-                    rotate(targetAngle);
-                }
-
-                if (speed < maxSpeed)
-                {
-                    accelerate(maxSpeed);
+                    //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
+                    hasDocked = true;
+                    navigator = null;
                 }
                 else
                 {
-                    move();
-                }
+                    double distanceToTarget = navigator.getDistanceToTargetNode(location);
+                    double targetAngle = navigator.getAngleToTarget(location);
 
-                Console.WriteLine(this.ToString());
+                    Console.WriteLine("Airplane target  : " + targetNode.ToString());
+                    Console.WriteLine("  target distance: " + distanceToTarget);
+                    Console.WriteLine("     target angle: " + targetAngle);
+
+                    //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
+                    double maxSpeed = 10;
+                    double cornerSpeed = 1;
+
+                    if (distanceToTarget < 0.5)
+                    {
+                        navigator.setNextTarget();
+                        targetNode = navigator.getTargetNode();
+                        if (targetNode == null)
+                        {
+                            //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
+                            hasDocked = true;
+                            navigator = null;
+                        }
+                        if (navigator != null)
+                            distanceToTarget = navigator.getDistanceToTargetNode(location);
+                    }
+                    if (navigator != null)
+                    {
+                        if (distanceToTarget < speed)
+                        {
+                            moveBy(distanceToTarget);
+                            speed = 0;
+                        }
+
+                        /*  else if(location == closeToWayPoint)
+                         *      deaccelerate naar bochtsnelheid
+                        */
+
+                        /*  if(! middenOpBaan)
+                         *      roteer richting midden van baan (prioriteit over rijden naar target!
+                        */
+
+                        if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
+                        {
+                            rotate(targetAngle);
+                        }
+
+                        if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
+                        {
+                            accelerate(maxSpeed);
+                        }
+
+                        else if (speed > cornerSpeed && distanceToTarget <= 50 && angle == targetAngle)
+                        {
+                            accelerate(cornerSpeed);
+                        }
+                        //alleen move als hij niet heeft versneld of afgeremd
+                        else if (angle == targetAngle)
+                        {
+                            move();
+                        }
+
+                        Console.WriteLine(this.ToString());
+                    }
+                }
             }
         }
 
@@ -120,21 +150,27 @@ namespace Introductieproject.Objects
         {
             Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);
             Console.WriteLine("Ticks:" + TimeKeeper.elapsedSimTime.Ticks);
+            //double rotation = 1;
             double rotation = rotationSpeed(angle, targetAngle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
-            if(targetAngle < angle)
+            if (targetAngle < angle)
             {
                 if (angle - targetAngle > 180) //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien
                 {
                     Console.WriteLine("Airplane rotate +");
                     angle += rotation;
-                    if (angle > 360)
-                        angle = angle - 360;    //Als je een heel rondje hebt gedraaid is het tijd om weer bij 0 te beginnen
                 }
-
-                Console.WriteLine("Airplane rotate -");
-                angle -= rotation;
-                if (angle < targetAngle)
-                    angle = targetAngle; //Op het moment dat je je targetAngle voorbij gaat omdat je niet met stappen van 1 gaat, moet je daarvoor compenseren
+                else if (angle - targetAngle <= 180)
+                {
+                    Console.WriteLine("Airplane rotate -");
+                    if (angle - targetAngle < rotation)
+                    {
+                        angle -= angle - targetAngle;
+                    }
+                    else
+                    {
+                        angle -= rotation;
+                    }
+                }
             }
             else if (targetAngle > angle)
             {
@@ -142,15 +178,18 @@ namespace Introductieproject.Objects
                 {
                     Console.WriteLine("Airplane rotate -");
                     angle -= rotation;
-                    if (angle < 0)
-                        angle = 360 + angle;    //Als je langs de 0 komt, dan ga je van bovenaf naar beneden
                 }
-                else
+                else if (targetAngle - angle <= 180)
                 {
                     Console.WriteLine("Airplane rotate +");
-                    angle += rotation;
-                    if (angle > targetAngle)
-                        angle = targetAngle;
+                    if (targetAngle - angle < rotation)
+                    {
+                        angle += targetAngle - angle;
+                    }
+                    else
+                    {
+                        angle += rotation;
+                    }
                 }
             }
             else
@@ -158,6 +197,10 @@ namespace Introductieproject.Objects
                 Console.WriteLine("Airplane rotate done");
                 angle = targetAngle;
             }
+            if (angle < 0)
+                angle = 360 + angle;    //Als je langs de 0 komt, dan ga je van bovenaf naar beneden
+            if (angle > 360)
+                angle = angle - 360;
         }
 
         private double rotationSpeed(double targetAngle, double angle)
@@ -165,47 +208,33 @@ namespace Introductieproject.Objects
             double angleDifference = Math.Abs(angle - targetAngle);
             if (angleDifference > 180)
                 angleDifference = 360 - angleDifference;
-            double rotation = (180 / angleDifference);
-            return rotation;
+            if (angleDifference > 10) return 1;
+            else return angleDifference / 10;
         }
 
         private void accelerate(double targetSpeed)
         {
             double acceleration = 1;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
+            if (targetSpeed < speed) 
+                acceleration = -1; // in het geval dat je moet afremmen
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
 
             double oldSpeed = speed;
 
             speed += acceleration;
 
-            if (speed > targetSpeed)
+            if (speed > targetSpeed && oldSpeed < targetSpeed)
             {
+                //Als je overversneld hebt
+                speed = targetSpeed;
+            }
+            else if (speed < targetSpeed && oldSpeed > targetSpeed)
+            {
+                //Als je te veel hebt afgeremd
                 speed = targetSpeed;
             }
 
             Console.WriteLine("Airplane accelerate to " + speed + " m/s");
-
-            double averageSpeed = (oldSpeed + speed) / 2;
-            double distanceTraveled = TimeKeeper.elapsedSimTime.Seconds * averageSpeed;
-            moveBy(distanceTraveled);
-        }
-
-        private void deaccelerate(double targetSpeed)
-        {
-            double acceleration = -1;       // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
-            double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
-
-            double oldSpeed = speed;
-
-            speed += acceleration;
-
-            if (speed < targetSpeed)
-            {
-                speed = targetSpeed;
-            }
-
-
-            Console.WriteLine("Airplane deaccelerate to " + speed + " m/s");
 
             double averageSpeed = (oldSpeed + speed) / 2;
             double distanceTraveled = TimeKeeper.elapsedSimTime.Seconds * averageSpeed;
@@ -221,8 +250,8 @@ namespace Introductieproject.Objects
 
         private void moveBy(double movement)
         {
-            int movementX = (int) (Math.Cos(angle) * movement);
-            int movementY = (int) (Math.Sin(angle) * movement);
+            double movementX = Math.Cos(angle * (Math.PI / 180)) * movement;
+            double movementY = Math.Sin(angle * (Math.PI / 180)) * movement;
 
             location[0] += movementX;
             location[1] += movementY;

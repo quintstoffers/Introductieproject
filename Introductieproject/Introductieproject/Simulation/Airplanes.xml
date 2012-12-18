@@ -2,12 +2,12 @@
 <data>
   <planes>
     <plane id="1" >
-      <ID> 742334</ID>
-      <carrier> borat air</carrier>
+      <ID>742334</ID>
+      <carrier>British Airways</carrier>
       <arrivaldate>12/12/12 14:50:00</arrivaldate>
-      <origin> kazachstan</origin>
-      <depaturedate>12-12-12 14:30</depaturedate>
-      <destination>mars</destination>
+      <origin>London</origin>
+      <depaturedate>12/12/12 17:30:00</depaturedate>
+      <destination>Amsterdam</destination>
       <type>747</type>
     </plane>
   </planes>

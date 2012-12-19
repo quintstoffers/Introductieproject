@@ -22,9 +22,7 @@ namespace Introductieproject
         public static double getDistanceBetweenPoints(double[] point1, double[] point2)
         {
             //berekent afstand tussen twee punten: wortel((x1-x2)^2+(y1-y2)^2)
-            double answer = Math.Sqrt((double)((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1])));
-            Console.WriteLine("DISTANCE= " + answer);
-            return answer;
+            return Math.Sqrt((double)((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1])));
         }
 
         public static double getAngleBetweenPoints(double[] point1, double[] point2)
@@ -38,7 +36,6 @@ namespace Introductieproject
                 answer = answer + 360;
             if (answer > 360)
                 answer = answer - 360;
-            Console.WriteLine("Angle calculation, deltaX: " + deltaX + ", deltaY: " + deltaY + ", Answer: " + answer);
             return answer;
         }
 

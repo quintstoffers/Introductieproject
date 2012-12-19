@@ -141,6 +141,7 @@ namespace Introductieproject.Objects
                         }
 
                         Console.WriteLine(this.ToString());
+                        Console.WriteLine("");
                     }
                 }
             }
@@ -148,20 +149,16 @@ namespace Introductieproject.Objects
 
         private void rotate(double targetAngle)
         {
-            Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);
-            Console.WriteLine("Ticks:" + TimeKeeper.elapsedSimTime.Ticks);
-            //double rotation = 1;
+            //Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);
             double rotation = rotationSpeed(angle, targetAngle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
             if (targetAngle < angle)
             {
                 if (angle - targetAngle > 180) //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien
                 {
-                    Console.WriteLine("Airplane rotate +");
                     angle += rotation;
                 }
                 else if (angle - targetAngle <= 180)
                 {
-                    Console.WriteLine("Airplane rotate -");
                     if (angle - targetAngle < rotation)
                     {
                         angle -= angle - targetAngle;
@@ -176,12 +173,10 @@ namespace Introductieproject.Objects
             {
                 if (targetAngle - angle > 180)  //Als angle = 10 && targetAngle = 350 bijv, wil je - draaien, niet +
                 {
-                    Console.WriteLine("Airplane rotate -");
                     angle -= rotation;
                 }
                 else if (targetAngle - angle <= 180)
                 {
-                    Console.WriteLine("Airplane rotate +");
                     if (targetAngle - angle < rotation)
                     {
                         angle += targetAngle - angle;
@@ -194,7 +189,6 @@ namespace Introductieproject.Objects
             }
             else
             {
-                Console.WriteLine("Airplane rotate done");
                 angle = targetAngle;
             }
             if (angle < 0)

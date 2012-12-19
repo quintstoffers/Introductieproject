@@ -233,8 +233,6 @@ namespace Introductieproject.Airplanes
         }
         public double getDistanceToTargetNode(double[] location)
         {
-            Console.WriteLine("LOCATION IS:" + location[0] +"," + location[1]);
-            Console.WriteLine("CURRENT NODE IS:" + nodepoints[currentTargetNode].location[0] + "," + nodepoints[currentTargetNode].location[1]);
             return Utils.getDistanceBetweenPoints(location, nodepoints[currentTargetNode].location);
         }
         public void setNextTarget()

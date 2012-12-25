@@ -11,6 +11,7 @@ namespace Introductieproject.Airplanes
     {
         public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
+        public IList<Way> wayList = new List<Way>();
         private int currentTargetNode = 0;
         private bool hasEnded = false;
 
@@ -198,7 +199,6 @@ namespace Introductieproject.Airplanes
         private IList<Way> convertNodesToWaypoints(IList<Node> nodeList)
         {
             //Deze methode neemt een lijst met nodes en construeert daaruit een lijst met de ways die deze nodes verbinden
-            IList<Way> wayList = new List<Way>();
             for (int t = 0; t < nodeList.Count - 1; t++)
             {
                 foreach (Way w in nodeList[t].connections)
@@ -238,10 +238,40 @@ namespace Introductieproject.Airplanes
         public void setNextTarget()
         {
             if (nodepoints.Count != currentTargetNode + 1)
+            {
+                if (currentTargetNode != 0)
+                {
+                    wayList[currentTargetNode - 1].hasAirplane = false;
+                }
+                wayList[currentTargetNode].hasAirplane = true;
                 currentTargetNode++;
+            }
             else
             {
                 hasEnded = true;
+            }
+        }
+
+        public bool hasPermission()
+        {
+            int trackWay = 0;
+            if (trackWay == wayList.Count)
+            {
+                return true;
+            }
+            else
+            {
+                if (wayList[trackWay + 1].hasAirplane == true)
+                {
+                    Console.WriteLine("ER IS AL VLIEGTUIG!");
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine("ER IS GEEN VLIEGTUIG!");
+                    trackWay++;
+                    return true;
+                }
             }
         }
 

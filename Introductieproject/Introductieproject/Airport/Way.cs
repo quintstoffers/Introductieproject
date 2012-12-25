@@ -18,11 +18,12 @@ namespace Introductieproject.Airport
         public int direction;
         public int angle;
 
-        public Airplane airplane;
+        public bool hasAirplane = false;
 
+        public Airplane airplane;
+        
         public Way()
         {
-
         }
 
         public Way(Node node1, Node node2, int dir)

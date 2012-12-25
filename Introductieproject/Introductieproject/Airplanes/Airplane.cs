@@ -46,6 +46,7 @@ namespace Introductieproject.Objects
 
         public Navigator navigator;                // Object dat aangeeft waar het vliegtuig heen moet
 
+        public double distanceToTarget;
         /*
          * Initialiseer variabelen
          */
@@ -80,7 +81,7 @@ namespace Introductieproject.Objects
                 }
                 else
                 {
-                    double distanceToTarget = navigator.getDistanceToTargetNode(location);
+                    distanceToTarget = navigator.getDistanceToTargetNode(location);
                     double targetAngle = navigator.getAngleToTarget(location);
 
                     Console.WriteLine("Airplane target  : " + targetNode.ToString());
@@ -93,16 +94,23 @@ namespace Introductieproject.Objects
 
                     if (distanceToTarget < 0.5)
                     {
-                        navigator.setNextTarget();
-                        targetNode = navigator.getTargetNode();
-                        if (targetNode == null)
+                        while (true)
                         {
-                            //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
-                            hasDocked = true;
-                            navigator = null;
+                            if (navigator.hasPermission() == true)
+                            {
+                                navigator.setNextTarget();
+                                targetNode = navigator.getTargetNode();
+                                if (targetNode == null)
+                                {
+                                    //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
+                                    hasDocked = true;
+                                    navigator = null;
+                                }
+                                if (navigator != null)
+                                    distanceToTarget = navigator.getDistanceToTargetNode(location);
+                                break;
+                            }
                         }
-                        if (navigator != null)
-                            distanceToTarget = navigator.getDistanceToTargetNode(location);
                     }
                     if (navigator != null)
                     {
@@ -150,7 +158,7 @@ namespace Introductieproject.Objects
         private void rotate(double targetAngle)
         {
             //Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);
-            double rotation = rotationSpeed(angle, targetAngle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
+            double rotation = rotationSpeed(targetAngle, angle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
             if (targetAngle < angle)
             {
                 if (angle - targetAngle > 180) //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien

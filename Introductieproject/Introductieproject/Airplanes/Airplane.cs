@@ -265,6 +265,7 @@ namespace Introductieproject.Objects
         {
             return "AIRPLANE: " + typeName + ". location=(" + location[0] + ", " + location[1] + "), speed=" + speed + ", angle=" + angle;
         }
+
     }
 
 }

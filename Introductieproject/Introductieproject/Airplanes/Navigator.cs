@@ -245,6 +245,7 @@ namespace Introductieproject.Airplanes
                 }
                 wayList[currentTargetNode].hasAirplane = true;
                 currentTargetNode++;
+                Console.WriteLine("TARGETNODE" + currentTargetNode);
             }
             else
             {
@@ -252,24 +253,31 @@ namespace Introductieproject.Airplanes
             }
         }
 
+        int trackWay = 0;
+
         public bool hasPermission()
         {
-            int trackWay = 0;
             if (trackWay == wayList.Count)
             {
+                trackWay = 0;
                 return true;
             }
             else
             {
-                if (wayList[trackWay + 1].hasAirplane == true)
+                Console.WriteLine("WAYLIST 0:" + wayList[0].hasAirplane);
+                Console.WriteLine("WAYLIST 1:" + wayList[1].hasAirplane);
+                Console.WriteLine("WAYLIST 2:" + wayList[2].hasAirplane);
+                Console.WriteLine("WAYLIST 3:" + wayList[3].hasAirplane);
+                if (wayList[trackWay].hasAirplane == true)
                 {
-                    Console.WriteLine("ER IS AL VLIEGTUIG!");
                     return false;
                 }
                 else
                 {
                     Console.WriteLine("ER IS GEEN VLIEGTUIG!");
                     trackWay++;
+
+                    Console.WriteLine("TRACKWAY" + trackWay);
                     return true;
                 }
             }

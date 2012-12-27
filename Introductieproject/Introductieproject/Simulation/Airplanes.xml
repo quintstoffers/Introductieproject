@@ -4,9 +4,9 @@
     <plane id="1" >
       <ID>742334</ID>
       <carrier>British Airways</carrier>
-      <arrivaldate>12/12/12 14:50:00</arrivaldate>
+      <arrivaldate>27/12/12 21:00:00</arrivaldate>
       <origin>London</origin>
-      <depaturedate>12/12/12 17:30:00</depaturedate>
+      <depaturedate>28/12/12 17:30:00</depaturedate>
       <destination>Amsterdam</destination>
       <type>747</type>
     </plane>

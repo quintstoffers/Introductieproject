@@ -61,6 +61,40 @@ namespace Introductieproject.Objects
             this.luggageKg = luggageKg;
         }
 
+        public void Dock()
+        {
+            //TODO: Vliegtuig krijgt geen arrivaldate mee.
+            //For testing purpose: zelf instellen
+
+            arrivaldate = new DateTime(2012, 12, 27, 21, 00, 00);
+
+            //Check wanneer vliegtuig is aangekomen.
+            DateTime simArrivalDate = TimeKeeper.currentSimTime;
+            Console.WriteLine("SIMARRIVALTIME: " + simArrivalDate);
+            Console.WriteLine("ARRIVALDATE: " + arrivaldate);
+
+            //Bereken verschil in verwachte vertrektijd en verwachte aankomst tijd.
+            TimeSpan difference;
+            difference = arrivaldate.Subtract(simArrivalDate);
+            Console.WriteLine("DIFFERENCE: " + difference);
+
+            //Tel absoluut verschil op bij de echte simulatietijd.
+            //Nieuwe vertrektijd is difference + oude vertrektijd.
+            
+           //Zolang de benodigde tijd voor het vliegtuig nog niet is verstreken, blijft deze in een loop.
+            while (hasDocked == true)
+            {
+
+                //Check wanneer vliegtuig weer weg gaat.
+                if (depaturedate == simArrivalDate.Add(difference))
+                {
+                    hasDocked = false;  //geef nieuwe navigator
+                }
+            }
+
+            navigator = null;
+        }
+
         /*
         * Simuleer een stap van grootte realTime milliseconden
         */
@@ -77,6 +111,7 @@ namespace Introductieproject.Objects
                 {
                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                     hasDocked = true;
+                    this.Dock();
                     navigator = null;
                 }
                 else
@@ -89,7 +124,7 @@ namespace Introductieproject.Objects
                     Console.WriteLine("     target angle: " + targetAngle);
 
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
-                    double maxSpeed = 10;
+                    double maxSpeed = 30;
                     double cornerSpeed = 1;
 
                     if (distanceToTarget < 0.5)
@@ -104,7 +139,7 @@ namespace Introductieproject.Objects
                                 {
                                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                                     hasDocked = true;
-                                    navigator = null;
+
                                 }
                                 if (navigator != null)
                                     distanceToTarget = navigator.getDistanceToTargetNode(location);
@@ -217,7 +252,7 @@ namespace Introductieproject.Objects
         private void accelerate(double targetSpeed)
         {
             double acceleration = 1;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
-            if (targetSpeed < speed) 
+            if (targetSpeed < speed)
                 acceleration = -1; // in het geval dat je moet afremmen
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
 

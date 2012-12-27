@@ -25,25 +25,25 @@ namespace Introductieproject.Airport
 
         public void simulate()
         {
-           checkWays();
-//
-           //For testing purposes: Als het eerste vliegtuig van de runway is, spawn een tweede vliegtuig
-           //Momenteel buggy: Utils.isPointInWay is erg precies. Letterlijk foutmarge van 0 mogelijk momenteel
-           if (airplanes.Count == 1)
-           {
-               int clearRoads = 0;
-               foreach (Way w in this.runways)
-               {
-                   if (!w.hasAirplane)
-                       clearRoads++;
-               }
-               Console.WriteLine("Clear roads: " + clearRoads);
-               if (clearRoads == runways.Count)
-               {
-                   airplanes.Add(createAirplane());
-                   Console.WriteLine("Airplane created!");
-               }
-           }
+            checkWays();
+            //
+            //For testing purposes: Als het eerste vliegtuig van de runway is, spawn een tweede vliegtuig
+            //Momenteel buggy: Utils.isPointInWay is erg precies. Letterlijk foutmarge van 0 mogelijk momenteel
+            if (airplanes.Count == 0)
+            {
+                int clearRoads = 0;
+                foreach (Way w in this.runways)
+                {
+                    if (!w.hasAirplane)
+                        clearRoads++;
+                }
+                Console.WriteLine("Clear roads: " + clearRoads);
+                if (clearRoads == runways.Count)
+                {
+                    airplanes.Add(createAirplane());
+                    Console.WriteLine("Airplane created!");
+                }
+            }
 
             foreach (Airplane currentAirplane in airplanes)
             {

@@ -270,6 +270,14 @@ namespace Introductieproject.Airplanes
                 Console.WriteLine("WAYLIST 3:" + wayList[3].hasAirplane);
                 if (wayList[trackWay].hasAirplane == true)
                 {
+                    if (wayList[trackWay].direction == 0)
+                    {
+                        //Dit moet veranderd worden in een list denk ik, aangezien een way meerdere airplanes kan hebben, zeker een way in beide directions
+                        if (nodepoints[wayList[trackWay].airplane.navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplane.navigator.currentTargetNode])
+                        {
+                            return true;
+                        }
+                    }
                     return false;
                 }
                 else

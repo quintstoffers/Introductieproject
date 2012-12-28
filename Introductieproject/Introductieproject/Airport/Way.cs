@@ -61,5 +61,29 @@ namespace Introductieproject.Airport
             }
             return returnStr;
         }
+
+        public void removeNavigator(Navigator navigator)
+        {
+            //Verwijdert een specifieke navigator uit de lijst en update de hasAirplane
+            for (int t = 0; t < this.navigatorList.Count; t++)
+            {
+                if (this.navigatorList[t] == navigator)
+                {
+                    navigatorList.RemoveAt(t);
+                    break;
+                }
+            }
+            if (navigatorList.Count > 0)
+                hasAirplane = true;
+            else hasAirplane = false;
+        }
+
+        public void addNavigator(Navigator navigator)
+        {
+            this.navigatorList.Add(navigator);
+            if (navigatorList.Count > 0)
+                hasAirplane = true;
+            else hasAirplane = false;
+        }
     }
 }

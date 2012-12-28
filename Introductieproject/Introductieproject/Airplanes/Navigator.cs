@@ -246,10 +246,11 @@ namespace Introductieproject.Airplanes
                 if (currentTargetNode != 0)
                 {
                     if (wayList[currentTargetNode - 1].navigatorList.Count == 1)
-                        wayList[currentTargetNode - 1].hasAirplane = false;
-                    wayList[currentTargetNode - 1].navigatorList.RemoveAt(0);
+                    {
+                        wayList[currentTargetNode - 1].removeNavigator(this);
+                    }
                 }
-                wayList[currentTargetNode].hasAirplane = true;
+                wayList[currentTargetNode].addNavigator(this);
                 currentTargetNode++;
                 Console.WriteLine("TARGETNODE" + currentTargetNode);
             }

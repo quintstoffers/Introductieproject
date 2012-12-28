@@ -25,7 +25,6 @@ namespace Introductieproject.Airport
 
         public void simulate()
         {
-            checkWays();
             //
             //For testing purposes: Als het eerste vliegtuig van de runway is, spawn een tweede vliegtuig
             //Momenteel buggy: Utils.isPointInWay is erg precies. Letterlijk foutmarge van 0 mogelijk momenteel
@@ -67,28 +66,6 @@ namespace Introductieproject.Airport
             Airplane newAirPlane = new Airplane();
             newAirPlane.initVariables(new double[] { 500, 500 }, 0, 315, new KLM(), 0, 200, 220, 4400);    // Nieuw vliegtuig op einde linker landingsbaan zonder snelheid en richting het noorden gericht
             return newAirPlane;
-        }
-
-        public void checkWays()
-        {
-            //Methode om te kijken of een way bezet is of niet
-            //Eerste methode, inefficient maar makkelijk en snel geschreven
-            foreach (Way w in this.ways)
-            {
-                w.airplane = null;
-                w.hasAirplane = false;
-            }
-            foreach (Airplane a in this.airplanes)
-            {
-                foreach (Way w in this.ways)
-                {
-                    if (Utils.isPointInWay(a.location, w))
-                    {
-                        w.navigatorList.Add(a.navigator);
-                        w.hasAirplane = true;
-                    }
-                }
-            }
         }
 
         public bool isBetweenNodes(Way way, Node node1, Node node2)

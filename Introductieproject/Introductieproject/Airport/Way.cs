@@ -20,6 +20,8 @@ namespace Introductieproject.Airport
 
         public bool hasAirplane = false;
 
+        public List<Airplane> airplanesList = new List<Airplane>();
+
         public Airplane airplane;
         
         public Way()

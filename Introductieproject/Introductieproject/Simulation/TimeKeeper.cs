@@ -46,6 +46,7 @@ namespace Introductieproject.Simulation
             currentRealTime = updatedRealTime;                                  // currentRealTime updaten met de nieuwe tijd
 
             Console.WriteLine("Time updated. elapsedRT: " + elapsedRealTime + ", elapsedST: " + elapsedSimTime);
+            Console.WriteLine("currentSimTime: " + currentSimTime + ", currentRealTime: " + currentRealTime);
         }
     }
 }

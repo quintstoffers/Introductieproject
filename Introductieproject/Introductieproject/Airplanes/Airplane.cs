@@ -117,6 +117,7 @@ namespace Introductieproject.Objects
                 else
                 {
                     distanceToTarget = navigator.getDistanceToTargetNode(location);
+                    navigator.distanceToTarget = this.distanceToTarget;
                     double targetAngle = navigator.getAngleToTarget(location);
 
                     Console.WriteLine("Airplane target  : " + targetNode.ToString());
@@ -126,6 +127,7 @@ namespace Introductieproject.Objects
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
                     double maxSpeed = 30;
                     double cornerSpeed = 1;
+                    navigator.location = this.location;
 
                     if (distanceToTarget < 0.5)
                     {

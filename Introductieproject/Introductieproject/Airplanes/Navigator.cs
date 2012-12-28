@@ -14,6 +14,8 @@ namespace Introductieproject.Airplanes
         public IList<Way> wayList = new List<Way>();
         private int currentTargetNode = 0;
         private bool hasEnded = false;
+        public double[] location;
+        public double distanceToTarget;
 
         public Navigator(Airplane airplane, List<Way> ways)
         {
@@ -68,6 +70,7 @@ namespace Introductieproject.Airplanes
                     {
                         //1 gate vrij, makkelijkste geval. Deze gate is doel
                         endWay = availableGates[0];
+                        endWay.isReserved = true;
                     }
                     else if (availableGates.Count == 0)
                     {
@@ -97,6 +100,7 @@ namespace Introductieproject.Airplanes
                     {
                         IList<Way> availableWays = (IList<Way>)availableGates;
                         endWay = Utils.getClosestWay(airplane.location, availableWays);
+                        endWay.isReserved = true;
                     }
                 }
                 else if (airplane.hasDocked)
@@ -241,9 +245,9 @@ namespace Introductieproject.Airplanes
             {
                 if (currentTargetNode != 0)
                 {
-                    if (wayList[currentTargetNode - 1].airplanesList.Count == 1)
+                    if (wayList[currentTargetNode - 1].navigatorList.Count == 1)
                         wayList[currentTargetNode - 1].hasAirplane = false;
-                    wayList[currentTargetNode - 1].airplanesList.RemoveAt(0);
+                    wayList[currentTargetNode - 1].navigatorList.RemoveAt(0);
                 }
                 wayList[currentTargetNode].hasAirplane = true;
                 currentTargetNode++;
@@ -274,42 +278,42 @@ namespace Introductieproject.Airplanes
                 {
                     if (wayList[trackWay].direction == 0)
                     {
-                        if (wayList[trackWay].airplanesList.Count == 1)
+                        if (wayList[trackWay].navigatorList.Count == 1)
                         {
-                            if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode])
+                            if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
                             {
                                 trackWay++;
                                 return true;
                             }
                         }
-                        if (wayList[trackWay].airplanesList.Count == 2)
+                        if (wayList[trackWay].navigatorList.Count == 2)
                         {
-                            if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode])
+                            if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
                             {
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                                 {
                                     trackWay++;
                                     return true;
                                 }
-                                else if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] != nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode])
+                                else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].airplanesList[1].distanceToTarget < 700)
+                                    if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
                                     {
                                         trackWay++;
                                         return true;
                                     }
                                 }
                             }
-                            else if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode])
+                            else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                             {
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
                                 {
                                     trackWay++;
                                     return true;
                                 }
-                                else if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] != nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode])
+                                else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].airplanesList[0].distanceToTarget < 700)
+                                    if (wayList[trackWay].navigatorList[0].distanceToTarget < 700) // <---
                                     {
                                         trackWay++;
                                         return true;
@@ -317,74 +321,74 @@ namespace Introductieproject.Airplanes
                                 }
                             }
                         }
-                        if (wayList[trackWay].airplanesList.Count == 3)
+                        if (wayList[trackWay].navigatorList.Count == 3)
                         {
-                            if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode])
+                            if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
                             {
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[2].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                                 {
                                     trackWay++;
                                     return true;
                                 }
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] != nodepoints[wayList[trackWay].airplanesList[2].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].airplanesList[2].distanceToTarget < 700)
+                                    if (wayList[trackWay].navigatorList[2].distanceToTarget < 700) // <---
                                     {
                                         trackWay++;
                                         return true;
                                     }
                                 }
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] != nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[2].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].airplanesList[1].distanceToTarget < 700)
+                                    if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
                                     {
                                         trackWay++;
                                         return true;
                                     }
                                 }
                             }
-                            else if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode])
+                            else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                             {
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[2].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                                 {
                                     trackWay++;
                                     return true;
                                 }
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] != nodepoints[wayList[trackWay].airplanesList[2].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].airplanesList[2].distanceToTarget < 700)
+                                    if (wayList[trackWay].navigatorList[2].distanceToTarget < 700) // <---
                                     {
                                         trackWay++;
                                         return true;
                                     }
                                 }
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] != nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[2].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].airplanesList[0].distanceToTarget < 700)
+                                    if (wayList[trackWay].navigatorList[0].distanceToTarget < 700) // <---
                                     {
                                         trackWay++;
                                         return true;
                                     }
                                 }
                             }
-                            else if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[2].navigator.currentTargetNode])
+                            else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                             {
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                                 {
                                     trackWay++;
                                     return true;
                                 }
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] != nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].airplanesList[1].distanceToTarget < 700)
+                                    if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
                                     {
                                         trackWay++;
                                         return true;
                                     }
                                 }
-                                if (nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] != nodepoints[wayList[trackWay].airplanesList[0].navigator.currentTargetNode] && nodepoints[wayList[trackWay - 1].airplanesList[0].navigator.currentTargetNode] == nodepoints[wayList[trackWay].airplanesList[1].navigator.currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].airplanesList[0].distanceToTarget < 700)
+                                    if (wayList[trackWay].navigatorList[0].distanceToTarget < 700)
                                     {
                                         trackWay++;
                                         return true;
@@ -393,16 +397,16 @@ namespace Introductieproject.Airplanes
                             } 
                         }
                     }
-                    else if(wayList[trackWay].airplanesList.Count < 3)
+                    else if(wayList[trackWay].navigatorList.Count < 3)
                     {
-                        if (wayList[trackWay].airplanesList.Count == 1)
+                        if (wayList[trackWay].navigatorList.Count == 1)
                         {
-                            if (wayList[trackWay].airplanesList[0].distanceToTarget < 700)
+                            if (wayList[trackWay].navigatorList[0].distanceToTarget < 700)
                                 trackWay++;
                                 return true;
                         }
-                        if (wayList[trackWay].airplanesList.Count == 2)
-                            if (wayList[trackWay].airplanesList[1].distanceToTarget < 700)
+                        if (wayList[trackWay].navigatorList.Count == 2)
+                            if (wayList[trackWay].navigatorList[1].distanceToTarget < 700)
                                 trackWay++;
                                 return true;
                     }

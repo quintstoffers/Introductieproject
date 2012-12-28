@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Introductieproject.Objects;
+using Introductieproject.Airplanes;
 
 namespace Introductieproject.Airport
 {
@@ -12,6 +13,8 @@ namespace Introductieproject.Airport
         public const int DIRECTION_ENDTOSTART = -1;
         public const int DIRECTION_STARTTOEND = 1;
 
+        public bool isReserved = false;
+
         public IList<Node> nodeConnections = new List<Node>();
 
         //Bepalen in welke richting moet rijden
@@ -20,7 +23,7 @@ namespace Introductieproject.Airport
 
         public bool hasAirplane = false;
 
-        public List<Airplane> airplanesList = new List<Airplane>();
+        public List<Navigator> navigatorList = new List<Navigator>();
 
         public Airplane airplane;
         

@@ -84,7 +84,7 @@ namespace Introductieproject.Airport
                 {
                     if (Utils.isPointInWay(a.location, w))
                     {
-                        w.airplanesList.Add(a);
+                        w.navigatorList.Add(a.navigator);
                         w.hasAirplane = true;
                     }
                 }

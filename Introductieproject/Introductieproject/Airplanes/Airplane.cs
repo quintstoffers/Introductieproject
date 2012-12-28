@@ -43,6 +43,7 @@ namespace Introductieproject.Objects
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
 
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
+        //public bool atGate = false;
 
         public Navigator navigator;                // Object dat aangeeft waar het vliegtuig heen moet
 
@@ -63,10 +64,13 @@ namespace Introductieproject.Objects
 
         public void Dock()
         {
-            //TODO: Vliegtuig krijgt geen arrivaldate mee.
+            bool atGate = true;
+
+            //TODO: Vliegtuig krijgt geen arrival/departuredate mee.
             //For testing purpose: zelf instellen
 
-            arrivaldate = new DateTime(2012, 12, 27, 21, 00, 00);
+            arrivaldate = new DateTime(2012, 12, 28, 16, 00, 00, 00);
+            depaturedate = new DateTime(2012, 12, 28, 16, 00, 30, 00);
 
             //Check wanneer vliegtuig is aangekomen.
             DateTime simArrivalDate = TimeKeeper.currentSimTime;
@@ -74,24 +78,41 @@ namespace Introductieproject.Objects
             Console.WriteLine("ARRIVALDATE: " + arrivaldate);
 
             //Bereken verschil in verwachte vertrektijd en verwachte aankomst tijd.
-            TimeSpan difference;
-            difference = arrivaldate.Subtract(simArrivalDate);
+            TimeSpan difference = new TimeSpan();
+            if (simArrivalDate >= arrivaldate)
+            {
+                difference = simArrivalDate.Subtract(arrivaldate);
+            }
+            else if (simArrivalDate < arrivaldate)
+            {
+                difference = arrivaldate.Subtract(simArrivalDate);
+            }
             Console.WriteLine("DIFFERENCE: " + difference);
 
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + oude vertrektijd.
-            
-           //Zolang de benodigde tijd voor het vliegtuig nog niet is verstreken, blijft deze in een loop.
-            while (hasDocked == true)
-            {
+            DateTime newSimDepartureDate = new DateTime(2012, 12, 28, 20, 00, 00, 00);
+            Console.WriteLine("DEPARTUREDATE: " + depaturedate);
+            newSimDepartureDate = depaturedate.Add(difference);
+            Console.WriteLine("newSimDepartureDate: " + newSimDepartureDate);
 
-                //Check wanneer vliegtuig weer weg gaat.
-                if (depaturedate == simArrivalDate.Add(difference))
+
+            /*  Zolang de benodigde tijd voor het vliegtuig nog niet is verstreken, blijft deze in een loop.
+             *  TODO: Niet pauzeerbaar tijdens de loop. 
+             *  Timekeeper update niet tijdens loop. Moet handmatig worden ingevoerd.
+             */ 
+            while (atGate == true)
+            {
+                //SimTime loopt niet door tijdens dock...
+                TimeKeeper.updateTime();
+
+                //Vliegtuig vertrek als de newSimDepartureDate gelijk is aan de currentSimTime.
+                if (TimeKeeper.currentSimTime >= newSimDepartureDate)
                 {
-                    hasDocked = false;  //geef nieuwe navigator
+                    atGate = false;  //Vliegtuig moet weer naar Runway
                 }
             }
-
+            // geef nieuwe navigator aan vliegtuig.
             navigator = null;
         }
 
@@ -110,9 +131,9 @@ namespace Introductieproject.Objects
                 if (targetNode == null)
                 {
                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
-                    hasDocked = true;
                     this.Dock();
-                    navigator = null;
+                    hasDocked = true;
+                    //navigator = null;
                 }
                 else
                 {

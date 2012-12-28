@@ -235,21 +235,24 @@ namespace Introductieproject.Airplanes
             else
                 return null;
         }
+
         public double getDistanceToTargetNode(double[] location)
         {
             return Utils.getDistanceBetweenPoints(location, nodepoints[currentTargetNode].location);
         }
+
         public void setNextTarget()
         {
+            //Indien er nog nodepoints over zijn
             if (nodepoints.Count != currentTargetNode + 1)
             {
+                //Als currentTargetNode geen 0 is, verwijder dan de navigator uit de vorige wayList
                 if (currentTargetNode != 0)
                 {
-                    if (wayList[currentTargetNode - 1].navigatorList.Count == 1)
-                    {
-                        wayList[currentTargetNode - 1].removeNavigator(this);
-                    }
+                    wayList[currentTargetNode - 1].removeNavigator(this);
                 }
+
+                //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
                 wayList[currentTargetNode].addNavigator(this);
                 currentTargetNode++;
                 Console.WriteLine("TARGETNODE" + currentTargetNode);
@@ -264,6 +267,7 @@ namespace Introductieproject.Airplanes
 
         public bool hasPermission()
         {
+            //Indien trackWay gelijk is aan grootte van wayList, dan moet hij weer op 0 en kan je sowieso true returnen, want hij is bij de gate.
             if (trackWay == wayList.Count)
             {
                 trackWay = 0;
@@ -275,144 +279,167 @@ namespace Introductieproject.Airplanes
                 Console.WriteLine("WAYLIST 1:" + wayList[1].hasAirplane);
                 Console.WriteLine("WAYLIST 2:" + wayList[2].hasAirplane);
                 Console.WriteLine("WAYLIST 3:" + wayList[3].hasAirplane);
+                //Indien de huidige way al een airplane heeft, controleer dan op mogelijkheden
                 if (wayList[trackWay].hasAirplane == true)
                 {
-                    if (wayList[trackWay].direction == 0)
+                    //Indien trackWay geen 0 is, ga dan bekijken of voor de volgende weg met direction 0 er mogelijkheden bestaan
+                    if (trackWay != 0)
                     {
-                        if (wayList[trackWay].navigatorList.Count == 1)
+                        if (wayList[trackWay].direction == 0)
                         {
-                            if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
-                            {
-                                trackWay++;
-                                return true;
-                            }
-                        }
-                        if (wayList[trackWay].navigatorList.Count == 2)
-                        {
-                            if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
-                            {
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
-                                {
-                                    trackWay++;
-                                    return true;
-                                }
-                                else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
-                                {
-                                    if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
-                                    {
-                                        trackWay++;
-                                        return true;
-                                    }
-                                }
-                            }
-                            else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
+                            //Indien de navigatorList voor de volgende weg 1 navigator bevat, controleer dan of die nodepoints gelijk zijn aan je huidige nodepoints, want dan is hij in andere richting
+                            if (wayList[trackWay].navigatorList.Count == 1)
                             {
                                 if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
                                 {
                                     trackWay++;
                                     return true;
                                 }
-                                else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
+                            }
+                            //Indien de navigatorList voor de volgende weg 2 navigators bevat
+                            if (wayList[trackWay].navigatorList.Count == 2)
+                            {
+                                //Controleer eerst of die nodepoints van de eerste in de lijst gelijk zijn aan je huidige nodepoints, want dan is hij in andere richting
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].navigatorList[0].distanceToTarget < 700) // <---
+                                    //Check daarna of de nodepoints van de 2e uit de lijst gelijk zijn, want dan beide in andere richting dus kan je erop
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                                     {
                                         trackWay++;
                                         return true;
+                                    }
+                                    //Indien dit niet het geval is, bekijk dan of de distanceToTarget kleiner dan 700 is, in dit geval is het veilig om te gaan rijden
+                                    else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
+                                    {
+                                        if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
+                                        {
+                                            trackWay++;
+                                            return true;
+                                        }
+                                    }
+                                }
+                                //Controleer of de nodepoints van de tweede in de lijst gelijk zijn aan je huidge positie, want dan is hij in andere richting
+                                else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
+                                {
+                                    //Check daarna of de nodepoints van de 1e uit de lijst gelijk zijn, want dan beide in andere richting dus kan je erop
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
+                                    {
+                                        trackWay++;
+                                        return true;
+                                    }
+                                    //Indien dit niet het geval is, bekijk dan of de distanceToTarget kleiner dan 700 is, in dit geval is het veilig om te gaan rijden
+                                    else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
+                                    {
+                                        if (wayList[trackWay].navigatorList[0].distanceToTarget < 700) // <---
+                                        {
+                                            trackWay++;
+                                            return true;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        if (wayList[trackWay].navigatorList.Count == 3)
-                        {
-                            if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
+                            //Zojuist bedacht dat dit helemaal niet meer nodig is, aangezien we maximaal 3 airplanes op een way willen en als er al 3 zijn, mag je toch niet meer.
+                            //Ik laat hem maar wel staan voor als we het in de toekomst misschien veranderen
+                            /*
+                            if (wayList[trackWay].navigatorList.Count == 3)
                             {
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
+                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
                                 {
-                                    trackWay++;
-                                    return true;
-                                }
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
-                                {
-                                    if (wayList[trackWay].navigatorList[2].distanceToTarget < 700) // <---
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                                     {
                                         trackWay++;
                                         return true;
                                     }
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
+                                    {
+                                        if (wayList[trackWay].navigatorList[2].distanceToTarget < 700) // <---
+                                        {
+                                            trackWay++;
+                                            return true;
+                                        }
+                                    }
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
+                                    {
+                                        if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
+                                        {
+                                            trackWay++;
+                                            return true;
+                                        }
+                                    }
                                 }
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
+                                else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
                                 {
-                                    if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
                                     {
                                         trackWay++;
                                         return true;
+                                    }
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
+                                    {
+                                        if (wayList[trackWay].navigatorList[2].distanceToTarget < 700) // <---
+                                        {
+                                            trackWay++;
+                                            return true;
+                                        }
+                                    }
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
+                                    {
+                                        if (wayList[trackWay].navigatorList[0].distanceToTarget < 700) // <---
+                                        {
+                                            trackWay++;
+                                            return true;
+                                        }
+                                    }
+                                }
+                                else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
+                                {
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
+                                    {
+                                        trackWay++;
+                                        return true;
+                                    }
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
+                                    {
+                                        if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
+                                        {
+                                            trackWay++;
+                                            return true;
+                                        }
+                                    }
+                                    if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
+                                    {
+                                        if (wayList[trackWay].navigatorList[0].distanceToTarget < 700)
+                                        {
+                                            trackWay++;
+                                            return true;
+                                        }
                                     }
                                 }
                             }
-                            else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
-                            {
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
-                                {
-                                    trackWay++;
-                                    return true;
-                                }
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
-                                {
-                                    if (wayList[trackWay].navigatorList[2].distanceToTarget < 700) // <---
-                                    {
-                                        trackWay++;
-                                        return true;
-                                    }
-                                }
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
-                                {
-                                    if (wayList[trackWay].navigatorList[0].distanceToTarget < 700) // <---
-                                    {
-                                        trackWay++;
-                                        return true;
-                                    }
-                                }
-                            }
-                            else if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[2].currentTargetNode])
-                            {
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
-                                {
-                                    trackWay++;
-                                    return true;
-                                }
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
-                                {
-                                    if (wayList[trackWay].navigatorList[1].distanceToTarget < 700) // <---
-                                    {
-                                        trackWay++;
-                                        return true;
-                                    }
-                                }
-                                if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] != nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode] && nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[1].currentTargetNode])
-                                {
-                                    if (wayList[trackWay].navigatorList[0].distanceToTarget < 700)
-                                    {
-                                        trackWay++;
-                                        return true;
-                                    }
-                                }
-                            } 
+                            */
                         }
                     }
-                    else if(wayList[trackWay].navigatorList.Count < 3)
+                    //Controleer of de list kleiner is dan 3 want dan mag er nog een nieuwe navigator bij
+                    else if (wayList[trackWay].navigatorList.Count < 3)
                     {
+                        //Indien de list 1 groot is, controleer dan of de eerste uit die lijst distanceToTarget kleiner dan 700 heeft, dan is het veilig
                         if (wayList[trackWay].navigatorList.Count == 1)
                         {
                             if (wayList[trackWay].navigatorList[0].distanceToTarget < 700)
                                 trackWay++;
-                                return true;
+                            return true;
                         }
+                        //Indien de list 2 groot is, controleer dan of de tweede uit die lijst distanceToTarget kleiner dan 700 heeft
+                        //De 2e heeft namelijk ook al gecontroleerd bij de eerste en dus weet je dan dat het veilig is
                         if (wayList[trackWay].navigatorList.Count == 2)
                             if (wayList[trackWay].navigatorList[1].distanceToTarget < 700)
                                 trackWay++;
-                                return true;
+                        return true;
                     }
+                    //Als geen van deze allen mogelijk zijn, return dan false en ga net zo lang door met de while loop tot je wel mag
                     return false;
                 }
+                //Indien er geen airplane op de weg is, mag je sowieso
                 else
                 {
                     Console.WriteLine("ER IS GEEN VLIEGTUIG!");

@@ -150,64 +150,67 @@ namespace Introductieproject.Objects
                     double cornerSpeed = 1;
                     navigator.location = this.location;
 
-                    if (distanceToTarget < 0.5)
+                    if (navigator.collisionDetection() == true)
                     {
-                        while (true)
+                        if (distanceToTarget < 0.5)
                         {
-                            if (navigator.hasPermission() == true)
+                            while (true)
                             {
-                                navigator.setNextTarget();
-                                targetNode = navigator.getTargetNode();
-                                if (targetNode == null)
+                                if (navigator.hasPermission() == true)
                                 {
-                                    //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
-                                    hasDocked = true;
+                                    navigator.setNextTarget();
+                                    targetNode = navigator.getTargetNode();
+                                    if (targetNode == null)
+                                    {
+                                        //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
+                                        hasDocked = true;
 
+                                    }
+                                    if (navigator != null)
+                                        distanceToTarget = navigator.getDistanceToTargetNode(location);
+                                    break;
                                 }
-                                if (navigator != null)
-                                    distanceToTarget = navigator.getDistanceToTargetNode(location);
-                                break;
                             }
                         }
-                    }
-                    if (navigator != null)
-                    {
-                        if (distanceToTarget < speed)
+                        if (navigator != null)
                         {
-                            moveBy(distanceToTarget);
-                            speed = 0;
+                            if (distanceToTarget < speed)
+                            {
+                                moveBy(distanceToTarget);
+                                speed = 0;
+                            }
+
+                            /*  else if(location == closeToWayPoint)
+                             *      deaccelerate naar bochtsnelheid
+                            */
+
+                            /*  if(! middenOpBaan)
+                             *      roteer richting midden van baan (prioriteit over rijden naar target!
+                            */
+
+                            if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
+                            {
+                                rotate(targetAngle);
+                            }
+
+                            if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
+                            {
+                                accelerate(maxSpeed);
+                            }
+
+                            else if (speed > cornerSpeed && distanceToTarget <= 50 && angle == targetAngle)
+                            {
+                                accelerate(cornerSpeed);
+                            }
+                            //alleen move als hij niet heeft versneld of afgeremd
+                            else if (angle == targetAngle)
+                            {
+                                move();
+                            }
+
+                            Console.WriteLine(this.ToString());
+                            Console.WriteLine("");
                         }
-
-                        /*  else if(location == closeToWayPoint)
-                         *      deaccelerate naar bochtsnelheid
-                        */
-
-                        /*  if(! middenOpBaan)
-                         *      roteer richting midden van baan (prioriteit over rijden naar target!
-                        */
-
-                        if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
-                        {
-                            rotate(targetAngle);
-                        }
-
-                        if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
-                        {
-                            accelerate(maxSpeed);
-                        }
-
-                        else if (speed > cornerSpeed && distanceToTarget <= 50 && angle == targetAngle)
-                        {
-                            accelerate(cornerSpeed);
-                        }
-                        //alleen move als hij niet heeft versneld of afgeremd
-                        else if (angle == targetAngle)
-                        {
-                            move();
-                        }
-
-                        Console.WriteLine(this.ToString());
-                        Console.WriteLine("");
                     }
                 }
             }

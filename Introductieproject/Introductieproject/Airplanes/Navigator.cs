@@ -451,6 +451,53 @@ namespace Introductieproject.Airplanes
             }
         }
 
+        //True betekend geen collision, false betekend wel collision
+        public bool collisionDetection()
+        {
+            if (trackWay != 0)
+            {
+                Console.WriteLine("TEST VOOR COLLISION");
+                //Indien een way is een gate, dan heeft het geen zin
+                if (wayList[trackWay - 1] is Gate)
+                {
+                    Console.WriteLine("GATE");
+                    return true;
+                }
+                else
+                {
+                    //Indien er 1 vliegtuig op de way is kan er geen collision zijn
+                    if (wayList[trackWay - 1].navigatorList.Count == 1)
+                    {
+                        Console.WriteLine("GEEN COLLISION");
+                        return true;
+                    }
+                    //Indien er 2 vliegtuigen op de way zijn, check of de laatste niet binnen 150 meter van de eerste is, want dan geen collision
+                    if (wayList[trackWay - 1].navigatorList.Count == 2)
+                    {
+                        if (wayList[trackWay - 1].navigatorList[1].distanceToTarget - wayList[trackWay - 1].navigatorList[0].distanceToTarget > 150)
+                        {
+                            Console.WriteLine("GEEN COLLISION");
+                            return true;
+                        }
+                    }
+                    //Indien er 3 vliegtuigen op de way zijn, check of de 3e niet binnen 150 meter dan de 2e is en de 2e niet binnen 150 meter van de 1e, want dan geen collision
+                    if (wayList[trackWay - 1].navigatorList.Count == 3)
+                    {
+                        if ((wayList[trackWay - 1].navigatorList[2].distanceToTarget - wayList[trackWay - 1].navigatorList[1].distanceToTarget > 150) && (wayList[trackWay - 1].navigatorList[1].distanceToTarget - wayList[trackWay - 1].navigatorList[0].distanceToTarget > 150))
+                        {
+                            Console.WriteLine("GEEN COLLISION");
+                            return true;
+                        }
+                    }
+                }
+                //Als dit niet zo is dan is er collision
+                Console.WriteLine("COLLISION");
+                return false;
+            }
+            //Indien trackway = 0, return dan true want dat is gate of runway en bij gate is het niet nodig en bij runway wordt het door ons zelf gedaan
+            return true;
+        }
+
         public double getAngleToTarget(double[] location)
         {
             return Utils.getAngleBetweenPoints(location, nodepoints[currentTargetNode].location);

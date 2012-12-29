@@ -43,7 +43,6 @@ namespace Introductieproject.Objects
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
 
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
-        //public bool atGate = false;
 
         public Navigator navigator;                // Object dat aangeeft waar het vliegtuig heen moet
 
@@ -89,11 +88,60 @@ namespace Introductieproject.Objects
             }
             Console.WriteLine("DIFFERENCE: " + difference);
 
+            // Random delay van 0-100. 
+            TimeSpan delay = new TimeSpan();
+            Random random = new Random();
+            int cases = random.Next(0, 100);
+
+            // 1% kans op 5 uur delay
+            if (cases <= 1)
+            {
+                delay = new TimeSpan(5, 0, 0);
+            }
+
+            // 2% kans op 2 uur delay
+            else if (cases < 1 && cases <= 3)
+            {
+                delay = new TimeSpan(2, 0, 0);
+            }
+
+            // 2% kans op 1 uur delay
+            else if (cases > 3 && cases <= 5)
+            {
+                delay = new TimeSpan(1, 0, 0);
+            }
+
+            // 5% kans op 30 minuten delay
+            else if (cases > 5 && cases <= 10)
+            {
+                delay = new TimeSpan(0, 30, 0);
+            }
+
+            //10% kans op 10 minuten delay
+            else if (cases > 10 && cases <= 20)
+            {
+                delay = new TimeSpan(0, 10, 0);
+            }
+
+            //10% kans op 5 minuten delay
+            else if (cases > 20 && cases <= 30)
+            {
+                delay = new TimeSpan(0, 5, 0);
+            }
+
+            else if (cases > 30)
+            {
+                // Geen delay
+            }
+
+            Console.WriteLine("DELAY: " + delay);
+
+
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + oude vertrektijd.
             DateTime newSimDepartureDate = new DateTime(2012, 12, 28, 20, 00, 00, 00);
             Console.WriteLine("DEPARTUREDATE: " + depaturedate);
-            newSimDepartureDate = depaturedate.Add(difference);
+            newSimDepartureDate = depaturedate.Add(difference + delay);
             Console.WriteLine("newSimDepartureDate: " + newSimDepartureDate);
 
 
@@ -103,7 +151,7 @@ namespace Introductieproject.Objects
              */ 
             while (atGate == true)
             {
-                //SimTime loopt niet door tijdens dock...
+                //SimTime loopt niet door tijdens de while loop...
                 TimeKeeper.updateTime();
 
                 //Vliegtuig vertrek als de newSimDepartureDate gelijk is aan de currentSimTime.
@@ -133,7 +181,6 @@ namespace Introductieproject.Objects
                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                     this.Dock();
                     hasDocked = true;
-                    //navigator = null;
                 }
                 else
                 {

@@ -154,22 +154,18 @@ namespace Introductieproject.Objects
                     {
                         if (distanceToTarget < 0.5)
                         {
-                            while (true)
+                            if (navigator.hasPermission() == true)
                             {
-                                if (navigator.hasPermission() == true)
+                                navigator.setNextTarget();
+                                targetNode = navigator.getTargetNode();
+                                if (targetNode == null)
                                 {
-                                    navigator.setNextTarget();
-                                    targetNode = navigator.getTargetNode();
-                                    if (targetNode == null)
-                                    {
-                                        //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
-                                        hasDocked = true;
+                                    //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
+                                    hasDocked = true;
 
-                                    }
-                                    if (navigator != null)
-                                        distanceToTarget = navigator.getDistanceToTargetNode(location);
-                                    break;
                                 }
+                                if (navigator != null)
+                                    distanceToTarget = navigator.getDistanceToTargetNode(location);
                             }
                         }
                         if (navigator != null)

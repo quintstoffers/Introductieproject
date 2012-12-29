@@ -28,7 +28,7 @@ namespace Introductieproject.Airport
             //
             //For testing purposes: Als het eerste vliegtuig van de runway is, spawn een tweede vliegtuig
             //Momenteel buggy: Utils.isPointInWay is erg precies. Letterlijk foutmarge van 0 mogelijk momenteel
-            if (airplanes.Count == 0)
+            if (airplanes.Count <= 0)
             {
                 int clearRoads = 0;
                 foreach (Way w in this.runways)

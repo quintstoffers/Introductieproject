@@ -12,10 +12,13 @@ namespace Introductieproject.Airplanes
         public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
         public IList<Way> wayList = new List<Way>();
-        private int currentTargetNode = 0;
+        public int currentTargetNode = 0;
         private bool hasEnded = false;
         public double[] location;
         public double distanceToTarget;
+        Node runwayNode = new Node(500, 500);
+
+        IList<Way> runWays = new List<Way>();
 
         public Navigator(Airplane airplane, List<Way> ways)
         {
@@ -105,7 +108,6 @@ namespace Introductieproject.Airplanes
                 }
                 else if (airplane.hasDocked)
                 {
-                    IList<Way> runWays = new List<Way>();
                     foreach(Way w in ways)
                     {
                         if(w is Runway)
@@ -231,9 +233,14 @@ namespace Introductieproject.Airplanes
         {
             //Console.WriteLine("CURRENTTARGETNODE IS: " + currentTargetNode);
             if (!hasEnded)
+            {
+                Console.WriteLine(nodepoints[currentTargetNode]);
                 return nodepoints[currentTargetNode];
+            }
             else
+            {
                 return null;
+            }
         }
 
         public double getDistanceToTargetNode(double[] location)
@@ -251,15 +258,35 @@ namespace Introductieproject.Airplanes
                 {
                     wayList[currentTargetNode - 1].removeNavigator(this);
                 }
-
                 //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
-                wayList[currentTargetNode].addNavigator(this);
+                //Ik voeg hem niet toe bij gate, want dat gaat nog fout want hij komt er dan 2x in.
+                if (wayList[currentTargetNode] is Gate)
+                { }
+                else
+                {
+                    wayList[currentTargetNode].addNavigator(this);
+                }
                 currentTargetNode++;
+
+                if(wayList[0] is Gate && runWays[0].runwayHasAirplane == false && currentTargetNode == (nodepoints.Count - 1))
+                {
+                    Console.WriteLine("GEKKE RUNWAYTEST!");
+                    runWays[0].runwayHasAirplane = true;
+                }
+
                 Console.WriteLine("TARGETNODE" + currentTargetNode);
             }
             else
             {
-                hasEnded = true;
+                if (runWays.Count != 0)
+                {
+                    hasEnded = true;
+                    runWays[0].runwayHasAirplane = false;
+                }
+                else
+                {
+                    hasEnded = true;
+                }
             }
         }
 

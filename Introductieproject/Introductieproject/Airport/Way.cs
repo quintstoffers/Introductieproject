@@ -23,6 +23,8 @@ namespace Introductieproject.Airport
 
         public bool hasAirplane = false;
 
+        public bool runwayHasAirplane = false;
+
         public List<Navigator> navigatorList = new List<Navigator>();
 
         public Airplane airplane;

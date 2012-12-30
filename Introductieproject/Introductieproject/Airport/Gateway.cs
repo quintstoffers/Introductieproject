@@ -6,7 +6,7 @@ using Introductieproject.Objects;
 
 namespace Introductieproject.Airport
 {
-    class Gateway:Way
+    public class Gateway:Way
     {
         public Gateway(Node node1, Node node2, int dir) : base(node1, node2, dir)
         {

@@ -61,6 +61,12 @@
     <Compile Include="Simulation\Parser.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="Simulation\TimeKeeper.cs" />
+    <Compile Include="UI\Controls\AirplaneStatsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\AirplaneStatsControl.Designer.cs">
+      <DependentUpon>AirplaneStatsControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Controls\EditMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -78,18 +84,6 @@
     </Compile>
     <Compile Include="UI\Controls\MapControl.Designer.cs">
       <DependentUpon>MapControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\StatsControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\Controls\StatsControl.Designer.cs">
-      <DependentUpon>StatsControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Controls\timecontrol.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\Controls\timecontrol.Designer.cs">
-      <DependentUpon>timecontrol.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Controls\ToolboxControl.cs">
       <SubType>UserControl</SubType>
@@ -117,13 +111,14 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UI\Controls\AirplaneStatsControl.resx">
+      <DependentUpon>AirplaneStatsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\SimulationMapControl.resx">
       <DependentUpon>SimulationMapControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\timecontrol.resx">
-      <DependentUpon>timecontrol.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

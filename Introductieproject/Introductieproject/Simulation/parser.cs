@@ -6,6 +6,7 @@ using System.Xml;
 using Introductieproject.Objects;
 using System.Reflection;
 using System.IO;
+using System.ComponentModel;
 
 namespace Introductieproject.Simulation
 {
@@ -52,7 +53,7 @@ namespace Introductieproject.Simulation
                 bool airplaneAlreadyLoaded = false;
                 foreach(Airplane currentAirplane in loadedAirplanes)
                 {
-                    if(currentAirplane.registration.Equals(registration))   // Airplane bestaat al
+                    if (currentAirplane.registration.Equals(registration))   // Airplane bestaat al
                     {
                         currentAirplane.flight = flight;
                         currentAirplane.carrier = carrier;
@@ -71,8 +72,12 @@ namespace Introductieproject.Simulation
 
                     Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
                     newAirplane.setXMLVariables(arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
+
+                    Console.WriteLine("ADD AIRPLANE");
                     loadedAirplanes.Add(newAirplane);
 
+
+                    Program.mainForm.Invoke((Action)(() => Program.mainForm.updateUI()));
                     Console.WriteLine("Arrival: " + arrivalDateTime.ToString());
                     Console.WriteLine("XML: new airplane loaded (flight=" + flight + " registration=" + registration + ")");
 

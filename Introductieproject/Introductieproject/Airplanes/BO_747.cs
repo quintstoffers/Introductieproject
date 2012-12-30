@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Introductieproject.Objects
 {
-    class BO_747 : Airplane
+    public class BO_747 : Airplane
     {
         public BO_747()
         {

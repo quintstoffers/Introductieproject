@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Introductieproject.Airport
 {
-    class Route
+    public class Route
     {
         //Class Route, gebaseerd op Pad in Imperatief Programmeren Listing 65
         public Node local;

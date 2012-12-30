@@ -7,7 +7,7 @@ using Introductieproject.Airplanes;
 
 namespace Introductieproject.Airport
 {
-    class Way
+    public class Way
     {
         public const int DIRECTION_BOTH = 0;
         public const int DIRECTION_ENDTOSTART = -1;

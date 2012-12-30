@@ -13,7 +13,7 @@ namespace Introductieproject
 {
     class Program
     {
-        private static MainForm mainform = new MainForm();
+        public static MainForm mainForm;
         private static Airport.Airport airport;
 
         static void Main(string[] args)
@@ -22,16 +22,17 @@ namespace Introductieproject
 
             airport = createAirport();
 
-            mainform.Show();
+            mainForm = new MainForm(airport);
+            mainForm.Show();
 
-            DateTime simStartTime = new DateTime(2013, 1, 1, 21, 59, 50);
+            DateTime simStartTime = new DateTime(2013, 1, 1, 21, 59, 55);
             TimeKeeper.initTime(simStartTime);      // TimeKeeper instellen op vaste starttijd
             TimeKeeper.scale = 2;                   // Verhouding tussen real en simtime is 1, dus gelijk.
 
             Simulation.Simulation.initSimulation(airport);
             Simulation.Simulation.startSimulation();
 
-            Application.Run(mainform);
+            Application.Run(mainForm);
         }
 
         static Airport.Airport createAirport()

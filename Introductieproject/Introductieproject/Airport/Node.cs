@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Introductieproject.Airport
 {
-    class Node
+    public class Node
     {
         public double[] location = new double[2];
         public IList<Way> connections = new List<Way>();

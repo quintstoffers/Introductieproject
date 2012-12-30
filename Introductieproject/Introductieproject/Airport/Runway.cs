@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Introductieproject.Airport
 {
-    class Runway:Way
+    public class Runway:Way
     {
         public Runway(Node node1, Node node2, int dir) : base(node1, node2, dir)
         {

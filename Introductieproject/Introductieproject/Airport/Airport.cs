@@ -3,10 +3,11 @@ using Introductieproject.Simulation;
 using System.Collections.Generic;
 using System;
 using Introductieproject.Airplanes;
+using System.ComponentModel;
 
 namespace Introductieproject.Airport
 {
-    class Airport
+    public class Airport
     {
         public List<Airplane> airplanes = new List<Airplane>();
 

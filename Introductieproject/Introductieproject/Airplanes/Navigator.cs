@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Introductieproject.Airplanes
 {
-    class Navigator
+    public class Navigator
     {
         public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig

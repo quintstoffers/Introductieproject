@@ -12,19 +12,21 @@ namespace Introductieproject.Forms
 {
     public partial class MainForm : Form
     {
-        UI.Controls.timecontrol tijdcontrol = new UI.Controls.timecontrol();
+        public Airport.Airport airport;
 
-        public MainForm()
+        public MainForm(Airport.Airport airport)
         {
+            this.airport = airport;
+
             InitializeComponent();
-            this.Controls.Add(tijdcontrol);
 
-
+            airplaneStatsControl.setDataBinding(airport.airplanes);
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        public void updateUI()
         {
-
+            //airplaneStatsControl.setDataBinding(airport.airplanes);
+            airplaneStatsControl.update(airport.airplanes);
         }
 
         void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -53,6 +55,11 @@ namespace Introductieproject.Forms
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
         {
 
         }

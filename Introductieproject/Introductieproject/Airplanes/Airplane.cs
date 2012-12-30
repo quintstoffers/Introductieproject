@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Introductieproject.Objects
 {
-    class Airplane
+    public class Airplane
     {
         // "Vaste" variabelen die per type vliegtuig zullen verschillen (defined in subclasse!)
         public String manufacturerName;     // Maker vliegtuig
@@ -41,13 +41,26 @@ namespace Introductieproject.Objects
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
         public bool atGate;
-
-
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
 
         public Navigator navigator;                // Object dat aangeeft waar het vliegtuig heen moet
 
-        public double distanceToTarget;
+        // Getters voor UI
+        public String Flight
+        {
+            get
+            {
+                return flight;
+            }
+        }
+        public String Registration
+        {
+            get
+            {
+                return registration;
+            }
+        }
+
         /*
          * Initialiseer variabelen
          */
@@ -190,8 +203,8 @@ namespace Introductieproject.Objects
                 }
                 else
                 {
-                    distanceToTarget = navigator.getDistanceToTargetNode(location);
-                    navigator.distanceToTarget = this.distanceToTarget;
+                    double distanceToTarget = navigator.getDistanceToTargetNode(location);
+                    navigator.distanceToTarget = distanceToTarget;
                     double targetAngle = navigator.getAngleToTarget(location);
 
                     Console.WriteLine("Airplane target  : " + targetNode.ToString());

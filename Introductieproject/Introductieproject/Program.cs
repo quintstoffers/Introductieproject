@@ -21,25 +21,17 @@ namespace Introductieproject
             Console.WriteLine("Program started");
 
             airport = createAirport();
-            airport.airplanes.Add(createAirplane());
+
             mainform.Show();
 
-            TimeKeeper.initTime();      // TimeKeeper instellen op huidige tijd
-            TimeKeeper.scale = 2;       // Verhouding tussen real en simtime is 1, dus gelijk.
+            DateTime simStartTime = new DateTime(2013, 1, 1, 21, 59, 50);
+            TimeKeeper.initTime(simStartTime);      // TimeKeeper instellen op vaste starttijd
+            TimeKeeper.scale = 2;                   // Verhouding tussen real en simtime is 1, dus gelijk.
 
             Simulation.Simulation.initSimulation(airport);
             Simulation.Simulation.startSimulation();
 
             Application.Run(mainform);
-        }
-
-        static Airplane createAirplane()
-        {
-            Airplane newAirPlane = new Airplane();
-            DateTime arrivalDate = new DateTime(2012, 12, 30, 14, 00, 00, 00);
-            DateTime departureDate = new DateTime(2012, 12, 30, 14, 01, 00, 00);
-            newAirPlane.initVariables(new double[]{500, 500}, 0, 315, new KLM(), 0, 200, 220, 4400, arrivalDate, departureDate);    // Nieuw vliegtuig op einde linker landingsbaan zonder snelheid en richting het noorden gericht
-            return newAirPlane;
         }
 
         static Airport.Airport createAirport()

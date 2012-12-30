@@ -17,7 +17,7 @@ namespace Introductieproject.Simulation
 
         public static double scale;                   // Verhouding tussen echte tijd en simulatietijd. >1 = sneller, <1 = langzamer
 
-        public static void initTime()
+        public static void iinitTime()
         {
             currentRealTime = DateTime.Now;
             currentSimTime = DateTime.Now;
@@ -45,7 +45,7 @@ namespace Introductieproject.Simulation
             currentSimTime = currentSimTime.Add(elapsedSimTime);                // De verstreken simulatietijd optellen bij de laatst bekende simtime
             currentRealTime = updatedRealTime;                                  // currentRealTime updaten met de nieuwe tijd
 
-            Console.WriteLine("Time updated. elapsedRT: " + elapsedRealTime + ", elapsedST: " + elapsedSimTime);
+            //Console.WriteLine("Time updated. elapsedRT: " + elapsedRealTime + ", elapsedST: " + elapsedSimTime);
             Console.WriteLine("currentSimTime: " + currentSimTime + ", currentRealTime: " + currentRealTime);
         }
     }

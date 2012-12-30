@@ -10,37 +10,34 @@ namespace Introductieproject.Objects
 {
     class Airplane
     {
-        // "Vaste" variabelen die per type zullen verschillen
-        public int type;                   // int gedefinieert in enumeratie
-        public String manufacturerName;    // Maker vliegtuig
-        public String typeName;  // Leesbare string voor weergave
-        public DateTime arrivalDate;
-        public DateTime depatureDate;
-        public DateTime actualArrivalDate;
-        public DateTime actualDepartureDate;
-        public string carrier;
-        public string destination;
-        public string orgin;
-        public int maxSpeed;               // Snelheden in m/s
+        // "Vaste" variabelen die per type vliegtuig zullen verschillen (defined in subclasse!)
+        public String manufacturerName;     // Maker vliegtuig
+        public String typeName;             // Leesbare string voor weergave
+        public int maxSpeed;                // Snelheden in m/s
         public int cruisingSpeed;
         public int takeofSpeed;
         public int taxiSpeed;
-        public int id;
-        public int maxCapacityKg;
 
-        // Vanaf hier èchte variabelen, per vliegtuig verschillend
-        public Company company;            // Eigenaar vliegtuig
+        // Hier variabelen die per individueel vliegtuig verschillen (defined in XML)
+        public String registration;
+        public String flight;
+        public DateTime arrivalDate;
+        public DateTime departureDate;
+        public string carrier;
+        public string destination;
+        public string origin;
 
-        public int state;                  // Huidige staat van het vliegtuig
+        // Vanaf hier èchte variabelen, per vliegtuig verschillen (defined tijdens aanwezigheid op vliegveld)
+        public Boolean wasSetup = false;    // op true zodra onderstaande variabelen gedefinieerd zijn
+        public DateTime actualArrivalDate;
+        public DateTime actualDepartureDate;
         public int priority;
 
-        public int passengers;             // Aantal passagiers
-        public int luggage;                // Aantal stukken baggage
-        public double luggageKg;           // Baggage in kilogram
+        public int passengers;              // Aantal passagiers
+        public int luggage;                 // Aantal stukken baggage
+        public double luggageKg;            // Baggage in kilogram
 
-        public Gate assignedGate;           // Gate waar het vliegtuig heen moet
-
-        public double[] location;              // De huidige locatie van het vliegtuig
+        public double[] location;           // De huidige locatie van het vliegtuig
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
         public bool atGate;
@@ -54,17 +51,22 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void initVariables(double[] location, double speed, int angle, Company company, int state, int passengers, int luggage, int luggageKg, DateTime arrivalDate, DateTime departureDate)
+        public void setXMLVariables(DateTime arrivalDate, DateTime departureDate, String registration, String flight, String carrier, String origin, String destination)
+        {
+            this.registration = registration;
+            this.flight = flight;
+            this.carrier = carrier;
+            this.arrivalDate = arrivalDate;
+            this.departureDate = departureDate;
+        }
+        public void setStateVariables(double[] location, double speed, int angle, int passengers, int luggage, int luggageKg)
         {
             this.location = location;
             this.speed = speed;
-            this.company = company;
-            this.state = state;
             this.passengers = passengers;
             this.luggage = luggage;
             this.luggageKg = luggageKg;
-            this.arrivalDate = arrivalDate;
-            this.depatureDate = departureDate;
+            this.wasSetup = true;
         }
 
         public void Dock()
@@ -75,7 +77,7 @@ namespace Introductieproject.Objects
             //For testing purpose: zelf instellen
 
             arrivalDate = new DateTime(2012, 12, 28, 16, 00, 00, 00);
-            depatureDate = new DateTime(2012, 12, 28, 16, 00, 30, 00);
+            departureDate = new DateTime(2012, 12, 28, 16, 00, 30, 00);
 
             actualArrivalDate = TimeKeeper.currentSimTime;
 
@@ -145,8 +147,8 @@ namespace Introductieproject.Objects
 
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + oude vertrektijd.
-            Console.WriteLine("DEPARTUREDATE: " + depatureDate);
-            actualDepartureDate = depatureDate.Add(difference + delay);
+            Console.WriteLine("DEPARTUREDATE: " + departureDate);
+            actualDepartureDate = departureDate.Add(difference + delay);
             Console.WriteLine("actualDepartureDate: " + actualDepartureDate);
 
             //navigator = null;

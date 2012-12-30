@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<schedule>
+  <plane
+    registration="G-BCDE"
+    flight="I-D0N7-KN0W"
+    type="BO_747"
+    carrier="British Airways"
+    arrivalDate="01/01/13 22:05:00"
+    departureDate="01/01/13 22:15:00"
+    origin="London Heathrow"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+    registration="G-ABCD"
+    flight="A-1337-101"
+    type="BO_747"
+    carrier="British Airways"
+    arrivalDate="01/01/13 22:00:00"
+    departureDate="01/01/13 22:10:00"
+    origin="John F. Kennedy International Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+</schedule>

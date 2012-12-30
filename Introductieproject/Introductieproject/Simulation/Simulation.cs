@@ -83,6 +83,8 @@ namespace Introductieproject.Simulation
 
                 TimeKeeper.updateTime();
 
+                Parser.refreshAirplanes(airport.airplanes);
+
                 updateSimulation();
 
                 Thread.Sleep(updateInterval);

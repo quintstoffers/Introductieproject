@@ -29,14 +29,35 @@ namespace Introductieproject.Airport
         {
             foreach (Airplane currentAirplane in airplanes)
             {
+                if (!currentAirplane.wasSetup)
+                {
+                    Console.WriteLine("NOT SETUP");
+                    Console.WriteLine("ARRIVE: " + currentAirplane.arrivalDate);
+                    Console.WriteLine("CURR:   " + TimeKeeper.currentSimTime);
+                    if (TimeKeeper.currentSimTime >= currentAirplane.arrivalDate)   // Vliegtuig is geland, maar nog niet setup
+                    {
+                        Console.WriteLine("New airplane landed (" + currentAirplane.registration + ")");
+
+                        double[] location = new double[2];
+                        location[0] = 1000;
+                        location[1] = 0;
+                        currentAirplane.setStateVariables(location, 0, 0, 200, 210, 2000);
+                    }
+                    else
+                    {
+                        // Vliegtuig is nog niet geland
+                    }
+                    continue;
+                }
+
                 if (currentAirplane.navigator == null && runways[0].runwayHasAirplane == false)       // Vliegtuig heeft nog geen navigator gekregen, ofwel net geland, of klaar om te vertrekken
                 {
-                        runways[0].runwayHasAirplane = true;
-                        Console.WriteLine("Found airplane without navigator");
-                        Navigator navigator = new Navigator(currentAirplane, ways);
-                        currentAirplane.navigator = navigator;
-                        Console.WriteLine(airplanes.Count);
-                        runwayTracker = 0;
+                    runways[0].runwayHasAirplane = true;
+                    Console.WriteLine("Found airplane without navigator");
+                    Navigator navigator = new Navigator(currentAirplane, ways);
+                    currentAirplane.navigator = navigator;
+                    Console.WriteLine(airplanes.Count);
+                    runwayTracker = 0;
                 }
                 else if (currentAirplane.navigator.wayList[0] is Taxiway && currentAirplane.navigator.currentTargetNode == 1 && runwayTracker == 0)
                 {
@@ -52,7 +73,7 @@ namespace Introductieproject.Airport
                 }
             }
 
-            Console.WriteLine(this.ToString());
+            //Console.WriteLine(this.ToString());
         }
 
         public override string ToString()

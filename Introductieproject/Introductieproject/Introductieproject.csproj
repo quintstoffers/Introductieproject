@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Airplanes\Airplane.cs" />
-    <Compile Include="Airplanes\Airplanes.cs" />
     <Compile Include="Airplanes\BO_747.cs" />
     <Compile Include="Airplanes\Navigator.cs" />
     <Compile Include="Airport\Airport.cs" />
@@ -59,9 +58,6 @@
     <Compile Include="Airport\Gateway.cs" />
     <Compile Include="Airport\Runway.cs" />
     <Compile Include="Airport\Taxiway.cs" />
-    <Compile Include="Companies\Companies.cs" />
-    <Compile Include="Companies\Company.cs" />
-    <Compile Include="Companies\KLM.cs" />
     <Compile Include="Simulation\Parser.cs" />
     <Compile Include="Simulation\Simulation.cs" />
     <Compile Include="Simulation\TimeKeeper.cs" />
@@ -134,7 +130,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Simulation\Airplanes.xml">
+    <Content Include="Simulation\schedule.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>

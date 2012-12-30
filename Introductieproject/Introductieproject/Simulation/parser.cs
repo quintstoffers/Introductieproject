@@ -11,24 +11,76 @@ namespace Introductieproject.Simulation
 {
     class Parser
     {
-        XmlDocument database = new XmlDocument();
-        List<Airplane> airplanes = new List<Airplane>();
-        XmlNodeList planes;
-        bool firstupdate = true;
-        public Parser()
+        static XmlDocument xmlDocument = new XmlDocument();
+        static XmlNodeList rawPlaneSchedule;
+
+        public static void refreshAirplanes(List<Airplane> loadedAirplanes)
         {
             try
             {
-                database.Load(@"Simulation\Airplanes.xml");
+                xmlDocument.Load(@"Simulation\schedule.xml");
             }
             catch (FileNotFoundException)
             {
                 Console.WriteLine("XML not found");
+                return;
             }
-            planes = database.GetElementsByTagName("plane");
+
+            rawPlaneSchedule = xmlDocument.GetElementsByTagName("plane");
+            Assembly assembly = Assembly.Load("Introductieproject");
+
+            int planeCount = rawPlaneSchedule.Count;
+            for (int i = 0; i < planeCount; i++)
+            {
+                XmlNode rawAirplane = rawPlaneSchedule.Item(i);
+
+                XmlAttributeCollection attr = rawAirplane.Attributes;
+                attr = rawAirplane.Attributes;
+                
+                String registration =   attr["registration"].Value;
+                String flight =         attr["flight"].Value;
+                String type =           attr["type"].Value;
+                String carrier =        attr["carrier"].Value;
+                String arrivalDate =    attr["arrivalDate"].Value;
+                String departureDate =  attr["departureDate"].Value;
+                String origin =         attr["origin"].Value;
+                String destination =    attr["destination"].Value;
+
+                DateTime arrivalDateTime = DateTime.Parse(arrivalDate);
+                DateTime departureDateTime = DateTime.Parse(departureDate);
+
+                bool airplaneAlreadyLoaded = false;
+                foreach(Airplane currentAirplane in loadedAirplanes)
+                {
+                    if(currentAirplane.registration.Equals(registration))   // Airplane bestaat al
+                    {
+                        currentAirplane.flight = flight;
+                        currentAirplane.carrier = carrier;
+                        currentAirplane.arrivalDate = arrivalDateTime;
+                        currentAirplane.departureDate = departureDateTime;
+                        currentAirplane.origin = origin;
+                        currentAirplane.destination = destination;
+
+                        airplaneAlreadyLoaded = true;
+                        break;
+                    }
+                }
+                if (!airplaneAlreadyLoaded)
+                {
+                    System.Type objectType = assembly.GetType("Introductieproject.Objects." + type);
+
+                    Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
+                    newAirplane.setXMLVariables(arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
+                    loadedAirplanes.Add(newAirplane);
+
+                    Console.WriteLine("Arrival: " + arrivalDateTime.ToString());
+                    Console.WriteLine("XML: new airplane loaded (flight=" + flight + " registration=" + registration + ")");
+
+                }
+            }
         }
 
-        public string getallplanes()
+        /*public string getallplanes()
         {
             string planes = null;
             XmlNodeList planename = database.SelectNodes("//data/planes/plane/number/text()");
@@ -84,6 +136,7 @@ namespace Introductieproject.Simulation
             Console.WriteLine(airplanes.Count + " Airplanes loaded");
             firstupdate = false;
         }
+
         public void saveairplane()
         {
             int i = 0;
@@ -97,6 +150,6 @@ namespace Introductieproject.Simulation
                 i++;
             }
             database.Save(@"Simulation\Airplanes.xml");
-        }
+        }*/
     }
 }

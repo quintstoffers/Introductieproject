@@ -14,8 +14,10 @@ namespace Introductieproject.Objects
         public int type;                   // int gedefinieert in enumeratie
         public String manufacturerName;    // Maker vliegtuig
         public String typeName;  // Leesbare string voor weergave
-        public DateTime arrivaldate;
-        public DateTime depaturedate;
+        public DateTime arrivalDate;
+        public DateTime depatureDate;
+        public DateTime actualArrivalDate;
+        public DateTime actualDepartureDate;
         public string carrier;
         public string destination;
         public string orgin;
@@ -41,6 +43,8 @@ namespace Introductieproject.Objects
         public double[] location;              // De huidige locatie van het vliegtuig
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
+        public bool atGate;
+
 
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
 
@@ -50,7 +54,7 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void initVariables(double[] location, double speed, int angle, Company company, int state, int passengers, int luggage, int luggageKg)
+        public void initVariables(double[] location, double speed, int angle, Company company, int state, int passengers, int luggage, int luggageKg, DateTime arrivalDate, DateTime departureDate)
         {
             this.location = location;
             this.speed = speed;
@@ -59,32 +63,35 @@ namespace Introductieproject.Objects
             this.passengers = passengers;
             this.luggage = luggage;
             this.luggageKg = luggageKg;
+            this.arrivalDate = arrivalDate;
+            this.depatureDate = departureDate;
         }
 
         public void Dock()
         {
-            bool atGate = true;
-
+            atGate = true;
+            
             //TODO: Vliegtuig krijgt geen arrival/departuredate mee.
             //For testing purpose: zelf instellen
 
-            arrivaldate = new DateTime(2012, 12, 28, 16, 00, 00, 00);
-            depaturedate = new DateTime(2012, 12, 28, 16, 00, 30, 00);
+            arrivalDate = new DateTime(2012, 12, 28, 16, 00, 00, 00);
+            depatureDate = new DateTime(2012, 12, 28, 16, 00, 30, 00);
+
+            actualArrivalDate = TimeKeeper.currentSimTime;
 
             //Check wanneer vliegtuig is aangekomen.
-            DateTime simArrivalDate = TimeKeeper.currentSimTime;
-            Console.WriteLine("SIMARRIVALTIME: " + simArrivalDate);
-            Console.WriteLine("ARRIVALDATE: " + arrivaldate);
+            Console.WriteLine("SIMARRIVALTIME: " + actualArrivalDate);
+            Console.WriteLine("ARRIVALDATE: " + arrivalDate);
 
             //Bereken verschil in verwachte vertrektijd en verwachte aankomst tijd.
             TimeSpan difference = new TimeSpan();
-            if (simArrivalDate >= arrivaldate)
+            if (actualArrivalDate >= arrivalDate)
             {
-                difference = simArrivalDate.Subtract(arrivaldate);
+                difference = actualArrivalDate.Subtract(arrivalDate);
             }
-            else if (simArrivalDate < arrivaldate)
+            else if (actualArrivalDate < arrivalDate)
             {
-                difference = arrivaldate.Subtract(simArrivalDate);
+                difference = arrivalDate.Subtract(actualArrivalDate);
             }
             Console.WriteLine("DIFFERENCE: " + difference);
 
@@ -139,29 +146,17 @@ namespace Introductieproject.Objects
 
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + oude vertrektijd.
-            DateTime newSimDepartureDate = new DateTime(2012, 12, 28, 20, 00, 00, 00);
-            Console.WriteLine("DEPARTUREDATE: " + depaturedate);
-            newSimDepartureDate = depaturedate.Add(difference + delay);
-            Console.WriteLine("newSimDepartureDate: " + newSimDepartureDate);
+            Console.WriteLine("DEPARTUREDATE: " + depatureDate);
+            actualDepartureDate = depatureDate.Add(difference + delay);
+            Console.WriteLine("actualDepartureDate: " + actualDepartureDate);
 
+            //navigator = null;
+            hasDocked = true;
 
             /*  Zolang de benodigde tijd voor het vliegtuig nog niet is verstreken, blijft deze in een loop.
              *  TODO: Niet pauzeerbaar tijdens de loop. 
              *  Timekeeper update niet tijdens loop. Moet handmatig worden ingevoerd.
-             */ 
-            while (atGate == true)
-            {
-                //SimTime loopt niet door tijdens de while loop...
-                TimeKeeper.updateTime();
-
-                //Vliegtuig vertrek als de newSimDepartureDate gelijk is aan de currentSimTime.
-                if (TimeKeeper.currentSimTime >= newSimDepartureDate)
-                {
-                    atGate = false;  //Vliegtuig moet weer naar Runway
-                }
-            }
-            // geef nieuwe navigator aan vliegtuig.
-            navigator = null;
+             */
         }
 
         /*
@@ -169,9 +164,20 @@ namespace Introductieproject.Objects
         */
         public void simulate()
         {
-            if (navigator == null)
+            // vliegtuig hoort geen navigator te hebben: bij gate.
+            if (atGate)
+                {
+                    //Vliegtuig vertrek als de newactualDepartureDate gelijk is aan de currentSimTime.
+                    if (TimeKeeper.currentSimTime >= actualDepartureDate)
+                    {
+                        atGate = false;  //Vliegtuig moet weer naar Runway
+                        navigator = null;
+                    }
+                    // geef nieuwe navigator aan vliegtuig.
+                }
+            else if (navigator == null)
             {
-                // vliegtuig heeft nog geen route gekregen
+                // of vliegtuig heeft nog geen route gekregen
             }
             else
             {
@@ -180,7 +186,6 @@ namespace Introductieproject.Objects
                 {
                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                     this.Dock();
-                    hasDocked = true;
                 }
                 else
                 {
@@ -193,7 +198,7 @@ namespace Introductieproject.Objects
                     Console.WriteLine("     target angle: " + targetAngle);
 
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
-                    double maxSpeed = 30;
+                    double maxSpeed = 50;
                     double cornerSpeed = 1;
                     navigator.location = this.location;
 
@@ -320,7 +325,7 @@ namespace Introductieproject.Objects
 
         private void accelerate(double targetSpeed)
         {
-            double acceleration = 1;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
+            double acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
             if (targetSpeed < speed)
                 acceleration = -1; // in het geval dat je moet afremmen
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;

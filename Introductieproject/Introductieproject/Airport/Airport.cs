@@ -31,26 +31,28 @@ namespace Introductieproject.Airport
             {
                 if (currentAirplane.navigator == null && runways[0].runwayHasAirplane == false)       // Vliegtuig heeft nog geen navigator gekregen, ofwel net geland, of klaar om te vertrekken
                 {
-                    runways[0].runwayHasAirplane = true;
-                    Console.WriteLine("Found airplane without navigator");
-                    Navigator navigator = new Navigator(currentAirplane, ways);
-                    currentAirplane.navigator = navigator;
-                    Console.WriteLine(airplanes.Count);
-                    runwayTracker = 0;
+                        runways[0].runwayHasAirplane = true;
+                        Console.WriteLine("Found airplane without navigator");
+                        Navigator navigator = new Navigator(currentAirplane, ways);
+                        currentAirplane.navigator = navigator;
+                        Console.WriteLine(airplanes.Count);
+                        runwayTracker = 0;
                 }
-                if (currentAirplane.navigator.wayList[0] is Taxiway && currentAirplane.navigator.currentTargetNode == 1 && runwayTracker == 0)
+                else if (currentAirplane.navigator.wayList[0] is Taxiway && currentAirplane.navigator.currentTargetNode == 1 && runwayTracker == 0)
                 {
                     runways[0].runwayHasAirplane = false;
                     runwayTracker = 1;
                     Console.WriteLine("RUNWAYTEST!");
                 }
-                if (currentAirplane.navigator.wayList[0] is Gate && runwayTracker == 0)
+                else if (currentAirplane.navigator.wayList[0] is Gate && runwayTracker == 0)
                 {
                     runways[0].runwayHasAirplane = false;
                     runwayTracker = 1;
                     Console.WriteLine("RUNWAYTEST!");
                 }
             }
+
+            Console.WriteLine(this.ToString());
         }
 
         public override string ToString()

@@ -16,7 +16,6 @@ namespace Introductieproject.Airplanes
         private bool hasEnded = false;
         public double[] location;
         public double distanceToTarget;
-        Node runwayNode = new Node(500, 500);
 
         IList<Way> runWays = new List<Way>();
 
@@ -295,10 +294,25 @@ namespace Introductieproject.Airplanes
         public bool hasPermission()
         {
             //Indien trackWay gelijk is aan grootte van wayList, dan moet hij weer op 0 en kan je sowieso true returnen, want hij is bij de gate.
+
             if (trackWay == wayList.Count)
             {
                 trackWay = 0;
                 return true;
+            }
+            else if (wayList[trackWay] is Runway)
+            {
+                if (runWays[0].runwayHasAirplane == false)
+                {
+                    Console.WriteLine("TOESTEMMING VOOR RUNWAY!");
+                    trackWay++;
+                    return true;
+                }
+                else
+                {                   
+                    Console.WriteLine("GEEN TOESTEMMING VOOR RUNWAY!");
+                    return false;
+                }
             }
             else
             {

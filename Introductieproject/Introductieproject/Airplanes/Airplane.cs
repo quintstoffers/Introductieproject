@@ -140,7 +140,6 @@ namespace Introductieproject.Objects
             {
                 // Geen delay
             }
-
             Console.WriteLine("DELAY: " + delay);
 
 

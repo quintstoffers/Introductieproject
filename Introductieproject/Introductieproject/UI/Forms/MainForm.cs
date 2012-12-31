@@ -23,6 +23,11 @@ namespace Introductieproject.Forms
             airplaneStatsControl.setDataBinding(airport.airplanes);
         }
 
+        public void updateUI()  // Update elementen zonder databinding
+        {
+            tsSimTime.Text = "Current time: " + TimeKeeper.currentSimTime.ToString();
+        }
+
         void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult res = MessageBox.Show("Je bent nog bezig met een Simulatie. Weet je zeker dat je wilt afsluiten?", "Waarschuwing", MessageBoxButtons.YesNo);
@@ -54,6 +59,11 @@ namespace Introductieproject.Forms
         }
 
         private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void airplaneStatsControl_Load(object sender, EventArgs e)
         {
 
         }

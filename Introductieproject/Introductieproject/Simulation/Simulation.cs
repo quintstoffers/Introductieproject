@@ -86,6 +86,7 @@ namespace Introductieproject.Simulation
 
                 updateSimulation();
 
+                Program.mainForm.BeginInvoke((Action)(() => Program.mainForm.updateUI()));
                 Thread.Sleep(updateInterval);
             }
 

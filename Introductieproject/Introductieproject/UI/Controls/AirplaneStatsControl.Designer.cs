@@ -33,6 +33,7 @@
             this.Registration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Arrival = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Departure = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,7 +51,8 @@
             this.Flight,
             this.Registration,
             this.Arrival,
-            this.Departure});
+            this.Departure,
+            this.Delay});
             this.dataGrid.Location = new System.Drawing.Point(0, 0);
             this.dataGrid.Margin = new System.Windows.Forms.Padding(0);
             this.dataGrid.Name = "dataGrid";
@@ -85,6 +87,7 @@
             this.Arrival.HeaderText = "Arrival";
             this.Arrival.Name = "Arrival";
             this.Arrival.ReadOnly = true;
+            this.Arrival.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.Arrival.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.Arrival.ToolTipText = "Planned date of arrival";
             // 
@@ -95,6 +98,15 @@
             this.Departure.Name = "Departure";
             this.Departure.ReadOnly = true;
             this.Departure.ToolTipText = "Planned date of departure";
+            // 
+            // Delay
+            // 
+            this.Delay.DataPropertyName = "CurrentDelay";
+            this.Delay.HeaderText = "Delay";
+            this.Delay.Name = "Delay";
+            this.Delay.ReadOnly = true;
+            this.Delay.ToolTipText = "Current delay";
+            this.Delay.Width = 50;
             // 
             // AirplaneStatsControl
             // 
@@ -116,6 +128,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Registration;
         private System.Windows.Forms.DataGridViewTextBoxColumn Arrival;
         private System.Windows.Forms.DataGridViewTextBoxColumn Departure;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Delay;
 
 
 

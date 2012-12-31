@@ -31,6 +31,7 @@ namespace Introductieproject.Objects
         public Boolean wasSetup = false;    // op true zodra onderstaande variabelen gedefinieerd zijn
         public DateTime actualArrivalDate;
         public DateTime actualDepartureDate;
+        public TimeSpan delay;
         public int priority;
 
         public int passengers;              // Aantal passagiers
@@ -74,6 +75,14 @@ namespace Introductieproject.Objects
                 return departureDate.ToString();
             }
         }
+        public String CurrentDelay
+        {
+            get
+            {
+                return delay.ToString();
+            }
+        }
+
 
         /*
          * Initialiseer variabelen
@@ -125,7 +134,7 @@ namespace Introductieproject.Objects
             Console.WriteLine("DIFFERENCE: " + difference);
 
             // Random delay van 0-100. 
-            TimeSpan delay = new TimeSpan();
+            delay = new TimeSpan();
             Random random = new Random();
             int cases = random.Next(0, 100);
 

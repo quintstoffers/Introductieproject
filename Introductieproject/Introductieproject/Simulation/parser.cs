@@ -15,7 +15,7 @@ namespace Introductieproject.Simulation
         static XmlDocument xmlDocument = new XmlDocument();
         static XmlNodeList rawPlaneSchedule;
 
-        public static void refreshAirplanes(List<Airplane> loadedAirplanes)
+        public static void refreshAirplanes(BindingList<Airplane> loadedAirplanes)
         {
             try
             {
@@ -53,6 +53,10 @@ namespace Introductieproject.Simulation
                 bool airplaneAlreadyLoaded = false;
                 foreach(Airplane currentAirplane in loadedAirplanes)
                 {
+                    if (currentAirplane.registration == null)
+                    {
+                        continue;
+                    }
                     if (currentAirplane.registration.Equals(registration))   // Airplane bestaat al
                     {
                         currentAirplane.flight = flight;
@@ -72,12 +76,9 @@ namespace Introductieproject.Simulation
 
                     Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
                     newAirplane.setXMLVariables(arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
+                    
+                    Program.mainForm.Invoke((Action)(() => loadedAirplanes.Add(newAirplane)));
 
-                    Console.WriteLine("ADD AIRPLANE");
-                    loadedAirplanes.Add(newAirplane);
-
-
-                    Program.mainForm.Invoke((Action)(() => Program.mainForm.updateUI()));
                     Console.WriteLine("Arrival: " + arrivalDateTime.ToString());
                     Console.WriteLine("XML: new airplane loaded (flight=" + flight + " registration=" + registration + ")");
 

@@ -31,21 +31,31 @@
             this.dataGrid = new System.Windows.Forms.DataGridView();
             this.Flight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Registration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Arrival = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Departure = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGrid
             // 
+            this.dataGrid.AllowUserToAddRows = false;
+            this.dataGrid.AllowUserToDeleteRows = false;
             this.dataGrid.AllowUserToOrderColumns = true;
+            this.dataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Flight,
-            this.Registration});
-            this.dataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Registration,
+            this.Arrival,
+            this.Departure});
             this.dataGrid.Location = new System.Drawing.Point(0, 0);
             this.dataGrid.Margin = new System.Windows.Forms.Padding(0);
             this.dataGrid.Name = "dataGrid";
+            this.dataGrid.ReadOnly = true;
+            this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGrid.Size = new System.Drawing.Size(600, 200);
             this.dataGrid.TabIndex = 0;
             // 
@@ -54,14 +64,37 @@
             this.Flight.DataPropertyName = "Flight";
             this.Flight.HeaderText = "Flight";
             this.Flight.Name = "Flight";
+            this.Flight.ReadOnly = true;
+            this.Flight.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Flight.ToolTipText = "Flight numbers";
+            this.Flight.Width = 80;
             // 
             // Registration
             // 
             this.Registration.DataPropertyName = "Registration";
             this.Registration.HeaderText = "Registration";
             this.Registration.Name = "Registration";
+            this.Registration.ReadOnly = true;
+            this.Registration.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Registration.ToolTipText = "Airplane registration";
+            this.Registration.Width = 80;
+            // 
+            // Arrival
+            // 
+            this.Arrival.DataPropertyName = "PlannedArrival";
+            this.Arrival.HeaderText = "Arrival";
+            this.Arrival.Name = "Arrival";
+            this.Arrival.ReadOnly = true;
+            this.Arrival.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.Arrival.ToolTipText = "Planned date of arrival";
+            // 
+            // Departure
+            // 
+            this.Departure.DataPropertyName = "PlannedDeparture";
+            this.Departure.HeaderText = "Departure";
+            this.Departure.Name = "Departure";
+            this.Departure.ReadOnly = true;
+            this.Departure.ToolTipText = "Planned date of departure";
             // 
             // AirplaneStatsControl
             // 
@@ -81,6 +114,8 @@
         public System.Windows.Forms.DataGridView dataGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn Flight;
         private System.Windows.Forms.DataGridViewTextBoxColumn Registration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Arrival;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Departure;
 
 
 

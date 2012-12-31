@@ -60,6 +60,20 @@ namespace Introductieproject.Objects
                 return registration;
             }
         }
+        public String PlannedArrival
+        {
+            get
+            {
+                return arrivalDate.ToString();
+            }
+        }
+        public String PlannedDeparture
+        {
+            get
+            {
+                return departureDate.ToString();
+            }
+        }
 
         /*
          * Initialiseer variabelen

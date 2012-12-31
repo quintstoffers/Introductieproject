@@ -23,12 +23,6 @@ namespace Introductieproject.Forms
             airplaneStatsControl.setDataBinding(airport.airplanes);
         }
 
-        public void updateUI()
-        {
-            //airplaneStatsControl.setDataBinding(airport.airplanes);
-            airplaneStatsControl.update(airport.airplanes);
-        }
-
         void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             DialogResult res = MessageBox.Show("Je bent nog bezig met een Simulatie. Weet je zeker dat je wilt afsluiten?", "Waarschuwing", MessageBoxButtons.YesNo);

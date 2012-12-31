@@ -17,16 +17,9 @@ namespace Introductieproject.UI.Controls
             InitializeComponent(); 
         }
 
-        public void setDataBinding(List<Airplane> airplanes)
+        public void setDataBinding(BindingList<Airplane> airplanes)
         {
             dataGrid.DataSource = airplanes;
-        }
-
-        public void update(List<Airplane> airplanes)
-        {
-            dataGrid.DataSource = typeof(List<>);
-            dataGrid.DataSource = airplanes;
-            dataGrid.Refresh();
         }
     }
 }

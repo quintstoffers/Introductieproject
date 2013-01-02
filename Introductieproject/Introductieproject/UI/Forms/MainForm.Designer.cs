@@ -42,9 +42,9 @@
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsSimTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -169,20 +169,8 @@
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitContainer1.Size = new System.Drawing.Size(1370, 269);
-            this.splitContainer1.SplitterDistance = 455;
+            this.splitContainer1.SplitterDistance = 799;
             this.splitContainer1.TabIndex = 3;
-            // 
-            // airplaneStatsControl
-            // 
-            this.airplaneStatsControl.AutoSize = true;
-            this.airplaneStatsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.airplaneStatsControl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.airplaneStatsControl.Location = new System.Drawing.Point(0, 0);
-            this.airplaneStatsControl.Name = "airplaneStatsControl";
-            this.airplaneStatsControl.Size = new System.Drawing.Size(455, 269);
-            this.airplaneStatsControl.TabIndex = 0;
-            this.airplaneStatsControl.Load += new System.EventHandler(this.airplaneStatsControl_Load);
             // 
             // statusStrip1
             // 
@@ -199,6 +187,21 @@
             this.tsSimTime.Name = "tsSimTime";
             this.tsSimTime.Size = new System.Drawing.Size(94, 17);
             this.tsSimTime.Text = "Simulation Time";
+            // 
+            // airplaneStatsControl
+            // 
+            this.airplaneStatsControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.airplaneStatsControl.AutoSize = true;
+            this.airplaneStatsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.airplaneStatsControl.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.airplaneStatsControl.Location = new System.Drawing.Point(0, 0);
+            this.airplaneStatsControl.Margin = new System.Windows.Forms.Padding(0);
+            this.airplaneStatsControl.Name = "airplaneStatsControl";
+            this.airplaneStatsControl.Size = new System.Drawing.Size(800, 200);
+            this.airplaneStatsControl.TabIndex = 0;
+            this.airplaneStatsControl.Load += new System.EventHandler(this.airplaneStatsControl_Load);
             // 
             // MainForm
             // 

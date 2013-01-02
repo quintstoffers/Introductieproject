@@ -10,6 +10,14 @@ namespace Introductieproject.Airport
         public double[] location = new double[2];
         public IList<Way> connections = new List<Way>();
 
+        public String Location
+        {
+            get
+            {
+                return location[0] + ", " + location[1];
+            }
+        }
+
         public Node(double x, double y)
         {
             this.location[0] = x;

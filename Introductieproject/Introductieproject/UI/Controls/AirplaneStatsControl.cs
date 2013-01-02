@@ -12,6 +12,8 @@ namespace Introductieproject.UI.Controls
 {
     public partial class AirplaneStatsControl : UserControl
     {
+        int currentSelectedRow = 0;
+
         public AirplaneStatsControl()
         {
             InitializeComponent(); 
@@ -22,14 +24,26 @@ namespace Introductieproject.UI.Controls
             dataGrid.DataSource = airplanes;
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        public void updateAirplaneStats(BindingList<Airplane> airplanes)
         {
+            try
+            {
+                Airplane currentAirplane = airplanes[currentSelectedRow];
 
+                if (currentAirplane.navigator != null && currentAirplane.navigator.nodepoints != null)
+                {
+                    dgvNodes.DataSource = currentAirplane.navigator.nodepoints;
+                }
+
+                lbSpeed.Text = currentAirplane.speed.ToString();
+                lbLocation.Text = currentAirplane.location[0] + ", " + currentAirplane.location[1];
+            }
+            catch (Exception) { }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGrid_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
-
+            currentSelectedRow = e.RowIndex;
         }
     }
 }

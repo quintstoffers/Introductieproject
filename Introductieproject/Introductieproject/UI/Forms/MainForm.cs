@@ -26,6 +26,7 @@ namespace Introductieproject.Forms
         public void updateUI()  // Update elementen zonder databinding
         {
             tsSimTime.Text = "Current time: " + TimeKeeper.currentSimTime.ToString();
+            airplaneStatsControl.updateAirplaneStats(airport.airplanes);
         }
 
         void MainForm_FormClosing(object sender, FormClosingEventArgs e)

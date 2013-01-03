@@ -37,7 +37,7 @@ namespace Introductieproject.Airport
                     Console.WriteLine("CURR:   " + TimeKeeper.currentSimTime);
                     if (TimeKeeper.currentSimTime >= currentAirplane.arrivalDate)   // Vliegtuig is geland, maar nog niet setup
                     {
-                        Console.WriteLine("New airplane landed (" + currentAirplane.registration + ")");
+                        Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
 
                         double[] location = new double[2];
                         location[0] = 1000;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Introductieproject.Simulation;
+using Introductieproject.UI;
 
 namespace Introductieproject.Forms
 {
@@ -20,13 +21,12 @@ namespace Introductieproject.Forms
 
             InitializeComponent();
 
-            airplaneStatsControl.setDataBinding(airport.airplanes);
+            airplaneStatsControl.init(airport);
         }
 
         public void updateUI()  // Update elementen zonder databinding
         {
-            tsSimTime.Text = "Current time: " + TimeKeeper.currentSimTime.ToString();
-            airplaneStatsControl.updateAirplaneStats(airport.airplanes);
+            airplaneStatsControl.update(airport);
         }
 
         void MainForm_FormClosing(object sender, FormClosingEventArgs e)

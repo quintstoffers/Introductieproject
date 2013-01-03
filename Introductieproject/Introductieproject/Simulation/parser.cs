@@ -52,11 +52,11 @@ namespace Introductieproject.Simulation
                 bool airplaneAlreadyLoaded = false;
                 foreach(Airplane currentAirplane in loadedAirplanes)
                 {
-                    if (currentAirplane.registration == null)
+                    if (currentAirplane.Registration == null)
                     {
                         continue;
                     }
-                    if (currentAirplane.registration.Equals(registration))   // Airplane bestaat al
+                    if (currentAirplane.Registration.Equals(registration))   // Airplane bestaat al
                     {
                         currentAirplane.flight = flight;
                         currentAirplane.carrier = carrier;

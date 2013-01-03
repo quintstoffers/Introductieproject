@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGrid = new System.Windows.Forms.DataGridView();
+            this.dgvAirplanes = new System.Windows.Forms.DataGridView();
             this.Flight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Registration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Arrival = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,7 +43,7 @@
             this.dgvNodes = new System.Windows.Forms.DataGridView();
             this.Node = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NodeLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAirplanes)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -52,30 +52,30 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvNodes)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGrid
+            // dgvAirplanes
             // 
-            this.dataGrid.AllowUserToAddRows = false;
-            this.dataGrid.AllowUserToDeleteRows = false;
-            this.dataGrid.AllowUserToOrderColumns = true;
-            this.dataGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgvAirplanes.AllowUserToAddRows = false;
+            this.dgvAirplanes.AllowUserToDeleteRows = false;
+            this.dgvAirplanes.AllowUserToOrderColumns = true;
+            this.dgvAirplanes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGrid.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvAirplanes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvAirplanes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAirplanes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Flight,
             this.Registration,
             this.Arrival,
             this.Departure,
             this.Delay});
-            this.dataGrid.Location = new System.Drawing.Point(0, 0);
-            this.dataGrid.Margin = new System.Windows.Forms.Padding(0);
-            this.dataGrid.Name = "dataGrid";
-            this.dataGrid.ReadOnly = true;
-            this.dataGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGrid.Size = new System.Drawing.Size(452, 350);
-            this.dataGrid.TabIndex = 0;
-            this.dataGrid.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_RowEnter);
+            this.dgvAirplanes.Location = new System.Drawing.Point(0, 0);
+            this.dgvAirplanes.Margin = new System.Windows.Forms.Padding(0);
+            this.dgvAirplanes.Name = "dgvAirplanes";
+            this.dgvAirplanes.ReadOnly = true;
+            this.dgvAirplanes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvAirplanes.Size = new System.Drawing.Size(452, 350);
+            this.dgvAirplanes.TabIndex = 0;
+            this.dgvAirplanes.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_RowEnter);
             // 
             // Flight
             // 
@@ -134,7 +134,7 @@
             // splitContainer1.Panel1
             // 
             this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.splitContainer1.Panel1.Controls.Add(this.dataGrid);
+            this.splitContainer1.Panel1.Controls.Add(this.dgvAirplanes);
             // 
             // splitContainer1.Panel2
             // 
@@ -238,7 +238,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "AirplaneStatsControl";
             this.Size = new System.Drawing.Size(800, 350);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAirplanes)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -252,7 +252,7 @@
 
         #endregion
 
-        public System.Windows.Forms.DataGridView dataGrid;
+        public System.Windows.Forms.DataGridView dgvAirplanes;
         private System.Windows.Forms.DataGridViewTextBoxColumn Flight;
         private System.Windows.Forms.DataGridViewTextBoxColumn Registration;
         private System.Windows.Forms.DataGridViewTextBoxColumn Arrival;

@@ -19,16 +19,16 @@ namespace Introductieproject.UI.Controls
             InitializeComponent(); 
         }
 
-        public void setDataBinding(BindingList<Airplane> airplanes)
+        public void init(Airport.Airport airport)
         {
-            dataGrid.DataSource = airplanes;
+            this.dgvAirplanes.DataSource = airport.airplanes;
         }
 
-        public void updateAirplaneStats(BindingList<Airplane> airplanes)
+        public void update(Airport.Airport airport)
         {
             try
             {
-                Airplane currentAirplane = airplanes[currentSelectedRow];
+                Airplane currentAirplane = airport.airplanes[currentSelectedRow];
 
                 if (currentAirplane.navigator != null && currentAirplane.navigator.nodepoints != null)
                 {

@@ -36,7 +36,6 @@ namespace Introductieproject.Simulation
                 XmlNode rawAirplane = rawPlaneSchedule.Item(i);
 
                 XmlAttributeCollection attr = rawAirplane.Attributes;
-                attr = rawAirplane.Attributes;
                 
                 String registration =   attr["registration"].Value;
                 String flight =         attr["flight"].Value;

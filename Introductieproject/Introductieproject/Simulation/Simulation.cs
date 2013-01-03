@@ -13,10 +13,10 @@ namespace Introductieproject.Simulation
     {
         private static Airport.Airport airport;            // Het vliegveld dat bewerkt wordt door deze simulatie
 
-        private static bool runSimulation;   // of de simulatie draait of niet
-        private static bool pauseSimulation; // of de simulatie gepauzeert is
+        private static bool runSimulation;                 // of de simulatie draait of niet
+        private static bool pauseSimulation;               // of de simulatie gepauzeert is
 
-        public static int updateInterval = 250;          // update interval van simulatie in milliseconden
+        public static int updateInterval = 250;            // update interval van simulatie in milliseconden
 
         private static Thread simulationThread;
 
@@ -28,9 +28,6 @@ namespace Introductieproject.Simulation
 
             Console.WriteLine("Simulation created");
 
-            Console.ForegroundColor = ConsoleColor.Blue; //kleur veranderingen heb ik gedaan voor debuggen van parser
-            //parser.Airplanelist();
-            //parser.Airplanelist();
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -56,6 +53,7 @@ namespace Introductieproject.Simulation
             runSimulation = false;
         }
 
+        // De lokale (simulatie) tijd moet hier worden opgeslagen, en op deze tijd moet ook weer worden hervat.
         public static void pauseSimulationToggle()  // Pauzeert of hervat de simulatie
         {
             pauseSimulation = !pauseSimulation;

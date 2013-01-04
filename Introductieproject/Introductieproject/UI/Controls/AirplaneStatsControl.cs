@@ -33,10 +33,21 @@ namespace Introductieproject.UI.Controls
                 if (currentAirplane.navigator != null && currentAirplane.navigator.nodepoints != null)
                 {
                     dgvNodes.DataSource = currentAirplane.navigator.nodepoints;
+                    Airport.Node targetNode = currentAirplane.navigator.getTargetNode();
+                    for (int i = 0; i < currentAirplane.navigator.nodepoints.Count; i++)
+                    {
+                        dgvNodes.Rows[i].Selected = false;
+                        if (currentAirplane.navigator.nodepoints[i].Equals(targetNode))
+                        {
+                            dgvNodes.Rows[i].Selected = true;
+                        }
+                    }
                 }
 
                 lbSpeed.Text = currentAirplane.speed.ToString();
-                lbLocation.Text = currentAirplane.location[0] + ", " + currentAirplane.location[1];
+                label1.Text = Math.Round(currentAirplane.location[0]).ToString();
+                label2.Text = Math.Round(currentAirplane.location[1]).ToString();
+                label9.Text = Math.Round(currentAirplane.angle).ToString();
             }
             catch (Exception) { }
         }
@@ -44,6 +55,11 @@ namespace Introductieproject.UI.Controls
         private void dataGrid_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             currentSelectedRow = e.RowIndex;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

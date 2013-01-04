@@ -28,8 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MapControl
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "MapControl";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MapControl_Paint);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

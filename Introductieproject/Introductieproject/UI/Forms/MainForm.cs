@@ -22,11 +22,15 @@ namespace Introductieproject.Forms
             InitializeComponent();
 
             airplaneStatsControl.init(airport);
+            mapControl.init(airport);
         }
 
         public void updateUI()  // Update elementen zonder databinding
         {
             airplaneStatsControl.update(airport);
+            mapControl.Invalidate();
+
+            tsSimTime.Text = "Simulated time: " + TimeKeeper.currentSimTime.ToString();
         }
 
         void MainForm_FormClosing(object sender, FormClosingEventArgs e)

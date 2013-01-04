@@ -72,12 +72,6 @@
     <Compile Include="UI\Controls\AirplaneStatsControl.Designer.cs">
       <DependentUpon>AirplaneStatsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\EditMapControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\Controls\EditMapControl.Designer.cs">
-      <DependentUpon>EditMapControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Controls\SimulationMapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -125,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\AirplaneStatsControl.resx">
       <DependentUpon>AirplaneStatsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\MapControl.resx">
+      <DependentUpon>MapControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\SimulationMapControl.resx">
       <DependentUpon>SimulationMapControl.cs</DependentUpon>

@@ -42,7 +42,7 @@ namespace Introductieproject.Objects
         public double[] location;           // De huidige locatie van het vliegtuig
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
-        public bool atGate;
+        public bool atGate;                 // Houdt bij of een vliegtuig op dit moment bij de gate is.
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
 
         public Navigator navigator;         // Object dat aangeeft waar het vliegtuig heen moet
@@ -84,7 +84,7 @@ namespace Introductieproject.Objects
                 totaldelay = delay + difference;
 
                 //afronden op seconden.
-                TimeSpan roundeddelay = new TimeSpan(totaldelay.Ticks - (totaldelay.Ticks % 100000));
+                TimeSpan roundeddelay = new TimeSpan(totaldelay.Ticks - (totaldelay.Ticks % 10000000));
 
                 return roundeddelay.ToString();
             }

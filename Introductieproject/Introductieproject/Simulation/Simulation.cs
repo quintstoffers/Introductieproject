@@ -64,6 +64,7 @@ namespace Introductieproject.Simulation
             else
             {
                 Console.WriteLine("Simulation unpaused");
+                TimeKeeper.updateTime();            // updateTime zodat de grote elapsedSimTime na een pause weg is
             }
         }
     

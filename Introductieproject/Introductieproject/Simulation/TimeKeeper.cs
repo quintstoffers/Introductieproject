@@ -17,7 +17,7 @@ namespace Introductieproject.Simulation
 
         public static double scale;                   // Verhouding tussen echte tijd en simulatietijd. >1 = sneller, <1 = langzamer
 
-        public static void iinitTime()
+        public static void initTime()
         {
             currentRealTime = DateTime.Now;
             currentSimTime = DateTime.Now;

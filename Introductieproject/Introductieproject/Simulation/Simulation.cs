@@ -60,11 +60,12 @@ namespace Introductieproject.Simulation
             if (pauseSimulation)
             {
                 Console.WriteLine("Simulation paused");
+                TimeKeeper.save();
             }
             else
             {
                 Console.WriteLine("Simulation unpaused");
-                TimeKeeper.updateTime();            // updateTime zodat de grote elapsedSimTime na een pause weg is
+                TimeKeeper.restore();
             }
         }
     
@@ -79,16 +80,23 @@ namespace Introductieproject.Simulation
                 {
                     Thread.Sleep(1000);
                 }
-                TimeKeeper.updateTime();
+                TimeKeeper.update();
 
                 Parser.refreshAirplanes(airport.airplanes);
 
                 updateSimulation();
+                try
+                {
+                    Program.mainForm.BeginInvoke((Action)(() => Program.mainForm.updateUI()));
+                }
+                catch (Exception e) // MainForm gesloten, geen UI thread beschikbaar. Simulatie sluiten
+                {
+                    runSimulation = false;
+                    break;
+                }
 
-                Program.mainForm.BeginInvoke((Action)(() => Program.mainForm.updateUI()));
                 Thread.Sleep(updateInterval);
             }
-
 
             Console.WriteLine("Simulation stopped");
         }

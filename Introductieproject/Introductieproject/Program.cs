@@ -26,7 +26,7 @@ namespace Introductieproject
             mainForm.Show();
 
             DateTime simStartTime = new DateTime(2013, 1, 1, 21, 59, 55);
-            TimeKeeper.initTime(simStartTime);      // TimeKeeper instellen op vaste starttijd
+            TimeKeeper.init(simStartTime);      // TimeKeeper instellen op vaste starttijd
             TimeKeeper.scale = 4;                   // Verhouding tussen real en simtime is 1, dus gelijk.
 
             Simulation.Simulation.initSimulation(airport);

@@ -17,15 +17,14 @@ namespace Introductieproject.Simulation
 
         public static double scale;                   // Verhouding tussen echte tijd en simulatietijd. >1 = sneller, <1 = langzamer
 
-        public static void initTime()
+        public static void init()
         {
             currentRealTime = DateTime.Now;
             currentSimTime = DateTime.Now;
 
             Console.WriteLine("Timekeeper set: " + currentRealTime);
         }
-
-        public static void initTime(DateTime simulationStartTime)   // Constructor die de simulatie op een bepaald tijdstip laat starten
+        public static void init(DateTime simulationStartTime)   // Constructor die de simulatie op een bepaald tijdstip laat starten
         {
             currentRealTime = DateTime.Now;
             currentSimTime = simulationStartTime;
@@ -33,7 +32,7 @@ namespace Introductieproject.Simulation
             Console.WriteLine("Simulation starting on: " + currentRealTime);
         }
 
-        public static void updateTime()
+        public static void update()
         {
             DateTime updatedRealTime = DateTime.Now;                            // Huidige tijd pakken
 
@@ -47,6 +46,24 @@ namespace Introductieproject.Simulation
 
             //Console.WriteLine("Time updated. elapsedRT: " + elapsedRealTime + ", elapsedST: " + elapsedSimTime);
             Console.WriteLine("currentSimTime: " + currentSimTime + ", currentRealTime: " + currentRealTime);
+        }
+
+        private static DateTime savedSimTime;
+        public static void save()
+        {
+            savedSimTime = currentSimTime;
+        }
+
+        public static void restore()
+        {
+            if (savedSimTime != null)
+            {
+                TimeKeeper.init(savedSimTime);
+            }
+            else
+            {
+                TimeKeeper.init();
+            }
         }
     }
 }

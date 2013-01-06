@@ -14,6 +14,7 @@ namespace Introductieproject.Airport
         public const int DIRECTION_STARTTOEND = 1;
 
         public bool isReserved = false;
+        public IList<Navigator> reservations = new List<Navigator>();
 
         public IList<Node> nodeConnections = new List<Node>();
 
@@ -86,6 +87,27 @@ namespace Introductieproject.Airport
             if (navigatorList.Count > 0)
                 hasAirplane = true;
             else hasAirplane = false;
+        }
+
+        public void addReservation(Navigator navigator)
+        {
+            this.reservations.Add(navigator);
+            this.isReserved = true;
+        }
+
+        public void removeReservation(Navigator navigator)
+        {
+            if (this.reservations.Contains(navigator))
+                this.reservations.Remove(navigator);
+            if (this.reservations.Count == 0)
+                this.isReserved = false;
+        }
+
+        public bool checkTurn(Navigator navigator)
+        {
+            if (this.reservations[0] == navigator && !this.hasAirplane)
+                return true;
+            return false;
         }
     }
 }

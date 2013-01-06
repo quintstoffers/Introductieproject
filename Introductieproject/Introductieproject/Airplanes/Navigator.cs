@@ -72,7 +72,7 @@ namespace Introductieproject.Airplanes
                     {
                         //1 gate vrij, makkelijkste geval. Deze gate is doel
                         endWay = availableGates[0];
-                        endWay.isReserved = true;
+                        endWay.addReservation(this);
                     }
                     else if (availableGates.Count == 0)
                     {
@@ -80,21 +80,29 @@ namespace Introductieproject.Airplanes
                         if (occupiedGates.Count > 0)
                         {
                             if (occupiedGates.Count == 1)
+                            {
                                 endWay = occupiedGates[0];
+                                endWay.addReservation(this);
+                            }
                             else
                             {
                                 IList<Way> occupiedWays = (IList<Way>)occupiedGates;
                                 endWay = Utils.getClosestWay(airplane.location, occupiedWays);
+                                endWay.addReservation(this);
                             }
                         }
                         else if (reservedGates.Count > 0)
                         {
                             if (reservedGates.Count == 1)
+                            {
                                 endWay = reservedGates[0];
+                                endWay.addReservation(this);
+                            }
                             else
                             {
                                 IList<Way> reservedWays = (IList<Way>)reservedGates;
                                 endWay = Utils.getClosestWay(airplane.location, reservedWays);
+                                endWay.addReservation(this);
                             }
                         }
                     }
@@ -102,7 +110,7 @@ namespace Introductieproject.Airplanes
                     {
                         IList<Way> availableWays = (IList<Way>)availableGates;
                         endWay = Utils.getClosestWay(airplane.location, availableWays);
-                        endWay.isReserved = true;
+                        endWay.addReservation(this);
                     }
                 }
                 else if (airplane.hasDocked)
@@ -260,7 +268,10 @@ namespace Introductieproject.Airplanes
                 //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
                 //Ik voeg hem niet toe bij gate, want dat gaat nog fout want hij komt er dan 2x in.
                 if (wayList[currentTargetNode] is Gate)
-                { }
+                {
+                    wayList[currentTargetNode].removeReservation(this);
+                    wayList[currentTargetNode].addNavigator(this);
+                }
                 else
                 {
                     wayList[currentTargetNode].addNavigator(this);

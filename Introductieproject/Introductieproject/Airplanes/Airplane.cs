@@ -119,6 +119,8 @@ namespace Introductieproject.Objects
             // vliegtuig hoort geen navigator te hebben: bij gate.
             if (atGate)
             {
+                //Onderstaande code staat nu in Airport, aangezien Airport de enige klasse is die een vliegtuig een Navigator kan geven
+                /*
                 //Vliegtuig vertrek als de newactualDepartureDate gelijk is aan de currentSimTime.
                 if (TimeKeeper.currentSimTime >= actualDepartureDate)
                 {
@@ -126,6 +128,7 @@ namespace Introductieproject.Objects
                     navigator = null;
                 }
                 // geef nieuwe navigator aan vliegtuig.
+                */
             }
             else if (navigator == null)
             {
@@ -137,7 +140,10 @@ namespace Introductieproject.Objects
                 if (targetNode == null)
                 {
                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
-                    this.dock();
+                    if (navigator != null)
+                    {
+                        this.dock();
+                    }
                 }
                 else
                 {
@@ -294,6 +300,8 @@ namespace Introductieproject.Objects
 
             // Zet hasDocked op true voor de navigator.
             hasDocked = true;
+
+            this.navigator = null; // Verwijder de navigator
         }
 
 

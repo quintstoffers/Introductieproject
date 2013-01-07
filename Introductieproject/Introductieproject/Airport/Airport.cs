@@ -11,7 +11,7 @@ namespace Introductieproject.Airport
     {
         public BindingList<Airplane> airplanes = new BindingList<Airplane>();
 
-        public List<Gate> gates = new List<Gate>();             // DEZE LIJSTEN MOETEN WORDEN VERVANGEN DOOR "ways"
+        public List<Gate> gates = new List<Gate>();
         public List<Runway> runways = new List<Runway>();
         public List<Taxiway> taxiways = new List<Taxiway>();
         public List<Gateway> gateways = new List<Gateway>();
@@ -50,27 +50,38 @@ namespace Introductieproject.Airport
                     }
                     continue;
                 }
-
+                if (currentAirplane.atGate && DateTime.Compare(TimeKeeper.currentSimTime,currentAirplane.actualDepartureDate) >= 0) // Als een vliegtuig bij een gate geparkeerd staat en het tijd is om te vertrekken
+                {
+                    currentAirplane.atGate = false; // Dan verlaat het vliegtuig de gate
+                    currentAirplane.navigator = null;
+                    currentAirplane.navigator = new Navigator(currentAirplane, this.ways); // En krijgt hij een nieuwe Navigator, die als het goed is een route uitrekent naar de Runway
+                }
                 if (currentAirplane.navigator == null && runways[0].runwayHasAirplane == false)       // Vliegtuig heeft nog geen navigator gekregen, ofwel net geland, of klaar om te vertrekken
                 {
-                    runways[0].runwayHasAirplane = true;
-                    Console.WriteLine("Found airplane without navigator");
-                    Navigator navigator = new Navigator(currentAirplane, ways);
-                    currentAirplane.navigator = navigator;
-                    Console.WriteLine(airplanes.Count);
-                    runwayTracker = 0;
+                    if (!currentAirplane.atGate)
+                    {
+                        runways[0].runwayHasAirplane = true;
+                        Console.WriteLine("Found airplane without navigator");
+                        Navigator navigator = new Navigator(currentAirplane, ways);
+                        currentAirplane.navigator = navigator;
+                        Console.WriteLine(airplanes.Count);
+                        runwayTracker = 0;
+                    }
                 }
-                else if (currentAirplane.navigator.wayList[0] is Taxiway && currentAirplane.navigator.currentTargetNode == 1 && runwayTracker == 0)
+                else if (currentAirplane.navigator != null)
                 {
-                    runways[0].runwayHasAirplane = false;
-                    runwayTracker = 1;
-                    Console.WriteLine("RUNWAYTEST!");
-                }
-                else if (currentAirplane.navigator.wayList[0] is Gate && runwayTracker == 0)
-                {
-                    runways[0].runwayHasAirplane = false;
-                    runwayTracker = 1;
-                    Console.WriteLine("RUNWAYTEST!");
+                    if (currentAirplane.navigator.wayList[0] is Taxiway && currentAirplane.navigator.currentTargetNode == 1 && runwayTracker == 0)
+                    {
+                        runways[0].runwayHasAirplane = false;
+                        runwayTracker = 1;
+                        Console.WriteLine("RUNWAYTEST!");
+                    }
+                    else if (currentAirplane.navigator.wayList[0] is Gate && runwayTracker == 0)
+                    {
+                        runways[0].runwayHasAirplane = false;
+                        runwayTracker = 1;
+                        Console.WriteLine("RUNWAYTEST!");
+                    }
                 }
             }
 

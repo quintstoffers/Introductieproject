@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Introductieproject.Objects;
 using Introductieproject.Airplanes;
+using Introductieproject.Simulation;
 
 namespace Introductieproject.Airport
 {
@@ -29,6 +30,15 @@ namespace Introductieproject.Airport
         public List<Navigator> navigatorList = new List<Navigator>();
 
         public Airplane airplane;
+
+        long timeOccupiedTicks = 0;
+        double Occupancy
+        {
+            get
+            {
+                return timeOccupiedTicks / TimeKeeper.totalElapsedSimTimeTicks;
+            }
+        }
         
         public Way()
         {
@@ -41,6 +51,14 @@ namespace Introductieproject.Airport
             node1.connections.Add(this); 
             node2.connections.Add(this);
             this.direction = dir;
+        }
+
+        public void simulate()
+        {
+            if (airplane != null)
+            {
+                timeOccupiedTicks += TimeKeeper.elapsedSimTime.Ticks;
+            }
         }
 
         public double length

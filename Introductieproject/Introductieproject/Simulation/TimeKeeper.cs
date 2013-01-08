@@ -12,6 +12,8 @@ namespace Introductieproject.Simulation
         public static DateTime currentRealTime;       // Tijd in echte wereld
         public static DateTime currentSimTime;        // Tijd in gesimuleerde wereld
 
+        public static long totalElapsedRealTimeTicks;
+        public static long totalElapsedSimTimeTicks;
         public static TimeSpan elapsedRealTime;       // Verstreken echte tijd sinds vorige kloktik
         public static TimeSpan elapsedSimTime;        // Idem voor de gesimuleerde wereld
 
@@ -21,13 +23,20 @@ namespace Introductieproject.Simulation
         {
             currentRealTime = DateTime.Now;
             currentSimTime = DateTime.Now;
+            totalElapsedRealTimeTicks = 0;
+            totalElapsedSimTimeTicks = 0;
 
             Console.WriteLine("Timekeeper set: " + currentRealTime);
         }
-        public static void init(DateTime simulationStartTime)   // Constructor die de simulatie op een bepaald tijdstip laat starten
+        public static void init(DateTime simulationStartTime, bool resetElapsedTime)   // Constructor die de simulatie op een bepaald tijdstip laat starten
         {
             currentRealTime = DateTime.Now;
             currentSimTime = simulationStartTime;
+            if (resetElapsedTime)
+            {
+                totalElapsedRealTimeTicks = 0;
+                totalElapsedSimTimeTicks = 0;
+            }
             Console.WriteLine("Timekeeper set        : " + currentRealTime);
             Console.WriteLine("Simulation starting on: " + currentRealTime);
         }
@@ -44,8 +53,12 @@ namespace Introductieproject.Simulation
             currentSimTime = currentSimTime.Add(elapsedSimTime);                // De verstreken simulatietijd optellen bij de laatst bekende simtime
             currentRealTime = updatedRealTime;                                  // currentRealTime updaten met de nieuwe tijd
 
+            totalElapsedRealTimeTicks += elapsedRealTimeTicks;
+            totalElapsedSimTimeTicks += elapsedSimTimeTicks;
+
             //Console.WriteLine("Time updated. elapsedRT: " + elapsedRealTime + ", elapsedST: " + elapsedSimTime);
             Console.WriteLine("currentSimTime: " + currentSimTime + ", currentRealTime: " + currentRealTime);
+
         }
 
         private static DateTime savedSimTime;
@@ -58,7 +71,7 @@ namespace Introductieproject.Simulation
         {
             if (savedSimTime != null)
             {
-                TimeKeeper.init(savedSimTime);
+                TimeKeeper.init(savedSimTime, false);
             }
             else
             {

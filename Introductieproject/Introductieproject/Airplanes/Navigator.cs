@@ -263,7 +263,14 @@ namespace Introductieproject.Airplanes
                 //Als currentTargetNode geen 0 is, verwijder dan de navigator uit de vorige wayList
                 if (currentTargetNode != 0)
                 {
-                    wayList[currentTargetNode - 1].removeNavigator(this);
+                    if (wayList[currentTargetNode - 1] is Gate)
+                    {
+
+                    }
+                    else
+                    {
+                        wayList[currentTargetNode - 1].removeNavigator(this);
+                    }
                 }
                 //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
                 //Ik voeg hem niet toe bij gate, want dat gaat nog fout want hij komt er dan 2x in.

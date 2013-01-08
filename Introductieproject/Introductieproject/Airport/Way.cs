@@ -86,7 +86,8 @@ namespace Introductieproject.Airport
         public void removeNavigator(Navigator navigator)
         {
             //Verwijdert een specifieke navigator uit de lijst en update de hasAirplane
-            for (int t = 0; t < this.navigatorList.Count; t++)
+            this.navigatorList.Remove(navigator);
+            /*for (int t = 0; t < this.navigatorList.Count; t++)
             {
                 if (this.navigatorList[t] == navigator)
                 {
@@ -94,6 +95,7 @@ namespace Introductieproject.Airport
                     break;
                 }
             }
+            */
             if (navigatorList.Count > 0)
                 hasAirplane = true;
             else hasAirplane = false;
@@ -126,6 +128,12 @@ namespace Introductieproject.Airport
             if (this.reservations[0] == navigator && !this.hasAirplane)
                 return true;
             return false;
+        }
+
+        public void resetNavigators()
+        {
+            this.navigatorList = new List<Navigator>();
+            this.hasAirplane = false;
         }
     }
 }

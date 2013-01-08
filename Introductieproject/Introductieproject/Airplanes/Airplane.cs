@@ -142,7 +142,14 @@ namespace Introductieproject.Objects
                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                     if (navigator != null)
                     {
-                        this.dock();
+                        if (!hasDocked)
+                        {
+                            this.dock();
+                        }
+                        else
+                        {
+                            //Opstijgen
+                        }
                     }
                 }
                 else
@@ -168,12 +175,14 @@ namespace Introductieproject.Objects
                             {
                                 navigator.setNextTarget();
                                 targetNode = navigator.getTargetNode();
+                                /*
                                 if (targetNode == null)
                                 {
                                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                                     hasDocked = true;
 
                                 }
+                                */
                                 if (navigator != null)
                                     distanceToTarget = navigator.getDistanceToTargetNode(location);
                             }

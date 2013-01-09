@@ -72,5 +72,20 @@ namespace Introductieproject.Forms
         {
 
         }
+
+        private void mapControl_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void airplaneStatsControl_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

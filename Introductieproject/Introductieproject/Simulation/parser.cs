@@ -7,19 +7,21 @@ using Introductieproject.Objects;
 using System.Reflection;
 using System.IO;
 using System.ComponentModel;
+using Introductieproject.Airport;
 
 namespace Introductieproject.Simulation
 {
     class Parser
     {
-        static XmlDocument xmlDocument = new XmlDocument();
+        static XmlDocument PlaneDocument = new XmlDocument();
+        static XmlDocument AirportDocument = new XmlDocument();
         static XmlNodeList rawPlaneSchedule;
 
         public static void refreshAirplanes(BindingList<Airplane> loadedAirplanes)
         {
             try
             {
-                xmlDocument.Load(@"Simulation\schedule.xml");
+                PlaneDocument.Load(@"Simulation\schedule.xml");
             }
             catch (FileNotFoundException)
             {
@@ -27,7 +29,7 @@ namespace Introductieproject.Simulation
                 return;
             }
 
-            rawPlaneSchedule = xmlDocument.GetElementsByTagName("plane");
+            rawPlaneSchedule = PlaneDocument.GetElementsByTagName("plane");
             Assembly assembly = Assembly.Load("Introductieproject");
 
             int planeCount = rawPlaneSchedule.Count;
@@ -36,21 +38,21 @@ namespace Introductieproject.Simulation
                 XmlNode rawAirplane = rawPlaneSchedule.Item(i);
 
                 XmlAttributeCollection attr = rawAirplane.Attributes;
-                
-                String registration =   attr["registration"].Value;
-                String flight =         attr["flight"].Value;
-                String type =           attr["type"].Value;
-                String carrier =        attr["carrier"].Value;
-                String arrivalDate =    attr["arrivalDate"].Value;
-                String departureDate =  attr["departureDate"].Value;
-                String origin =         attr["origin"].Value;
-                String destination =    attr["destination"].Value;
+
+                String registration = attr["registration"].Value;
+                String flight = attr["flight"].Value;
+                String type = attr["type"].Value;
+                String carrier = attr["carrier"].Value;
+                String arrivalDate = attr["arrivalDate"].Value;
+                String departureDate = attr["departureDate"].Value;
+                String origin = attr["origin"].Value;
+                String destination = attr["destination"].Value;
 
                 DateTime arrivalDateTime = DateTime.Parse(arrivalDate);
                 DateTime departureDateTime = DateTime.Parse(departureDate);
 
                 bool airplaneAlreadyLoaded = false;
-                foreach(Airplane currentAirplane in loadedAirplanes)
+                foreach (Airplane currentAirplane in loadedAirplanes)
                 {
                     if (currentAirplane.Registration == null)
                     {
@@ -75,7 +77,7 @@ namespace Introductieproject.Simulation
 
                     Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
                     newAirplane.setXMLVariables(arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
-                    
+
                     Program.mainForm.Invoke((Action)(() => loadedAirplanes.Add(newAirplane)));
 
                     Console.WriteLine("Arrival: " + arrivalDateTime.ToString());
@@ -85,76 +87,97 @@ namespace Introductieproject.Simulation
             }
         }
 
-        /*public string getallplanes()
+
+        public void getWays(List<Node> nodeList, List<Runway> runWayList, List<Taxiway> taxiWayList, List<Gateway> gateWayList, List<Gate> gateList)
         {
-            string planes = null;
-            XmlNodeList planename = database.SelectNodes("//data/planes/plane/number/text()");
-            for (int i = 0; i < planename.Count; i++)
+            AirportDocument.Load(@"Simulation\airportlayout.xml");
+            XmlNodeList xmlNodes = AirportDocument.SelectNodes("//node");
+            int dir = 0;
+            foreach (Node[] nodeMatch in getNodeMatch("runway", dir, AirportDocument, nodeList))
             {
-                if (i != planename.Count - 1)
+                Runway runWay = new Runway(nodeMatch[0], nodeMatch[1], dir);
+                runWayList.Add(runWay);
+
+            }
+            foreach (Node[] nodeMatch in getNodeMatch("taxiway", dir, AirportDocument, nodeList))
+            {
+                Taxiway taxiWay = new Taxiway(nodeMatch[0], nodeMatch[1], dir);
+                taxiWayList.Add(taxiWay);
+
+            }
+
+            foreach (Node[] nodeMatch in getNodeMatch("gate", dir, AirportDocument, nodeList))
+            {
+                Gate gate = new Gate(nodeMatch[0], nodeMatch[1], dir);
+                gateList.Add(gate);
+
+            }
+            foreach (Node[] nodeMatch in getNodeMatch("gateway", dir, AirportDocument, nodeList))
+            {
+                Gateway gateWay = new Gateway(nodeMatch[0], nodeMatch[1], dir);
+                gateWayList.Add(gateWay);
+
+            }
+        }
+        public List<Node[]> getNodeMatch(string type, int dir, XmlDocument xmlDocument, List<Node> nodeList)
+        {
+            List<Node[]> NodeMatch = new List<Node[]>();
+            XmlNodeList wayNodes = xmlDocument.SelectNodes("//" + type);
+            foreach (XmlNode xmlNode in wayNodes)
+            {
+                Node[] matches = new Node[2];
+                int nodeX1 = int.Parse(xmlNode.Attributes["X1"].Value);
+                int nodeX2 = int.Parse(xmlNode.Attributes["X2"].Value);
+                int nodeY1 = int.Parse(xmlNode.Attributes["Y1"].Value);
+                int nodeY2 = int.Parse(xmlNode.Attributes["Y2"].Value);
+                int nodedir = int.Parse(xmlNode.Attributes["dir"].Value);
+
+                Node firstNode = new Node(nodeX1, nodeY1);
+                Node secondNode = new Node(nodeX2, nodeY2);
+                if (!listContainsNode(nodeList, firstNode))
                 {
-                    planes += (planename[i].InnerText + Environment.NewLine);
+                    nodeList.Add(firstNode);
+                    matches[0] = firstNode;
                 }
                 else
                 {
-                    planes += (planename[i].InnerText);
+                    foreach (Node node in nodeList)
+                    {
+                        if (firstNode.Equals(node))
+                            matches[0] = node;
+                    }
                 }
-            }
-            return planes;
-        }
+                if (!listContainsNode(nodeList, secondNode))
+                {
+                    nodeList.Add(secondNode);
+                    matches[1] = secondNode;
+                }
+                else
+                {
+                    foreach (Node node in nodeList)
+                    {
+                        if (secondNode.Equals(node))
+                            matches[1] = node;
+                    }
 
-        public void updateAirplanelist()
-        {
-            if (firstupdate == false)
-            {
-                saveairplane();
-            }
-            airplanes.Clear();
-            foreach (XmlElement plane in planes)
-            {
-                Console.WriteLine(planes.Count + " Airplanes in xml");
-                try
-                {
-                    Airplane airplane = new Airplane();
-                    airplane.arrivalDate = DateTime.Parse(plane.SelectSingleNode("arrivaldate").InnerText);
-                    airplane.carrier = plane.SelectSingleNode("carrier").InnerText;
-                    airplane.orgin = plane.SelectSingleNode("origin").InnerText;
-                    airplane.depatureDate = DateTime.Parse(plane.SelectSingleNode("depaturedate").InnerText);
-                    airplane.destination = plane.SelectSingleNode("destination").InnerText;
-                    airplane.type = int.Parse(plane.SelectSingleNode("type").InnerText);
-                    airplane.id = int.Parse(plane.SelectSingleNode("ID").InnerText);
-                    Console.WriteLine("new Airplane loaded:" + Environment.NewLine + "arrival date:" + airplane.arrivalDate + Environment.NewLine
-                        + "carrier:" + airplane.carrier + Environment.NewLine + "origin:" + airplane.orgin + Environment.NewLine + "departure date:"
-                        + airplane.depatureDate + Environment.NewLine + "destination:" + airplane.destination
-                        + Environment.NewLine + "type:" + airplane.type + Environment.NewLine + "ID:" + airplane.id);
-                    airplanes.Add(airplane);
                 }
-                catch (NullReferenceException)
+                if (matches.Count() == 2)
                 {
-                    Console.WriteLine("error loading Airplanes, please check Airplanes.XML");
-                }
-                catch (FormatException)
-                {
-                    Console.WriteLine("error loading Airplanes, please check Airplanes.XML");
+                    NodeMatch.Add(matches);
                 }
             }
-            Console.WriteLine(airplanes.Count + " Airplanes loaded");
-            firstupdate = false;
-        }
 
-        public void saveairplane()
+            return NodeMatch;
+        }
+        public bool listContainsNode(List<Node> nodeList, Node node)
         {
-            int i = 0;
-            foreach (Airplane airplane in airplanes)
+
+            for (int i = 0; i < nodeList.Count; i++)
             {
-                if (airplane.arrivalDate.CompareTo(DateTime.Parse(planes.Item(i).SelectSingleNode("arrivaldate").InnerText)) != 0)
-                {
-                    Console.Write("airplane" + i.ToString() + "arrivaldate changed");
-                    planes.Item(i).SelectSingleNode("arrivaldate").InnerText = airplane.arrivalDate.ToString();
-                }
-                i++;
+                if (nodeList[i].Equals(node))
+                    return true;
             }
-            database.Save(@"Simulation\Airplanes.xml");
-        }*/
+            return false;
+        }
     }
 }

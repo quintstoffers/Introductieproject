@@ -56,18 +56,23 @@ namespace Introductieproject.Simulation
                     {
                         continue;
                     }
-                    if (currentAirplane.Registration.Equals(registration))   // Airplane bestaat al
+                    if (currentAirplane.takeOff == true)
                     {
-                        currentAirplane.flight = flight;
-                        currentAirplane.carrier = carrier;
-                        currentAirplane.arrivalDate = arrivalDateTime;
-                        currentAirplane.departureDate = departureDateTime;
-                        currentAirplane.origin = origin;
-                        currentAirplane.destination = destination;
-
-                        airplaneAlreadyLoaded = true;
+                        Program.mainForm.Invoke((Action)(() => loadedAirplanes.Remove(currentAirplane)));
                         break;
                     }
+                        if (currentAirplane.Registration.Equals(registration))   // Airplane bestaat al
+                        {
+                            currentAirplane.flight = flight;
+                            currentAirplane.carrier = carrier;
+                            currentAirplane.arrivalDate = arrivalDateTime;
+                            currentAirplane.departureDate = departureDateTime;
+                            currentAirplane.origin = origin;
+                            currentAirplane.destination = destination;
+
+                            airplaneAlreadyLoaded = true;
+                            break;
+                        }
                 }
                 if (!airplaneAlreadyLoaded)
                 {

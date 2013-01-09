@@ -68,6 +68,20 @@ namespace Introductieproject.Airport
                         runwayTracker = 0;
                     }
                 }
+
+                // Als vliegtuig al bij de gate is geweest, en op de runway staat -> versnellen en opstijgen
+                if (currentAirplane.hasDocked && runways[0].hasAirplane == true )
+                {
+                    currentAirplane.accelerate(currentAirplane.takeofSpeed);
+                    if (currentAirplane.speed == currentAirplane.takeofSpeed)
+                    {
+                        currentAirplane.takeOff = true;
+                        runways[0].hasAirplane = false;
+                        runways[0].resetNavigators();
+                        //Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
+                        //break;
+                    }
+                }
                 else if (currentAirplane.navigator != null)
                 {
                     if (currentAirplane.navigator.wayList[0] is Taxiway && currentAirplane.navigator.currentTargetNode == 1 && runwayTracker == 0)

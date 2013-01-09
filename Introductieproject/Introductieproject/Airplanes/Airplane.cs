@@ -44,6 +44,7 @@ namespace Introductieproject.Objects
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
         public bool atGate;                 // Houdt bij of een vliegtuig op dit moment bij de gate is.
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
+        public bool takeOff = false;
 
         public Navigator navigator;         // Object dat aangeeft waar het vliegtuig heen moet
 
@@ -373,7 +374,7 @@ namespace Introductieproject.Objects
             else return angleDifference / 10;
         }
 
-        private void accelerate(double targetSpeed)
+        public void accelerate(double targetSpeed)
         {
             double acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
             if (targetSpeed < speed)

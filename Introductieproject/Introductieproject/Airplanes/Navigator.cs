@@ -21,6 +21,11 @@ namespace Introductieproject.Airplanes
 
         public Navigator(Airplane airplane, List<Way> ways)
         {
+            newRoute(airplane, ways);
+        }
+
+        public void newRoute(Airplane airplane, List<Way> ways)
+        {
             Console.WriteLine("Creating new navigator");
             /*
             Routeplanner zelf
@@ -37,6 +42,7 @@ namespace Introductieproject.Airplanes
                     break;
                 }
             }
+
             if (startWay != null) //Om zeker te weten dat een beginlocatie bepaald is
             {
                 Way endWay = null;

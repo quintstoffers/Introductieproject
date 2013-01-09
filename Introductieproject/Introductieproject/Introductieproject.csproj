@@ -58,7 +58,6 @@
     <Compile Include="Airport\Gateway.cs" />
     <Compile Include="Airport\Runway.cs" />
     <Compile Include="Airport\Taxiway.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

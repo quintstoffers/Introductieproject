@@ -15,11 +15,12 @@ namespace Introductieproject
     {
         public static MainForm mainForm;
         private static Airport.Airport airport;
+        
 
         static void Main(string[] args)
         {
             Console.WriteLine("Program started");
-
+            
             airport = createAirport();
 
             mainForm = new MainForm(airport);
@@ -38,6 +39,14 @@ namespace Introductieproject
         static Airport.Airport createAirport()
         {
             airport = new Airport.Airport();
+            Parser parser = new Parser();
+            List<Taxiway> taxiWayList = new List<Taxiway>();
+            List<Runway> runWayList = new List<Runway>();
+            List<Gateway> gateWayList = new List<Gateway>();
+            List<Gate> gateList = new List<Gate>();
+            List<Node> nodeList= new List<Node>();
+            parser.getWays(nodeList, runWayList, taxiWayList, gateWayList, gateList);
+           
 
             Node rwLeftNode = new Node(0, 1000);        // Beginpunt runway left
             Node rwRightNode = new Node(1000, 0);       // Eindpunt runway left
@@ -59,35 +68,46 @@ namespace Introductieproject
 
             Gate mainGate = new Gate(gateStartNode, gateEndNode, Way.DIRECTION_BOTH);               // Daadwerkelijke gate
 
-            airport.nodes.Add(rwLeftNode);
-            airport.nodes.Add(rwRightNode);
-            airport.nodes.Add(txLeftNode);
-            airport.nodes.Add(centerNode);
-            airport.nodes.Add(txRightNode);
-            airport.nodes.Add(gateStartNode);
-            airport.nodes.Add(gateEndNode);
+            airport.ways.AddRange(taxiWayList);
+            airport.ways.AddRange(runWayList);
+            airport.ways.AddRange(gateWayList);
+            airport.ways.AddRange(gateList);
+            airport.nodes.AddRange(nodeList);
+            airport.taxiways.AddRange(taxiWayList);
+            airport.runways.AddRange(runWayList);
+            airport.gateways.AddRange(gateWayList);
+            airport.gates.AddRange(gateList);
 
-            airport.gateways.Add(gateway1);
-            airport.gateways.Add(gateway2);
+            //airport.nodes.Add(rwLeftNode);
+            //airport.nodes.Add(rwRightNode);
+            //airport.nodes.Add(txLeftNode);
+            //airport.nodes.Add(centerNode);
+            //airport.nodes.Add(txRightNode);
+            //airport.nodes.Add(gateStartNode);
+            //airport.nodes.Add(gateEndNode);
 
-            airport.gates.Add(mainGate);
 
-            airport.taxiways.Add(txLeftBottom);
-            airport.taxiways.Add(txLeftTop);
-            airport.taxiways.Add(txCenterToLeft);
-            airport.taxiways.Add(txCenterToRight);
 
-            airport.runways.Add(rwLeft);
+            //airport.gateways.Add(gateway1);
+            //airport.gateways.Add(gateway2);
 
-            airport.ways.Add(rwLeft);
-            airport.ways.Add(txLeftBottom);
-            airport.ways.Add(txLeftTop);
-            airport.ways.Add(txCenterToLeft);
-            airport.ways.Add(txCenterToRight);
-            airport.ways.Add(mainGate);
-            airport.ways.Add(gateway1);
-            airport.ways.Add(gateway2);
+            //airport.gates.Add(mainGate);
 
+            //airport.taxiways.Add(txLeftBottom);
+            //airport.taxiways.Add(txLeftTop);
+            //airport.taxiways.Add(txCenterToLeft);
+            //airport.taxiways.Add(txCenterToRight);
+
+            //airport.runways.Add(rwLeft);
+
+            //airport.ways.Add(rwLeft);
+            //airport.ways.Add(txLeftBottom);
+            //airport.ways.Add(txLeftTop);
+            //airport.ways.Add(txCenterToLeft);
+            //airport.ways.Add(txCenterToRight);
+            //airport.ways.Add(mainGate);
+            //airport.ways.Add(gateway1);
+            //airport.ways.Add(gateway2);
             return airport;
         }
     }

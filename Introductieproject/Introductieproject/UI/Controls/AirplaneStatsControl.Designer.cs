@@ -68,11 +68,11 @@
             this.dgvNodes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Node,
             this.NodeLocation});
-            this.dgvNodes.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dgvNodes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNodes.Location = new System.Drawing.Point(0, 0);
             this.dgvNodes.Margin = new System.Windows.Forms.Padding(0);
             this.dgvNodes.Name = "dgvNodes";
-            this.dgvNodes.Size = new System.Drawing.Size(316, 274);
+            this.dgvNodes.Size = new System.Drawing.Size(316, 350);
             this.dgvNodes.TabIndex = 0;
             // 
             // Node

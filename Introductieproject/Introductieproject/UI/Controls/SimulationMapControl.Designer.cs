@@ -36,6 +36,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "SimulationMapControl";
             this.Size = new System.Drawing.Size(594, 436);
+            this.Load += new System.EventHandler(this.SimulationMapControl_Load);
             this.ResumeLayout(false);
 
         }

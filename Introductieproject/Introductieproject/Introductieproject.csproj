@@ -58,6 +58,7 @@
     <Compile Include="Airport\Gateway.cs" />
     <Compile Include="Airport\Runway.cs" />
     <Compile Include="Airport\Taxiway.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -131,6 +132,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Simulation\airportlayout.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Simulation\schedule.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>

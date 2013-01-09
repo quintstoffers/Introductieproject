@@ -56,5 +56,12 @@ namespace Introductieproject.Airport
         {
             return "NODE: location (" + location[0] + "," + location[1] + "), connections=" + this.connections.Count();
         }
+        public bool Equals(Node node)
+        {
+            if (this.location[0] == node.location[0] && this.location[1] == node.location[1])
+                return true;
+            else
+                return false;
+        }
     }
 }

@@ -133,6 +133,7 @@
   <ItemGroup>
     <Content Include="Simulation\airportlayout.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Simulation\schedule.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -68,10 +68,10 @@ namespace Introductieproject
 
             Gate mainGate = new Gate(gateStartNode, gateEndNode, Way.DIRECTION_BOTH);               // Daadwerkelijke gate
             */
-            airport.ways.AddRange(taxiWayList);
             airport.ways.AddRange(runWayList);
-            airport.ways.AddRange(gateWayList);
             airport.ways.AddRange(gateList);
+            airport.ways.AddRange(gateWayList);
+            airport.ways.AddRange(taxiWayList);
             airport.nodes.AddRange(nodeList);
             airport.taxiways.AddRange(taxiWayList);
             airport.runways.AddRange(runWayList);

@@ -81,8 +81,7 @@ namespace Introductieproject.Airport
                         currentRunway.resetNavigators();
                         currentRunway.runwayHasAirplane = false;
                         airplanesTakenOff.Add(currentAirplane);
-                        airplanes.Remove(currentAirplane);
-                        //Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
+                        Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
                         break;
                     }
                 }

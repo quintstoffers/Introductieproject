@@ -76,8 +76,9 @@ namespace Introductieproject.Airport
                     if (currentAirplane.speed == currentAirplane.takeofSpeed)
                     {
                         currentAirplane.takeOff = true;
-                        runways[0].hasAirplane = false;
-                        runways[0].resetNavigators();
+                        Runway currentRunway = getAirplanesRunway(currentAirplane);
+                        currentRunway.resetNavigators();
+                        currentRunway.runwayHasAirplane = false;
                         Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
                         break;
                     }
@@ -123,6 +124,16 @@ namespace Introductieproject.Airport
                     return true;
             }
             return false;
+        }
+
+        public Runway getAirplanesRunway(Airplane airplane)
+        {
+            foreach (Runway runway in this.runways)
+            {
+                if (runway.navigatorList.Contains(airplane.navigator))
+                    return runway;
+            }
+            return null;
         }
     }
 }

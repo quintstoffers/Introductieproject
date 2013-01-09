@@ -56,11 +56,6 @@ namespace Introductieproject.Simulation
                     {
                         continue;
                     }
-                    if (currentAirplane.takeOff == true)
-                    {
-                        Program.mainForm.Invoke((Action)(() => loadedAirplanes.Remove(currentAirplane)));
-                        break;
-                    }
                         if (currentAirplane.Registration.Equals(registration))   // Airplane bestaat al
                         {
                             currentAirplane.flight = flight;
@@ -74,7 +69,7 @@ namespace Introductieproject.Simulation
                             break;
                         }
                 }
-                if (!airplaneAlreadyLoaded)
+                if (!airplaneAlreadyLoaded && TimeKeeper.currentSimTime < arrivalDateTime)
                 {
                     System.Type objectType = assembly.GetType("Introductieproject.Objects." + type);
 

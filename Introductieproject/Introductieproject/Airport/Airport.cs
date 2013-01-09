@@ -50,7 +50,7 @@ namespace Introductieproject.Airport
                     }
                     continue;
                 }
-                if (currentAirplane.atGate && DateTime.Compare(TimeKeeper.currentSimTime,currentAirplane.actualDepartureDate) >= 0) // Als een vliegtuig bij een gate geparkeerd staat en het tijd is om te vertrekken
+                if (currentAirplane.atGate && DateTime.Compare(TimeKeeper.currentSimTime, currentAirplane.actualDepartureDate) >= 0) // Als een vliegtuig bij een gate geparkeerd staat en het tijd is om te vertrekken
                 {
                     currentAirplane.atGate = false; // Dan verlaat het vliegtuig de gate
                     currentAirplane.navigator = null;
@@ -70,7 +70,7 @@ namespace Introductieproject.Airport
                 }
 
                 // Als vliegtuig al bij de gate is geweest, en op de runway staat -> versnellen en opstijgen
-                if (currentAirplane.hasDocked && runways[0].hasAirplane == true )
+                if (currentAirplane.hasDocked && isOnRunway(currentAirplane))
                 {
                     currentAirplane.accelerate(currentAirplane.takeofSpeed);
                     if (currentAirplane.speed == currentAirplane.takeofSpeed)
@@ -78,8 +78,8 @@ namespace Introductieproject.Airport
                         currentAirplane.takeOff = true;
                         runways[0].hasAirplane = false;
                         runways[0].resetNavigators();
-                        //Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
-                        //break;
+                        Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
+                        break;
                     }
                 }
                 else if (currentAirplane.navigator != null)
@@ -112,6 +112,16 @@ namespace Introductieproject.Airport
             //Als node 1 en 2 de way bevatten, dan is way een verbinding tussen de twee nodes
             if (node1.checkConnection(way) && node2.checkConnection(way))
                 return true;
+            return false;
+        }
+
+        public bool isOnRunway(Airplane airplane)
+        {
+            foreach (Runway runway in this.runways)
+            {
+                if (runway.navigatorList.Contains(airplane.navigator))
+                    return true;
+            }
             return false;
         }
     }

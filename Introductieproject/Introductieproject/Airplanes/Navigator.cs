@@ -265,7 +265,7 @@ namespace Introductieproject.Airplanes
                 {
                     if (wayList[currentTargetNode - 1] is Gate)
                     {
-
+                        wayList[currentTargetNode - 1].resetNavigators();
                     }
                     else
                     {

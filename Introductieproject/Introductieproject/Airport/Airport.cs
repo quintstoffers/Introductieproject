@@ -10,6 +10,7 @@ namespace Introductieproject.Airport
     public class Airport
     {
         public BindingList<Airplane> airplanes = new BindingList<Airplane>();
+        public List<Airplane> airplanesTakenOff = new List<Airplane>();
 
         public List<Gate> gates = new List<Gate>();
         public List<Runway> runways = new List<Runway>();
@@ -79,7 +80,9 @@ namespace Introductieproject.Airport
                         Runway currentRunway = getAirplanesRunway(currentAirplane);
                         currentRunway.resetNavigators();
                         currentRunway.runwayHasAirplane = false;
-                        Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
+                        airplanesTakenOff.Add(currentAirplane);
+                        airplanes.Remove(currentAirplane);
+                        //Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
                         break;
                     }
                 }

@@ -69,7 +69,9 @@ namespace Introductieproject.Airport
                     - Math.Min(this.nodeConnections[1].location[0], this.nodeConnections[0].location[0]);
                 double deltaY = Math.Max(this.nodeConnections[1].location[1], this.nodeConnections[0].location[1]) 
                     - Math.Min(this.nodeConnections[1].location[1], this.nodeConnections[0].location[1]);
-                return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
+                double basicLength = Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
+                basicLength = basicLength * Math.Pow((double)navigatorList.Count, 2);
+                return basicLength;
             }
         }
 

@@ -47,7 +47,7 @@ namespace Introductieproject
             List<Node> nodeList= new List<Node>();
             parser.getWays(nodeList, runWayList, taxiWayList, gateWayList, gateList);
            
-
+            /*
             Node rwLeftNode = new Node(0, 1000);        // Beginpunt runway left
             Node rwRightNode = new Node(1000, 0);       // Eindpunt runway left
             Node txLeftNode = new Node(1000, 2000);     // Beginpunt taxiway naar runway left
@@ -67,7 +67,7 @@ namespace Introductieproject
             Gateway gateway2 = new Gateway(gateStartNode, txRightNode, Way.DIRECTION_BOTH);         // Van gate naar rechts
 
             Gate mainGate = new Gate(gateStartNode, gateEndNode, Way.DIRECTION_BOTH);               // Daadwerkelijke gate
-
+            */
             airport.ways.AddRange(taxiWayList);
             airport.ways.AddRange(runWayList);
             airport.ways.AddRange(gateWayList);

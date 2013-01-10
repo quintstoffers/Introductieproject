@@ -93,31 +93,36 @@ namespace Introductieproject.Simulation
             AirportDocument.Load(@"Simulation\airportlayout.xml");
             XmlNodeList xmlNodes = AirportDocument.SelectNodes("//node");
             List<int> directions = new List<int>();
+            List<Node[]> runwayNodes = getNodeMatch("runway", directions, AirportDocument, nodeList);
             int i = 0; //Een maal getNodeMatch ophalen.
-            foreach (Node[] nodeMatch in getNodeMatch("runway", directions, AirportDocument, nodeList))
+            foreach (Node[] nodeMatch in runwayNodes)
             {
-                
                 Runway runWay = new Runway(nodeMatch[0], nodeMatch[1], directions[i]);
                 runWayList.Add(runWay);
                 i++;
-
             }
+
+            List<Node[]> taxiwayNodes = getNodeMatch("taxiway", directions, AirportDocument, nodeList);
             i = 0;
-            foreach (Node[] nodeMatch in getNodeMatch("taxiway", directions, AirportDocument, nodeList))
+            foreach (Node[] nodeMatch in taxiwayNodes)
             {
                 Taxiway taxiWay = new Taxiway(nodeMatch[0], nodeMatch[1], directions[i]);
                 taxiWayList.Add(taxiWay);
                 i++;
             }
+
+            List<Node[]> gateNodes = getNodeMatch("gate", directions, AirportDocument, nodeList);
             i = 0;
-            foreach (Node[] nodeMatch in getNodeMatch("gate", directions, AirportDocument, nodeList))
+            foreach (Node[] nodeMatch in gateNodes)
             {
                 Gate gate = new Gate(nodeMatch[0], nodeMatch[1], directions[i]);
                 gateList.Add(gate);
                 i++;
             }
+
+            List<Node[]> gatewayNodes = getNodeMatch("gateway", directions, AirportDocument, nodeList);
             i = 0;
-            foreach (Node[] nodeMatch in getNodeMatch("gateway", directions, AirportDocument, nodeList))
+            foreach (Node[] nodeMatch in gatewayNodes)
             {
                 Gateway gateWay = new Gateway(nodeMatch[0], nodeMatch[1], directions[i]);
                 gateWayList.Add(gateWay);

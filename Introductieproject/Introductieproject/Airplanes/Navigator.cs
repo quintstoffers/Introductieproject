@@ -64,7 +64,7 @@ namespace Introductieproject.Airplanes
                             {
                                 reservedGates.Add(newGate);
                             }
-                            else if (newGate.airplane != null)
+                            else if (newGate.hasAirplane)
                             {
                                 occupiedGates.Add(newGate);
                             }
@@ -92,7 +92,11 @@ namespace Introductieproject.Airplanes
                             }
                             else
                             {
-                                IList<Way> occupiedWays = (IList<Way>)occupiedGates;
+                                IList<Way> occupiedWays = new List<Way>();
+                                foreach (Gate g in occupiedGates)
+                                {
+                                    occupiedWays.Add(g);
+                                }
                                 endWay = Utils.getClosestWay(airplane.location, occupiedWays);
                                 endWay.addReservation(this);
                             }
@@ -106,7 +110,11 @@ namespace Introductieproject.Airplanes
                             }
                             else
                             {
-                                IList<Way> reservedWays = (IList<Way>)reservedGates;
+                                IList<Way> reservedWays = new List<Way>();
+                                foreach (Gate g in reservedGates)
+                                {
+                                    reservedWays.Add(g);
+                                }
                                 endWay = Utils.getClosestWay(airplane.location, reservedWays);
                                 endWay.addReservation(this);
                             }
@@ -114,7 +122,11 @@ namespace Introductieproject.Airplanes
                     }
                     else if (availableGates.Count > 1)
                     {
-                        IList<Way> availableWays = (IList<Way>)availableGates;
+                        IList<Way> availableWays = new List<Way>();
+                        foreach (Gate g in availableGates)
+                        {
+                            availableWays.Add(g);
+                        }
                         endWay = Utils.getClosestWay(airplane.location, availableWays);
                         endWay.addReservation(this);
                     }

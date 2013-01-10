@@ -94,7 +94,7 @@ namespace Introductieproject.Simulation
             XmlNodeList xmlNodes = AirportDocument.SelectNodes("//node");
             List<int> directions = new List<int>();
             List<Node[]> runwayNodes = getNodeMatch("runway", directions, AirportDocument, nodeList);
-            int i = 0; //Een maal getNodeMatch ophalen.
+            int i = 0; 
             foreach (Node[] nodeMatch in runwayNodes)
             {
                 Runway runWay = new Runway(nodeMatch[0], nodeMatch[1], directions[i]);

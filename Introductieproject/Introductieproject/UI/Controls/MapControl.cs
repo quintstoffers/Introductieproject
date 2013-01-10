@@ -20,7 +20,7 @@ namespace Introductieproject.UI.Controls
         Parser parser = new Parser();
         double maxXCoord = 0;
         double maxYCoord = 0;
-
+        bool firstRun = true;
         public MapControl()
         {
             InitializeComponent();
@@ -61,17 +61,21 @@ namespace Introductieproject.UI.Controls
         */
         public void drawAirport(Graphics graphics)
         {
-            
 
-            
+
+            Bitmap bmp = new Bitmap((int)maxXCoord, (int)maxYCoord);
+            Graphics bMap = Graphics.FromImage(bmp);
+            bmp.MakeTransparent();
             foreach (Airport.Node currentNode in airport.nodes)
             {
                 int drawingLocationX = (int) (currentNode.location[0] * drawingScale);
                 int drawingLocationY = (int) (currentNode.location[1] * drawingScale);
                 
-                graphics.FillEllipse(Brushes.Black, drawingLocationX, drawingLocationY, 5, 5);
+                bMap.FillEllipse(Brushes.Black, drawingLocationX, drawingLocationY, 5, 5);
             }
-
+            Brush redBrush = new SolidBrush(Color.FromArgb(255, 255, 0, 0));
+            Brush transparentBrush = new SolidBrush(Color.FromArgb(0, 0, 0, 0));
+            bMap.FillRectangle(transparentBrush, 0, 0, (int)maxXCoord, (int)maxYCoord);
             foreach (Airplane currentAirplane in airport.airplanes)
             {
                 if (currentAirplane.wasSetup)
@@ -79,9 +83,10 @@ namespace Introductieproject.UI.Controls
                     int drawingLocationX = (int)(currentAirplane.location[0] * drawingScale);
                     int drawingLocationY = (int)(currentAirplane.location[1] * drawingScale);
 
-                    graphics.FillEllipse(Brushes.Red, drawingLocationX, drawingLocationY, 5, 5);
+                    bMap.FillEllipse(Brushes.Red, drawingLocationX, drawingLocationY, 5, 5);
                 }
             }
+            graphics.DrawImage(bmp, 0, 0, (float)maxXCoord, (float)maxYCoord);
         }
         private void drawWays(Graphics g)
         {
@@ -141,7 +146,7 @@ namespace Introductieproject.UI.Controls
                  bMap.DrawLine(pen, point1, point2);
 
              }
-             
+             firstRun = false;
              g.DrawImage(bmp, 0, 0, bmp.Width, bmp.Height);
         }
        
@@ -153,7 +158,8 @@ namespace Introductieproject.UI.Controls
             }
             else
             {
-                drawWays(e.Graphics);
+                if (firstRun)
+                    drawWays(e.Graphics);
                 drawAirport(e.Graphics);
                 
 

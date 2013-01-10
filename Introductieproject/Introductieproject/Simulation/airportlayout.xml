@@ -8,6 +8,13 @@
       Y2="0"
       dir="1"
     ></runway>
+    <runway
+      X1="3000"
+      Y1="0"
+      X2="4000"
+      Y2="1000"
+      dir="1"
+      ></runway>
   </runways>
   <taxiways>
     <taxiway
@@ -30,16 +37,28 @@
       X2="1000"
       Y2="2000"
       dir="0"
-      >
-    </taxiway>
+      ></taxiway>
     <taxiway
-     X1="2000"
-     Y1="1000"
-     X2="3000"
-     Y2="2000"
-     dir="0"
-      >
-    </taxiway>
+      X1="2000"
+      Y1="1000"
+      X2="3000"
+      Y2="2000"
+      dir="0"
+      ></taxiway>
+    <taxiway
+      X1="2000"
+      Y1="1000"
+      X2="3000"
+      Y2="0"
+      dir="1"
+      ></taxiway>
+    <taxiway
+      X1="4000"
+      Y1="1000"
+      X2="3000"
+      Y2="2000"
+      dir="1"
+      ></taxiway>
   </taxiways>
   <gateways>
     <gateway
@@ -48,8 +67,7 @@
       X2="1000"
       Y2="2000"
       dir="0"
-      >
-    </gateway>
+      ></gateway>
     <gateway
       X1="2000"
       Y1="2000"
@@ -70,6 +88,13 @@
       X1="2000"
       Y1="2000"
       X2="2100"
+      Y2="2100"
+      dir="0"
+      ></gate>
+    <gate
+      X1="2000"
+      Y1="2000"
+      X2="1900"
       Y2="2100"
       dir="0"
       ></gate>

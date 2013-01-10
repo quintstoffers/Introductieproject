@@ -21,6 +21,7 @@ namespace Introductieproject.Objects
         // Hier variabelen die per individueel vliegtuig verschillen (defined in XML)
         public String registration;
         public String flight;
+        public DateTime landingDate;
         public DateTime arrivalDate;
         public DateTime departureDate;
         public string carrier;
@@ -29,10 +30,12 @@ namespace Introductieproject.Objects
 
         // Vanaf hier èchte variabelen, per vliegtuig verschillen (defined tijdens aanwezigheid op vliegveld)
         public Boolean wasSetup = false;    // op true zodra onderstaande variabelen gedefinieerd zijn
+        public DateTime actualLandingDate;
         public DateTime actualArrivalDate;
         public DateTime actualDepartureDate;
         public TimeSpan delay;
-        public TimeSpan difference;
+        public TimeSpan arrivalDifference;
+        public TimeSpan landingDifference;
         public int priority;
 
         public int passengers;              // Aantal passagiers
@@ -74,7 +77,10 @@ namespace Introductieproject.Objects
         {
             get
             {
-                return departureDate.ToString();
+                TimeSpan totaldelay = new TimeSpan();
+                totaldelay = delay + arrivalDifference + landingDifference;
+
+                return (departureDate + totaldelay).ToString();
             }
         }
         public String CurrentDelay
@@ -82,7 +88,7 @@ namespace Introductieproject.Objects
             get
             {
                 TimeSpan totaldelay = new TimeSpan();
-                totaldelay = delay + difference;
+                totaldelay = delay + arrivalDifference + landingDifference;
 
                 //afronden op seconden.
                 TimeSpan roundeddelay = new TimeSpan(totaldelay.Ticks - (totaldelay.Ticks % 10000000));
@@ -94,11 +100,13 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void setXMLVariables(DateTime arrivalDate, DateTime departureDate, String registration, String flight, String carrier, String origin, String destination)
+        public void setXMLVariables(DateTime landingDate, DateTime arrivalDate, DateTime departureDate, String registration, String flight, String carrier, String origin, String destination)
         {
             this.registration = registration;
             this.flight = flight;
             this.carrier = carrier;
+            this.landingDate = landingDate;
+            this.actualLandingDate = landingDate;
             this.arrivalDate = arrivalDate;
             this.departureDate = departureDate;
         }
@@ -164,7 +172,7 @@ namespace Introductieproject.Objects
                     Console.WriteLine("     target angle: " + targetAngle);
 
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
-                    double maxSpeed = 50;
+                    double maxSpeed = 10;
                     double cornerSpeed = 1;
                     navigator.location = this.location;
 
@@ -241,21 +249,33 @@ namespace Introductieproject.Objects
 
             //Check wanneer vliegtuig is aangekomen.
             actualArrivalDate = TimeKeeper.currentSimTime;
+            actualLandingDate = this.landingDate;
 
             Console.WriteLine("SIMARRIVALTIME: " + actualArrivalDate);
             Console.WriteLine("ARRIVALDATE: " + arrivalDate);
 
             //Bereken verschil in verwachte vertrektijd en verwachte aankomst tijd.
+            if (landingDate != actualLandingDate)
+            {
+                if (actualLandingDate > landingDate)
+                {
+                    landingDifference = actualLandingDate.Subtract(landingDate);
+                }
+                else
+                {
+                    landingDifference = new TimeSpan();
+                }
+            }
             if (actualArrivalDate > arrivalDate)
             {
-                difference = actualArrivalDate.Subtract(arrivalDate);
+                arrivalDifference = actualArrivalDate.Subtract(arrivalDate);
             }
             //Vliegtuig is te vroeg/op tijd, dus alles via planning
             else if (actualArrivalDate <= arrivalDate)
             {
-                difference = new TimeSpan();
+                arrivalDifference = new TimeSpan();
             }
-            Console.WriteLine("DIFFERENCE: " + difference);
+            Console.WriteLine("DIFFERENCE: " + arrivalDifference + landingDifference);
 
             // Random delay van 0-100.
             // Statistieken van http://www.flightstats.com/go/FlightRating/flightRatingByRoute.do
@@ -305,7 +325,7 @@ namespace Introductieproject.Objects
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + delay + oude vertrektijd.
             Console.WriteLine("DEPARTUREDATE: " + departureDate);
-            actualDepartureDate = departureDate.Add(difference + delay);
+            actualDepartureDate = departureDate.Add(landingDifference + arrivalDifference + delay);
             Console.WriteLine("actualDepartureDate: " + actualDepartureDate);
 
             // Zet hasDocked op true voor de navigator.

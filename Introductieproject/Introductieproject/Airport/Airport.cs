@@ -34,16 +34,25 @@ namespace Introductieproject.Airport
                 if (!currentAirplane.wasSetup)
                 {
                     Console.WriteLine("NOT SETUP");
-                    Console.WriteLine("ARRIVE: " + currentAirplane.arrivalDate);
+                    Console.WriteLine("ARRIVE: " + currentAirplane.landingDate);
                     Console.WriteLine("CURR:   " + TimeKeeper.currentSimTime);
-                    if (TimeKeeper.currentSimTime >= currentAirplane.arrivalDate)   // Vliegtuig is geland, maar nog niet setup
+                    if (TimeKeeper.currentSimTime >= currentAirplane.actualLandingDate)   // Vliegtuig is geland, maar nog niet setup
                     {
-                        Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
+                            if (runways[0].runwayHasAirplane)
+                            {
+                                // Wacht een extra 30 seconden.
+                                TimeSpan wait = new TimeSpan(0,0,30);
+                                currentAirplane.actualLandingDate = currentAirplane.landingDate + wait;
+                            }
+                            else
+                            {
+                                Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
 
-                        double[] location = new double[2];
-                        location[0] = 1000;
-                        location[1] = 0;
-                        currentAirplane.setStateVariables(location, 0, 0, 200, 210, 2000);
+                                double[] location = new double[2];
+                                location[0] = 0;
+                                location[1] = 1000;
+                                currentAirplane.setStateVariables(location, 0, 0, 200, 210, 2000);
+                            }
                     }
                     else
                     {

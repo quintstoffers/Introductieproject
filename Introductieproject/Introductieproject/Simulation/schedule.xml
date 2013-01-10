@@ -5,8 +5,9 @@
     flight="I-D0N7-KN0W"
     type="BO_747"
     carrier="British Airways"
-    arrivalDate="01/01/13 22:05:00"
-    departureDate="01/01/13 22:15:00"
+    landingDate="01/01/13 22:05:00"
+    arrivalDate="01/01/13 22:10:00"
+    departureDate="01/01/13 22:20:00"
     origin="London Heathrow"
     destination="Amsterdam Airport Schiphol">
   </plane>
@@ -15,9 +16,21 @@
     flight="A-1337-101"
     type="BO_747"
     carrier="British Airways"
-    arrivalDate="01/01/13 22:00:00"
+    landingDate="01/01/13 22:01:15"
+    arrivalDate="01/01/13 22:07:00"
     departureDate="01/01/13 22:10:00"
     origin="John F. Kennedy International Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+    registration="G-CDEF"
+    flight="I-D0N7-C4R3"
+    type="BO_747"
+    carrier="KLM"
+    landingDate="01/01/13 22:01:00"
+    arrivalDate="01/01/13 22:05:00"
+    departureDate="01/01/13 22:15:00"
+    origin="Memphis Intl. Airport"
     destination="Amsterdam Airport Schiphol">
   </plane>
 </schedule>

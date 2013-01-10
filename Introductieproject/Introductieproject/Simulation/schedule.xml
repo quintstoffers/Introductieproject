@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <schedule>
-  <plane
+  <!--<plane
     registration="G-BCDE"
     flight="I-D0N7-KN0W"
     type="BO_747"
@@ -21,13 +21,13 @@
     departureDate="01/01/13 22:10:00"
     origin="John F. Kennedy International Airport"
     destination="Amsterdam Airport Schiphol">
-  </plane>
+  </plane>-->
   <plane
     registration="G-CDEF"
     flight="I-D0N7-C4R3"
     type="BO_747"
     carrier="KLM"
-    landingDate="01/01/13 22:01:00"
+    landingDate="01/01/13 22:01:30"
     arrivalDate="01/01/13 22:05:00"
     departureDate="01/01/13 22:15:00"
     origin="Memphis Intl. Airport"

@@ -12,14 +12,13 @@ namespace Introductieproject.Objects
     {
         public enum Status
         {
-            WAITING_TAKEOFF = 0,
-            WAITING_NAVIGATOR,
-
-            APPROACHING,
-            TAKINGOFF,
-            DEPARTED,
-            DOCKING,
+            APPROACHING = 0,
+            
             IDLE
+            DOCKING,
+            WAITING_TAKEOFF = 0,
+            TAKINGOFF,
+            DEPARTED
         }
 
         // "Vaste" variabelen die per type vliegtuig zullen verschillen (defined in subclasse!)
@@ -41,8 +40,6 @@ namespace Introductieproject.Objects
         public string origin;
 
         // Vanaf hier èchte variabelen, per vliegtuig verschillen (defined tijdens aanwezigheid op vliegveld)
-        public Boolean wasSetup = false;    // op true zodra onderstaande variabelen gedefinieerd zijn
-
         public DateTime actualLandingDate;
         public DateTime actualArrivalDate;
         public DateTime actualDepartureDate;
@@ -59,8 +56,6 @@ namespace Introductieproject.Objects
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
-
-        public bool takeOff = false;
 
         public Status status;
 
@@ -133,7 +128,6 @@ namespace Introductieproject.Objects
             this.passengers = passengers;
             this.luggage = luggage;
             this.luggageKg = luggageKg;
-            this.wasSetup = true;
         }
 
         /*
@@ -141,52 +135,47 @@ namespace Introductieproject.Objects
         */
         public void simulate(Airport.Airport airport)
         {
-            if (status == Status.APPROACHING)
+            if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
             {
-                // Niets doen, vliegtuig is nog niet in scope
             }
-            else if (status == Status.DOCKING)
+            else if (status == Status.DOCKING)      // Vliegtuig staat bij gate
             {
-                //Onderstaande code staat nu in Airport, aangezien Airport de enige klasse is die een vliegtuig een Navigator kan geven
-                /*
-                //Vliegtuig vertrek als de newactualDepartureDate gelijk is aan de currentSimTime.
+                Console.WriteLine("LEAVE   : " + actualDepartureDate);
+                Console.WriteLine("CURR     :" + TimeKeeper.currentSimTime);
                 if (TimeKeeper.currentSimTime >= actualDepartureDate)
                 {
-                    atGate = false;  //Vliegtuig moet weer naar Runway
-                    navigator = null;
+                    leaveDock();
                 }
-                // geef nieuwe navigator aan vliegtuig.
-                */
+            }
+            else if(status == Status.WAITING_TAKEOFF)    // Vliegtuig wacht voordat hij mag opstijgen
+            {
+                requestTakeOff(airport);
             }
             else if (navigator == null)
             {
-                if (!airport.requestNavigator(this))
-                {
-                    return; // Geen navigator gekregen, dus nothing to do here
-                }
+                requestNavigator(airport);
             }
             else
             {
+                status = Status.IDLE;
+
                 Node targetNode = navigator.getTargetNode();
+
                 if (targetNode == null)
                 {
                     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
-                    if (navigator != null)
+                    if (!hasDocked)
                     {
-                        if (!hasDocked)
-                        {
-                            this.dock();
-                        }
-                        else
-                        {
-                            //Opstijgen
-                        }
+                        dock();
+                    }
+                    else
+                    {
+                        prepareTakeOff();
                     }
                 }
                 else
                 {
                     double distanceToTarget = navigator.getDistanceToTargetNode(location);
-                    navigator.distanceToTarget = distanceToTarget;
                     double targetAngle = navigator.getAngleToTarget(location);
 
                     Console.WriteLine("Airplane target  : " + targetNode.ToString());
@@ -198,67 +187,53 @@ namespace Introductieproject.Objects
                     double cornerSpeed = 1;
                     navigator.location = this.location;
 
-                    if (navigator.collisionDetection() == true)
+                    //TODO collision test
+                    //TODO permission check
+                    if (distanceToTarget < 0.5)
                     {
-                        if (distanceToTarget < 0.5)
-                        {
-                            if (navigator.hasPermission() == true)
-                            {
-                                navigator.setNextTarget();
-                                targetNode = navigator.getTargetNode();
-                                /*
-                                if (targetNode == null)
-                                {
-                                    //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
-                                    hasDocked = true;
-
-                                }
-                                */
-                                if (navigator != null)
-                                    distanceToTarget = navigator.getDistanceToTargetNode(location);
-                            }
-                        }
-                        if (navigator != null)
-                        {
-                            if (distanceToTarget < speed)
-                            {
-                                moveBy(distanceToTarget);
-                                speed = 0;
-                            }
-
-                            /*  else if(location == closeToWayPoint)
-                             *      deaccelerate naar bochtsnelheid
-                            */
-
-                            /*  if(! middenOpBaan)
-                             *      roteer richting midden van baan (prioriteit over rijden naar target!
-                            */
-
-                            if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
-                            {
-                                rotate(targetAngle);
-                            }
-
-                            if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
-                            {
-                                accelerate(maxSpeed);
-                            }
-
-                            else if (speed > cornerSpeed && distanceToTarget <= 50 && angle == targetAngle)
-                            {
-                                accelerate(cornerSpeed);
-                            }
-                            //alleen move als hij niet heeft versneld of afgeremd
-                            else if (angle == targetAngle)
-                            {
-                                move();
-                            }
-
-                            Console.WriteLine(this.ToString());
-                            Console.WriteLine("");
-                        }
+                        navigator.setNextTarget();
+                        return;                     // Volgende simtik gaan we weer verder
                     }
+
+                    if (distanceToTarget < speed)
+                    {
+                        moveBy(distanceToTarget);
+                        speed = 0;
+                    }
+
+                    if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
+                    {
+                        rotate(targetAngle);
+                    }
+
+                    if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
+                    {
+                        accelerate(maxSpeed);
+                    }
+                    else if (speed > cornerSpeed && distanceToTarget <= 50 && angle == targetAngle)
+                    {
+                        accelerate(cornerSpeed);
+                    }
+                    else if (angle == targetAngle)  //alleen move als hij in de goede richting staat
+                    {
+                        move();
+                    }
+
+                    Console.WriteLine(this.ToString());
+                    Console.WriteLine("");
                 }
+            }
+        }
+
+        public void requestNavigator(Airport.Airport airport)
+        {
+            airport.requestNavigator(this);
+        }
+        public void requestTakeOff(Airport.Airport airport)
+        {
+            if(airport.requestTakeOff(this))
+            {
+                takeOff();
             }
         }
 
@@ -271,7 +246,7 @@ namespace Introductieproject.Objects
 
             this.status = Status.IDLE;
         }
-
+        
         /*
          * Wat er moet gebeuren als het vliegtuig bij de gate staat.
         */
@@ -353,7 +328,6 @@ namespace Introductieproject.Objects
 
             Console.WriteLine("DELAY: " + delay);
 
-
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + delay + oude vertrektijd.
             Console.WriteLine("DEPARTUREDATE: " + departureDate);
@@ -365,16 +339,27 @@ namespace Introductieproject.Objects
 
             this.navigator = null; // Verwijder de navigator
         }
+
         public void leaveDock()
         {
+            Console.WriteLine("LEAVING DOCK");
             status = Status.IDLE;
         }
 
+        public void prepareTakeOff()
+        {
+            status = Status.WAITING_TAKEOFF;
+        }
+
+        public void takeOff()
+        {
+            status = Status.DEPARTED;
+        }
 
         private void rotate(double targetAngle)
         {
             //Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);
-            double rotation = rotationSpeed(targetAngle, angle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
+            double rotation = getRotationSpeed(targetAngle, angle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
             if (targetAngle < angle)
             {
                 if (angle - targetAngle > 180) //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien
@@ -421,7 +406,7 @@ namespace Introductieproject.Objects
                 angle = angle - 360;
         }
 
-        private double rotationSpeed(double targetAngle, double angle)
+        private double getRotationSpeed(double targetAngle, double angle)
         {
             double angleDifference = Math.Abs(angle - targetAngle);
             if (angleDifference > 180)

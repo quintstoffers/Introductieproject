@@ -12,14 +12,12 @@ namespace Introductieproject.Airplanes
         public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
         public IList<Way> wayList = new List<Way>();
-        public int currentTargetNode = 0;
+        public int targetNodeNumber = 0;
 
-        private bool hasEnded = false;
+        public Way currentWay;
+
         public double[] location;
-        public double distanceToTarget;
-
-        IList<Way> runWays = new List<Way>();
-
+        
         public Navigator(Airplane airplane, List<Way> ways)
         {
             newRoute(airplane, ways);
@@ -65,10 +63,10 @@ namespace Introductieproject.Airplanes
                             {
                                 reservedGates.Add(newGate);
                             }
-                            else if (newGate.hasAirplane)
+                            /*else if (newGate.hasAirplane)
                             {
                                 occupiedGates.Add(newGate);
-                            }
+                            }*/
                             else
                             {
                                 availableGates.Add(newGate);
@@ -134,12 +132,13 @@ namespace Introductieproject.Airplanes
                 }
                 else if (airplane.hasDocked)
                 {
+                    IList<Way> runways = new List<Way>();
                     foreach(Way w in ways)
                     {
                         if(w is Runway)
-                            runWays.Add(w);
+                            runways.Add(w);
                     }
-                    endWay = Utils.getClosestWay(airplane.location, runWays);
+                    endWay = Utils.getClosestWay(airplane.location, runways);
                 }
                 Node startNode = findStartNode(startWay, airplane);
                 Node endNode = endWay.nodeConnections[1]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
@@ -258,9 +257,9 @@ namespace Introductieproject.Airplanes
         public Node getTargetNode()
         {
             //Console.WriteLine("CURRENTTARGETNODE IS: " + currentTargetNode);
-            if (!hasEnded)
+            if (nodepoints.Count != targetNodeNumber + 1)
             {
-                return nodepoints[currentTargetNode];
+                return nodepoints[targetNodeNumber];
             }
             else
             {
@@ -270,8 +269,8 @@ namespace Introductieproject.Airplanes
 
         public Way getCurrentWay()
         {
-            Node targetNode = nodepoints[currentTargetNode];
-            Node previousNode = nodepoints[currentTargetNode - 1];
+            Node targetNode = nodepoints[targetNodeNumber];
+            Node previousNode = nodepoints[targetNodeNumber - 1];
 
             foreach (Way targetConnectedWay in targetNode.connections)
             {
@@ -289,64 +288,44 @@ namespace Introductieproject.Airplanes
 
         public double getDistanceToTargetNode(double[] location)
         {
-            return Utils.getDistanceBetweenPoints(location, nodepoints[currentTargetNode].location);
+            return Utils.getDistanceBetweenPoints(location, nodepoints[targetNodeNumber].location);
         }
 
         public void setNextTarget()
         {
-            //Indien er nog nodepoints over zijn
-            if (nodepoints.Count != currentTargetNode + 1)
+            //Als currentTargetNode geen 0 is, verwijder dan de navigator uit de vorige wayList
+            if (targetNodeNumber != 0)
             {
-                //Als currentTargetNode geen 0 is, verwijder dan de navigator uit de vorige wayList
-                if (currentTargetNode != 0)
+                /*if (wayList[currentTargetNode - 1] is Gate)
                 {
-                    if (wayList[currentTargetNode - 1] is Gate)
-                    {
-                        wayList[currentTargetNode - 1].resetNavigators();
-                    }
-                    else
-                    {
-                        wayList[currentTargetNode - 1].removeNavigator(this);
-                    }
-                }
-                //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
-                //Ik voeg hem niet toe bij gate, want dat gaat nog fout want hij komt er dan 2x in.
-                if (wayList[currentTargetNode] is Gate)
-                {
-                    wayList[currentTargetNode].removeReservation(this);
-                    wayList[currentTargetNode].addNavigator(this);
+                    wayList[currentTargetNode - 1].resetNavigators();
                 }
                 else
                 {
-                    wayList[currentTargetNode].addNavigator(this);
-                }
-                currentTargetNode++;
-
-                if(wayList[0] is Gate && runWays[0].runwayHasAirplane == false && currentTargetNode == (nodepoints.Count - 1))
-                {
-                    Console.WriteLine("GEKKE RUNWAYTEST!");
-                    runWays[0].runwayHasAirplane = true;
-                }
-
-                Console.WriteLine("TARGETNODE" + currentTargetNode);
+                    wayList[currentTargetNode - 1].removeNavigator(this);
+                }*/
+            }
+            //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
+            //Ik voeg hem niet toe bij gate, want dat gaat nog fout want hij komt er dan 2x in.
+            if (wayList[targetNodeNumber] is Gate)
+            {
+                wayList[targetNodeNumber].removeReservation(this);
+                // wayList[currentTargetNode].addNavigator(this);
             }
             else
             {
-                if (runWays.Count != 0)
-                {
-                    hasEnded = true;
-                    runWays[0].runwayHasAirplane = false;
-                }
-                else
-                {
-                    hasEnded = true;
-                }
+                // wayList[currentTargetNode].addNavigator(this);
             }
+            targetNodeNumber++;
+
+            /*if(wayList[0] is Gate && runWays[0].runwayHasAirplane == false && currentTargetNode == (nodepoints.Count - 1))
+            {
+                Console.WriteLine("GEKKE RUNWAYTEST!");
+                runWays[0].runwayHasAirplane = true;
+            }*/
         }
 
-        int trackWay = 0;
-
-        public bool hasPermission()
+        /*public bool hasPermission()
         {
             //Indien trackWay gelijk is aan grootte van wayList, dan moet hij weer op 0 en kan je sowieso true returnen, want hij is bij de gate.
 
@@ -436,7 +415,7 @@ namespace Introductieproject.Airplanes
                             }
                             //Zojuist bedacht dat dit helemaal niet meer nodig is, aangezien we maximaal 3 airplanes op een way willen en als er al 3 zijn, mag je toch niet meer.
                             //Ik laat hem maar wel staan voor als we het in de toekomst misschien veranderen
-                            /*
+                           
                             if (wayList[trackWay].navigatorList.Count == 3)
                             {
                                 if (nodepoints[wayList[trackWay - 1].navigatorList[0].currentTargetNode] == nodepoints[wayList[trackWay].navigatorList[0].currentTargetNode])
@@ -512,7 +491,7 @@ namespace Introductieproject.Airplanes
                                     }
                                 }
                             }
-                            */
+                            
                         }
                     }
                     //Controleer of de list kleiner is dan 3 want dan mag er nog een nieuwe navigator bij
@@ -545,10 +524,10 @@ namespace Introductieproject.Airplanes
                     return true;
                 }
             }
-        }
+        }*/
 
         //True betekend geen collision, false betekend wel collision
-        public bool collisionDetection()
+        /*public bool collisionDetection()
         {
             if (trackWay != 0)
             {
@@ -592,11 +571,11 @@ namespace Introductieproject.Airplanes
             }
             //Indien trackway = 0, return dan true want dat is gate of runway en bij gate is het niet nodig en bij runway wordt het door ons zelf gedaan
             return true;
-        }
+        }*/
 
         public double getAngleToTarget(double[] location)
         {
-            return Utils.getAngleBetweenPoints(location, nodepoints[currentTargetNode].location);
+            return Utils.getAngleBetweenPoints(location, nodepoints[targetNodeNumber].location);
         }
     }
 }

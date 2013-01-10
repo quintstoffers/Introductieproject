@@ -19,15 +19,13 @@ namespace Introductieproject.Airport
 
         public IList<Node> nodeConnections = new List<Node>();
 
-        //Bepalen in welke richting moet rijden
+        public int numAirplanesOnWay;
+
+        //Bepalen in welke richting gereden moet worden
         public int direction;
         public int angle;
 
-        public bool hasAirplane = false;
-
-        public bool runwayHasAirplane = false;
-
-        public List<Navigator> navigatorList = new List<Navigator>();
+        //public List<Navigator> navigatorList = new List<Navigator>();
 
         public Airplane airplane;
 
@@ -85,31 +83,32 @@ namespace Introductieproject.Airport
             return returnStr;
         }
 
-        public void removeNavigator(Navigator navigator)
-        {
-            //Verwijdert een specifieke navigator uit de lijst en update de hasAirplane
-            this.navigatorList.Remove(navigator);
-            /*for (int t = 0; t < this.navigatorList.Count; t++)
-            {
-                if (this.navigatorList[t] == navigator)
-                {
-                    navigatorList.RemoveAt(t);
-                    break;
-                }
-            }
-            */
-            if (navigatorList.Count > 0)
-                hasAirplane = true;
-            else hasAirplane = false;
-        }
+        //public void removeNavigator(Navigator navigator)
+        //{
+        //    //Verwijdert een specifieke navigator uit de lijst en update de hasAirplane
+        //    this.navigatorList.Remove(navigator);
+        //    /*for (int t = 0; t < this.navigatorList.Count; t++)
+        //    {
+        //        if (this.navigatorList[t] == navigator)
+        //        {
+        //            navigatorList.RemoveAt(t);
+        //            break;
+        //        }
+        //    }
+        //    */
+        //    if (navigatorList.Count > 0)
+        //        hasAirplane = true;
+        //    else hasAirplane = false;
+        //}
+    
 
-        public void addNavigator(Navigator navigator)
+        /*public void addNavigator(Navigator navigator)
         {
             this.navigatorList.Add(navigator);
             if (navigatorList.Count > 0)
                 hasAirplane = true;
             else hasAirplane = false;
-        }
+        }*/
 
         public void addReservation(Navigator navigator)
         {
@@ -125,17 +124,19 @@ namespace Introductieproject.Airport
                 this.isReserved = false;
         }
 
-        public bool checkTurn(Navigator navigator)
+        /*public bool checkTurn(Navigator navigator)
         {
             if (this.reservations[0] == navigator && !this.hasAirplane)
+            {
                 return true;
+            }
             return false;
-        }
+        }*/
 
-        public void resetNavigators()
+        /*public void resetNavigators()
         {
             this.navigatorList = new List<Navigator>();
             this.hasAirplane = false;
-        }
+        }*/
     }
 }

@@ -11,12 +11,26 @@ namespace Introductieproject.Simulation
 {
     static class Simulation  
     {
-        private static Airport.Airport airport;            // Het vliegveld dat bewerkt wordt door deze simulatie
+        private static Airport.Airport airport;             // Het vliegveld dat bewerkt wordt door deze simulatie
 
-        private static bool runSimulation;                 // of de simulatie draait of niet
-        private static bool pauseSimulation;               // of de simulatie gepauzeert is
+        private static bool runSimulation;                  // of de simulatie draait of niet
+        private static bool pauseSimulation;                // of de simulatie gepauzeert is
 
-        public static int updateInterval = 100;            // update interval van simulatie in milliseconden
+        public static int updateInterval;                   // update interval van simulatie in milliseconden
+        public static int uiUpdateTicks;                    // aantal kloktiks voordat de UI geupdatet wordt
+        public static int uiUpdateInterval                  // "leesbare" ui update interval in milliseconden
+        {
+            get
+            {
+                return uiUpdateTicks * updateInterval;
+            }
+            set
+            {
+                uiUpdateTicks = value / updateInterval;
+                Console.WriteLine("UpdateTIcks set to:  " + uiUpdateTicks);
+            }
+        }
+        private static int tickCounter = 0;
 
         private static Thread simulationThread;
 
@@ -73,29 +87,32 @@ namespace Introductieproject.Simulation
         {
             pauseSimulation = false;
             runSimulation = true;
+            Stopwatch stopwatch = new Stopwatch();
 
-            while (runSimulation == true)       // Simulatie draait terwijl runSimulation true is
+            while (runSimulation == true)               // Simulatie draait terwijl runSimulation true is
             {
-                while (pauseSimulation)         // Slapen terwijl de simulatie gepauzeert is.
+                while (pauseSimulation)                 // Slapen terwijl de simulatie gepauzeert is.
                 {
                     Thread.Sleep(1000);
                 }
+
+                stopwatch.Reset();
+                stopwatch.Start();
+                
                 TimeKeeper.update();
 
                 Parser.refreshAirplanes(airport.airplanes);
 
                 updateSimulation();
-                try
-                {
-                    Program.mainForm.BeginInvoke((Action)(() => Program.mainForm.updateUI()));
-                }
-                catch (Exception e) // MainForm gesloten, geen UI thread beschikbaar. Simulatie sluiten
-                {
-                    runSimulation = false;
-                    break;
-                }
 
-                Thread.Sleep(updateInterval);
+                updateUI();
+
+                long elapsedMillis = stopwatch.ElapsedMilliseconds;
+                if (elapsedMillis < updateInterval)
+                {
+                    Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
+                    Thread.Sleep(updateInterval - (int) elapsedMillis);
+                }
             }
 
             Console.WriteLine("Simulation stopped");
@@ -108,6 +125,25 @@ namespace Introductieproject.Simulation
             foreach(Airplane currentAirplane in airport.airplanes)
             {
                 currentAirplane.simulate();
+            }
+        }
+
+        private static void updateUI()
+        {
+            tickCounter++;
+
+            if (tickCounter >= uiUpdateTicks)
+            {
+                try
+                {
+
+                    Program.mainForm.BeginInvoke((Action)(() => Program.mainForm.updateUI()));  // BeginInvoke == asynchroon
+                }
+                catch (Exception e) // MainForm gesloten, geen UI thread beschikbaar. Simulatie sluiten
+                {
+                    runSimulation = false;
+                }
+                tickCounter = 0;
             }
         }
     }

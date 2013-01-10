@@ -17,7 +17,21 @@ namespace Introductieproject.Simulation
         public static TimeSpan elapsedRealTime;       // Verstreken echte tijd sinds vorige kloktik
         public static TimeSpan elapsedSimTime;        // Idem voor de gesimuleerde wereld
 
-        public static double scale;                   // Verhouding tussen echte tijd en simulatietijd. >1 = sneller, <1 = langzamer
+        private static double scale;
+        public static double Scale
+        {
+            get
+            {
+                return scale;
+            }
+            set
+            {
+                scale = value;
+
+                Simulation.updateInterval = (int)(1000 / scale);
+                Simulation.uiUpdateInterval = 1000;
+            }
+        }                   // Verhouding tussen echte tijd en simulatietijd. >1 = sneller, <1 = langzamer
 
         public static void init()
         {

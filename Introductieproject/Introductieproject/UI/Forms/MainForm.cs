@@ -20,15 +20,12 @@ namespace Introductieproject.Forms
             this.airport = airport;
 
             InitializeComponent();
-
-            airplaneStatsControl.init(airport);
-            mapControl.init(airport);
         }
 
         public void updateUI()  // Update elementen zonder databinding
         {
             airplaneStatsControl.update(airport);
-            mapControl.Invalidate();
+            mapControl.update(airport);
 
             tsSimTime.Text = "Simulated time: " + TimeKeeper.currentSimTime.ToString();
         }
@@ -58,34 +55,14 @@ namespace Introductieproject.Forms
             Simulation.Simulation.pauseSimulationToggle();
         }
 
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void airplaneStatsControl_Load(object sender, EventArgs e)
         {
-
+            airplaneStatsControl.init(airport);
         }
 
         private void mapControl_Load(object sender, EventArgs e)
         {
-
-        }
-
-        private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void airplaneStatsControl_Load_1(object sender, EventArgs e)
-        {
-
+            mapControl.init(airport);
         }
     }
 }

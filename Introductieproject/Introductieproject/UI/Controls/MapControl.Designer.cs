@@ -35,8 +35,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "MapControl";
-            this.Load += new System.EventHandler(this.MapControl_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MapControl_Paint);
+            this.SizeChanged += new System.EventHandler(this.MapControl_SizeChanged);
             this.ResumeLayout(false);
 
         }

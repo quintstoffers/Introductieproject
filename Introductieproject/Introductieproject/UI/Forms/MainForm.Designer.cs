@@ -83,7 +83,6 @@
             this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
             this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.saveToolStripMenuItem.Text = "Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
@@ -160,7 +159,6 @@
             this.statusStrip1.Size = new System.Drawing.Size(1370, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
-            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
             // 
             // tsSimTime
             // 
@@ -176,11 +174,10 @@
             this.airplaneStatsControl.Name = "airplaneStatsControl";
             this.airplaneStatsControl.Size = new System.Drawing.Size(648, 570);
             this.airplaneStatsControl.TabIndex = 6;
-            this.airplaneStatsControl.Load += new System.EventHandler(this.airplaneStatsControl_Load_1);
             // 
             // mapControl
             // 
-            this.mapControl.BackColor = System.Drawing.SystemColors.Info;
+            this.mapControl.BackColor = System.Drawing.SystemColors.Control;
             this.mapControl.Dock = System.Windows.Forms.DockStyle.Left;
             this.mapControl.Location = new System.Drawing.Point(0, 24);
             this.mapControl.Name = "mapControl";

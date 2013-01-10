@@ -34,53 +34,52 @@ namespace Introductieproject.Airport
                 if (!currentAirplane.wasSetup)
                 {
                     Console.WriteLine("NOT SETUP");
-                    Console.WriteLine("ARRIVE: " + currentAirplane.landingDate);
+                    Console.WriteLine("ARRIVE : " + currentAirplane.landingDate);
+                    Console.WriteLine("ARRIVE2: " + currentAirplane.actualLandingDate);
                     Console.WriteLine("CURR:   " + TimeKeeper.currentSimTime);
-                    if (TimeKeeper.currentSimTime >= currentAirplane.actualLandingDate)   // Vliegtuig is geland, maar nog niet setup
+                    if (TimeKeeper.currentSimTime >= currentAirplane.landingDate)
                     {
+                        if(currentAirplane.actualLandingDate == null)
+                        {
+                            if (runways[0].runwayHasAirplane)
+                            {
+                                // Wacht een extra minuut
+                                TimeSpan wait = new TimeSpan(0, 1, 0);
+                                currentAirplane.actualLandingDate = TimeKeeper.currentSimTime + wait;
+                            }
+                        }
+                        else if (TimeKeeper.currentSimTime >= currentAirplane.actualLandingDate)   // Vliegtuig is geland, maar nog niet setup
+                        {
                             if (runways[0].runwayHasAirplane)
                             {
                                 // Wacht een extra 30 seconden.
-                                TimeSpan wait = new TimeSpan(0,0,30);
-                                currentAirplane.actualLandingDate = currentAirplane.landingDate + wait;
+                                TimeSpan wait = new TimeSpan(0, 1, 0);
+                                currentAirplane.actualLandingDate = TimeKeeper.currentSimTime + wait;
                             }
                             else
                             {
                                 Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
-
-                                double[] location = new double[2];
-                                location[0] = 0;
-                                location[1] = 1000;
-                                currentAirplane.setStateVariables(location, 0, 0, 200, 210, 2000);
+                                currentAirplane.land();
                             }
-                    }
-                    else
-                    {
-                        // Vliegtuig is nog niet geland
+                        }
                     }
                     continue;
                 }
-                if (currentAirplane.atGate && DateTime.Compare(TimeKeeper.currentSimTime, currentAirplane.actualDepartureDate) >= 0) // Als een vliegtuig bij een gate geparkeerd staat en het tijd is om te vertrekken
+                else if (currentAirplane.status == Airplane.Status.DOCKING && TimeKeeper.currentSimTime >= currentAirplane.actualDepartureDate) // Als een vliegtuig bij een gate geparkeerd staat en het tijd is om te vertrekken
                 {
-                    currentAirplane.atGate = false; // Dan verlaat het vliegtuig de gate
-                    currentAirplane.navigator = null;
-                    currentAirplane.navigator = new Navigator(currentAirplane, this.ways); // En krijgt hij een nieuwe Navigator, die als het goed is een route uitrekent naar de Runway
+                    currentAirplane.leaveDock();
                 }
-                if (currentAirplane.navigator == null && runways[0].runwayHasAirplane == false)       // Vliegtuig heeft nog geen navigator gekregen, ofwel net geland, of klaar om te vertrekken
+                else if (currentAirplane.navigator == null)       // Vliegtuig heeft nog geen navigator gekregen, ofwel net geland, of klaar om te vertrekken
                 {
-                    if (!currentAirplane.atGate)
+                    if (currentAirplane.status != Airplane.Status.DOCKING)
                     {
-                        runways[0].runwayHasAirplane = true;
                         Console.WriteLine("Found airplane without navigator");
                         Navigator navigator = new Navigator(currentAirplane, ways);
                         currentAirplane.navigator = navigator;
-                        Console.WriteLine(airplanes.Count);
                         runwayTracker = 0;
                     }
                 }
-
-                // Als vliegtuig al bij de gate is geweest, en op de runway staat -> versnellen en opstijgen
-                if (currentAirplane.hasDocked && isOnRunway(currentAirplane))
+                else if (currentAirplane.hasDocked && isOnRunway(currentAirplane)) // Als vliegtuig al bij de gate is geweest, en op de runway staat -> versnellen en opstijgen
                 {
                     currentAirplane.accelerate(currentAirplane.takeofSpeed);
                     if (currentAirplane.speed == currentAirplane.takeofSpeed)
@@ -145,6 +144,24 @@ namespace Introductieproject.Airport
                     return runway;
             }
             return null;
+        }
+
+
+        /*
+         * Requesters
+         */
+        public bool requestNavigator(Airplane airplane) // True als vliegtuig een navigator krijgt
+        {
+            airplane.navigator = new Navigator(airplane, this.ways); // En krijgt hij een nieuwe Navigator, die als het goed is een route uitrekent naar de Runway
+            return true;
+        }
+
+        /*
+         * Permission requesters
+         */
+        public bool canTakeOff(Airplane airplane)
+        {
+            return true;
         }
     }
 }

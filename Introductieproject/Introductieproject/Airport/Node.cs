@@ -27,7 +27,9 @@ namespace Introductieproject.Airport
         public bool checkConnection(Way checkWay)
         {
             foreach (Way w in this.connections)
+            {
                 if (w == checkWay) return true;
+            }
             return false;
         }
 

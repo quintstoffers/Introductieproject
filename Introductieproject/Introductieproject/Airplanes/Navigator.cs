@@ -13,6 +13,7 @@ namespace Introductieproject.Airplanes
         public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
         public IList<Way> wayList = new List<Way>();
         public int currentTargetNode = 0;
+
         private bool hasEnded = false;
         public double[] location;
         public double distanceToTarget;
@@ -259,13 +260,31 @@ namespace Introductieproject.Airplanes
             //Console.WriteLine("CURRENTTARGETNODE IS: " + currentTargetNode);
             if (!hasEnded)
             {
-                Console.WriteLine(nodepoints[currentTargetNode]);
                 return nodepoints[currentTargetNode];
             }
             else
             {
                 return null;
             }
+        }
+
+        public Way getCurrentWay()
+        {
+            Node targetNode = nodepoints[currentTargetNode];
+            Node previousNode = nodepoints[currentTargetNode - 1];
+
+            foreach (Way targetConnectedWay in targetNode.connections)
+            {
+                foreach (Way previousConnectedWay in previousNode.connections)
+                {
+                    if(targetConnectedWay.Equals(previousConnectedWay))
+                    {
+                        return targetConnectedWay;
+                    }
+                }
+            }
+
+            return null;
         }
 
         public double getDistanceToTargetNode(double[] location)

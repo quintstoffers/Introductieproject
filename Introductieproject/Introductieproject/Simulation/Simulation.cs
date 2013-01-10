@@ -124,7 +124,7 @@ namespace Introductieproject.Simulation
 
             foreach(Airplane currentAirplane in airport.airplanes)
             {
-                currentAirplane.simulate();
+                currentAirplane.simulate(airport);
             }
         }
 
@@ -139,7 +139,7 @@ namespace Introductieproject.Simulation
 
                     Program.mainForm.BeginInvoke((Action)(() => Program.mainForm.updateUI()));  // BeginInvoke == asynchroon
                 }
-                catch (Exception e) // MainForm gesloten, geen UI thread beschikbaar. Simulatie sluiten
+                catch (Exception) // MainForm gesloten, geen UI thread beschikbaar. Simulatie sluiten
                 {
                     runSimulation = false;
                 }

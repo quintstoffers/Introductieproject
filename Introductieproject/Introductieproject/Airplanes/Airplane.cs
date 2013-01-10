@@ -10,6 +10,18 @@ namespace Introductieproject.Objects
 {
     public class Airplane
     {
+        public enum Status
+        {
+            WAITING_TAKEOFF = 0,
+            WAITING_NAVIGATOR,
+
+            APPROACHING,
+            TAKINGOFF,
+            DEPARTED,
+            DOCKING,
+            IDLE
+        }
+
         // "Vaste" variabelen die per type vliegtuig zullen verschillen (defined in subclasse!)
         public String manufacturerName;     // Maker vliegtuig
         public String typeName;             // Leesbare string voor weergave
@@ -30,6 +42,7 @@ namespace Introductieproject.Objects
 
         // Vanaf hier èchte variabelen, per vliegtuig verschillen (defined tijdens aanwezigheid op vliegveld)
         public Boolean wasSetup = false;    // op true zodra onderstaande variabelen gedefinieerd zijn
+
         public DateTime actualLandingDate;
         public DateTime actualArrivalDate;
         public DateTime actualDepartureDate;
@@ -45,9 +58,11 @@ namespace Introductieproject.Objects
         public double[] location;           // De huidige locatie van het vliegtuig
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
-        public bool atGate;                 // Houdt bij of een vliegtuig op dit moment bij de gate is.
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
+
         public bool takeOff = false;
+
+        public Status status;
 
         public Navigator navigator;         // Object dat aangeeft waar het vliegtuig heen moet
 
@@ -106,9 +121,10 @@ namespace Introductieproject.Objects
             this.flight = flight;
             this.carrier = carrier;
             this.landingDate = landingDate;
-            this.actualLandingDate = landingDate;
             this.arrivalDate = arrivalDate;
             this.departureDate = departureDate;
+
+            this.status = Status.APPROACHING;
         }
         public void setStateVariables(double[] location, double speed, int angle, int passengers, int luggage, int luggageKg)
         {
@@ -123,10 +139,13 @@ namespace Introductieproject.Objects
         /*
         * Simuleer een stap van grootte realTime milliseconden
         */
-        public void simulate()
+        public void simulate(Airport.Airport airport)
         {
-            // vliegtuig hoort geen navigator te hebben: bij gate.
-            if (atGate)
+            if (status == Status.APPROACHING)
+            {
+                // Niets doen, vliegtuig is nog niet in scope
+            }
+            else if (status == Status.DOCKING)
             {
                 //Onderstaande code staat nu in Airport, aangezien Airport de enige klasse is die een vliegtuig een Navigator kan geven
                 /*
@@ -141,7 +160,10 @@ namespace Introductieproject.Objects
             }
             else if (navigator == null)
             {
-                // of vliegtuig heeft nog geen route gekregen
+                if (!airport.requestNavigator(this))
+                {
+                    return; // Geen navigator gekregen, dus nothing to do here
+                }
             }
             else
             {
@@ -240,12 +262,22 @@ namespace Introductieproject.Objects
             }
         }
 
+        public void land()
+        {
+            double[] location = new double[2];
+            location[0] = 0;
+            location[1] = 1000;
+            this.setStateVariables(location, 0, 0, 200, 210, 2000);
+
+            this.status = Status.IDLE;
+        }
+
         /*
          * Wat er moet gebeuren als het vliegtuig bij de gate staat.
         */
         public void dock()
         {
-            atGate = true;
+            status = Status.DOCKING;
 
             //Check wanneer vliegtuig is aangekomen.
             actualArrivalDate = TimeKeeper.currentSimTime;
@@ -332,6 +364,10 @@ namespace Introductieproject.Objects
             hasDocked = true;
 
             this.navigator = null; // Verwijder de navigator
+        }
+        public void leaveDock()
+        {
+            status = Status.IDLE;
         }
 
 

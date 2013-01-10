@@ -13,10 +13,9 @@ namespace Introductieproject.Objects
         public enum Status
         {
             APPROACHING = 0,
-            
-            IDLE
+            IDLE,
             DOCKING,
-            WAITING_TAKEOFF = 0,
+            WAITING_TAKEOFF,
             TAKINGOFF,
             DEPARTED
         }
@@ -138,6 +137,9 @@ namespace Introductieproject.Objects
             if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
             {
             }
+            else if (status == Status.DEPARTED)
+            {
+            }
             else if (status == Status.DOCKING)      // Vliegtuig staat bij gate
             {
                 Console.WriteLine("LEAVE   : " + actualDepartureDate);
@@ -145,9 +147,10 @@ namespace Introductieproject.Objects
                 if (TimeKeeper.currentSimTime >= actualDepartureDate)
                 {
                     leaveDock();
+                    requestNavigator(airport);
                 }
             }
-            else if(status == Status.WAITING_TAKEOFF)    // Vliegtuig wacht voordat hij mag opstijgen
+            else if (status == Status.WAITING_TAKEOFF)    // Vliegtuig wacht voordat hij mag opstijgen
             {
                 requestTakeOff(airport);
             }
@@ -191,8 +194,11 @@ namespace Introductieproject.Objects
                     //TODO permission check
                     if (distanceToTarget < 0.5)
                     {
-                        navigator.setNextTarget();
-                        return;                     // Volgende simtik gaan we weer verder
+                        if (airport.requestWayAccess(this, navigator.targetWay)) // Toestemming verzoeken voor volgende way
+                        {
+                            navigator.setNextTarget();
+                            return;                     // Volgende simtik gaan we weer verder
+                        }
                     }
 
                     if (distanceToTarget < speed)
@@ -337,7 +343,7 @@ namespace Introductieproject.Objects
             // Zet hasDocked op true voor de navigator.
             hasDocked = true;
 
-            this.navigator = null; // Verwijder de navigator
+            //this.navigator = null; // Verwijder de navigator
         }
 
         public void leaveDock()

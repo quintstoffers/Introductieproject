@@ -15,6 +15,7 @@ namespace Introductieproject.Airplanes
         public int targetNodeNumber = 0;
 
         public Way currentWay;
+        public Way targetWay;
 
         public double[] location;
         
@@ -150,7 +151,7 @@ namespace Introductieproject.Airplanes
                     Console.WriteLine(node.ToString());
                 }
                 waypoints = convertNodesToWaypoints(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
-
+                
                 Console.WriteLine("Created new list of waypoints");
                 /*foreach (Way way in waypoints)
                 {
@@ -158,6 +159,10 @@ namespace Introductieproject.Airplanes
                 }
                 Console.WriteLine("End of waypoints");
                 */
+
+                // Ways initten
+                currentWay = startWay;
+                getTargetWay();
             }
         }
 
@@ -256,7 +261,8 @@ namespace Introductieproject.Airplanes
 
         public Node getTargetNode()
         {
-            //Console.WriteLine("CURRENTTARGETNODE IS: " + currentTargetNode);
+            Console.WriteLine("Current way: " + currentWay);
+            Console.WriteLine("Target way : " + targetWay);
             if (nodepoints.Count != targetNodeNumber + 1)
             {
                 return nodepoints[targetNodeNumber];
@@ -267,25 +273,6 @@ namespace Introductieproject.Airplanes
             }
         }
 
-        public Way getCurrentWay()
-        {
-            Node targetNode = nodepoints[targetNodeNumber];
-            Node previousNode = nodepoints[targetNodeNumber - 1];
-
-            foreach (Way targetConnectedWay in targetNode.connections)
-            {
-                foreach (Way previousConnectedWay in previousNode.connections)
-                {
-                    if(targetConnectedWay.Equals(previousConnectedWay))
-                    {
-                        return targetConnectedWay;
-                    }
-                }
-            }
-
-            return null;
-        }
-
         public double getDistanceToTargetNode(double[] location)
         {
             return Utils.getDistanceBetweenPoints(location, nodepoints[targetNodeNumber].location);
@@ -293,18 +280,6 @@ namespace Introductieproject.Airplanes
 
         public void setNextTarget()
         {
-            //Als currentTargetNode geen 0 is, verwijder dan de navigator uit de vorige wayList
-            if (targetNodeNumber != 0)
-            {
-                /*if (wayList[currentTargetNode - 1] is Gate)
-                {
-                    wayList[currentTargetNode - 1].resetNavigators();
-                }
-                else
-                {
-                    wayList[currentTargetNode - 1].removeNavigator(this);
-                }*/
-            }
             //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
             //Ik voeg hem niet toe bij gate, want dat gaat nog fout want hij komt er dan 2x in.
             if (wayList[targetNodeNumber] is Gate)
@@ -323,7 +298,55 @@ namespace Introductieproject.Airplanes
                 Console.WriteLine("GEKKE RUNWAYTEST!");
                 runWays[0].runwayHasAirplane = true;
             }*/
+
+            getCurrentWay();
+            getTargetWay();
         }
+        public void getCurrentWay()
+        {
+            if (targetNodeNumber == 0)  // als 0, dan staat de huidige weg al goed vanuit newRoute()
+            {
+                return;
+            }
+
+            Node targetNode = nodepoints[targetNodeNumber];
+            Node previousNode = nodepoints[targetNodeNumber - 1]; ;
+
+            foreach (Way targetConnectedWay in targetNode.connections)
+            {
+                foreach (Way previousConnectedWay in previousNode.connections)
+                {
+                    if (targetConnectedWay.Equals(previousConnectedWay))
+                    {
+                        currentWay = targetConnectedWay;
+                        return;
+                    }
+                }
+            }
+        }
+        public void getTargetWay()
+        {
+            if (targetNodeNumber == nodepoints.Count - 1)
+            {
+                return;
+            }
+
+            Node targetNode = nodepoints[targetNodeNumber];
+            Node nextTargetNode = nodepoints[targetNodeNumber + 1]; ;
+
+            foreach (Way targetConnectedWay in targetNode.connections)
+            {
+                foreach (Way previousConnectedWay in nextTargetNode.connections)
+                {
+                    if (targetConnectedWay.Equals(previousConnectedWay))
+                    {
+                        targetWay = targetConnectedWay;
+                        return;
+                    }
+                }
+            }
+        }
+
 
         /*public bool hasPermission()
         {

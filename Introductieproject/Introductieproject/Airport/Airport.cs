@@ -121,17 +121,6 @@ namespace Introductieproject.Airport
             //Console.WriteLine(this.ToString());
         }
 
-        private void checkWays()
-        {
-            foreach(Way currentWay in ways)
-            {
-                foreach(Airplane currentAirplane in airplanes)
-                {
-
-                }
-            }
-        }
-
         public static bool isBetweenNodes(Way way, Node node1, Node node2)
         {
             //Als node 1 en 2 de way bevatten, dan is way een verbinding tussen de twee nodes
@@ -156,6 +145,16 @@ namespace Introductieproject.Airport
          */
         public bool requestWayAccess(Airplane airplane, Way way)
         {
+            foreach (Airplane currentAirplane in airplanes)                 // Alle vliegtuigen bekijken
+            {
+                if (!currentAirplane.Equals(airplane))                      // Eigen vliegtuig niet meerekenen
+                {
+                    if (currentAirplane.navigator.currentWay.Equals(way))   // Een ander vliegtuig rijdt op dit moment op de weg
+                    {
+                        return false;                                       // Ruw, maar het werkt net zoals hiervoor
+                    }
+                }
+            }
             return true;
         }
         public bool requestTakeOff(Airplane airplane)

@@ -93,7 +93,7 @@ namespace Introductieproject.Simulation
             AirportDocument.Load(@"Simulation\airportlayout.xml");
             XmlNodeList xmlNodes = AirportDocument.SelectNodes("//node");
             List<int> directions = new List<int>();
-            int i = 0;
+            int i = 0; //Een maal getNodeMatch ophalen.
             foreach (Node[] nodeMatch in getNodeMatch("runway", directions, AirportDocument, nodeList))
             {
                 

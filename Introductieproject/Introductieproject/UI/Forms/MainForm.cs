@@ -20,6 +20,9 @@ namespace Introductieproject.Forms
             this.airport = airport;
 
             InitializeComponent();
+
+            mapControl.init(airport);
+            airplaneStatsControl.init(airport);
         }
 
         public void updateUI()  // Update elementen zonder databinding
@@ -53,16 +56,6 @@ namespace Introductieproject.Forms
         private void continueToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Simulation.Simulation.pauseSimulationToggle();
-        }
-
-        private void airplaneStatsControl_Load(object sender, EventArgs e)
-        {
-            airplaneStatsControl.init(airport);
-        }
-
-        private void mapControl_Load(object sender, EventArgs e)
-        {
-            mapControl.init(airport);
         }
     }
 }

@@ -183,7 +183,6 @@
             this.mapControl.Name = "mapControl";
             this.mapControl.Size = new System.Drawing.Size(722, 570);
             this.mapControl.TabIndex = 5;
-            this.mapControl.Load += new System.EventHandler(this.mapControl_Load);
             // 
             // MainForm
             // 

@@ -154,6 +154,24 @@ namespace Introductieproject.Objects
             {
                 requestTakeOff(airport);
             }
+            else if (status == Status.TAKINGOFF)
+            {
+                speed = 0;
+                double targetAngle = navigator.getAngleToTarget(location);
+
+                if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
+                {
+                    rotate(targetAngle);
+                }
+                if (angle == targetAngle)
+                {
+                    this.accelerate(takeofSpeed);
+                    if (this.speed == takeofSpeed)
+                    {
+                        takeOff();
+                    }
+                }
+            }
             else if (navigator == null)
             {
                 requestNavigator(airport);
@@ -186,7 +204,7 @@ namespace Introductieproject.Objects
                     Console.WriteLine("     target angle: " + targetAngle);
 
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
-                    double maxSpeed = 10;
+                    double maxSpeed = 20;
                     double cornerSpeed = 1;
                     navigator.location = this.location;
 
@@ -194,7 +212,12 @@ namespace Introductieproject.Objects
                     //TODO permission check
                     if (distanceToTarget < 0.5)
                     {
-                        if (navigator.hasNextTarget())
+                        if (this.hasDocked && navigator.targetWay is Runway)
+                        {
+                            airport.requestWayAccess(this, navigator.wayList[navigator.wayList.Count - 1]);
+                            prepareTakeOff();
+                        }
+                        else if (navigator.hasNextTarget())
                         {
                             if (airport.requestWayAccess(this, navigator.targetWay)) // Toestemming verzoeken voor volgende way
                             {
@@ -208,10 +231,10 @@ namespace Introductieproject.Objects
                             {
                                 dock();
                             }
-                            else
-                            {
-                                prepareTakeOff();
-                            }                 // Volgende simtik gaan we weer verder
+                            //else
+                            //{
+                            //    prepareTakeOff();
+                            //}                 // Volgende simtik gaan we weer verder
                         }
                     }
 
@@ -251,9 +274,9 @@ namespace Introductieproject.Objects
         }
         public void requestTakeOff(Airport.Airport airport)
         {
-            if(airport.requestTakeOff(this))
+            if (airport.requestTakeOff(this))
             {
-                takeOff();
+                status = Status.TAKINGOFF;
             }
         }
 
@@ -266,7 +289,7 @@ namespace Introductieproject.Objects
 
             this.status = Status.IDLE;
         }
-        
+
         /*
          * Wat er moet gebeuren als het vliegtuig bij de gate staat.
         */

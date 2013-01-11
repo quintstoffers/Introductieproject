@@ -156,14 +156,16 @@ namespace Introductieproject.Objects
             }
             else if (status == Status.TAKINGOFF)
             {
-                speed = 0;
                 double targetAngle = navigator.getAngleToTarget(location);
-
-                if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
+                double var = 0.01;
+                //if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
+                if (angle - targetAngle > var || angle - targetAngle < -var) //vliegtuig staat niet in de juiste richting, met foutmarge
                 {
+                    speed = 0;
                     rotate(targetAngle);
                 }
-                if (angle == targetAngle)
+                //if (angle == targetAngle)
+                if (angle - targetAngle < var && angle - targetAngle > -var)
                 {
                     this.accelerate(takeofSpeed);
                     if (this.speed == takeofSpeed)
@@ -277,6 +279,7 @@ namespace Introductieproject.Objects
             if (airport.requestTakeOff(this))
             {
                 status = Status.TAKINGOFF;
+                navigator.setNextTarget();
             }
         }
 

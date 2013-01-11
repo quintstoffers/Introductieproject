@@ -402,6 +402,15 @@ namespace Introductieproject.Objects
             status = Status.DEPARTED;
         }
 
+        public bool isOnAirport()
+        {
+            if (status == Status.APPROACHING || status == Status.DEPARTED)
+            {
+                return false;
+            }
+            else { return true; }
+        }
+
         private void rotate(double targetAngle)
         {
             //Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);

@@ -147,7 +147,7 @@ namespace Introductieproject.Airport
         {
             foreach (Airplane currentAirplane in airplanes)                 // Alle vliegtuigen bekijken
             {
-                if (!currentAirplane.Equals(airplane))                      // Eigen vliegtuig niet meerekenen
+                if (!currentAirplane.Equals(airplane) && currentAirplane.isOnAirport()) // Eigen vliegtuig niet meerekenen & vliegtuig moet in bereik van Airport zijn.
                 {
                     if (currentAirplane.navigator.currentWay.Equals(way))   // Een ander vliegtuig rijdt op dit moment op de weg
                     {

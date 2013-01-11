@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <schedule>
-  <!--<plane
+  <plane
     registration="G-BCDE"
     flight="I-D0N7-KN0W"
     type="BO_747"
@@ -10,7 +10,7 @@
     departureDate="01/01/13 22:20:00"
     origin="London Heathrow"
     destination="Amsterdam Airport Schiphol">
-  </plane>-->
+  </plane>
   <plane
     registration="G-ABCD"
     flight="A-1337-101"

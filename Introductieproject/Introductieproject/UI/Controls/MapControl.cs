@@ -152,7 +152,7 @@ namespace Introductieproject.UI.Controls
                     int drawingLocationX = (int)(currentAirplane.location[0] * drawingScale);
                     int drawingLocationY = (int)(currentAirplane.location[1] * drawingScale);
 
-                    graphics.FillEllipse(Brushes.White, drawingLocationX, drawingLocationY, 5, 5);
+                    graphics.FillEllipse(Brushes.White, drawingLocationX-2, drawingLocationY-2, 5, 5);
                 }
             }
         }

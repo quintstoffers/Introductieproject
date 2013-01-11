@@ -166,7 +166,7 @@ namespace Introductieproject.Objects
 
                 if (targetNode == null)
                 {
-                    //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
+                    /*//wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                     if (!hasDocked)
                     {
                         dock();
@@ -174,7 +174,7 @@ namespace Introductieproject.Objects
                     else
                     {
                         prepareTakeOff();
-                    }
+                    }*/
                 }
                 else
                 {
@@ -194,10 +194,24 @@ namespace Introductieproject.Objects
                     //TODO permission check
                     if (distanceToTarget < 0.5)
                     {
-                        if (airport.requestWayAccess(this, navigator.targetWay)) // Toestemming verzoeken voor volgende way
+                        if (navigator.hasNextTarget())
                         {
-                            navigator.setNextTarget();
-                            return;                     // Volgende simtik gaan we weer verder
+                            if (airport.requestWayAccess(this, navigator.targetWay)) // Toestemming verzoeken voor volgende way
+                            {
+                                navigator.setNextTarget();
+                                return;                     // Volgende simtik gaan we weer verder
+                            }
+                        }
+                        else if (airport.requestWayAccess(this, navigator.targetWay)) // Toestemming verzoeken voor volgende way
+                        {
+                            if (!hasDocked)
+                            {
+                                dock();
+                            }
+                            else
+                            {
+                                prepareTakeOff();
+                            }                 // Volgende simtik gaan we weer verder
                         }
                     }
 

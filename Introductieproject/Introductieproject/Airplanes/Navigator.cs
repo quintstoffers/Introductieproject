@@ -263,7 +263,7 @@ namespace Introductieproject.Airplanes
         {
             Console.WriteLine("Current way: " + currentWay);
             Console.WriteLine("Target way : " + targetWay);
-            if (nodepoints.Count != targetNodeNumber + 1)
+            if (nodepoints.Count != targetNodeNumber)
             {
                 return nodepoints[targetNodeNumber];
             }
@@ -278,6 +278,18 @@ namespace Introductieproject.Airplanes
             return Utils.getDistanceBetweenPoints(location, nodepoints[targetNodeNumber].location);
         }
 
+
+        public Boolean hasNextTarget()
+        {
+            if (targetNodeNumber + 1 >= nodepoints.Count)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public void setNextTarget()
         {
             //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
@@ -326,7 +338,7 @@ namespace Introductieproject.Airplanes
         }
         public void getTargetWay()
         {
-            if (targetNodeNumber == nodepoints.Count - 1)
+            if (targetNodeNumber == nodepoints.Count - 1)   // Targetway is de huidige weg
             {
                 return;
             }

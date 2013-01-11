@@ -351,7 +351,7 @@ namespace Introductieproject.Objects
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + delay + oude vertrektijd.
             Console.WriteLine("DEPARTUREDATE: " + departureDate);
-            actualDepartureDate = departureDate.Add(landingDifference + arrivalDifference + delay);
+            actualDepartureDate = departureDate.Add(landingDifference + arrivalDifference); //+ delay
             Console.WriteLine("actualDepartureDate: " + actualDepartureDate);
 
             // Zet hasDocked op true voor de navigator.
@@ -422,7 +422,7 @@ namespace Introductieproject.Objects
             }
             if (angle < 0)
                 angle = 360 + angle;    //Als je langs de 0 komt, dan ga je van bovenaf naar beneden
-            if (angle > 360)
+            if (angle >= 360)
                 angle = angle - 360;
         }
 

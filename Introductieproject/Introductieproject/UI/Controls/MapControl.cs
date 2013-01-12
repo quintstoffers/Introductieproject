@@ -17,12 +17,13 @@ namespace Introductieproject.UI.Controls
     {
         Bitmap bmpAirplanes;
         Bitmap bmpAirport;
-
+        bool firstPaint = true;
         double drawingScale = 1;
         Parser parser = new Parser();
         double maxXCoord = 0;
         double maxYCoord = 0;
-
+        int zoomlevelX;
+        int zoomlevelY;
         bool airportDirty;
 
         public MapControl()
@@ -50,8 +51,8 @@ namespace Introductieproject.UI.Controls
             Graphics graphics = this.CreateGraphics();
 
             graphics.Clear(Color.Black);
-            graphics.DrawImage(bmpAirport, 0, 0, bmpAirport.Width, bmpAirport.Height);
-            graphics.DrawImage(bmpAirplanes, 0, 0, bmpAirplanes.Width, bmpAirplanes.Height);
+            graphics.DrawImage(bmpAirport, 0, 0, zoomlevelX, zoomlevelY);
+            graphics.DrawImage(bmpAirplanes, 0, 0, zoomlevelX, zoomlevelY);
         }
 
         /*
@@ -76,7 +77,12 @@ namespace Introductieproject.UI.Controls
 
             drawingScale = Math.Min(xScale, yScale);
         }
-
+        public void zoom(int zoomLevel)
+        {
+            zoomlevelX = (int)(bmpAirport.Width * (1 + 0.1225 *zoomLevel));
+            zoomlevelY = (int)(bmpAirport.Height * (1 + 0.1225 * zoomLevel));
+            airportDirty = true;
+        }
         private void drawAirportToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
@@ -133,7 +139,12 @@ namespace Introductieproject.UI.Controls
                 graphics.DrawLine(pen, point1, point2);
 
             }
-
+            if (firstPaint)
+            {
+               zoomlevelX = bmpAirport.Width;
+               zoomlevelY = bmpAirport.Height;
+               firstPaint = false;
+            }
             airportDirty = false;
         }
         private void drawAirplanesToBitmap(Airport.Airport airport)
@@ -160,6 +171,11 @@ namespace Introductieproject.UI.Controls
         private void MapControl_SizeChanged(object sender, EventArgs e)
         {
             airportDirty = true;
+        }
+
+        private void MapControl_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

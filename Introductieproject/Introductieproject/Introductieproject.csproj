@@ -90,6 +90,12 @@
     <Compile Include="UI\Controls\ToolboxControl.Designer.cs">
       <DependentUpon>ToolboxControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Controls\ZoomControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\Controls\ZoomControl.Designer.cs">
+      <DependentUpon>ZoomControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\EditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\SimulationMapControl.resx">
       <DependentUpon>SimulationMapControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Controls\ZoomControl.resx">
+      <DependentUpon>ZoomControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -72,7 +72,7 @@
             this.dgvNodes.Location = new System.Drawing.Point(0, 0);
             this.dgvNodes.Margin = new System.Windows.Forms.Padding(0);
             this.dgvNodes.Name = "dgvNodes";
-            this.dgvNodes.Size = new System.Drawing.Size(316, 350);
+            this.dgvNodes.Size = new System.Drawing.Size(460, 350);
             this.dgvNodes.TabIndex = 0;
             // 
             // Node
@@ -106,7 +106,7 @@
             this.panel1.Location = new System.Drawing.Point(0, 274);
             this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(316, 76);
+            this.panel1.Size = new System.Drawing.Size(460, 76);
             this.panel1.TabIndex = 1;
             // 
             // label10
@@ -240,7 +240,7 @@
             this.dgvAirplanes.ReadOnly = true;
             this.dgvAirplanes.RowTemplate.Height = 24;
             this.dgvAirplanes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAirplanes.Size = new System.Drawing.Size(580, 350);
+            this.dgvAirplanes.Size = new System.Drawing.Size(436, 350);
             this.dgvAirplanes.TabIndex = 0;
             this.dgvAirplanes.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_RowEnter);
             // 
@@ -309,7 +309,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.panel1);
             this.splitContainer1.Panel2.Controls.Add(this.dgvNodes);
             this.splitContainer1.Size = new System.Drawing.Size(900, 350);
-            this.splitContainer1.SplitterDistance = 580;
+            this.splitContainer1.SplitterDistance = 436;
             this.splitContainer1.TabIndex = 2;
             // 
             // AirplaneStatsControl

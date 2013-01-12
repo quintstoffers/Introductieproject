@@ -20,7 +20,7 @@ namespace Introductieproject.Forms
             this.airport = airport;
 
             InitializeComponent();
-
+            zoomControl1.zoom += new EventHandler(zoom);
             mapControl.init(airport);
             airplaneStatsControl.init(airport);
         }
@@ -57,5 +57,16 @@ namespace Introductieproject.Forms
         {
             Simulation.Simulation.pauseSimulationToggle();
         }
+
+        private void mapControl_Load(object sender, EventArgs e)
+        {
+
+        }
+        private void zoom(object sender, EventArgs e)
+        {
+            mapControl.zoom(zoomControl1.zoomLevel);
+        }
+
+        }
     }
-}
+

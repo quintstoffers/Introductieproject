@@ -43,6 +43,7 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsSimTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.zoomControl1 = new Introductieproject.UI.Controls.ZoomControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
             this.menuStrip1.SuspendLayout();
@@ -58,7 +59,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(1370, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1362, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -156,7 +157,7 @@
             this.tsSimTime});
             this.statusStrip1.Location = new System.Drawing.Point(0, 594);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1370, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1362, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -166,29 +167,41 @@
             this.tsSimTime.Size = new System.Drawing.Size(94, 17);
             this.tsSimTime.Text = "Simulation Time";
             // 
+            // zoomControl1
+            // 
+            this.zoomControl1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.zoomControl1.Location = new System.Drawing.Point(520, 24);
+            this.zoomControl1.Name = "zoomControl1";
+            this.zoomControl1.Size = new System.Drawing.Size(42, 570);
+            this.zoomControl1.TabIndex = 7;
+            // 
             // airplaneStatsControl
             // 
             this.airplaneStatsControl.AutoSize = true;
-            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.airplaneStatsControl.Location = new System.Drawing.Point(722, 24);
+            this.airplaneStatsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Right;
+            this.airplaneStatsControl.Location = new System.Drawing.Point(562, 24);
+            this.airplaneStatsControl.MinimumSize = new System.Drawing.Size(800, 400);
             this.airplaneStatsControl.Name = "airplaneStatsControl";
-            this.airplaneStatsControl.Size = new System.Drawing.Size(648, 570);
+            this.airplaneStatsControl.Size = new System.Drawing.Size(800, 570);
             this.airplaneStatsControl.TabIndex = 6;
             // 
             // mapControl
             // 
             this.mapControl.BackColor = System.Drawing.SystemColors.Control;
-            this.mapControl.Dock = System.Windows.Forms.DockStyle.Left;
+            this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapControl.Location = new System.Drawing.Point(0, 24);
             this.mapControl.Name = "mapControl";
-            this.mapControl.Size = new System.Drawing.Size(722, 570);
+            this.mapControl.Size = new System.Drawing.Size(1362, 570);
             this.mapControl.TabIndex = 5;
+            this.mapControl.Load += new System.EventHandler(this.mapControl_Load);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 616);
+            this.ClientSize = new System.Drawing.Size(1362, 616);
+            this.Controls.Add(this.zoomControl1);
             this.Controls.Add(this.airplaneStatsControl);
             this.Controls.Add(this.mapControl);
             this.Controls.Add(this.statusStrip1);
@@ -224,5 +237,6 @@
         private System.Windows.Forms.ToolStripStatusLabel tsSimTime;
         private UI.Controls.MapControl mapControl;
         private UI.Controls.AirplaneStatsControl airplaneStatsControl;
+        private UI.Controls.ZoomControl zoomControl1;
     }
 }

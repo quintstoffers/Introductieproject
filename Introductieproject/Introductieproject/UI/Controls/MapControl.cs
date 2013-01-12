@@ -25,10 +25,13 @@ namespace Introductieproject.UI.Controls
         int zoomlevelX;
         int zoomlevelY;
         bool airportDirty;
-
+        public Point lastPanlocation;
+        public Point mouseLocation;
+        public Point mapLocation;
         public MapControl()
         {
             InitializeComponent();
+            Cursor = Cursors.Hand;
         }
 
         public void init(Airport.Airport airport)
@@ -51,8 +54,8 @@ namespace Introductieproject.UI.Controls
             Graphics graphics = this.CreateGraphics();
 
             graphics.Clear(Color.Black);
-            graphics.DrawImage(bmpAirport, 0, 0, zoomlevelX, zoomlevelY);
-            graphics.DrawImage(bmpAirplanes, 0, 0, zoomlevelX, zoomlevelY);
+            graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+            graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
         }
 
         /*
@@ -81,7 +84,14 @@ namespace Introductieproject.UI.Controls
         {
             zoomlevelX = (int)(bmpAirport.Width * (1 + 0.1225 *zoomLevel));
             zoomlevelY = (int)(bmpAirport.Height * (1 + 0.1225 * zoomLevel));
-            airportDirty = true;
+        }
+        public void pan(Point panStart, Point mouseLocation, Airport.Airport airport)
+        {
+            mapLocation.X = lastPanlocation.X +  (mouseLocation.X - panStart.X);
+            mapLocation.Y = lastPanlocation.Y +(mouseLocation.Y - panStart.Y);
+            panStart = mouseLocation;
+            update(airport);
+
         }
         private void drawAirportToBitmap(Airport.Airport airport)
         {
@@ -147,6 +157,7 @@ namespace Introductieproject.UI.Controls
             }
             airportDirty = false;
         }
+
         private void drawAirplanesToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
@@ -177,5 +188,6 @@ namespace Introductieproject.UI.Controls
         {
 
         }
+        
     }
 }

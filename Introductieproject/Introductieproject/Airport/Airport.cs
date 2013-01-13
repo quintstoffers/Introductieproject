@@ -63,10 +63,13 @@ namespace Introductieproject.Airport
                                 currentAirplane.land();
                             }
                         }*/
-
-
-                        Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
-                        currentAirplane.land();
+                        if (currentAirplane.navigator == null)
+                            currentAirplane.navigator = new Navigator(currentAirplane, this.ways);
+                        if (requestWayAccess(currentAirplane, currentAirplane.navigator.currentWay))
+                        {
+                            Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
+                            currentAirplane.land();
+                        }
                     }
                     continue;
                 }

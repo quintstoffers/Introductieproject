@@ -29,7 +29,7 @@ namespace Introductieproject
             mainForm = new MainForm(airport);
             mainForm.Show();
 
-            Simulation.Simulation.initSimulation(airport, true);
+            Simulation.Simulation.initSimulation(airport, false);
             Simulation.Simulation.startSimulation();
 
             Application.Run(mainForm);

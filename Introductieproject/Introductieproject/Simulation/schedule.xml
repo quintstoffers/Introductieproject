@@ -1,7 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <schedule>
   <plane
+    registration="G-ABCD"
+    flight="A-1337-101"
+    type="BO_747"
+    carrier="British Airways"
+    location="0,1000"
+    landingDate="01/01/13 22:01:00"
+    arrivalDate="01/01/13 22:07:00"
+    departureDate="01/01/13 22:10:00"
+    origin="John F. Kennedy Intl. Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
     registration="G-BCDE"
+    flight="I-D0N7-C4R3"
+    type="BO_747"
+    carrier="KLM"
+    location="3000,0"
+    landingDate="01/01/13 22:02:15"
+    arrivalDate="01/01/13 22:05:00"
+    departureDate="01/01/13 22:15:00"
+    origin="Memphis Intl. Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+    registration="G-CDEF"
     flight="I-D0N7-KN0W"
     type="BO_747"
     carrier="British Airways"
@@ -9,31 +33,104 @@
     landingDate="01/01/13 22:05:00"
     arrivalDate="01/01/13 22:10:00"
     departureDate="01/01/13 22:20:00"
+    origin="Hartsfield-Jackson Atlanta Intl. Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+    registration="G-DEFG"
+    flight="I-L1K3-SN0W"
+    type="BO_747"
+    carrier="Delta Airlines"
+    location="3000,0"
+    landingDate="01/01/13 22:10:00"
+    arrivalDate="01/01/13 22:15:00"
+    departureDate="01/01/13 22:35:00"
     origin="London Heathrow"
     destination="Amsterdam Airport Schiphol">
   </plane>
   <plane
-    registration="G-ABCD"
-    flight="A-1337-101"
+    registration="G-EFGH"
+    flight="A-CR4P-SH1P"
     type="BO_747"
-    carrier="British Airways"
-    location="3000,0"
-    landingDate="01/01/13 22:01:15"
-    arrivalDate="01/01/13 22:07:00"
-    departureDate="01/01/13 22:10:00"
-    origin="John F. Kennedy International Airport"
+    carrier="Aeroflot"
+    location="0,1000"
+    landingDate="01/01/13 22:10:00"
+    arrivalDate="01/01/13 22:14:00"
+    departureDate="01/01/13 22:25:00"
+    origin="Moscow Domodedovo Airport"
     destination="Amsterdam Airport Schiphol">
   </plane>
   <plane
-    registration="G-CDEF"
-    flight="I-D0N7-C4R3"
+    registration="G-FGHI"
+    flight="Y-DO_1-C4R3"
     type="BO_747"
-    carrier="KLM"
+    carrier="Aerlingus"
     location="3000,0"
-    landingDate="01/01/13 22:01:30"
-    arrivalDate="01/01/13 22:05:00"
-    departureDate="01/01/13 22:15:00"
-    origin="Memphis Intl. Airport"
+    landingDate="01/01/13 22:13:25"
+    arrivalDate="01/01/13 22:18:40"
+    departureDate="01/01/13 22:48:00"
+    origin="Dublin Airport"
     destination="Amsterdam Airport Schiphol">
   </plane>
+  <plane
+    registration="G-GHIJ"
+    flight="A-XKCD-STR1P"
+    type="BO_747"
+    carrier="Air France"
+    location="0,1000"
+    landingDate="01/01/13 22:15:00"
+    arrivalDate="01/01/13 22:22:00"
+    departureDate="01/01/13 22:48:00"
+    origin="Charles de Gaulle Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+    registration="G-HJIK"
+    flight="F-ZER0-T3N"
+    type="BO_747"
+    carrier="Air France"
+    location="0,1000"
+    landingDate="01/01/13 22:20:00"
+    arrivalDate="01/01/13 22:24:00"
+    departureDate="01/01/13 22:42:00"
+    origin="Charles de Gaulle Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-JIKL"
+      flight="A-M4RI0-K4R7"
+      type="BO_747"
+      carrier="Air France"
+      location="3000,0"
+      landingDate="01/01/13 22:21:16"
+      arrivalDate="01/01/13 22:24:53"
+      departureDate="01/01/13 22:35:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-IKLM"
+      flight="A-B33R-C4P"
+      type="BO_747"
+      carrier="Air France"
+      location="0,1000"
+      landingDate="01/01/13 22:34:12"
+      arrivalDate="01/01/13 22:38:00"
+      departureDate="02/01/13 05:15:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-KLMN"
+      flight="A-N3RF-GUN"
+      type="BO_747"
+      carrier="Air France"
+      location="0,1000"
+      landingDate="01/01/13 22:45:00"
+      arrivalDate="01/01/13 22:50:00"
+      departureDate="02/01/13 07:25:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+
 </schedule>

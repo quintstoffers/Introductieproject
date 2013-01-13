@@ -45,9 +45,7 @@ namespace Introductieproject.UI.Controls
             airplanesDrawThread.Start();
             if (airportDirty)
             {
-                Thread airportDrawThread = new Thread(() => drawAirportToBitmap(airport));
-                airportDrawThread.Start();
-                airportDrawThread.Join();
+                drawAirportToBitmap(airport);
             }
             airplanesDrawThread.Join();
 

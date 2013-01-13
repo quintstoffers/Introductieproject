@@ -17,6 +17,8 @@ namespace Introductieproject.Simulation
         private static bool pauseSimulation;                // of de simulatie gepauzeert is
         private static bool leaping = false;
 
+        private static bool multiThreadingEnabled;
+
         public static int updateInterval;                   // update interval van simulatie in milliseconden
         public static int uiUpdateTicks;                    // aantal kloktiks voordat de UI geupdatet wordt
         public static int uiUpdateInterval                  // "leesbare" ui update interval in milliseconden
@@ -38,9 +40,10 @@ namespace Introductieproject.Simulation
         private static Parser parser = new Parser();
         private static DateTime targetDate;
 
-        public static void initSimulation(Airport.Airport airport)
+        public static void initSimulation(Airport.Airport airport, Boolean enableMultiThreading)
         {
             Simulation.airport = airport;
+            Simulation.multiThreadingEnabled = enableMultiThreading;
 
             Console.WriteLine("Simulation created");
 
@@ -51,6 +54,10 @@ namespace Introductieproject.Simulation
         {
             if (!runSimulation)
             {
+                if (multiThreadingEnabled)
+                {
+                    ThreadPool.SetMaxThreads(Environment.ProcessorCount + 2, Environment.ProcessorCount + 2);
+                }
                 if (simulationThread == null)
                 {
                     simulationThread = new Thread(simulation);
@@ -111,11 +118,9 @@ namespace Introductieproject.Simulation
                 
                 TimeKeeper.update();
 
-                Parser.refreshAirplanes(airport.airplanes);
-
                 updateSimulation();
 
-                updateUI();
+                updateNonUrgent();
 
                 if (leaping)
                 {
@@ -123,10 +128,6 @@ namespace Introductieproject.Simulation
                     {
                         TimeKeeper.setLeapMode(false);
                     }
-                }
-                else
-                {
-                    
                 }
 
                 long elapsedMillis = stopwatch.ElapsedMilliseconds;
@@ -142,23 +143,42 @@ namespace Introductieproject.Simulation
 
         private static void updateSimulation()
         {
-            airport.simulate();
-
-            foreach(Airplane currentAirplane in airport.airplanes)
+            if (multiThreadingEnabled)
             {
-                currentAirplane.simulate(airport);
+                new Thread(() => airport.simulate()).Start();
+
+                foreach (Airplane currentAirplane in airport.airplanes)
+                {
+                    ThreadPool.QueueUserWorkItem(new WaitCallback(simulateAirplane), currentAirplane);
+                }
+            }
+            else
+            {
+                airport.simulate();
+
+                foreach (Airplane currentAirplane in airport.airplanes)
+                {
+                    currentAirplane.simulate(airport);
+                }
             }
         }
+        private static void simulateAirplane(object airplane)
+        {
+            ((Airplane)airplane).simulate(airport);
+        }
 
-        private static void updateUI()
+
+
+        private static void updateNonUrgent()
         {
             tickCounter++;
 
             if (tickCounter >= uiUpdateTicks)
             {
+                Parser.refreshAirplanes(airport.airplanes);
+
                 try
                 {
-
                     Program.mainForm.BeginInvoke((Action)(() => Program.mainForm.updateUI()));  // BeginInvoke == asynchroon
                 }
                 catch (Exception) // MainForm gesloten, geen UI thread beschikbaar. Simulatie sluiten

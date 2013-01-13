@@ -134,6 +134,7 @@ namespace Introductieproject.Objects
         */
         public void simulate(Airport.Airport airport)
         {
+            Console.WriteLine("SIMULATE: " + this.ToString());
             if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
             {
             }

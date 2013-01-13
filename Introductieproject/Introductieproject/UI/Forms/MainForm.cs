@@ -86,6 +86,11 @@ namespace Introductieproject.Forms
         {
             mapControl.lastPanlocation = mapControl.mapLocation;
         }
+
+        private void nuScale_ValueChanged(object sender, EventArgs e)
+        {
+            TimeKeeper.Scale = (double) nuScale.Value;
+        }
     }
 }
 

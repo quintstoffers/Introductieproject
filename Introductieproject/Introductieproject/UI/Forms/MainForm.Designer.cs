@@ -46,8 +46,11 @@
             this.zoomControl1 = new Introductieproject.UI.Controls.ZoomControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
+            this.nuScale = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -189,6 +192,7 @@
             // mapControl
             // 
             this.mapControl.BackColor = System.Drawing.SystemColors.Control;
+            this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapControl.Location = new System.Drawing.Point(0, 24);
             this.mapControl.Name = "mapControl";
@@ -196,12 +200,48 @@
             this.mapControl.TabIndex = 5;
             this.mapControl.Load += new System.EventHandler(this.mapControl_Load);
             // 
+            // nuScale
+            // 
+            this.nuScale.DecimalPlaces = 1;
+            this.nuScale.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nuScale.Location = new System.Drawing.Point(515, 596);
+            this.nuScale.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nuScale.Name = "nuScale";
+            this.nuScale.Size = new System.Drawing.Size(47, 20);
+            this.nuScale.TabIndex = 7;
+            this.nuScale.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.nuScale.ValueChanged += new System.EventHandler(this.nuScale_ValueChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.label1.Location = new System.Drawing.Point(415, 597);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(94, 15);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "Simulation Scale";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1362, 616);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.zoomControl1);
+            this.Controls.Add(this.nuScale);
             this.Controls.Add(this.airplaneStatsControl);
             this.Controls.Add(this.mapControl);
             this.Controls.Add(this.statusStrip1);
@@ -213,6 +253,7 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nuScale)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -238,5 +279,7 @@
         private UI.Controls.MapControl mapControl;
         private UI.Controls.AirplaneStatsControl airplaneStatsControl;
         private UI.Controls.ZoomControl zoomControl1;
+        private System.Windows.Forms.NumericUpDown nuScale;
+        private System.Windows.Forms.Label label1;
     }
 }

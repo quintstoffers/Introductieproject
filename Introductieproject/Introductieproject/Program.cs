@@ -22,7 +22,7 @@ namespace Introductieproject
             Console.WriteLine("Program started");
             
             airport = createAirport();
-           
+
             DateTime simStartTime = new DateTime(2013, 1, 1, 21, 59, 55);
             TimeKeeper.init(simStartTime, true);      // TimeKeeper instellen op vaste starttijd
             TimeKeeper.Scale = 10;                   // Verhouding tussen real en simtime is 1, dus gelijk.

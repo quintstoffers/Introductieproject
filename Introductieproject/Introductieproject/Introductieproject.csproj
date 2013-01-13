@@ -96,6 +96,12 @@
     <Compile Include="UI\Controls\ZoomControl.Designer.cs">
       <DependentUpon>ZoomControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="UI\Forms\DatePickerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Forms\DatePickerForm.Designer.cs">
+      <DependentUpon>DatePickerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Forms\EditForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\ZoomControl.resx">
       <DependentUpon>ZoomControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Forms\DatePickerForm.resx">
+      <DependentUpon>DatePickerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

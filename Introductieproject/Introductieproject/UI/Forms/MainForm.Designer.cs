@@ -43,11 +43,11 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsSimTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.nuScale = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
             this.zoomControl1 = new Introductieproject.UI.Controls.ZoomControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
-            this.nuScale = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
@@ -137,21 +137,21 @@
             // continueToolStripMenuItem1
             // 
             this.continueToolStripMenuItem1.Name = "continueToolStripMenuItem1";
-            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(123, 22);
+            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.continueToolStripMenuItem1.Text = "Continue";
             this.continueToolStripMenuItem1.Click += new System.EventHandler(this.continueToolStripMenuItem1_Click);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // statusStrip1
@@ -169,36 +169,7 @@
             this.tsSimTime.Name = "tsSimTime";
             this.tsSimTime.Size = new System.Drawing.Size(94, 17);
             this.tsSimTime.Text = "Simulation Time";
-            // 
-            // zoomControl1
-            // 
-            this.zoomControl1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.zoomControl1.Location = new System.Drawing.Point(520, 24);
-            this.zoomControl1.Name = "zoomControl1";
-            this.zoomControl1.Size = new System.Drawing.Size(42, 570);
-            this.zoomControl1.TabIndex = 7;
-            // 
-            // airplaneStatsControl
-            // 
-            this.airplaneStatsControl.AutoSize = true;
-            this.airplaneStatsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.airplaneStatsControl.Location = new System.Drawing.Point(562, 24);
-            this.airplaneStatsControl.MinimumSize = new System.Drawing.Size(800, 400);
-            this.airplaneStatsControl.Name = "airplaneStatsControl";
-            this.airplaneStatsControl.Size = new System.Drawing.Size(800, 570);
-            this.airplaneStatsControl.TabIndex = 6;
-            // 
-            // mapControl
-            // 
-            this.mapControl.BackColor = System.Drawing.SystemColors.Control;
-            this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapControl.Location = new System.Drawing.Point(0, 24);
-            this.mapControl.Name = "mapControl";
-            this.mapControl.Size = new System.Drawing.Size(1362, 570);
-            this.mapControl.TabIndex = 5;
-            this.mapControl.Load += new System.EventHandler(this.mapControl_Load);
+            this.tsSimTime.Click += new System.EventHandler(this.tsSimTime_Click);
             // 
             // nuScale
             // 
@@ -233,6 +204,36 @@
             this.label1.Size = new System.Drawing.Size(94, 15);
             this.label1.TabIndex = 8;
             this.label1.Text = "Simulation Scale";
+            // 
+            // zoomControl1
+            // 
+            this.zoomControl1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.zoomControl1.Location = new System.Drawing.Point(520, 24);
+            this.zoomControl1.Name = "zoomControl1";
+            this.zoomControl1.Size = new System.Drawing.Size(42, 570);
+            this.zoomControl1.TabIndex = 7;
+            // 
+            // airplaneStatsControl
+            // 
+            this.airplaneStatsControl.AutoSize = true;
+            this.airplaneStatsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Right;
+            this.airplaneStatsControl.Location = new System.Drawing.Point(562, 24);
+            this.airplaneStatsControl.MinimumSize = new System.Drawing.Size(800, 400);
+            this.airplaneStatsControl.Name = "airplaneStatsControl";
+            this.airplaneStatsControl.Size = new System.Drawing.Size(800, 570);
+            this.airplaneStatsControl.TabIndex = 6;
+            // 
+            // mapControl
+            // 
+            this.mapControl.BackColor = System.Drawing.SystemColors.Control;
+            this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapControl.Location = new System.Drawing.Point(0, 24);
+            this.mapControl.Name = "mapControl";
+            this.mapControl.Size = new System.Drawing.Size(1362, 570);
+            this.mapControl.TabIndex = 5;
+            this.mapControl.Load += new System.EventHandler(this.mapControl_Load);
             // 
             // MainForm
             // 

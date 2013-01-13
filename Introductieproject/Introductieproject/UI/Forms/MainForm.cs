@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Introductieproject.Simulation;
 using Introductieproject.UI;
+using Introductieproject.UI.Forms;
 
 namespace Introductieproject.Forms
 {
@@ -95,6 +96,19 @@ namespace Introductieproject.Forms
         private void nuScale_ValueChanged(object sender, EventArgs e)
         {
             TimeKeeper.Scale = (double) nuScale.Value;
+        }
+
+        private void tsSimTime_Click(object sender, EventArgs e)
+        {
+            Simulation.Simulation.pauseSimulationToggle();
+
+            DatePickerForm datePickerForm = new DatePickerForm();
+            datePickerForm.FormClosed += datePickerForm_FormClosed;
+            datePickerForm.ShowDialog();
+        }
+        private void datePickerForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Simulation.Simulation.pauseSimulationToggle();
         }
     }
 }

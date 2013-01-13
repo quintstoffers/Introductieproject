@@ -37,10 +37,12 @@ namespace Introductieproject.Airport
                     Console.WriteLine("CURR     :   " + TimeKeeper.currentSimTime);
                     if (TimeKeeper.currentSimTime >= currentAirplane.landingDate)
                     {
+                        /*
                         //TODO runway bezet ja of nee
-                        /*if(currentAirplane.actualLandingDate == null)
+                        if (currentAirplane.actualLandingDate == null)
                         {
-                            if (runways[0].runwayHasAirplane)
+
+                            if (!requestWayAccess(currentAirplane, currentAirplane.navigator.targetWay))
                             {
                                 // Wacht een extra minuut
                                 TimeSpan wait = new TimeSpan(0, 1, 0);
@@ -49,7 +51,7 @@ namespace Introductieproject.Airport
                         }
                         else if (TimeKeeper.currentSimTime >= currentAirplane.actualLandingDate)   // Vliegtuig is geland, maar nog niet setup
                         {
-                            if (runways[0].runwayHasAirplane)
+                            if (!requestWayAccess(currentAirplane, currentAirplane.navigator.targetWay))
                             {
                                 // Wacht een extra 30 seconden.
                                 TimeSpan wait = new TimeSpan(0, 1, 0);
@@ -61,6 +63,8 @@ namespace Introductieproject.Airport
                                 currentAirplane.land();
                             }
                         }*/
+
+
                         Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
                         currentAirplane.land();
                     }

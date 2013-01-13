@@ -48,10 +48,17 @@ namespace Introductieproject.Simulation
                 String departureDate = attr["departureDate"].Value;
                 String origin = attr["origin"].Value;
                 String destination = attr["destination"].Value;
+                String location = attr["location"].Value;
 
                 DateTime landingDateTime = DateTime.Parse(landingDate);
                 DateTime arrivalDateTime = DateTime.Parse(arrivalDate);
                 DateTime departureDateTime = DateTime.Parse(departureDate);
+
+                //Split landinglocation string to double[] location.
+                string[] coords = location.Split(',');
+                double[] landingLocation = new double[2];
+                landingLocation[0] = double.Parse(coords[0]);
+                landingLocation[1] = double.Parse(coords[1]);
 
                 bool airplaneAlreadyLoaded = false;
                 foreach (Airplane currentAirplane in loadedAirplanes)
@@ -79,7 +86,7 @@ namespace Introductieproject.Simulation
                     System.Type objectType = assembly.GetType("Introductieproject.Objects." + type);
 
                     Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
-                    newAirplane.setXMLVariables(landingDateTime, arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
+                    newAirplane.setXMLVariables(landingLocation, landingDateTime, arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
 
                     Program.mainForm.Invoke((Action)(() => loadedAirplanes.Add(newAirplane)));
 

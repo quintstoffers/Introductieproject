@@ -109,7 +109,7 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void setXMLVariables(DateTime landingDate, DateTime arrivalDate, DateTime departureDate, String registration, String flight, String carrier, String origin, String destination)
+        public void setXMLVariables(double[] landingLocation, DateTime landingDate, DateTime arrivalDate, DateTime departureDate, String registration, String flight, String carrier, String origin, String destination)
         {
             this.registration = registration;
             this.flight = flight;
@@ -117,12 +117,12 @@ namespace Introductieproject.Objects
             this.landingDate = landingDate;
             this.arrivalDate = arrivalDate;
             this.departureDate = departureDate;
+            this.location = landingLocation;
 
             this.status = Status.APPROACHING;
         }
-        public void setStateVariables(double[] location, double speed, int angle, int passengers, int luggage, int luggageKg)
+        public void setStateVariables(double speed, int angle, int passengers, int luggage, int luggageKg)
         {
-            this.location = location;
             this.speed = speed;
             this.passengers = passengers;
             this.luggage = luggage;
@@ -285,10 +285,7 @@ namespace Introductieproject.Objects
 
         public void land()
         {
-            double[] location = new double[2];
-            location[0] = 0;
-            location[1] = 1000;
-            this.setStateVariables(location, 0, 0, 200, 210, 2000);
+            this.setStateVariables(0, 0, 200, 210, 2000);
 
             this.status = Status.IDLE;
         }

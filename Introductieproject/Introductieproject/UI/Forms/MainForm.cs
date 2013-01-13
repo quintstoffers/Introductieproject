@@ -20,9 +20,14 @@ namespace Introductieproject.Forms
             this.airport = airport;
 
             InitializeComponent();
-            zoomControl1.zoom += new EventHandler(zoom);
+
             mapControl.init(airport);
             airplaneStatsControl.init(airport);
+
+            nuScale.Value = (Decimal) TimeKeeper.Scale;
+
+            zoomControl1.zoom += new EventHandler(zoom);
+
             mapControl.MouseDown += new MouseEventHandler(MapControlClick);
             mapControl.MouseMove += new MouseEventHandler(MapControlMouseMove);
             mapControl.MouseUp += new MouseEventHandler(MapControlMouseUp);

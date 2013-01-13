@@ -158,7 +158,13 @@ namespace Introductieproject.Airport
                 {
                     if (currentAirplane.navigator.currentWay.Equals(way))   // Een ander vliegtuig rijdt op dit moment op de weg
                     {
-                        return false;                                       // Ruw, maar het werkt net zoals hiervoor
+                        if (way.direction != 0)
+                            return false;                                       // Ruw, maar het werkt net zoals hiervoor
+                        else
+                        {
+                            if (airplane.navigator.getTargetNode() != currentAirplane.navigator.getTargetNode())
+                                return false;
+                        }
                     }
                 }
             }

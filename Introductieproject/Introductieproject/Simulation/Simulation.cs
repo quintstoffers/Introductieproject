@@ -9,13 +9,12 @@ using Introductieproject.Objects;
 
 namespace Introductieproject.Simulation
 {
-    static class Simulation
+    static class Simulation  
     {
         private static Airport.Airport airport;             // Het vliegveld dat bewerkt wordt door deze simulatie
 
         private static bool runSimulation;                  // of de simulatie draait of niet
         private static bool pauseSimulation;                // of de simulatie gepauzeert is
-        private static bool leaping;
 
         public static int updateInterval;                   // update interval van simulatie in milliseconden
         public static int uiUpdateTicks;                    // aantal kloktiks voordat de UI geupdatet wordt
@@ -36,7 +35,6 @@ namespace Introductieproject.Simulation
         private static Thread simulationThread;
 
         private static Parser parser = new Parser();
-        private static DateTime targetDate;
 
         public static void initSimulation(Airport.Airport airport)
         {
@@ -63,16 +61,10 @@ namespace Introductieproject.Simulation
                 Console.WriteLine("Attempted to start already running simulationThread");
             }
         }
-
+        
         public static void stopSimulation()         // Stop de simulatie, no matter what
         {
             runSimulation = false;
-        }
-
-        public static void leapTo(DateTime newDate)
-        {
-            leaping = true;
-            newDate = targetDate;
         }
 
         // De lokale (simulatie) tijd moet hier worden opgeslagen, en op deze tijd moet ook weer worden hervat.
@@ -90,7 +82,7 @@ namespace Introductieproject.Simulation
                 TimeKeeper.restore();
             }
         }
-
+    
         private static void simulation()
         {
             pauseSimulation = false;
@@ -106,7 +98,7 @@ namespace Introductieproject.Simulation
 
                 stopwatch.Reset();
                 stopwatch.Start();
-
+                
                 TimeKeeper.update();
 
                 Parser.refreshAirplanes(airport.airplanes);
@@ -115,21 +107,11 @@ namespace Introductieproject.Simulation
 
                 updateUI();
 
-                if (leaping)
+                long elapsedMillis = stopwatch.ElapsedMilliseconds;
+                if (elapsedMillis < updateInterval)
                 {
-                    if (TimeKeeper.currentSimTime >= targetDate)
-                    {
-                        leaping = false;
-                    }
-                }
-                else
-                {
-                    long elapsedMillis = stopwatch.ElapsedMilliseconds;
-                    if (elapsedMillis < updateInterval)
-                    {
-                        Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
-                        Thread.Sleep(updateInterval - (int)elapsedMillis);
-                    }
+                    Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
+                    Thread.Sleep(updateInterval - (int) elapsedMillis);
                 }
             }
 
@@ -140,7 +122,7 @@ namespace Introductieproject.Simulation
         {
             airport.simulate();
 
-            foreach (Airplane currentAirplane in airport.airplanes)
+            foreach(Airplane currentAirplane in airport.airplanes)
             {
                 currentAirplane.simulate(airport);
             }

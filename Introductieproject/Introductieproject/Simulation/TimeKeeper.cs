@@ -92,5 +92,19 @@ namespace Introductieproject.Simulation
                 TimeKeeper.init();
             }
         }
+
+        private static double oldScale;
+        public static void setLeapMode(Boolean leap)
+        {
+            if (leap)
+            {
+                oldScale = scale;
+                Scale = 100;
+            }
+            else
+            {
+                Scale = oldScale;
+            }
+        }
     }
 }

@@ -72,7 +72,9 @@ namespace Introductieproject.Simulation
         public static void leapTo(DateTime newDate)
         {
             leaping = true;
-            newDate = targetDate;
+            targetDate = newDate;
+
+            TimeKeeper.setLeapMode(true);
         }
 
         // De lokale (simulatie) tijd moet hier worden opgeslagen, en op deze tijd moet ook weer worden hervat.
@@ -119,17 +121,19 @@ namespace Introductieproject.Simulation
                 {
                     if (TimeKeeper.currentSimTime >= targetDate)
                     {
-                        leaping = false;
+                        TimeKeeper.setLeapMode(false);
                     }
                 }
                 else
                 {
-                    long elapsedMillis = stopwatch.ElapsedMilliseconds;
-                    if (elapsedMillis < updateInterval)
-                    {
-                        Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
-                        Thread.Sleep(updateInterval - (int)elapsedMillis);
-                    }
+                    
+                }
+
+                long elapsedMillis = stopwatch.ElapsedMilliseconds;
+                if (elapsedMillis < updateInterval)
+                {
+                    Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
+                    Thread.Sleep(updateInterval - (int)elapsedMillis);
                 }
             }
 

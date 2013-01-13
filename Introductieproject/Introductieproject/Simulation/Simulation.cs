@@ -15,6 +15,7 @@ namespace Introductieproject.Simulation
 
         private static bool runSimulation;                  // of de simulatie draait of niet
         private static bool pauseSimulation;                // of de simulatie gepauzeert is
+        private static bool leaping = false;
 
         public static int updateInterval;                   // update interval van simulatie in milliseconden
         public static int uiUpdateTicks;                    // aantal kloktiks voordat de UI geupdatet wordt
@@ -35,6 +36,7 @@ namespace Introductieproject.Simulation
         private static Thread simulationThread;
 
         private static Parser parser = new Parser();
+        private static DateTime targetDate;
 
         public static void initSimulation(Airport.Airport airport)
         {
@@ -65,6 +67,12 @@ namespace Introductieproject.Simulation
         public static void stopSimulation()         // Stop de simulatie, no matter what
         {
             runSimulation = false;
+        }
+
+        public static void leapTo(DateTime newDate)
+        {
+            leaping = true;
+            newDate = targetDate;
         }
 
         // De lokale (simulatie) tijd moet hier worden opgeslagen, en op deze tijd moet ook weer worden hervat.
@@ -107,11 +115,21 @@ namespace Introductieproject.Simulation
 
                 updateUI();
 
-                long elapsedMillis = stopwatch.ElapsedMilliseconds;
-                if (elapsedMillis < updateInterval)
+                if (leaping)
                 {
-                    Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
-                    Thread.Sleep(updateInterval - (int) elapsedMillis);
+                    if (TimeKeeper.currentSimTime >= targetDate)
+                    {
+                        leaping = false;
+                    }
+                }
+                else
+                {
+                    long elapsedMillis = stopwatch.ElapsedMilliseconds;
+                    if (elapsedMillis < updateInterval)
+                    {
+                        Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
+                        Thread.Sleep(updateInterval - (int)elapsedMillis);
+                    }
                 }
             }
 

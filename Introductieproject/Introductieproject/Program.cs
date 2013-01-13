@@ -22,13 +22,13 @@ namespace Introductieproject
             Console.WriteLine("Program started");
             
             airport = createAirport();
-
-            mainForm = new MainForm(airport);
-            mainForm.Show();
-
+           
             DateTime simStartTime = new DateTime(2013, 1, 1, 21, 59, 55);
             TimeKeeper.init(simStartTime, true);      // TimeKeeper instellen op vaste starttijd
             TimeKeeper.Scale = 10;                   // Verhouding tussen real en simtime is 1, dus gelijk.
+
+            mainForm = new MainForm(airport);
+            mainForm.Show();
 
             Simulation.Simulation.initSimulation(airport);
             Simulation.Simulation.startSimulation();

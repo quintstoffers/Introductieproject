@@ -64,8 +64,8 @@ namespace Introductieproject.Airport
                             }
                         }*/
                         if (currentAirplane.navigator == null)
-                            currentAirplane.navigator = new Navigator(currentAirplane, this.ways);
-                        if (requestWayAccess(currentAirplane, currentAirplane.navigator.currentWay))
+                            currentAirplane.navigator = new Navigator(currentAirplane, this.ways, this);
+                        if (requestWayAccess(currentAirplane, currentAirplane.navigator.currentWay, currentAirplane.navigator.getTargetNode()))
                         {
                             Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
                             currentAirplane.land();
@@ -94,7 +94,7 @@ namespace Introductieproject.Airport
                     if (currentAirplane.status != Airplane.Status.DOCKING)
                     {
                         Console.WriteLine("Found airplane without navigator");
-                        Navigator navigator = new Navigator(currentAirplane, ways);
+                        Navigator navigator = new Navigator(currentAirplane, ways, this);
                         currentAirplane.navigator = navigator;
                     }
                 }
@@ -143,14 +143,14 @@ namespace Introductieproject.Airport
          */
         public bool requestNavigator(Airplane airplane) // True als vliegtuig een navigator krijgt
         {
-            airplane.navigator = new Navigator(airplane, this.ways); // En krijgt hij een nieuwe Navigator, die als het goed is een route uitrekent naar de Runway
+            airplane.navigator = new Navigator(airplane, this.ways, this); // En krijgt hij een nieuwe Navigator, die als het goed is een route uitrekent naar de Runway
             return true;
         }
 
         /*
          * Permission requesters
          */
-        public bool requestWayAccess(Airplane airplane, Way way)
+        public bool requestWayAccess(Airplane airplane, Way way, Node targetNode)
         {
             foreach (Airplane currentAirplane in airplanes)                 // Alle vliegtuigen bekijken
             {
@@ -162,7 +162,7 @@ namespace Introductieproject.Airport
                             return false;                                       // Ruw, maar het werkt net zoals hiervoor
                         else
                         {
-                            if (airplane.navigator.getTargetNode() != currentAirplane.navigator.getTargetNode())
+                            if (targetNode != currentAirplane.navigator.getTargetNode())
                                 return false;
                         }
                     }

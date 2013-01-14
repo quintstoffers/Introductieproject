@@ -19,12 +19,12 @@ namespace Introductieproject.Airplanes
 
         public double[] location;
         
-        public Navigator(Airplane airplane, List<Way> ways)
+        public Navigator(Airplane airplane, List<Way> ways, Airport.Airport airport)
         {
-            newRoute(airplane, ways);
+            newRoute(airplane, ways, airport);
         }
 
-        public void newRoute(Airplane airplane, List<Way> ways)
+        public void newRoute(Airplane airplane, List<Way> ways, Airport.Airport airport)
         {
             Console.WriteLine("Creating new navigator");
             /*
@@ -143,7 +143,7 @@ namespace Introductieproject.Airplanes
                 }
                 Node startNode = findStartNode(startWay, airplane);
                 Node endNode = endWay.nodeConnections[1]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
-                Route bestRoute = findRoute(startNode, endNode);
+                Route bestRoute = findRoute(startNode, endNode, airplane, airport);
                 this.nodepoints = bestRoute.RouteList();
                 Console.WriteLine("Created list of Nodes");
                 foreach (Node node in nodepoints)
@@ -166,7 +166,7 @@ namespace Introductieproject.Airplanes
             }
         }
 
-        public Route findRoute(Node startNode, Node endNode)
+        public Route findRoute(Node startNode, Node endNode, Airplane airplane, Airport.Airport airport)
         {
             /*
              * Deze methode maakt een stapel aan met routes. Het pakt de bovenste route van deze stapel. Route heeft Node, vorige Route en lengte.
@@ -197,7 +197,11 @@ namespace Introductieproject.Airplanes
                 foreach (Way connection in connections)
                 {
                     Console.WriteLine("Checking connection: " + connection.ToString());
-                    if (!route.hasNode(endNode) && (bestRoute == null || route.length + connection.length <= bestRoute.length))
+                    Node tempNode = route.local.getConnectedNode(connection);   //Van hier...
+                    double length = connection.length;
+                    if (!airport.requestWayAccess(airplane, connection, tempNode))
+                        length += length;                                       //Tot en met hier is voor het rekening houden met of een weg bezet is
+                    if (!route.hasNode(endNode) && (bestRoute == null || route.length + length <= bestRoute.length))
                     {
                         if (route.local.isDirectionAllowed(connection))
                         {

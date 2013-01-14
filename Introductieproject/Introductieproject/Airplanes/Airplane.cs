@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
 
 namespace Introductieproject.Objects
 {
@@ -217,18 +218,36 @@ namespace Introductieproject.Objects
                     {
                         if (this.hasDocked && navigator.targetWay is Runway)
                         {
-                            airport.requestWayAccess(this, navigator.wayList[navigator.wayList.Count - 1]);
+                            airport.requestWayAccess(this, navigator.wayList[navigator.wayList.Count - 1], navigator.getTargetNode());
                             prepareTakeOff();
                         }
                         else if (navigator.hasNextTarget())
                         {
-                            if (airport.requestWayAccess(this, navigator.targetWay)) // Toestemming verzoeken voor volgende way
+                            if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode())) // Toestemming verzoeken voor volgende way
                             {
                                 navigator.setNextTarget();
                                 return;                     // Volgende simtik gaan we weer verder
                             }
+                            else
+                            {
+                                this.accelerate(0);
+                                Stopwatch timer = new Stopwatch();
+                                if (timer == null)
+                                {
+                                    timer.Reset();
+                                    timer.Start();
+                                }
+                                else
+                                {
+                                    if (timer.ElapsedMilliseconds >= 30000)
+                                    {
+                                        requestNavigator(airport);
+                                        timer = null;
+                                    }
+                                }
+                            }
                         }
-                        else if (airport.requestWayAccess(this, navigator.targetWay)) // Toestemming verzoeken voor volgende way
+                        else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode())) // Toestemming verzoeken voor volgende way
                         {
                             if (!hasDocked)
                             {

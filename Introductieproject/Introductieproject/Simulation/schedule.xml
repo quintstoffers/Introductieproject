@@ -88,19 +88,19 @@
     registration="G-HJIK"
     flight="F-ZER0-T3N"
     type="BO_747"
-    carrier="Air France"
+    carrier="Singapore Air"
     location="0,1000"
     landingDate="01/01/13 22:20:00"
     arrivalDate="01/01/13 22:24:00"
     departureDate="01/01/13 22:42:00"
-    origin="Charles de Gaulle Airport"
+    origin="Singapore Changi Airport"
     destination="Amsterdam Airport Schiphol">
   </plane>
   <plane
       registration="G-JIKL"
       flight="A-M4RI0-K4R7"
       type="BO_747"
-      carrier="Air France"
+      carrier="China Airlines"
       location="3000,0"
       landingDate="01/01/13 22:21:16"
       arrivalDate="01/01/13 22:24:53"

@@ -75,6 +75,7 @@
       X2="1800"
       Y2="2000"
       dir="0"
+      name="GW-01"
       ></gateway>
     <gateway
       X1="1800"
@@ -82,6 +83,7 @@
       X2="1600"
       Y2="2000"
       dir="0"
+      name="GW-02"
       ></gateway>
     <gateway
       X1="1600"
@@ -89,6 +91,7 @@
       X2="1400"
       Y2="2000"
       dir="0"
+      name="GW-03"
       ></gateway>
     <gateway
       X1="1400"
@@ -96,6 +99,7 @@
       X2="1200"
       Y2="2000"
       dir="0"
+      name="GW-04"
       ></gateway>
     <gateway
       X1="1200"
@@ -103,7 +107,7 @@
       X2="1000"
       Y2="2000"
       dir="0"
-      name="GW-01"
+      name="GW-05"
       ></gateway>
     <gateway
       X1="2000"
@@ -111,7 +115,7 @@
       X2="3000"
       Y2="2000"
       dir="0"
-      name="GW-02"
+      name="GW-06"
       ></gateway>
     <gateway
       X1="2200"
@@ -119,6 +123,7 @@
       X2="2400"
       Y2="2000"
       dir="0"
+      name="GW-07"
       ></gateway>
     <gateway
       X1="2400"
@@ -126,6 +131,7 @@
       X2="2600"
       Y2="2000"
       dir="0"
+      name="GW-08"
       ></gateway>
     <gateway
       X1="2600"
@@ -133,6 +139,7 @@
       X2="2800"
       Y2="2000"
       dir="0"
+      name="GW-09"
       ></gateway>
     <gateway
       X1="2800"
@@ -140,6 +147,7 @@
       X2="3000"
       Y2="2000"
       dir="0"
+      name="GW-10"
       ></gateway>
   </gateways>
   <gates>
@@ -149,7 +157,7 @@
       X2="2000"
       Y2="2100"
       dir="0"
-      name="G-01"
+      name="A1"
       ></gate>
     <gate
       X1="1800"
@@ -157,7 +165,7 @@
       X2="1800"
       Y2="2100"
       dir="0"
-      name="G-02"
+      name="A2"
       ></gate>
     <gate
       X1="1600"
@@ -165,6 +173,7 @@
       X2="1600"
       Y2="1900"
       dir="0"
+      name="B1"
       ></gate>
     <gate
       X1="1200"
@@ -172,7 +181,7 @@
       X2="1200"
       Y2="2100"
       dir="0"
-      name="G-02"
+      name="A3"
       ></gate>
     <gate
       X1="2400"
@@ -180,6 +189,7 @@
       X2="2400"
       Y2="1900"
       dir="0"
+      name="B2"
       ></gate>
   </gates>
 </airport>

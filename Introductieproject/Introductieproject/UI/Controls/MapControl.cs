@@ -132,7 +132,7 @@ namespace Introductieproject.UI.Controls
                 int x2 = (int)(gateway.nodeConnections[1].location[0] * drawingScale);
                 Point point1 = new Point(x1, y1);
                 Point point2 = new Point(x2, y2);
-                drawWay(graphics,Color.Green, point1, point2, gateway.name);
+                drawWay(graphics,Color.Green, point1, point2);
 
             }
             foreach (Gate gate in airport.gates)
@@ -169,6 +169,18 @@ namespace Introductieproject.UI.Controls
             g.DrawString(name, SystemFonts.DefaultFont, Brushes.White, namePos);
 
         }
+        public void drawWay(Graphics g, Color color, Point start, Point end)
+        {
+            Pen pen = new Pen(color, 7);
+            g.DrawLine(pen, start, end);
+            Point namePos = new Point();
+            namePos.Y = (int)(start.Y + 0.5 * (end.Y - start.Y) - 20);
+            if (Math.Min(start.X, end.X) == start.X)
+                namePos.X = start.X + 60;
+            else
+                namePos.X = start.X - 60;
+        }
+
         private void drawAirplanesToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);

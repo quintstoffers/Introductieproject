@@ -103,48 +103,50 @@ namespace Introductieproject.Simulation
             AirportDocument.Load(@"Simulation\airportlayout.xml");
             XmlNodeList xmlNodes = AirportDocument.SelectNodes("//node");
             List<int> directions = new List<int>();
-            List<Node[]> runwayNodes = getNodeMatch("runway", directions, AirportDocument, nodeList);
+            List<string> names = new List<string>();
+            List<Node[]> runwayNodes = getNodeMatch("runway", directions, AirportDocument, nodeList, names);
             int i = 0; 
             foreach (Node[] nodeMatch in runwayNodes)
             {
-                Runway runWay = new Runway(nodeMatch[0], nodeMatch[1], directions[i]);
+                Runway runWay = new Runway(nodeMatch[0], nodeMatch[1], directions[i], names[i]);
                 runWayList.Add(runWay);
                 i++;
             }
 
-            List<Node[]> taxiwayNodes = getNodeMatch("taxiway", directions, AirportDocument, nodeList);
+            List<Node[]> taxiwayNodes = getNodeMatch("taxiway", directions, AirportDocument, nodeList, names);
             i = 0;
             foreach (Node[] nodeMatch in taxiwayNodes)
             {
-                Taxiway taxiWay = new Taxiway(nodeMatch[0], nodeMatch[1], directions[i]);
+                Taxiway taxiWay = new Taxiway(nodeMatch[0], nodeMatch[1], directions[i], names[i]);
                 taxiWayList.Add(taxiWay);
                 i++;
             }
 
-            List<Node[]> gateNodes = getNodeMatch("gate", directions, AirportDocument, nodeList);
+            List<Node[]> gateNodes = getNodeMatch("gate", directions, AirportDocument, nodeList, names);
             i = 0;
             foreach (Node[] nodeMatch in gateNodes)
             {
-                Gate gate = new Gate(nodeMatch[0], nodeMatch[1], directions[i]);
+                Gate gate = new Gate(nodeMatch[0], nodeMatch[1], directions[i], names[i]);
                 gateList.Add(gate);
                 i++;
             }
 
-            List<Node[]> gatewayNodes = getNodeMatch("gateway", directions, AirportDocument, nodeList);
+            List<Node[]> gatewayNodes = getNodeMatch("gateway", directions, AirportDocument, nodeList, names);
             i = 0;
             foreach (Node[] nodeMatch in gatewayNodes)
             {
-                Gateway gateWay = new Gateway(nodeMatch[0], nodeMatch[1], directions[i]);
+                Gateway gateWay = new Gateway(nodeMatch[0], nodeMatch[1], directions[i], names[i]);
                 gateWayList.Add(gateWay);
                 i++;
             }
         }
-        public List<Node[]> getNodeMatch(string type, List<int> directions, XmlDocument xmlDocument, List<Node> nodeList)
+        public List<Node[]> getNodeMatch(string type, List<int> directions, XmlDocument xmlDocument, List<Node> nodeList, List<string> names)
         {
             List<Node[]> NodeMatch = new List<Node[]>();
             XmlNodeList wayNodes = xmlDocument.SelectNodes("//" + type);
             int i = 0;
             directions.Clear();
+            names.Clear();
             foreach (XmlNode xmlNode in wayNodes)
             {
                 Node[] matches = new Node[2];
@@ -153,6 +155,7 @@ namespace Introductieproject.Simulation
                 int nodeY1 = int.Parse(xmlNode.Attributes["Y1"].Value);
                 int nodeY2 = int.Parse(xmlNode.Attributes["Y2"].Value);
                 int nodedir = int.Parse(xmlNode.Attributes["dir"].Value);
+                string name = xmlNode.Attributes["name"].Value;
                 Node firstNode = new Node(nodeX1, nodeY1);
                 Node secondNode = new Node(nodeX2, nodeY2);
                 if (!listContainsNode(nodeList, firstNode))
@@ -186,6 +189,7 @@ namespace Introductieproject.Simulation
                 {
                     NodeMatch.Add(matches);
                     directions.Add(nodedir);
+                    names.Add(name);
                     i++;
                 }
             }

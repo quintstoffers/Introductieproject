@@ -13,7 +13,7 @@ namespace Introductieproject.Airport
         public const int DIRECTION_BOTH = 0;
         public const int DIRECTION_ENDTOSTART = -1;
         public const int DIRECTION_STARTTOEND = 1;
-
+        public string name;
         public bool isReserved = false;
         public IList<Navigator> reservations = new List<Navigator>();
 
@@ -42,13 +42,14 @@ namespace Introductieproject.Airport
         {
         }
 
-        public Way(Node node1, Node node2, int dir)
+        public Way(Node node1, Node node2, int dir, string name)
         {
             this.nodeConnections.Add(node1);
             this.nodeConnections.Add(node2);
             node1.connections.Add(this); 
             node2.connections.Add(this);
             this.direction = dir;
+            this.name = name;
         }
 
         public void simulate()

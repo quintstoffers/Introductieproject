@@ -8,7 +8,7 @@ namespace Introductieproject.Airport
 {
     public class Taxiway:Way
     {
-        public Taxiway(Node node1, Node node2, int dir) : base(node1, node2, dir)
+        public Taxiway(Node node1, Node node2, int dir, string name) : base(node1, node2, dir, name)
         {
         }
     }

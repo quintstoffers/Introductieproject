@@ -137,21 +137,21 @@
             // continueToolStripMenuItem1
             // 
             this.continueToolStripMenuItem1.Name = "continueToolStripMenuItem1";
-            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(123, 22);
             this.continueToolStripMenuItem1.Text = "Continue";
             this.continueToolStripMenuItem1.Click += new System.EventHandler(this.continueToolStripMenuItem1_Click);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // statusStrip1
@@ -173,6 +173,7 @@
             // 
             // nuScale
             // 
+            this.nuScale.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.nuScale.DecimalPlaces = 1;
             this.nuScale.Increment = new decimal(new int[] {
             1,
@@ -197,6 +198,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label1.Location = new System.Drawing.Point(415, 597);
@@ -250,6 +252,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainForm";
             this.Text = "Airport Simulator";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);

@@ -51,9 +51,11 @@ namespace Introductieproject.UI.Controls
 
             Graphics graphics = this.CreateGraphics();
 
-            graphics.Clear(Color.Black);
+            graphics.Clear(Color.DarkBlue);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
             graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+
         }
 
         /*
@@ -94,22 +96,22 @@ namespace Introductieproject.UI.Controls
         private void drawAirportToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
-
             bmpAirport = new Bitmap((int)maxXCoord, (int)maxYCoord);
             Graphics graphics = Graphics.FromImage(bmpAirport);
-
             graphics.Clear(Color.Transparent);
+    
 
             foreach (Runway runway in airport.runways)
             {
+                       
                 int y1 = (int)(runway.nodeConnections[0].location[1] * drawingScale);
                 int y2 = (int)(runway.nodeConnections[1].location[1] * drawingScale);
                 int x1 = (int)(runway.nodeConnections[0].location[0] * drawingScale);
                 int x2 = (int)(runway.nodeConnections[1].location[0] * drawingScale);
                 Point point1 = new Point(x1, y1);
                 Point point2 = new Point(x2, y2);
-                Pen pen = new Pen(Color.Red, 5);
-                graphics.DrawLine(pen, point1, point2);
+                drawWay(graphics, Color.Red, point1, point2, runway.name);
+                
             }
             foreach (Taxiway taxiWay in airport.taxiways)
             {
@@ -119,8 +121,7 @@ namespace Introductieproject.UI.Controls
                 int x2 = (int)(taxiWay.nodeConnections[1].location[0] * drawingScale);
                 Point point1 = new Point(x1, y1);
                 Point point2 = new Point(x2, y2);
-                Pen pen = new Pen(Color.Blue, 5);
-                graphics.DrawLine(pen, point1, point2);
+                drawWay(graphics,Color.Gray, point1, point2, taxiWay.name);
 
             }
             foreach (Gateway gateway in airport.gateways)
@@ -131,8 +132,7 @@ namespace Introductieproject.UI.Controls
                 int x2 = (int)(gateway.nodeConnections[1].location[0] * drawingScale);
                 Point point1 = new Point(x1, y1);
                 Point point2 = new Point(x2, y2);
-                Pen pen = new Pen(Color.Green, 5);
-                graphics.DrawLine(pen, point1, point2);
+                drawWay(graphics,Color.Green, point1, point2, gateway.name);
 
             }
             foreach (Gate gate in airport.gates)
@@ -143,7 +143,7 @@ namespace Introductieproject.UI.Controls
                 int x2 = (int)(gate.nodeConnections[1].location[0] * drawingScale);
                 Point point1 = new Point(x1, y1);
                 Point point2 = new Point(x2, y2);
-                Pen pen = new Pen(Color.Yellow, 5);
+                Pen pen = new Pen(Color.Yellow, 2);
                 graphics.DrawLine(pen, point1, point2);
 
             }
@@ -153,9 +153,22 @@ namespace Introductieproject.UI.Controls
                zoomlevelY = bmpAirport.Height;
                firstPaint = false;
             }
+            
             airportDirty = false;
         }
+        public void drawWay(Graphics g, Color color, Point start, Point end, String name)
+        {
+            Pen pen = new Pen(color,7);
+            g.DrawLine(pen, start, end);
+            Point namePos = new Point();
+            namePos.Y = (int)(start.Y + 0.5 * (end.Y - start.Y) - 20);
+            if (Math.Min(start.X, end.X) == start.X)
+                namePos.X = start.X + 60;
+            else
+                namePos.X = start.X - 60;
+            g.DrawString(name, SystemFonts.DefaultFont, Brushes.White, namePos);
 
+        }
         private void drawAirplanesToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
@@ -176,7 +189,6 @@ namespace Introductieproject.UI.Controls
                 }
             }
         }
-
         private void MapControl_SizeChanged(object sender, EventArgs e)
         {
             airportDirty = true;

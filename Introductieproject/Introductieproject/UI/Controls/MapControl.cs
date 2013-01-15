@@ -16,6 +16,8 @@ namespace Introductieproject.UI.Controls
 {
     public partial class MapControl : UserControl
     {
+        object drawingLock = new Object();
+
         Bitmap bmpAirplanes;
         Bitmap bmpAirport;
 
@@ -70,17 +72,9 @@ namespace Introductieproject.UI.Controls
 
         public void update(Airport.Airport airport)
         {
-            if (!isDrawing)
-            {
-                new Thread(() => draw(this.CreateGraphics(), airport)).Start();
-            }
-        }
-        public void drawBitmaps(Graphics graphics)
-        {
-            graphics.Clear(Color.DarkBlue);
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
-            graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+            Thread drawThread = new Thread(() => draw(this.CreateGraphics(), airport));
+            drawThread.Priority = ThreadPriority.BelowNormal;
+            drawThread.Start();
         }
 
         bool isDrawing;
@@ -92,9 +86,6 @@ namespace Introductieproject.UI.Controls
             }
             else isDrawing = true;
 
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            
             if (airportDirty)
             {
                 Thread airplanesDrawThread = new Thread(() => drawAirplanesToBitmap(airport));
@@ -102,21 +93,28 @@ namespace Introductieproject.UI.Controls
 
                 drawAirportToBitmap(airport);
 
-                Console.WriteLine("Bitmap drawing in: " + stopwatch.ElapsedMilliseconds);
                 airplanesDrawThread.Join();
             }
             else if(airplanesDirty)
             {
                 drawAirplanesToBitmap(airport);
-                Console.WriteLine("Draw airplanes");
             }
 
             drawBitmaps(graphics);
 
-            Console.WriteLine("Graphics drawing in: " + stopwatch.ElapsedMilliseconds);
-
             isDrawing = false;
         }
+        public void drawBitmaps(Graphics graphics)
+        {
+            lock (drawingLock)
+            {
+                graphics.Clear(Color.DarkBlue);
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+                graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+            }
+        }
+
 
         /*
          * Berekent op welke schaal het vliegveld getekend zal worden

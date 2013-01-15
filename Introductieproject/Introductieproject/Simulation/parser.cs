@@ -17,7 +17,7 @@ namespace Introductieproject.Simulation
         static XmlDocument AirportDocument = new XmlDocument();
         static XmlNodeList rawPlaneSchedule;
 
-        public static void refreshAirplanes(BindingList<Airplane> loadedAirplanes)
+        public static void refreshAirplanes(List<Airplane> loadedAirplanes)
         {
             try
             {

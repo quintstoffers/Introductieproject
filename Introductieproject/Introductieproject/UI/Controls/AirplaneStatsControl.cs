@@ -30,6 +30,9 @@ namespace Introductieproject.UI.Controls
             {
                 Airplane currentAirplane = airport.airplanes[currentSelectedRow];
 
+                this.dgvAirplanes.DataSource = null;
+                this.dgvAirplanes.DataSource = airport.airplanes;
+
                 if (currentAirplane.navigator != null && currentAirplane.navigator.nodepoints != null)
                 {
                     dgvNodes.DataSource = currentAirplane.navigator.nodepoints;

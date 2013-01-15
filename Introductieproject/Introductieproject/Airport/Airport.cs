@@ -152,24 +152,73 @@ namespace Introductieproject.Airport
          */
         public bool requestWayAccess(Airplane airplane, Way way, Node targetNode)
         {
+            List<Airplane> currentAirplaneList = new List<Airplane>();
             foreach (Airplane currentAirplane in airplanes)                 // Alle vliegtuigen bekijken
             {
                 if (!currentAirplane.Equals(airplane) && currentAirplane.isOnAirport()) // Eigen vliegtuig niet meerekenen & vliegtuig moet in bereik van Airport zijn.
                 {
-                    if (currentAirplane.navigator.currentWay.Equals(way))   // Een ander vliegtuig rijdt op dit moment op de weg
-                    {
-                        if (way.direction != 0)
-                            return false;                                       // Ruw, maar het werkt net zoals hiervoor
-                        else
+                        if (currentAirplane.navigator.currentWay.Equals(way))   // Een ander vliegtuig rijdt op dit moment op de weg
                         {
-                            if (targetNode != currentAirplane.navigator.getTargetNode())
-                                return false;
+                            currentAirplaneList.Add(currentAirplane);
                         }
-                    }
                 }
             }
-            return true;
+            
+            if (way.direction != 0)
+            {
+                if (currentAirplaneList.Count == 0)
+                    return true;
+                if (currentAirplaneList.Count == 1)
+                    if (currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location) < 700)
+                        return true;                                    // Ruw, maar het werkt net zoals hiervoor
+                if (currentAirplaneList.Count == 2)
+                    if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location)) < 700)
+                        return true;
+                return false;
+            }
+            else
+            {
+                if (currentAirplaneList.Count == 0)
+                    return true;
+                if (currentAirplaneList.Count == 1)
+                {
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode())
+                    {
+                        if (currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location) < 700)
+                            return true;
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+                if (currentAirplaneList.Count == 2)
+                {
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location)) < 700)
+                            return true;
+                    }
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode())
+                    {
+                        if (currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location) < 700)
+                            return true;
+                    }
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode())
+                    {
+                        if (currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location) < 700)
+                            return true;
+                    }
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode())
+                    {
+                        return true;
+                    }
+                    //Moet nog voor list count 3, 4 en 5
+                }
+            }  
+            return false;
         }
+
         public bool requestTakeOff(Airplane airplane)
         {
             return true;

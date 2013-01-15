@@ -28,10 +28,6 @@ namespace Introductieproject.Forms
             nuScale.Value = (Decimal) TimeKeeper.Scale;
 
             zoomControl1.zoom += new EventHandler(zoom);
-
-            mapControl.MouseDown += new MouseEventHandler(MapControlClick);
-            mapControl.MouseMove += new MouseEventHandler(MapControlMouseMove);
-            mapControl.MouseUp += new MouseEventHandler(MapControlMouseUp);
         }
 
         public void updateUI()  // Update elementen zonder databinding
@@ -78,22 +74,6 @@ namespace Introductieproject.Forms
             mapControl.zoom(zoomControl1.zoomLevel);
         }
 
-
-        private void MapControlClick(object sender, MouseEventArgs e)
-        {
-            mapControl.mouseLocation = e.Location;
-        }
-        private void MapControlMouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                mapControl.pan(mapControl.mouseLocation, e.Location, airport);
-            }
-        }
-        private void MapControlMouseUp(object sender, MouseEventArgs e)
-        {
-            mapControl.lastPanlocation = mapControl.mapLocation;
-        }
 
         private void nuScale_ValueChanged(object sender, EventArgs e)
         {

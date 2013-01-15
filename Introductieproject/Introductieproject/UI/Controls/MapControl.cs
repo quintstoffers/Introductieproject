@@ -40,6 +40,10 @@ namespace Introductieproject.UI.Controls
             InitializeComponent();
 
             Cursor = Cursors.Hand;
+
+            MouseDown += new MouseEventHandler(MapControlClick);
+            MouseMove += new MouseEventHandler(MapControlMouseMove);
+            MouseUp += new MouseEventHandler(MapControlMouseUp);
         }
 
         public void init(Airport.Airport airport)
@@ -48,12 +52,35 @@ namespace Introductieproject.UI.Controls
             airplanesDirty = true;
         }
 
+        private void MapControlClick(object sender, MouseEventArgs e)
+        {
+            this.mouseLocation = e.Location;
+        }
+        private void MapControlMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                pan(this.mouseLocation, e.Location);
+            }
+        }
+        private void MapControlMouseUp(object sender, MouseEventArgs e)
+        {
+            this.lastPanlocation = this.mapLocation;
+        }
+
         public void update(Airport.Airport airport)
         {
             if (!isDrawing)
             {
                 new Thread(() => draw(this.CreateGraphics(), airport)).Start();
             }
+        }
+        public void drawBitmaps(Graphics graphics)
+        {
+            graphics.Clear(Color.DarkBlue);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+            graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
         }
 
         bool isDrawing;
@@ -84,10 +111,7 @@ namespace Introductieproject.UI.Controls
                 Console.WriteLine("Draw airplanes");
             }
 
-            graphics.Clear(Color.DarkBlue);
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
-            graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+            drawBitmaps(graphics);
 
             Console.WriteLine("Graphics drawing in: " + stopwatch.ElapsedMilliseconds);
 
@@ -123,12 +147,12 @@ namespace Introductieproject.UI.Controls
             zoomlevelY = (int)(bmpAirport.Height * (1 + 0.1225 * zoomLevel));
         }
 
-        public void pan(Point panStart, Point mouseLocation, Airport.Airport airport)
+        public void pan(Point panStart, Point mouseLocation)
         {
             mapLocation.X = lastPanlocation.X +  (mouseLocation.X - panStart.X);
             mapLocation.Y = lastPanlocation.Y +(mouseLocation.Y - panStart.Y);
             panStart = mouseLocation;
-            update(airport);
+            drawBitmaps(this.CreateGraphics());
         }
 
         private void drawAirportToBitmap(Airport.Airport airport)

@@ -56,7 +56,7 @@ namespace Introductieproject.Simulation
             {
                 if (multiThreadingEnabled)
                 {
-                    ThreadPool.SetMaxThreads(Environment.ProcessorCount + 2, Environment.ProcessorCount + 2);
+                    ThreadPool.SetMaxThreads(Environment.ProcessorCount + 1, Environment.ProcessorCount + 1);
                 }
                 if (simulationThread == null)
                 {
@@ -167,15 +167,13 @@ namespace Introductieproject.Simulation
             ((Airplane)airplane).simulate(airport);
         }
 
-
-
         private static void updateNonUrgent()
         {
             tickCounter++;
 
             if (tickCounter >= uiUpdateTicks)
             {
-                Parser.refreshAirplanes(airport.airplanes);
+                new Thread(() => Parser.refreshAirplanes(airport.airplanes)).Start();
 
                 try
                 {

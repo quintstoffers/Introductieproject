@@ -228,9 +228,11 @@
             // 
             // mapControl
             // 
+            this.mapControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mapControl.BackColor = System.Drawing.SystemColors.Control;
             this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.mapControl.Dock = System.Windows.Forms.DockStyle.Left;
             this.mapControl.Location = new System.Drawing.Point(0, 24);
             this.mapControl.Name = "mapControl";
             this.mapControl.Size = new System.Drawing.Size(556, 570);

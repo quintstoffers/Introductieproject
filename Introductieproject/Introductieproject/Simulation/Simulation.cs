@@ -173,7 +173,7 @@ namespace Introductieproject.Simulation
 
             if (tickCounter >= uiUpdateTicks)
             {
-                new Thread(() => Parser.refreshAirplanes(airport.airplanes)).Start();
+                Parser.refreshAirplanes(airport.airplanes);
 
                 try
                 {

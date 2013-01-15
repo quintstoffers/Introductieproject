@@ -55,6 +55,7 @@ namespace Introductieproject.Airplanes
                     IList<Gate> availableGates = new List<Gate>();
                     IList<Gate> occupiedGates = new List<Gate>();
                     IList<Gate> reservedGates = new List<Gate>();
+                    occupiedGates = airport.occupiedGates();
                     foreach (Way w in ways)
                     {
                         if (w is Gate)
@@ -64,11 +65,7 @@ namespace Introductieproject.Airplanes
                             {
                                 reservedGates.Add(newGate);
                             }
-                            /*else if (newGate.hasAirplane)
-                            {
-                                occupiedGates.Add(newGate);
-                            }*/
-                            else
+                            else if (!occupiedGates.Contains(newGate))
                             {
                                 availableGates.Add(newGate);
                             }

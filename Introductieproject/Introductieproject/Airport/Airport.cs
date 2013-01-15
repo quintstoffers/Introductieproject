@@ -174,6 +174,17 @@ namespace Introductieproject.Airport
         {
             return true;
         }
+        public List<Gate> occupiedGates()
+        {
+            List<Gate> occupiedGates = new List<Gate>();
+            foreach (Airplane airplane in this.airplanes)
+            {
+                if (airplane.isOnAirport())
+                    if (airplane.navigator.currentWay is Gate)
+                        occupiedGates.Add((Gate)airplane.navigator.currentWay);
+            }
+            return occupiedGates;
+        }
     }
 }
 

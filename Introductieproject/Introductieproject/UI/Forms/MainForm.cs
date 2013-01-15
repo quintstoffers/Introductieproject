@@ -37,6 +37,8 @@ namespace Introductieproject.Forms
         public void updateUI()  // Update elementen zonder databinding
         {
             airplaneStatsControl.update(airport);
+
+            mapControl.airplanesDirty = true;
             mapControl.update(airport);
 
             tsSimTime.Text = "Simulated time: " + TimeKeeper.currentSimTime.ToString();

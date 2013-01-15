@@ -10,6 +10,7 @@ using Introductieproject.Objects;
 using Introductieproject.Simulation;
 using Introductieproject.Airport;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Introductieproject.UI.Controls
 {
@@ -19,7 +20,6 @@ namespace Introductieproject.UI.Controls
         Bitmap bmpAirport;
 
         Parser parser = new Parser();
-
         double drawingScale = 1;
         double maxXCoord = 0;
         double maxYCoord = 0;
@@ -27,7 +27,8 @@ namespace Introductieproject.UI.Controls
         int zoomlevelX;
         int zoomlevelY;
 
-        bool airportDirty;
+        public bool airportDirty;
+        public bool airplanesDirty = false;
         bool firstPaint = true;
 
         public Point lastPanlocation;
@@ -37,30 +38,60 @@ namespace Introductieproject.UI.Controls
         public MapControl()
         {
             InitializeComponent();
+
             Cursor = Cursors.Hand;
         }
 
         public void init(Airport.Airport airport)
         {
             airportDirty = true;
+            airplanesDirty = true;
         }
 
         public void update(Airport.Airport airport)
         {
-            Thread airplanesDrawThread = new Thread(() => drawAirplanesToBitmap(airport));
-            airplanesDrawThread.Start();
+            if (!isDrawing)
+            {
+                new Thread(() => draw(this.CreateGraphics(), airport)).Start();
+            }
+        }
+
+        bool isDrawing;
+        public void draw(Graphics graphics, Airport.Airport airport)
+        {
+            if (isDrawing)
+            {
+                return;
+            }
+            else isDrawing = true;
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            
             if (airportDirty)
             {
-                drawAirportToBitmap(airport);
-            }
-            airplanesDrawThread.Join();
+                Thread airplanesDrawThread = new Thread(() => drawAirplanesToBitmap(airport));
+                airplanesDrawThread.Start();
 
-            Graphics graphics = this.CreateGraphics();
+                drawAirportToBitmap(airport);
+
+                Console.WriteLine("Bitmap drawing in: " + stopwatch.ElapsedMilliseconds);
+                airplanesDrawThread.Join();
+            }
+            else if(airplanesDirty)
+            {
+                drawAirplanesToBitmap(airport);
+                Console.WriteLine("Draw airplanes");
+            }
 
             graphics.Clear(Color.DarkBlue);
             graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
             graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+
+            Console.WriteLine("Graphics drawing in: " + stopwatch.ElapsedMilliseconds);
+
+            isDrawing = false;
         }
 
         /*
@@ -80,8 +111,8 @@ namespace Introductieproject.UI.Controls
                 }
             }
 
-            double xScale = this.Width / maxXCoord;
-            double yScale = this.Height / maxYCoord;
+            double xScale = this.Width / (maxXCoord * 2);
+            double yScale = this.Height / (maxYCoord * 2);
 
             drawingScale = Math.Min(xScale, yScale);
         }
@@ -103,51 +134,58 @@ namespace Introductieproject.UI.Controls
         private void drawAirportToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             bmpAirport = new Bitmap((int)maxXCoord, (int)maxYCoord);
+
             Graphics graphics = Graphics.FromImage(bmpAirport);
-            graphics.Clear(Color.Transparent);
-    
-            foreach (Runway runway in airport.runways)
+            graphics.Clear(Color.DarkBlue);
+
+            foreach (Way way in airport.ways)
             {
-                int y1 = (int)(runway.nodeConnections[0].location[1] * drawingScale);
-                int y2 = (int)(runway.nodeConnections[1].location[1] * drawingScale);
-                int x1 = (int)(runway.nodeConnections[0].location[0] * drawingScale);
-                int x2 = (int)(runway.nodeConnections[1].location[0] * drawingScale);
-                Point point1 = new Point(x1, y1);
-                Point point2 = new Point(x2, y2);
-                drawWay(graphics, Color.Red, point1, point2, runway.name);
-            }
-            foreach (Taxiway taxiWay in airport.taxiways)
-            {
-                int y1 = (int)(taxiWay.nodeConnections[0].location[1] * drawingScale);
-                int y2 = (int)(taxiWay.nodeConnections[1].location[1] * drawingScale);
-                int x1 = (int)(taxiWay.nodeConnections[0].location[0] * drawingScale);
-                int x2 = (int)(taxiWay.nodeConnections[1].location[0] * drawingScale);
-                Point point1 = new Point(x1, y1);
-                Point point2 = new Point(x2, y2);
-                drawWay(graphics,Color.Gray, point1, point2, taxiWay.name);
-            }
-            foreach (Gateway gateway in airport.gateways)
-            {
-                int y1 = (int)(gateway.nodeConnections[0].location[1] * drawingScale);
-                int y2 = (int)(gateway.nodeConnections[1].location[1] * drawingScale);
-                int x1 = (int)(gateway.nodeConnections[0].location[0] * drawingScale);
-                int x2 = (int)(gateway.nodeConnections[1].location[0] * drawingScale);
-                Point point1 = new Point(x1, y1);
-                Point point2 = new Point(x2, y2);
-                Pen pen = new Pen(Color.Green, 7);
-                graphics.DrawLine(pen, point1, point2);
-            }
-            foreach (Gate gate in airport.gates)
-            {
-                int y1 = (int)(gate.nodeConnections[0].location[1] * drawingScale);
-                int y2 = (int)(gate.nodeConnections[1].location[1] * drawingScale);
-                int x1 = (int)(gate.nodeConnections[0].location[0] * drawingScale);
-                int x2 = (int)(gate.nodeConnections[1].location[0] * drawingScale);
-                Point point1 = new Point(x1, y1);
-                Point point2 = new Point(x2, y2);
-                Pen pen = new Pen(Color.Yellow, 2);
-                drawGate(graphics, Color.Gray, point1, point2, gate.name);
+                if (way is Runway)
+                {
+                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale);
+                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale);
+                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale);
+                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
+                    Point point1 = new Point(x1, y1);
+                    Point point2 = new Point(x2, y2);
+                    drawWay(graphics, Color.Red, point1, point2, way.name);
+                }
+                else if(way is Taxiway)
+                {
+                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale);
+                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale);
+                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale);
+                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
+                    Point point1 = new Point(x1, y1);
+                    Point point2 = new Point(x2, y2);
+                    drawWay(graphics, Color.Gray, point1, point2, way.name);
+                }
+                else if (way is Gateway)
+                {
+                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale);
+                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale);
+                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale);
+                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
+                    Point point1 = new Point(x1, y1);
+                    Point point2 = new Point(x2, y2);
+                    Pen pen = new Pen(Color.Green, 7);
+                    graphics.DrawLine(pen, point1, point2);
+                }
+                else if (way is Gate)
+                {
+                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale);
+                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale);
+                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale);
+                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
+                    Point point1 = new Point(x1, y1);
+                    Point point2 = new Point(x2, y2);
+                    Pen pen = new Pen(Color.Yellow, 2);
+                    drawGate(graphics, Color.Gray, point1, point2, way.name);
+                }
             }
             if (firstPaint)
             {
@@ -155,7 +193,6 @@ namespace Introductieproject.UI.Controls
                zoomlevelY = bmpAirport.Height;
                firstPaint = false;
             }
-            
             airportDirty = false;
         }
 
@@ -192,7 +229,6 @@ namespace Introductieproject.UI.Controls
         private void drawAirplanesToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
-
             bmpAirplanes = new Bitmap((int)maxXCoord, (int)maxYCoord);
             Graphics graphics = Graphics.FromImage(bmpAirplanes);
 
@@ -208,11 +244,13 @@ namespace Introductieproject.UI.Controls
                     graphics.FillEllipse(Brushes.White, drawingLocationX-2, drawingLocationY-2, 5, 5);
                 }
             }
+            airplanesDirty = false;
         }
 
         private void MapControl_SizeChanged(object sender, EventArgs e)
         {
             airportDirty = true;
+            airplanesDirty = true;
         }
 
         private void MapControl_Load(object sender, EventArgs e)

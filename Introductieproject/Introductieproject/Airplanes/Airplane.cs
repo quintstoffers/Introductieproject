@@ -230,7 +230,8 @@ namespace Introductieproject.Objects
                             }
                             else
                             {
-                                this.accelerate(0);
+                                //this.accelerate(0);
+                                this.speed = 0;
                                 Stopwatch timer = new Stopwatch();
                                 if (timer == null)
                                 {
@@ -260,7 +261,7 @@ namespace Introductieproject.Objects
                         }
                     }
 
-                    if (distanceToTarget < speed)
+                    if (distanceToTarget <= speed)
                     {
                         moveBy(distanceToTarget);
                         speed = 0;

@@ -67,6 +67,22 @@
       dir="1"
       name="T-06"
       ></taxiway>
+    <taxiway
+      X1="3000"
+      Y1="2000"
+      X2="3000"
+      Y2="3300"
+      dir="0"
+      name="T-07"
+      ></taxiway>
+    <taxiway
+      X1="1000"
+      Y1="2000"
+      X2="1000"
+      Y2="3300"
+      dir="0"
+      name="T-08"
+      ></taxiway>
   </taxiways>
   <gateways>
     <gateway
@@ -149,15 +165,111 @@
       dir="0"
       name="GW-10"
       ></gateway>
+    <gateway
+      X1="1000"
+      Y1="3300"
+      X2="1200"
+      Y2="3300"
+      dir="0"
+      name="GW-11"
+      ></gateway>
+    <gateway
+      X1="1200"
+      Y1="3300"
+      X2="1400"
+      Y2="3300"
+      dir="0"
+      name="GW-12"
+      ></gateway>
+    <gateway
+      X1="1400"
+      Y1="3300"
+      X2="1600"
+      Y2="3300"
+      dir="0"
+      name="GW-13"
+      ></gateway>
+    <gateway
+      X1="1600"
+      Y1="3300"
+      X2="1800"
+      Y2="3300"
+      dir="0"
+      name="GW-14"
+      ></gateway>
+    <gateway
+      X1="1800"
+      Y1="3300"
+      X2="2000"
+      Y2="3300"
+      dir="0"
+      name="GW-15"
+      ></gateway>
+    <gateway
+      X1="2000"
+      Y1="3300"
+      X2="2200"
+      Y2="3300"
+      dir="0"
+      name="GW-16"
+      ></gateway>
+    <gateway
+      X1="2200"
+      Y1="3300"
+      X2="2400"
+      Y2="3300"
+      dir="0"
+      name="GW-17"
+      ></gateway>
+    <gateway
+      X1="2400"
+      Y1="3300"
+      X2="2600"
+      Y2="3300"
+      dir="0"
+      name="GW-18"
+      ></gateway>
+    <gateway
+      X1="2600"
+      Y1="3300"
+      X2="2800"
+      Y2="3300"
+      dir="0"
+      name="GW-19"
+      ></gateway>
+    <gateway
+      X1="2800"
+      Y1="3300"
+      X2="3000"
+      Y2="3300"
+      dir="0"
+      name="GW-20"
+      ></gateway>
   </gateways>
   <gates>
     <gate
-      X1="2000"
-      Y1="2000"
-      X2="2000"
-      Y2="2100"
+      X1="1400"
+      Y1="3300"
+      X2="1400"
+      Y2="3200"
       dir="0"
-      name="A3"
+      name="C1"
+      ></gate>
+    <gate
+      X1="2400"
+      Y1="3300"
+      X2="2400"
+      Y2="3400"
+      dir="0"
+      name="D3"
+      ></gate>
+    <gate
+      X1="2000"
+      Y1="3300"
+      X2="2000"
+      Y2="3400"
+      dir="0"
+      name="D2"
       ></gate>
     <gate
       X1="1800"
@@ -166,6 +278,14 @@
       Y2="2100"
       dir="0"
       name="A2"
+      ></gate>
+    <gate
+      X1="2600"
+      Y1="2000"
+      X2="2600"
+      Y2="2100"
+      dir="0"
+      name="A3"
       ></gate>
     <gate
       X1="1600"

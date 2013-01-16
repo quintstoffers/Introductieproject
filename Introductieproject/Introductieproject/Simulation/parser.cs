@@ -196,6 +196,25 @@ namespace Introductieproject.Simulation
 
             return NodeMatch;
         }
+        public void writePLane(Airplane airplane)
+        {
+            PlaneDocument.Load(@"Simulation\schedule.xml");
+            XmlElement plane = PlaneDocument.CreateElement("plane");
+            plane.SetAttribute("registration", airplane.registration);
+            plane.SetAttribute("carrier", airplane.carrier);
+            plane.SetAttribute("type", airplane.typeName);
+            plane.SetAttribute("origin", airplane.origin);
+            plane.SetAttribute("destination", airplane.destination);
+            plane.SetAttribute("departureDate", airplane.departureDate.ToString());
+            plane.SetAttribute("arrivalDate", airplane.arrivalDate.ToString());
+            plane.SetAttribute("flight", airplane.flight);
+            plane.SetAttribute("landingDate", airplane.landingDate.ToString());
+            plane.SetAttribute("location", "3000,0");
+            XmlNode schedule = PlaneDocument.SelectSingleNode("/schedule");
+            schedule.AppendChild(plane);
+            PlaneDocument.Save(@"Simulation\schedule.xml");
+
+        }
         public bool listContainsNode(List<Node> nodeList, Node node)
         {
 

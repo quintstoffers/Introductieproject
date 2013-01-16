@@ -25,13 +25,8 @@ namespace Introductieproject.Forms
             mapControl.init(airport);
             airplaneStatsControl.init(airport);
 
-<<<<<<< HEAD
             nuScale.Value = (Decimal) TimeKeeper.targetScale;
 
-=======
-            nuScale.Value = (Decimal) TimeKeeper.Scale;
-            this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
->>>>>>> Bugfix, updates in planner en newplane forms
             zoomControl1.zoom += new EventHandler(zoom);
         }
 
@@ -97,12 +92,6 @@ namespace Introductieproject.Forms
         private void datePickerForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             Simulation.Simulation.pauseSimulationToggle();
-        }
-
-        private void planningToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ScheduleForm scheduleForm = new ScheduleForm(airport);
-            scheduleForm.Show();
         }
     }
 }

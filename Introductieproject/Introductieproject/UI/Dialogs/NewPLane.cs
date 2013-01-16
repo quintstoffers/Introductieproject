@@ -16,41 +16,21 @@ namespace Introductieproject.UI.Dialogs
         Parser parser = new Parser();
         Introductieproject.Objects.Airplane airplane;
         Introductieproject.Airport.Airport airport;
-        Airport.Runway selectedRunway;
-        Airport.Gate selectedGate;
         public NewPLane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport)
         {
             InitializeComponent();
             this.airplane = airplane;
             this.airport = airport;
             loadRunways();
-            loadGates();
-            loadTypes();
-            arrivaldate.CustomFormat = "dd/MM/yyyy hh:mm";
-            departuredate.CustomFormat = "dd/MM/yyyy hh:mm";
-            landing.CustomFormat = "dd/MM/yyyy hh:mm"; 
         }
         private void loadRunways()
         {
             foreach (Introductieproject.Airport.Runway runway in airport.runways)
             {
-                runwaybox.Items.Add(runway.name);
-                runwaybox.SelectedItem = runwaybox.Items[0];
+                runwaybox.Items.Add(runway);
             }
         }
-        private void loadGates()
-        {
-            foreach (Introductieproject.Airport.Gate gate in airport.gates)
-            {
-                gateBox.Items.Add(gate.name);
-                gateBox.SelectedItem = gateBox.Items[0];
-            }
-        }
-        private void loadTypes()
-        {
-            typeBox.Items.Add("BO_747");
-            typeBox.SelectedItem = typeBox.Items[0];
-        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -68,7 +48,7 @@ namespace Introductieproject.UI.Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
             airplane.registration = registration.Text;
             airplane.carrier = carrier.Text;
             airplane.flight = flight.Text;
@@ -77,11 +57,11 @@ namespace Introductieproject.UI.Dialogs
             airplane.departureDate = departuredate.Value;
             airplane.arrivalDate = arrivaldate.Value;
             airplane.landingDate = landing.Value;
-            airplane.typeName = typeBox.SelectedItem.ToString();
-            airplane.location = selectedRunway.nodeConnections[0].location;
-           
+            airplane.typeName = type.Text;
             this.Close();
-           
+            //airplane.location[0] = runwaybox.SelectedValue;
+            //airplane.location[1] = double.Parse(location2.Text);
+            
            
         }
 
@@ -111,24 +91,6 @@ namespace Introductieproject.UI.Dialogs
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach(Introductieproject.Airport.Runway runway in airport.runways)
-            {
-                if (runway.name == runwaybox.SelectedItem.ToString())
-                    selectedRunway = runway;
-            }
-        }
-
-        private void gateBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            foreach (Introductieproject.Airport.Gate gate in airport.gates)
-            {
-                if (gate.name == gateBox.SelectedItem.ToString())
-                    selectedGate = gate;
-            }
-        }
-
-        private void typeBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

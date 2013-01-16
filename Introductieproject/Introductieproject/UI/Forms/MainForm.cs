@@ -93,6 +93,13 @@ namespace Introductieproject.Forms
         {
             Simulation.Simulation.pauseSimulationToggle();
         }
+
+        private void planningToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ScheduleForm scheduleForm = new ScheduleForm(airport);
+            scheduleForm.loadPLanes();
+            scheduleForm.Show();
+        }
     }
 }
 

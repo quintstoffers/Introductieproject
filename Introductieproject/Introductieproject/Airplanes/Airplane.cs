@@ -18,7 +18,8 @@ namespace Introductieproject.Objects
             DOCKING,
             WAITING_TAKEOFF,
             TAKINGOFF,
-            DEPARTED
+            DEPARTED,
+            CANCELLED
         }
 
         // "Vaste" variabelen die per type vliegtuig zullen verschillen (defined in subclasse!)

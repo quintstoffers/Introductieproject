@@ -43,12 +43,12 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsSimTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsCurrentScale = new System.Windows.Forms.ToolStripStatusLabel();
             this.nuScale = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.zoomControl1 = new Introductieproject.UI.Controls.ZoomControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
-            this.tsCurrentScale = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
@@ -110,20 +110,21 @@
             this.clearToolStripMenuItem,
             this.planningToolStripMenuItem});
             this.airplaneToolStripMenuItem.Name = "airplaneToolStripMenuItem";
-            this.airplaneToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.airplaneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.airplaneToolStripMenuItem.Text = "Airplane";
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             // 
             // planningToolStripMenuItem
             // 
             this.planningToolStripMenuItem.Name = "planningToolStripMenuItem";
-            this.planningToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.planningToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.planningToolStripMenuItem.Text = "Planning";
+            this.planningToolStripMenuItem.Click += new System.EventHandler(this.planningToolStripMenuItem_Click);
             // 
             // simulationToolStripMenuItem
             // 
@@ -138,21 +139,21 @@
             // continueToolStripMenuItem1
             // 
             this.continueToolStripMenuItem1.Name = "continueToolStripMenuItem1";
-            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(123, 22);
+            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.continueToolStripMenuItem1.Text = "Continue";
             this.continueToolStripMenuItem1.Click += new System.EventHandler(this.continueToolStripMenuItem1_Click);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // statusStrip1
@@ -172,6 +173,12 @@
             this.tsSimTime.Size = new System.Drawing.Size(94, 17);
             this.tsSimTime.Text = "Simulation Time";
             this.tsSimTime.Click += new System.EventHandler(this.tsSimTime_Click);
+            // 
+            // tsCurrentScale
+            // 
+            this.tsCurrentScale.Name = "tsCurrentScale";
+            this.tsCurrentScale.Size = new System.Drawing.Size(76, 17);
+            this.tsCurrentScale.Text = "Current scale";
             // 
             // nuScale
             // 
@@ -240,12 +247,6 @@
             this.mapControl.Size = new System.Drawing.Size(556, 570);
             this.mapControl.TabIndex = 5;
             this.mapControl.Load += new System.EventHandler(this.mapControl_Load);
-            // 
-            // tsCurrentScale
-            // 
-            this.tsCurrentScale.Name = "tsCurrentScale";
-            this.tsCurrentScale.Size = new System.Drawing.Size(76, 17);
-            this.tsCurrentScale.Text = "Current scale";
             // 
             // MainForm
             // 

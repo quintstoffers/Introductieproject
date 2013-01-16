@@ -199,7 +199,7 @@ namespace Introductieproject.Simulation
         }
         public void writePLane(Airplane airplane)
         {
-            PlaneDocument.Load(@"Simulation\schedule.xml");
+            //PlaneDocument.Load(@"Simulation\schedule.xml");
             XmlElement plane = PlaneDocument.CreateElement("plane");
             plane.SetAttribute("registration", airplane.registration);
             plane.SetAttribute("carrier", airplane.carrier);
@@ -210,7 +210,9 @@ namespace Introductieproject.Simulation
             plane.SetAttribute("arrivalDate", airplane.arrivalDate.ToString());
             plane.SetAttribute("flight", airplane.flight);
             plane.SetAttribute("landingDate", airplane.landingDate.ToString());
-            plane.SetAttribute("location", "3000,0");
+            string location = (airplane.location[0] + "," + airplane.location[1]);
+            plane.SetAttribute("location", location);
+            plane.SetAttribute("gate", airplane.gate);
             XmlNode schedule = PlaneDocument.SelectSingleNode("/schedule");
             schedule.AppendChild(plane);
             PlaneDocument.Save(@"Simulation\schedule.xml");

@@ -25,7 +25,7 @@ namespace Introductieproject.Forms
             mapControl.init(airport);
             airplaneStatsControl.init(airport);
 
-            nuScale.Value = (Decimal) TimeKeeper.Scale;
+            nuScale.Value = (Decimal) TimeKeeper.targetScale;
 
             zoomControl1.zoom += new EventHandler(zoom);
         }
@@ -38,6 +38,7 @@ namespace Introductieproject.Forms
             mapControl.update(airport);
 
             tsSimTime.Text = "Simulated time: " + TimeKeeper.currentSimTime.ToString();
+            tsCurrentScale.Text = "Current scale: " + TimeKeeper.currentScale.ToString();
         }
 
         void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -77,7 +78,7 @@ namespace Introductieproject.Forms
 
         private void nuScale_ValueChanged(object sender, EventArgs e)
         {
-            TimeKeeper.Scale = (double) nuScale.Value;
+            TimeKeeper.targetScale = (double)nuScale.Value;
         }
 
         private void tsSimTime_Click(object sender, EventArgs e)

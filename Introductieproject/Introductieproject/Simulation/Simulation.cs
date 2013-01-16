@@ -30,12 +30,11 @@ namespace Introductieproject.Simulation
             set
             {
                 uiUpdateTicks = value / updateInterval;
-                Console.WriteLine("UpdateTIcks set to:  " + uiUpdateTicks);
             }
         }
-        private static int tickCounter = 0;
 
         private static Thread simulationThread;
+        private static Thread uiUpdaterThread;
 
         private static Parser parser = new Parser();
         private static DateTime targetDate;
@@ -62,8 +61,13 @@ namespace Introductieproject.Simulation
                 {
                     simulationThread = new Thread(simulation);
                 }
+                if (uiUpdaterThread == null)
+                {
+                    uiUpdaterThread = new Thread(uiUpdater);
+                }
                 runSimulation = true;
                 simulationThread.Start();
+                uiUpdaterThread.Start();
             }
             else
             {
@@ -120,8 +124,6 @@ namespace Introductieproject.Simulation
 
                 updateSimulation();
 
-                updateNonUrgent();
-
                 if (leaping)
                 {
                     if (TimeKeeper.currentSimTime >= targetDate)
@@ -131,25 +133,52 @@ namespace Introductieproject.Simulation
                 }
 
                 long elapsedMillis = stopwatch.ElapsedMilliseconds;
+                Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
                 if (elapsedMillis < updateInterval)
                 {
-                    Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
-                    Thread.Sleep(updateInterval - (int)elapsedMillis);
+                    Thread.Sleep((int) (updateInterval - elapsedMillis));
+                    TimeKeeper.tuneScale(true);
+                }
+                else
+                {
+                    TimeKeeper.tuneScale(false);
                 }
             }
 
             Console.WriteLine("Simulation stopped");
         }
 
+        private static void uiUpdater()
+        {
+            while (runSimulation)
+            {
+                updateNonUrgent();
+
+                Thread.Sleep(1000);
+            }
+        }
+
+        private static int tasksDone;
+        private static int tasksStarted;
         private static void updateSimulation()
         {
+            Parser.refreshAirplanes(airport.airplanes);
+
             if (multiThreadingEnabled)
             {
+                tasksDone = 0;
+                tasksStarted = 0;
+
                 new Thread(() => airport.simulate()).Start();
 
                 foreach (Airplane currentAirplane in airport.airplanes)
                 {
                     ThreadPool.QueueUserWorkItem(new WaitCallback(simulateAirplane), currentAirplane);
+                    tasksStarted++;
+                }
+                while (tasksDone < tasksStarted)
+                {
+                    Thread.Sleep(1);
                 }
             }
             else
@@ -165,26 +194,20 @@ namespace Introductieproject.Simulation
         private static void simulateAirplane(object airplane)
         {
             ((Airplane)airplane).simulate(airport);
+            tasksDone++;
         }
 
         private static void updateNonUrgent()
         {
-            tickCounter++;
-
-            if (tickCounter >= uiUpdateTicks)
+            try
             {
-                Parser.refreshAirplanes(airport.airplanes);
-
-                try
-                {
-                    Program.mainForm.BeginInvoke((Action)(() => Program.mainForm.updateUI()));  // BeginInvoke == asynchroon
-                }
-                catch (Exception) // MainForm gesloten, geen UI thread beschikbaar. Simulatie sluiten
-                {
-                    runSimulation = false;
-                }
-                tickCounter = 0;
+                Program.mainForm.Invoke((Action)(() => Program.mainForm.updateUI()));
             }
+            catch (Exception)
+            {
+                runSimulation = false;
+            }
+     
         }
     }
 }

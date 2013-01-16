@@ -48,6 +48,7 @@
             this.zoomControl1 = new Introductieproject.UI.Controls.ZoomControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
+            this.tsCurrentScale = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
@@ -157,7 +158,8 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsSimTime});
+            this.tsSimTime,
+            this.tsCurrentScale});
             this.statusStrip1.Location = new System.Drawing.Point(0, 594);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1362, 22);
@@ -180,7 +182,7 @@
             0,
             0,
             65536});
-            this.nuScale.Location = new System.Drawing.Point(515, 596);
+            this.nuScale.Location = new System.Drawing.Point(509, 598);
             this.nuScale.Minimum = new decimal(new int[] {
             1,
             0,
@@ -201,11 +203,11 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label1.Location = new System.Drawing.Point(415, 597);
+            this.label1.Location = new System.Drawing.Point(433, 599);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(94, 15);
+            this.label1.Size = new System.Drawing.Size(70, 15);
             this.label1.TabIndex = 8;
-            this.label1.Text = "Simulation Scale";
+            this.label1.Text = "Target scale";
             // 
             // zoomControl1
             // 
@@ -238,6 +240,12 @@
             this.mapControl.Size = new System.Drawing.Size(556, 570);
             this.mapControl.TabIndex = 5;
             this.mapControl.Load += new System.EventHandler(this.mapControl_Load);
+            // 
+            // tsCurrentScale
+            // 
+            this.tsCurrentScale.Name = "tsCurrentScale";
+            this.tsCurrentScale.Size = new System.Drawing.Size(76, 17);
+            this.tsCurrentScale.Text = "Current scale";
             // 
             // MainForm
             // 
@@ -287,5 +295,6 @@
         private UI.Controls.ZoomControl zoomControl1;
         private System.Windows.Forms.NumericUpDown nuScale;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolStripStatusLabel tsCurrentScale;
     }
 }

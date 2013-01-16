@@ -144,8 +144,6 @@ namespace Introductieproject.Objects
             }
             else if (status == Status.DOCKING)      // Vliegtuig staat bij gate
             {
-                Console.WriteLine("LEAVE   : " + actualDepartureDate);
-                Console.WriteLine("CURR     :" + TimeKeeper.currentSimTime);
                 if (TimeKeeper.currentSimTime >= actualDepartureDate)
                 {
                     leaveDock();
@@ -322,9 +320,6 @@ namespace Introductieproject.Objects
             actualArrivalDate = TimeKeeper.currentSimTime;
             actualLandingDate = this.landingDate;
 
-            Console.WriteLine("SIMARRIVALTIME: " + actualArrivalDate);
-            Console.WriteLine("ARRIVALDATE: " + arrivalDate);
-
             //Bereken verschil in verwachte vertrektijd en verwachte aankomst tijd.
             if (landingDate != actualLandingDate)
             {
@@ -346,8 +341,6 @@ namespace Introductieproject.Objects
             {
                 arrivalDifference = new TimeSpan();
             }
-            Console.WriteLine("DIFFERENCE: " + arrivalDifference + landingDifference);
-
             // Random delay van 0-100.
             // Statistieken van http://www.flightstats.com/go/FlightRating/flightRatingByRoute.do
             // Meeste vliegtuigmaatschappijen zitten 4% veel te laat; ~3% te laat; ~10% iets te laat; ~80% op tijd.
@@ -406,7 +399,6 @@ namespace Introductieproject.Objects
 
         public void leaveDock()
         {
-            Console.WriteLine("LEAVING DOCK");
             status = Status.IDLE;
         }
 

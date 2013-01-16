@@ -17,8 +17,16 @@ namespace Introductieproject.Simulation
         public static TimeSpan elapsedRealTime;       // Verstreken echte tijd sinds vorige kloktik
         public static TimeSpan elapsedSimTime;        // Idem voor de gesimuleerde wereld
 
+        public static double targetScale;
+        public static double currentScale
+        {
+            get
+            {
+                return scale;
+            }
+        }
         private static double scale;
-        public static double Scale
+        private static double Scale
         {
             get
             {
@@ -29,7 +37,6 @@ namespace Introductieproject.Simulation
                 scale = value;
 
                 Simulation.updateInterval = (int)(1000 / scale);
-                Simulation.uiUpdateInterval = 1000;
             }
         }                   // Verhouding tussen echte tijd en simulatietijd. >1 = sneller, <1 = langzamer
 
@@ -39,6 +46,8 @@ namespace Introductieproject.Simulation
             currentSimTime = DateTime.Now;
             totalElapsedRealTimeTicks = 0;
             totalElapsedSimTimeTicks = 0;
+
+            Scale = targetScale;
 
             Console.WriteLine("Timekeeper set: " + currentRealTime);
         }
@@ -51,6 +60,10 @@ namespace Introductieproject.Simulation
                 totalElapsedRealTimeTicks = 0;
                 totalElapsedSimTimeTicks = 0;
             }
+
+
+            Scale = targetScale;
+
             Console.WriteLine("Timekeeper set        : " + currentRealTime);
             Console.WriteLine("Simulation starting on: " + currentRealTime);
         }
@@ -69,9 +82,6 @@ namespace Introductieproject.Simulation
 
             totalElapsedRealTimeTicks += elapsedRealTimeTicks;
             totalElapsedSimTimeTicks += elapsedSimTimeTicks;
-
-            //Console.WriteLine("Time updated. elapsedRT: " + elapsedRealTime + ", elapsedST: " + elapsedSimTime);
-            Console.WriteLine("currentSimTime: " + currentSimTime + ", currentRealTime: " + currentRealTime);
 
         }
 
@@ -93,17 +103,36 @@ namespace Introductieproject.Simulation
             }
         }
 
-        private static double oldScale;
+        private static double oldTargetScale;
         public static void setLeapMode(Boolean leap)
         {
             if (leap)
             {
-                oldScale = scale;
-                Scale = 100;
+                oldTargetScale = targetScale;
+                targetScale = 100;
             }
             else
             {
-                Scale = oldScale;
+                targetScale = oldTargetScale;
+            }
+        }
+
+        public static void tuneScale(bool up)
+        {
+            if (up)
+            {
+                if (scale < targetScale)
+                {
+                    Scale += 0.1;
+                }
+                else
+                {
+                    Scale = targetScale;
+                }
+            }
+            else
+            {
+                scale -= 0.1;
             }
         }
     }

@@ -31,10 +31,6 @@ namespace Introductieproject.Airport
             {
                 if (currentAirplane.status == Airplane.Status.APPROACHING)
                 {
-                    Console.WriteLine("Airplane is approaching, check landing time");
-                    Console.WriteLine("ARRIVE   : " + currentAirplane.landingDate);
-                    Console.WriteLine("ARRIVEAct: " + currentAirplane.actualLandingDate);
-                    Console.WriteLine("CURR     :   " + TimeKeeper.currentSimTime);
                     if (TimeKeeper.currentSimTime >= currentAirplane.landingDate)
                     {
                         /*
@@ -67,7 +63,6 @@ namespace Introductieproject.Airport
                             currentAirplane.navigator = new Navigator(currentAirplane, this.ways, this);
                         if (requestWayAccess(currentAirplane, currentAirplane.navigator.currentWay, currentAirplane.navigator.getTargetNode()))
                         {
-                            Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
                             currentAirplane.land();
                         }
                     }

@@ -75,12 +75,17 @@ namespace Introductieproject.UI.Controls
                 new Thread(() => draw(this.CreateGraphics(), airport)).Start();
             }
         }
+
+        Object drawLock = new Object();
         public void drawBitmaps(Graphics graphics)
         {
-            graphics.Clear(Color.DarkBlue);
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
-            graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+            lock (drawLock)
+            {
+                graphics.Clear(Color.DarkBlue);
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+                graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+            }
         }
 
         bool isDrawing;
@@ -102,18 +107,14 @@ namespace Introductieproject.UI.Controls
 
                 drawAirportToBitmap(airport);
 
-                Console.WriteLine("Bitmap drawing in: " + stopwatch.ElapsedMilliseconds);
                 airplanesDrawThread.Join();
             }
             else if(airplanesDirty)
             {
                 drawAirplanesToBitmap(airport);
-                Console.WriteLine("Draw airplanes");
             }
 
             drawBitmaps(graphics);
-
-            Console.WriteLine("Graphics drawing in: " + stopwatch.ElapsedMilliseconds);
 
             isDrawing = false;
         }

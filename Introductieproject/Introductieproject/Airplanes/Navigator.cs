@@ -190,20 +190,27 @@ namespace Introductieproject.Airplanes
              * Gebruik deze lengte voor het bepalen van de route
              * (note: voorlopig nog erg simpele manier. Moet nog rekening houden met of een vliegtuig al langs een weg is geweest, en kijken wanneer een weg ong bezet wordt)
             */
+            bool useSmartChoice = false;
             foreach (Way way in airport.ways)
             {
                 way.weightedLength = 1;
                 // Zet eerst alle weightedLengths op 1. We gebruiken de weightedLength als een teller voor het eerste gedeelte van de loop
             }
-            foreach (Airplane ap in airport.airplanes)
+            if (useSmartChoice)
             {
-                if (ap.navigator != this && ap.navigator != null) // We moeten deze navigator niet meerekenen en voorkomen nullpointer
+                foreach (Airplane ap in airport.airplanes)
                 {
-                    foreach (Way way in airport.ways)
+                    if (ap.navigator != this && ap.navigator != null) // We moeten deze navigator niet meerekenen en voorkomen nullpointer
                     {
-                        if (ap.navigator.wayList.Contains(way))
-                            way.weightedLength++;
-                        // Als een weg zich bevindt in de wayList van een navigator, dan wordt zijn gewogen lengte met 1 verhoogd
+                        int current = ap.navigator.waypoints.IndexOf(ap.navigator.currentWay);
+                        if (current < 0) // Zodra een vliegtuig landt, telt hij zijn huidige way niet mee in zijn waypoints. 
+                            current = 0; // Dus als hij op 0,1000 landt, is de way 0,1000 > 1000,0 niet in zijn waypoints en returnt hij -1 voor current. Daarom min 0
+                        for (int t = 0; t < ap.navigator.waypoints.Count; t++)
+                        {
+                            if (t >= current)
+                                ap.navigator.waypoints[t].weightedLength++;
+                            // Als een weg zich bevindt in de wayList van een navigator, dan wordt zijn gewogen lengte met 1 verhoogd
+                        }
                     }
                 }
             }

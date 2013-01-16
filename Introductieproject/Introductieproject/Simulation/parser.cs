@@ -43,6 +43,7 @@ namespace Introductieproject.Simulation
                 String flight = attr["flight"].Value;
                 String type = attr["type"].Value;
                 String carrier = attr["carrier"].Value;
+                String gate = attr["gate"].Value;
                 String landingDate = attr["landingDate"].Value;
                 String arrivalDate = attr["arrivalDate"].Value;
                 String departureDate = attr["departureDate"].Value;
@@ -86,7 +87,7 @@ namespace Introductieproject.Simulation
                     System.Type objectType = assembly.GetType("Introductieproject.Objects." + type);
 
                     Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
-                    newAirplane.setXMLVariables(landingLocation, landingDateTime, arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
+                    newAirplane.setXMLVariables(landingLocation, landingDateTime, gate, arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
 
                     Program.mainForm.Invoke((Action)(() => loadedAirplanes.Add(newAirplane)));
 

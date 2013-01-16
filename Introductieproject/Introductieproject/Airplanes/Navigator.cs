@@ -47,87 +47,95 @@ namespace Introductieproject.Airplanes
             {
                 Way endWay = null;
                 //Stap 2, waar moet het vliegtuig heen? Zoek een vrije gate als start een runway is, en vice versa
+                
                 if (!airplane.hasDocked)
                 {
-                    //Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
-                    //Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
-                    //Optie 2 leidt vrijwel altijd tot alle nieuwe vliegtuigen naar dezelfde gate -> file.
-                    IList<Gate> availableGates = new List<Gate>();
-                    IList<Gate> occupiedGates = new List<Gate>();
-                    IList<Gate> reservedGates = new List<Gate>();
-                    occupiedGates = airport.occupiedGates();
-                    foreach (Way w in ways)
-                    {
-                        if (w is Gate)
-                        {
-                            Gate newGate = (Gate)w;
-                            if (newGate.isReserved)
-                            {
-                                reservedGates.Add(newGate);
-                            }
-                            else if (!occupiedGates.Contains(newGate))
-                            {
-                                availableGates.Add(newGate);
-                            }
-                        }
-                    }
-                    if (availableGates.Count == 1)
-                    {
-                        //1 gate vrij, makkelijkste geval. Deze gate is doel
-                        endWay = availableGates[0];
-                        endWay.addReservation(this);
-                    }
-                    else if (availableGates.Count == 0)
-                    {
-                        //Geen gates vrij, occupiedGates heeft voorrang, dan reservedGates
-                        if (occupiedGates.Count > 0)
-                        {
-                            if (occupiedGates.Count == 1)
-                            {
-                                endWay = occupiedGates[0];
-                                endWay.addReservation(this);
-                            }
-                            else
-                            {
-                                IList<Way> occupiedWays = new List<Way>();
-                                foreach (Gate g in occupiedGates)
-                                {
-                                    occupiedWays.Add(g);
-                                }
-                                endWay = Utils.getClosestWay(airplane.location, occupiedWays);
-                                endWay.addReservation(this);
-                            }
-                        }
-                        else if (reservedGates.Count > 0)
-                        {
-                            if (reservedGates.Count == 1)
-                            {
-                                endWay = reservedGates[0];
-                                endWay.addReservation(this);
-                            }
-                            else
-                            {
-                                IList<Way> reservedWays = new List<Way>();
-                                foreach (Gate g in reservedGates)
-                                {
-                                    reservedWays.Add(g);
-                                }
-                                endWay = Utils.getClosestWay(airplane.location, reservedWays);
-                                endWay.addReservation(this);
-                            }
-                        }
-                    }
-                    else if (availableGates.Count > 1)
-                    {
-                        IList<Way> availableWays = new List<Way>();
-                        foreach (Gate g in availableGates)
-                        {
-                            availableWays.Add(g);
-                        }
-                        endWay = Utils.getClosestWay(airplane.location, availableWays);
-                        endWay.addReservation(this);
-                    }
-                }
+
+                    //Utils.getClosestWay(airplane.location, airplane.gate);
+
+                       //Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
+                       //Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
+                       //Optie 2 leidt vrijwel altijd tot alle nieuwe vliegtuigen naar dezelfde gate -> file.
+                       //IList<Gate> availableGates = new List<Gate>();
+                       //IList<Gate> occupiedGates = new List<Gate>();
+                       //IList<Gate> reservedGates = new List<Gate>();
+                       //occupiedGates = airport.occupiedGates();
+                       foreach (Way w in ways)
+                       {
+                           if (w is Gate)
+                           {
+                               if (w.name == airplane.gate)
+                               {
+                                   endWay = (Gate)w;
+                                   break;
+                               }
+                               //if (newGate.isReserved)
+                               //{
+                               //    reservedGates.Add(newGate);
+                               //}
+                               //else if (!occupiedGates.Contains(newGate))
+                               //{
+                               //    availableGates.Add(newGate);
+                               //}
+                           }
+                       }
+                /*       if (availableGates.Count == 1)
+                       {
+                           //1 gate vrij, makkelijkste geval. Deze gate is doel
+                           endWay = availableGates[0];
+                           endWay.addReservation(this);
+                       }
+                       else if (availableGates.Count == 0)
+                       {
+                           //Geen gates vrij, occupiedGates heeft voorrang, dan reservedGates
+                           if (occupiedGates.Count > 0)
+                           {
+                               if (occupiedGates.Count == 1)
+                               {
+                                   endWay = occupiedGates[0];
+                                   endWay.addReservation(this);
+                               }
+                               else
+                               {
+                                   IList<Way> occupiedWays = new List<Way>();
+                                   foreach (Gate g in occupiedGates)
+                                   {
+                                       occupiedWays.Add(g);
+                                   }
+                                   endWay = Utils.getClosestWay(airplane.location, occupiedWays);
+                                   endWay.addReservation(this);
+                               }
+                           }
+                           else if (reservedGates.Count > 0)
+                           {
+                               if (reservedGates.Count == 1)
+                               {
+                                   endWay = reservedGates[0];
+                                   endWay.addReservation(this);
+                               }
+                               else
+                               {
+                                   IList<Way> reservedWays = new List<Way>();
+                                   foreach (Gate g in reservedGates)
+                                   {
+                                       reservedWays.Add(g);
+                                   }
+                                   endWay = Utils.getClosestWay(airplane.location, reservedWays);
+                                   endWay.addReservation(this);
+                               }
+                           }
+                       }
+                       else if (availableGates.Count > 1)
+                       {
+                           IList<Way> availableWays = new List<Way>();
+                           foreach (Gate g in availableGates)
+                           {
+                               availableWays.Add(g);
+                           }
+                           endWay = Utils.getClosestWay(airplane.location, availableWays);
+                           endWay.addReservation(this);
+                       }*/
+                } 
                 else if (airplane.hasDocked)
                 {
                     IList<Way> runways = new List<Way>();

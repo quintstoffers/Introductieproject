@@ -35,6 +35,7 @@ namespace Introductieproject.Objects
         public DateTime landingDate;
         public DateTime arrivalDate;
         public DateTime departureDate;
+        public string gate;
         public string carrier;
         public string destination;
         public string origin;
@@ -110,7 +111,7 @@ namespace Introductieproject.Objects
         /*
          * Initialiseer variabelen
          */
-        public void setXMLVariables(double[] landingLocation, DateTime landingDate, DateTime arrivalDate, DateTime departureDate, String registration, String flight, String carrier, String origin, String destination)
+        public void setXMLVariables(double[] landingLocation, DateTime landingDate, String gate, DateTime arrivalDate, DateTime departureDate, String registration, String flight, String carrier, String origin, String destination)
         {
             this.registration = registration;
             this.flight = flight;
@@ -119,6 +120,7 @@ namespace Introductieproject.Objects
             this.arrivalDate = arrivalDate;
             this.departureDate = departureDate;
             this.location = landingLocation;
+            this.gate = gate;
 
             this.status = Status.APPROACHING;
         }

@@ -18,7 +18,8 @@ namespace Introductieproject.Objects
             DOCKING,
             WAITING_TAKEOFF,
             TAKINGOFF,
-            DEPARTED
+            DEPARTED,
+            CANCELLED
         }
 
         // "Vaste" variabelen die per type vliegtuig zullen verschillen (defined in subclasse!)
@@ -57,7 +58,6 @@ namespace Introductieproject.Objects
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
-
         public Status status;
 
         public Navigator navigator;         // Object dat aangeeft waar het vliegtuig heen moet

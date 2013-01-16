@@ -16,22 +16,24 @@ namespace Introductieproject.Simulation
         static XmlDocument PlaneDocument = new XmlDocument();
         static XmlDocument AirportDocument = new XmlDocument();
         static XmlNodeList rawPlaneSchedule;
-
+        
         public static void refreshAirplanes(BindingList<Airplane> loadedAirplanes)
         {
-            try
-            {
-                PlaneDocument.Load(@"Simulation\schedule.xml");
-            }
-            catch (FileNotFoundException)
-            {
-                Console.WriteLine("XML not found");
-                return;
-            }
+            
+                try
+                {
+                    PlaneDocument.Load(@"Simulation\schedule.xml");
+                }
+                catch (FileNotFoundException)
+                {
+                    Console.WriteLine("XML not found");
+                    return;
+                }
 
-            rawPlaneSchedule = PlaneDocument.GetElementsByTagName("plane");
-            Assembly assembly = Assembly.Load("Introductieproject");
+                rawPlaneSchedule = PlaneDocument.GetElementsByTagName("plane");
+                Assembly assembly = Assembly.Load("Introductieproject");
 
+<<<<<<< HEAD
             int planeCount = rawPlaneSchedule.Count;
             for (int i = 0; i < planeCount; i++)
             {
@@ -63,11 +65,43 @@ namespace Introductieproject.Simulation
 
                 bool airplaneAlreadyLoaded = false;
                 foreach (Airplane currentAirplane in loadedAirplanes)
+=======
+                int planeCount = rawPlaneSchedule.Count;
+                for (int i = 0; i < planeCount; i++)
+>>>>>>> Bugfix, updates in planner en newplane forms
                 {
-                    if (currentAirplane.Registration == null)
+                    XmlNode rawAirplane = rawPlaneSchedule.Item(i);
+
+                    XmlAttributeCollection attr = rawAirplane.Attributes;
+
+                    String registration = attr["registration"].Value;
+                    String flight = attr["flight"].Value;
+                    String type = attr["type"].Value;
+                    String carrier = attr["carrier"].Value;
+                    String landingDate = attr["landingDate"].Value;
+                    String arrivalDate = attr["arrivalDate"].Value;
+                    String departureDate = attr["departureDate"].Value;
+                    String origin = attr["origin"].Value;
+                    String destination = attr["destination"].Value;
+                    String location = attr["location"].Value;
+
+                    DateTime landingDateTime = DateTime.Parse(landingDate);
+                    DateTime arrivalDateTime = DateTime.Parse(arrivalDate);
+                    DateTime departureDateTime = DateTime.Parse(departureDate);
+
+                    //Split landinglocation string to double[] location.
+                    string[] coords = location.Split(',');
+                    double[] landingLocation = new double[2];
+                    landingLocation[0] = double.Parse(coords[0]);
+                    landingLocation[1] = double.Parse(coords[1]);
+
+                    bool airplaneAlreadyLoaded = false;
+                    foreach (Airplane currentAirplane in loadedAirplanes)
                     {
-                        continue;
-                    }
+                        if (currentAirplane.Registration == null)
+                        {
+                            continue;
+                        }
                         if (currentAirplane.Registration.Equals(registration))   // Airplane bestaat al
                         {
                             currentAirplane.flight = flight;
@@ -81,6 +115,7 @@ namespace Introductieproject.Simulation
                             airplaneAlreadyLoaded = true;
                             break;
                         }
+<<<<<<< HEAD
                 }
                 if (!airplaneAlreadyLoaded && TimeKeeper.currentSimTime < arrivalDateTime)
                 {
@@ -88,12 +123,21 @@ namespace Introductieproject.Simulation
 
                     Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
                     newAirplane.setXMLVariables(landingLocation, landingDateTime, gate, arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
+=======
+                    }
+                    if (!airplaneAlreadyLoaded && TimeKeeper.currentSimTime < arrivalDateTime)
+                    {
+                        System.Type objectType = assembly.GetType("Introductieproject.Objects." + type);
+>>>>>>> Bugfix, updates in planner en newplane forms
 
-                    Program.mainForm.Invoke((Action)(() => loadedAirplanes.Add(newAirplane)));
+                        Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
+                        newAirplane.setXMLVariables(landingLocation, landingDateTime, arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
 
-                    Console.WriteLine("Arrival: " + arrivalDateTime.ToString());
-                    Console.WriteLine("XML: new airplane loaded (flight=" + flight + " registration=" + registration + ")");
+                        Program.mainForm.Invoke((Action)(() => loadedAirplanes.Add(newAirplane)));
+                        Console.WriteLine("Arrival: " + arrivalDateTime.ToString());
+                        Console.WriteLine("XML: new airplane loaded (flight=" + flight + " registration=" + registration + ")");
 
+                    
                 }
             }
         }

@@ -23,9 +23,9 @@ namespace Introductieproject.Forms
             InitializeComponent();
             this.FormClosing += new FormClosingEventHandler(ScheduleForm_FormClosing);
             listView1.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(selectionChange);
-            
+            loadPLanes();
         }
-        public void LoadPLanes()
+        public void loadPLanes()
         {
             listView1.Items.Clear();
             foreach (Introductieproject.Objects.Airplane airplane in airport.airplanes)
@@ -39,6 +39,11 @@ namespace Introductieproject.Forms
                 plane.SubItems.Add(airplane.arrivalDate.ToString());
                 plane.SubItems.Add(airplane.departureDate.ToString());
                 listView1.Items.Add(plane);
+                if ((int)(airplane.status) == 7)
+                {
+                    plane.Checked = true;
+                    plane.ForeColor = Color.Red;
+                }
             }
             
         }
@@ -47,13 +52,15 @@ namespace Introductieproject.Forms
             
             NewPLane newPlane = new NewPLane(airplane, airport);
             newPlane.button1.Click += button1_Click;
-            newPlane.ShowDialog(this); 
+            newPlane.ShowDialog(this);
+            Parser.refreshAirplanes(airport.airplanes);
+            loadPLanes();
         }
 
         void button1_Click(object sender, EventArgs e)
         {
-            airport.airplanes.Add(airplane);
             parser.writePLane(airplane);
+            
             
             
         }
@@ -79,28 +86,28 @@ namespace Introductieproject.Forms
 
         private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("nog niet geimplementeerd");
+            //foreach (Airplane plane in airport.airplanes)
+            //{
 
-            foreach (Airplane plane in airport.airplanes)
-            {
 
+            //    if (plane.registration == itemselected)
+            //    {
+            //        plane.status = Airplane.Status.CANCELLED;
+            //        loadPLanes();
+            //        break;
+            //    }
 
-                if (plane.registration == itemselected)
-                {
-                    if (!plane.isOnAirport())
-                        airport.airplanes.Remove(plane);
-                    else
-                    {
-                        MessageBox.Show("Cannot remove Airplane is already Landed");
-                    }
-                    LoadPLanes();
-                    break;
-                }
-
-            }
+            //}
         }
         private void selectionChange(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             itemselected = e.Item.Text;
+        }
+
+        private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loadPLanes();
         }
     }
 }

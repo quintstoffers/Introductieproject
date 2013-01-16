@@ -197,7 +197,7 @@ namespace Introductieproject.Simulation
             tasksDone++;
         }
 
-        private static void updateNonUrgent()
+        public static void updateNonUrgent()
         {
             try
             {

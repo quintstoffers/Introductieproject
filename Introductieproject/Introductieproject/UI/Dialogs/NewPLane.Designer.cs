@@ -35,7 +35,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.carrier = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.type = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.origin = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -50,6 +49,9 @@
             this.landingdate = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.runwaybox = new System.Windows.Forms.ComboBox();
+            this.gateBox = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.typeBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // registration
@@ -114,13 +116,6 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "Type";
             // 
-            // type
-            // 
-            this.type.Location = new System.Drawing.Point(105, 127);
-            this.type.Name = "type";
-            this.type.Size = new System.Drawing.Size(100, 20);
-            this.type.TabIndex = 6;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -155,15 +150,18 @@
             // 
             // arrivaldate
             // 
-            this.arrivaldate.Location = new System.Drawing.Point(105, 239);
+            this.arrivaldate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.arrivaldate.Location = new System.Drawing.Point(105, 268);
             this.arrivaldate.Name = "arrivaldate";
+            this.arrivaldate.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.arrivaldate.Size = new System.Drawing.Size(200, 20);
             this.arrivaldate.TabIndex = 12;
+            this.arrivaldate.Value = new System.DateTime(2013, 1, 16, 16, 15, 37, 0);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(11, 239);
+            this.label7.Location = new System.Drawing.Point(11, 268);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(62, 13);
             this.label7.TabIndex = 13;
@@ -172,7 +170,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(11, 269);
+            this.label8.Location = new System.Drawing.Point(11, 298);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(80, 13);
             this.label8.TabIndex = 14;
@@ -180,14 +178,15 @@
             // 
             // departuredate
             // 
-            this.departuredate.Location = new System.Drawing.Point(105, 262);
+            this.departuredate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.departuredate.Location = new System.Drawing.Point(105, 291);
             this.departuredate.Name = "departuredate";
             this.departuredate.Size = new System.Drawing.Size(200, 20);
             this.departuredate.TabIndex = 15;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(41, 311);
+            this.button1.Location = new System.Drawing.Point(42, 418);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 16;
@@ -197,7 +196,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(174, 311);
+            this.button2.Location = new System.Drawing.Point(169, 418);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 17;
@@ -207,7 +206,8 @@
             // 
             // landing
             // 
-            this.landing.Location = new System.Drawing.Point(105, 288);
+            this.landing.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.landing.Location = new System.Drawing.Point(105, 317);
             this.landing.Name = "landing";
             this.landing.Size = new System.Drawing.Size(200, 20);
             this.landing.TabIndex = 19;
@@ -215,7 +215,7 @@
             // landingdate
             // 
             this.landingdate.AutoSize = true;
-            this.landingdate.Location = new System.Drawing.Point(11, 295);
+            this.landingdate.Location = new System.Drawing.Point(11, 324);
             this.landingdate.Name = "landingdate";
             this.landingdate.Size = new System.Drawing.Size(71, 13);
             this.landingdate.TabIndex = 18;
@@ -224,7 +224,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(11, 215);
+            this.label9.Location = new System.Drawing.Point(11, 223);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(46, 13);
             this.label9.TabIndex = 20;
@@ -240,11 +240,43 @@
             this.runwaybox.TabIndex = 21;
             this.runwaybox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
+            // gateBox
+            // 
+            this.gateBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.gateBox.FormattingEnabled = true;
+            this.gateBox.Location = new System.Drawing.Point(105, 242);
+            this.gateBox.Name = "gateBox";
+            this.gateBox.Size = new System.Drawing.Size(121, 21);
+            this.gateBox.TabIndex = 23;
+            this.gateBox.SelectedIndexChanged += new System.EventHandler(this.gateBox_SelectedIndexChanged);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(11, 250);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(30, 13);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "Gate";
+            // 
+            // typeBox
+            // 
+            this.typeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.typeBox.FormattingEnabled = true;
+            this.typeBox.Location = new System.Drawing.Point(106, 122);
+            this.typeBox.Name = "typeBox";
+            this.typeBox.Size = new System.Drawing.Size(121, 21);
+            this.typeBox.TabIndex = 24;
+            this.typeBox.SelectedIndexChanged += new System.EventHandler(this.typeBox_SelectedIndexChanged);
+            // 
             // NewPLane
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(317, 463);
+            this.ClientSize = new System.Drawing.Size(318, 463);
+            this.Controls.Add(this.typeBox);
+            this.Controls.Add(this.gateBox);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.runwaybox);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.landing);
@@ -260,7 +292,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.origin);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.type);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.carrier);
             this.Controls.Add(this.label2);
@@ -282,7 +313,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox carrier;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox type;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox origin;
         private System.Windows.Forms.Label label6;
@@ -298,6 +328,9 @@
         private System.Windows.Forms.Label landingdate;
         private System.Windows.Forms.Label label9;
         public System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox runwaybox;
+        private System.Windows.Forms.ComboBox gateBox;
+        private System.Windows.Forms.Label label10;
+        public System.Windows.Forms.ComboBox runwaybox;
+        public System.Windows.Forms.ComboBox typeBox;
     }
 }

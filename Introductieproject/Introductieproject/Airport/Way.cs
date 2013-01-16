@@ -25,6 +25,8 @@ namespace Introductieproject.Airport
         public int direction;
         public int angle;
 
+        public double weightedLength;
+
         //public List<Navigator> navigatorList = new List<Navigator>();
 
         public Airplane airplane;
@@ -68,9 +70,7 @@ namespace Introductieproject.Airport
                     - Math.Min(this.nodeConnections[1].location[0], this.nodeConnections[0].location[0]);
                 double deltaY = Math.Max(this.nodeConnections[1].location[1], this.nodeConnections[0].location[1]) 
                     - Math.Min(this.nodeConnections[1].location[1], this.nodeConnections[0].location[1]);
-                double basicLength = Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
-                //basicLength = basicLength * Math.Pow((double)navigatorList.Count, 2);
-                return basicLength;
+                return Math.Sqrt((double)(deltaX * deltaX + deltaY * deltaY));
             }
         }
 

@@ -182,6 +182,38 @@ namespace Introductieproject.Airplanes
             Console.WriteLine("Finding route to " + endNode.ToString());
             Console.WriteLine("            from " + startNode.ToString());
 
+            /*
+             * Voor het rekening houden met de routes van andere vliegtuigen, maak een lijst aan met de wegen.
+             * Ga voor all Navigators die niet deze navigator zijn na welke wegen ze langsgaan mbv hun waypoints
+             * Zodra een way in een waypoint-lijst zit van een navigator, zet een teller 1tje hoger
+             * Aan het einde van de loop, vermenigvuldig die teller met de normale lengte van de weg om de 'gewogen' lengte te krijgen
+             * Gebruik deze lengte voor het bepalen van de route
+             * (note: voorlopig nog erg simpele manier. Moet nog rekening houden met of een vliegtuig al langs een weg is geweest, en kijken wanneer een weg ong bezet wordt)
+            */
+            foreach (Way way in airport.ways)
+            {
+                way.weightedLength = 1;
+                // Zet eerst alle weightedLengths op 1. We gebruiken de weightedLength als een teller voor het eerste gedeelte van de loop
+            }
+            foreach (Airplane ap in airport.airplanes)
+            {
+                if (ap.navigator != this && ap.navigator != null) // We moeten deze navigator niet meerekenen en voorkomen nullpointer
+                {
+                    foreach (Way way in airport.ways)
+                    {
+                        if (ap.navigator.wayList.Contains(way))
+                            way.weightedLength++;
+                        // Als een weg zich bevindt in de wayList van een navigator, dan wordt zijn gewogen lengte met 1 verhoogd
+                    }
+                }
+            }
+            foreach (Way w in airport.ways)
+            {
+                double length = w.length; // Length opslaan in variabele hier omdat weightedLength direct met way.Length vermenigvuldigen niet werkt for some reason
+                w.weightedLength = w.weightedLength * length;
+                // En vermenigvuldig uiteindelijk zijn gewogen lengte met zijn eigenlijke lengte. Hoe meer vliegtuigen over een bepaalde weg rijden, hoe minder aantrekkelijk die weg wordt
+            }
+
             Stack<Route> routes = new Stack<Route>();
             Route bestRoute = null;
             routes.Push(new Route(startNode, null, 0));
@@ -202,10 +234,7 @@ namespace Introductieproject.Airplanes
                 foreach (Way connection in connections)
                 {
                     Console.WriteLine("Checking connection: " + connection.ToString());
-                    Node tempNode = route.local.getConnectedNode(connection);   //Van hier...
-                    double length = connection.length;
-                    if (!airport.requestWayAccess(airplane, connection, tempNode))
-                        length += length;                                       //Tot en met hier is voor het rekening houden met of een weg bezet is
+                    double length = connection.weightedLength;
                     if (!route.hasNode(endNode) && (bestRoute == null || route.length + length <= bestRoute.length))
                     {
                         if (route.local.isDirectionAllowed(connection))
@@ -213,12 +242,18 @@ namespace Introductieproject.Airplanes
                             Node connectedNode = route.local.getConnectedNode(connection);
                             if (!route.hasNode(connectedNode))
                             {
-                                Route newRoute = new Route(connectedNode, route, connection.length);
+                                Route newRoute = new Route(connectedNode, route, connection.weightedLength);
                                 routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
                             }
                         }
                     }
                 }
+            }
+
+            foreach (Way way in airport.ways)
+            {
+                way.weightedLength = 1;
+                // Niet noodzakelijk, maar wel zo netjes lijkt me on na het gebruik de weightedLength weer te resetten
             }
 
             return bestRoute;

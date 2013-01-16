@@ -26,9 +26,9 @@ namespace Introductieproject.UI.Dialogs
             loadRunways();
             loadGates();
             loadTypes();
-            arrivaldate.CustomFormat = "dd/MM/yyyy hh:mm";
-            departuredate.CustomFormat = "dd/MM/yyyy hh:mm";
-            landing.CustomFormat = "dd/MM/yyyy hh:mm";
+            arrivaldate.CustomFormat = "dd/MM/yyyy HH:mm";
+            departuredate.CustomFormat = "dd/MM/yyyy HH:mm";
+            landing.CustomFormat = "dd/MM/yyyy HH:mm";
         }
         private void loadRunways()
         {

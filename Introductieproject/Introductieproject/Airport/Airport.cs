@@ -211,11 +211,13 @@ namespace Introductieproject.Airport
                 }
                 if (currentAirplaneList.Count == 3)
                 {
+                    /*
                     // 1 2 3 up
                     if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode())
                     {
                         return false;
                     }
+                    */
                     // 1 2 up 3 down
                     if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode())
                     {
@@ -258,7 +260,206 @@ namespace Introductieproject.Airport
                             return true;
                     }
                 }
-                //Moet nog voor list count 4 en 5
+                if (currentAirplaneList.Count == 4)
+                {
+                    /*
+                    //1 2 3 up 4 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //1 2 4 up 3 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //1 3 4 up 2 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //2 3 4 up 1 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    */
+                    //1 2 up 3 4 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location)) < 700)
+                            return true;
+                    }
+                    //1 3 up 2 4 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[2].navigator.getDistanceToTargetNode(currentAirplaneList[2].location)) < 700)
+                            return true;
+                    }
+                    //1 4 up 2 3 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[3].navigator.getDistanceToTargetNode(currentAirplaneList[3].location)) < 700)
+                            return true;
+                    }
+                    //2 3 up 1 4 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location), currentAirplaneList[2].navigator.getDistanceToTargetNode(currentAirplaneList[2].location)) < 700)
+                            return true;
+                    }
+                    //2 4 up 1 3 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location), currentAirplaneList[3].navigator.getDistanceToTargetNode(currentAirplaneList[3].location)) < 700)
+                            return true;
+                    }
+                    //3 4 up 1 2 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[2].navigator.getDistanceToTargetNode(currentAirplaneList[2].location), currentAirplaneList[3].navigator.getDistanceToTargetNode(currentAirplaneList[3].location)) < 700)
+                            return true;
+                    }
+                    //4 up 1 2 3 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (currentAirplaneList[3].navigator.getDistanceToTargetNode(currentAirplaneList[3].location) < 700)
+                            return true;
+                    }
+                    //3 up 1 2 4 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (currentAirplaneList[2].navigator.getDistanceToTargetNode(currentAirplaneList[2].location) < 700)
+                            return true;
+                    }
+                    //2 up 1 3 4 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location) < 700)
+                            return true;
+                    }
+                    //1 up 2 3 4 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
+                    {
+                        if (currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location) < 700)
+                            return true;
+                    }
+                }
+                if (currentAirplaneList.Count == 5)
+                {
+                    /*
+                    //1 2 3 up 4 5 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //1 3 4 up 2 5 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //1 4 5 up 2 3 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //2 3 4 up 1 5 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //3 4 5 up 1 2 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //2 4 5 up 1 3 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //1 2 5 up 3 4 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //2 3 5 up 1 4 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //1 3 5 up 2 4 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    //1 2 4 up 3 5 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        return false;
+                    }
+                    */
+                    //4 5 up 1 2 3 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[3].navigator.getDistanceToTargetNode(currentAirplaneList[3].location), currentAirplaneList[4].navigator.getDistanceToTargetNode(currentAirplaneList[4].location)) < 700)
+                            return true;
+                    }
+                    //2 5 up 1 3 4 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location), currentAirplaneList[4].navigator.getDistanceToTargetNode(currentAirplaneList[4].location)) < 700)
+                            return true;
+                    }
+                    //2 3 up 1 4 5 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location), currentAirplaneList[2].navigator.getDistanceToTargetNode(currentAirplaneList[2].location)) < 700)
+                            return true;
+                    }
+                    //1 5 up 2 3 4 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[4].navigator.getDistanceToTargetNode(currentAirplaneList[4].location)) < 700)
+                            return true;
+                    }
+                    //1 2 up 3 4 5 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location)) < 700)
+                            return true;
+                    }
+                    //1 3 up 2 4 5 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[2].navigator.getDistanceToTargetNode(currentAirplaneList[2].location)) < 700)
+                            return true;
+                    }
+                    //3 4 up 1 2 5 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[2].navigator.getDistanceToTargetNode(currentAirplaneList[2].location), currentAirplaneList[3].navigator.getDistanceToTargetNode(currentAirplaneList[3].location)) < 700)
+                            return true;
+                    }
+                    //1 4 up 2 3 5 down
+                    if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location), currentAirplaneList[3].navigator.getDistanceToTargetNode(currentAirplaneList[3].location)) < 700)
+                            return true;
+                    }
+                    //2 4 up 1 3 5 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[1].navigator.getDistanceToTargetNode(currentAirplaneList[1].location), currentAirplaneList[3].navigator.getDistanceToTargetNode(currentAirplaneList[3].location)) < 700)
+                            return true;
+                    }
+                    //3 5 up 1 2 4 down
+                    if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
+                    {
+                        if (Math.Max(currentAirplaneList[2].navigator.getDistanceToTargetNode(currentAirplaneList[2].location), currentAirplaneList[4].navigator.getDistanceToTargetNode(currentAirplaneList[4].location)) < 700)
+                            return true;
+                    }
+                }
             }  
             return false;
         }

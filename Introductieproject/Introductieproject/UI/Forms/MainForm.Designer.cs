@@ -110,19 +110,19 @@
             this.clearToolStripMenuItem,
             this.planningToolStripMenuItem});
             this.airplaneToolStripMenuItem.Name = "airplaneToolStripMenuItem";
-            this.airplaneToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.airplaneToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.airplaneToolStripMenuItem.Text = "Airplane";
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             // 
             // planningToolStripMenuItem
             // 
             this.planningToolStripMenuItem.Name = "planningToolStripMenuItem";
-            this.planningToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.planningToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.planningToolStripMenuItem.Text = "Planning";
             this.planningToolStripMenuItem.Click += new System.EventHandler(this.planningToolStripMenuItem_Click);
             // 
@@ -139,21 +139,21 @@
             // continueToolStripMenuItem1
             // 
             this.continueToolStripMenuItem1.Name = "continueToolStripMenuItem1";
-            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(123, 22);
             this.continueToolStripMenuItem1.Text = "Continue";
             this.continueToolStripMenuItem1.Click += new System.EventHandler(this.continueToolStripMenuItem1_Click);
             // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // statusStrip1
@@ -190,6 +190,11 @@
             0,
             65536});
             this.nuScale.Location = new System.Drawing.Point(509, 598);
+            this.nuScale.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
             this.nuScale.Minimum = new decimal(new int[] {
             1,
             0,

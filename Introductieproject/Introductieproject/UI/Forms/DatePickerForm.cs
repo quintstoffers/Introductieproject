@@ -18,10 +18,13 @@ namespace Introductieproject.UI.Forms
 
             dateTimePicker.Value = TimeKeeper.currentSimTime;
             dateTimePicker.MinDate = TimeKeeper.currentSimTime;
+
+            nmTargetLeap.Value = (Decimal) TimeKeeper.targetLeapScale;
         }
 
         private void btApply_Click(object sender, EventArgs e)
         {
+            TimeKeeper.targetLeapScale = (double) nmTargetLeap.Value;
             Simulation.Simulation.leapTo(dateTimePicker.Value);
             this.Close();
         }

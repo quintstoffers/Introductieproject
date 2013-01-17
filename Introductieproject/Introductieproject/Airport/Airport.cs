@@ -173,6 +173,23 @@ namespace Introductieproject.Airport
             }
             else
             {
+                List<Airplane> sameNodeList = new List<Airplane>();
+                foreach (Airplane currentAirplaneListAirplane in currentAirplaneList)
+                {
+                    if (currentAirplaneListAirplane.navigator.getTargetNode() != targetNode)
+                        sameNodeList.Add(currentAirplaneListAirplane);
+                }
+
+                if (sameNodeList.Count == 0)
+                    return true;
+                if (sameNodeList.Count == 1)
+                    if (sameNodeList[0].navigator.getDistanceToTargetNode(sameNodeList[0].location) < 700)
+                        return true;
+                if (sameNodeList.Count == 2)
+                    if (Math.Max(sameNodeList[0].navigator.getDistanceToTargetNode(sameNodeList[0].location), sameNodeList[1].navigator.getDistanceToTargetNode(sameNodeList[1].location)) < 700)
+                        return true;
+
+                /*
                 if (currentAirplaneList.Count == 0)
                     return true;
                 if (currentAirplaneList.Count == 1)
@@ -211,13 +228,13 @@ namespace Introductieproject.Airport
                 }
                 if (currentAirplaneList.Count == 3)
                 {
-                    /*
+                    
                     // 1 2 3 up
                     if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode())
                     {
                         return false;
                     }
-                    */
+                    
                     // 1 2 up 3 down
                     if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode())
                     {
@@ -262,7 +279,7 @@ namespace Introductieproject.Airport
                 }
                 if (currentAirplaneList.Count == 4)
                 {
-                    /*
+                    
                     //1 2 3 up 4 down
                     if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
                     {
@@ -283,7 +300,7 @@ namespace Introductieproject.Airport
                     {
                         return false;
                     }
-                    */
+                    
                     //1 2 up 3 4 down
                     if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode())
                     {
@@ -347,7 +364,7 @@ namespace Introductieproject.Airport
                 }
                 if (currentAirplaneList.Count == 5)
                 {
-                    /*
+                    
                     //1 2 3 up 4 5 down
                     if (targetNode != currentAirplaneList[0].navigator.getTargetNode() && targetNode != currentAirplaneList[1].navigator.getTargetNode() && targetNode != currentAirplaneList[2].navigator.getTargetNode() && targetNode == currentAirplaneList[3].navigator.getTargetNode() && targetNode == currentAirplaneList[4].navigator.getTargetNode())
                     {
@@ -398,7 +415,7 @@ namespace Introductieproject.Airport
                     {
                         return false;
                     }
-                    */
+                    
                     //4 5 up 1 2 3 down
                     if (targetNode == currentAirplaneList[0].navigator.getTargetNode() && targetNode == currentAirplaneList[1].navigator.getTargetNode() && targetNode == currentAirplaneList[2].navigator.getTargetNode() && targetNode != currentAirplaneList[3].navigator.getTargetNode() && targetNode != currentAirplaneList[4].navigator.getTargetNode())
                     {
@@ -460,7 +477,9 @@ namespace Introductieproject.Airport
                             return true;
                     }
                 }
+            */
             }  
+        
             return false;
         }
 

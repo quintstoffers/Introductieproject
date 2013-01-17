@@ -17,6 +17,7 @@ namespace Introductieproject.Simulation
         public static TimeSpan elapsedRealTime;       // Verstreken echte tijd sinds vorige kloktik
         public static TimeSpan elapsedSimTime;        // Idem voor de gesimuleerde wereld
 
+        public static double targetLeapScale = 300;
         public static double targetScale;
         public static double currentScale
         {
@@ -109,7 +110,7 @@ namespace Introductieproject.Simulation
             if (leap)
             {
                 oldTargetScale = targetScale;
-                targetScale = 100;
+                targetScale = targetLeapScale;
             }
             else
             {

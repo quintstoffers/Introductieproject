@@ -178,7 +178,6 @@ namespace Introductieproject.Simulation
                 }
                 while (tasksDone < tasksStarted)
                 {
-                    Thread.Sleep(1);
                 }
             }
             else

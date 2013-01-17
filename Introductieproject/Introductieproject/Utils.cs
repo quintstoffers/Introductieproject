@@ -15,8 +15,15 @@ namespace Introductieproject
             //http://stackoverflow.com/questions/7050186/find-if-point-lay-on-line-segment
             //(x-x1)/(x2-x1)==(y-y1)/(y2-y1) voor (x,y) op lijn (x1,y1),(x2,y2)
             //Equivalent aan (x-x1)*(y2-y1)==(y-y1)*(x2-x1)
-            return (double)((planeLoc[0] - way.nodeConnections[0].location[0]) * (way.nodeConnections[1].location[1] - way.nodeConnections[0].location[1]))
-                == (double)((planeLoc[1] - way.nodeConnections[0].location[1]) * (way.nodeConnections[1].location[0] - way.nodeConnections[0].location[0]));
+            if (planeLoc[0] <= Math.Max(way.nodeConnections[0].location[0], way.nodeConnections[1].location[0]) &&
+                planeLoc[0] >= Math.Min(way.nodeConnections[0].location[0], way.nodeConnections[1].location[0]) &&
+                planeLoc[1] <= Math.Max(way.nodeConnections[0].location[1], way.nodeConnections[1].location[1]) &&
+                planeLoc[1] >= Math.Min(way.nodeConnections[0].location[1], way.nodeConnections[1].location[1])) // Kijken of de locatie van het vliegtuig tussen de nodes zit
+            {
+                return (double)((planeLoc[0] - way.nodeConnections[0].location[0]) * (way.nodeConnections[1].location[1] - way.nodeConnections[0].location[1]))
+                    == (double)((planeLoc[1] - way.nodeConnections[0].location[1]) * (way.nodeConnections[1].location[0] - way.nodeConnections[0].location[0]));
+            }
+            return false;
         }
 
         public static double getDistanceBetweenPoints(double[] point1, double[] point2)

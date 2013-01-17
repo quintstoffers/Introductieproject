@@ -247,6 +247,7 @@ namespace Introductieproject.Airplanes
                         if (route.local.isDirectionAllowed(connection))
                         {
                             Node connectedNode = route.local.getConnectedNode(connection);
+
                             if (!route.hasNode(connectedNode))
                             {
                                 Route newRoute = new Route(connectedNode, route, connection.weightedLength);

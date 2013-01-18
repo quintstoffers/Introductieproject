@@ -48,7 +48,7 @@ namespace Introductieproject.Simulation
             totalElapsedRealTimeTicks = 0;
             totalElapsedSimTimeTicks = 0;
 
-            Scale = targetScale;
+            //Scale = targetScale;
 
             Console.WriteLine("Timekeeper set: " + currentRealTime);
         }
@@ -63,7 +63,7 @@ namespace Introductieproject.Simulation
             }
 
 
-            Scale = targetScale;
+            Scale = 10;
 
             Console.WriteLine("Timekeeper set        : " + currentRealTime);
             Console.WriteLine("Simulation starting on: " + currentRealTime);

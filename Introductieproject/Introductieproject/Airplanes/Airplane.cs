@@ -218,24 +218,6 @@ namespace Introductieproject.Objects
 
                     double cornerSpeed = 1;
                     navigator.location = this.location;
-                    
-                    bool hasWayAccess = false;
-
-                    if (distanceToTarget < 50 && navigator.hasNextTarget())
-                    {
-                        if (airport.requestWayAccess(this, navigator.targetWay, targetNode))
-                        {
-                            hasWayAccess = true;
-                        }
-                    }
-
-                    if (hasWayAccess)
-                    {
-                        navigator.setNextTarget();
-                        //blijf rijden
-                    }
-                    else if (hasWayAccess && angle != targetAngle)
-                        //this.accelerate(0);
 
                     //TODO collision test
                     if (distanceToTarget < 0.5)
@@ -247,8 +229,9 @@ namespace Introductieproject.Objects
                         }
                         else if (navigator.hasNextTarget())
                         {
-                            if (hasWayAccess) // Toestemming verzoeken voor volgende way
+                            if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
                             {
+                                navigator.setNextTarget();
                                 return;                     // Volgende simtik gaan we weer verder
                             }
                             else

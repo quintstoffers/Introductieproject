@@ -153,7 +153,19 @@ namespace Introductieproject.Airport
                 {
                     if (collisionAirplane.navigator.currentWay.Equals(way))   // Een ander vliegtuig rijdt op dit moment op de weg
                     {
-                        if (airplane.navigator.getTargetNode() == collisionAirplane.navigator.getTargetNode())
+                        if (collisionAirplane.navigator.currentWay.direction == 0)
+                        {
+                            if (targetNode == collisionAirplane.navigator.getTargetNode())
+                            {
+                                if (airplane.navigator.getDistanceToTargetNode(airplane.location) - collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) < 150)
+                                {
+                                    airplane.hasCollision = true;
+                                    Console.WriteLine("COLLISION");
+                                    return true;
+                                }
+                            }
+                        }
+                        if (collisionAirplane.navigator.currentWay.direction != 0)
                         {
                             if (airplane.navigator.getDistanceToTargetNode(airplane.location) - collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) < 150)
                             {
@@ -166,6 +178,8 @@ namespace Introductieproject.Airport
             }
             return false;
         }
+
+
 
         /*
          * Permission requesters

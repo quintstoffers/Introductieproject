@@ -307,10 +307,11 @@ namespace Introductieproject.Objects
                     {
                         accelerate(cornerSpeed);
                     }
-                    else if (airport.collisionDetection(this, navigator.currentWay, navigator.getTargetNode()))
+                    else if (navigator.currentWay is Taxiway && airport.collisionDetection(this, navigator.currentWay, navigator.getTargetNode()))
                     {
                         accelerate(0);
                     }
+
                     else if (angle == targetAngle)  //alleen move als hij in de goede richting staat
                     {
                         move();
@@ -515,14 +516,12 @@ namespace Introductieproject.Objects
 
         public void accelerate(double targetSpeed)
         {
-            double acceleration;
-            if (hasCollision == false)
-                acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
-            else
-                acceleration = 50;
+            double acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
 
             if (targetSpeed < speed)
-                acceleration = -10; // in het geval dat je moet afremmen
+                acceleration = -1; // in het geval dat je moet afremmen
+            if (hasCollision == true)
+                acceleration = -10;
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
 
             double oldSpeed = speed;

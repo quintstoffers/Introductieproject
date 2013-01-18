@@ -43,6 +43,8 @@ namespace Introductieproject.Airplanes
                     break;
                 }
             }
+            if (startWay == null)
+                startWay = Utils.getClosestWay(airplane.location, ways);
 
             if (startWay != null) //Om zeker te weten dat een beginlocatie bepaald is
             {

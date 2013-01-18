@@ -61,6 +61,9 @@ namespace Introductieproject.Objects
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
         public bool hasCollision = false;   // Houdt bij of er collision is
 
+        private bool standingStill = false;
+        private TimeSpan timeStopped;
+
         public Status status;
 
         public Navigator navigator;         // Object dat aangeeft waar het vliegtuig heen moet
@@ -142,6 +145,25 @@ namespace Introductieproject.Objects
         public void simulate(Airport.Airport airport)
         {
             Console.WriteLine("SIMULATE: " + this.ToString());
+
+            if (speed == 0 && status != Status.DOCKING)
+            {
+                if (!standingStill)
+                {
+                    timeStopped = new TimeSpan();
+                    standingStill = true;
+                }
+                else if (standingStill)
+                {
+                    if (timeStopped >= TimeSpan.FromSeconds(30))
+                    {
+                        airport.requestNavigator(this);
+                        standingStill = false;
+                    }
+                    timeStopped.Add(TimeSpan.FromSeconds(TimeKeeper.elapsedSimTime.TotalSeconds));
+                }
+            }
+
             if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
             {
             }

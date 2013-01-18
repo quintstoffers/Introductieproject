@@ -143,5 +143,18 @@
       origin="Charles de Gaulle Airport"
       destination="Amsterdam Airport Schiphol">
   </plane>
+  <plane
+      registration="G-TEST"
+      flight="L-ETS-LOL"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="533,86"
+      landingDate="01/01/13 22:15:00"
+      arrivalDate="01/01/13 22:20:00"
+      departureDate="01/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
 
 </schedule>

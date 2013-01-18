@@ -182,51 +182,9 @@ namespace Introductieproject.Airplanes
             */
             Console.WriteLine("Finding route to " + endNode.ToString());
             Console.WriteLine("            from " + startNode.ToString());
-            //-----------------------------------------------------------------------------------------
-            /*
-             * Voor het rekening houden met de routes van andere vliegtuigen, maak een lijst aan met de wegen.
-             * Ga voor all Navigators die niet deze navigator zijn na welke wegen ze langsgaan mbv hun waypoints
-             * Zodra een way in een waypoint-lijst zit van een navigator, zet een teller 1tje hoger
-             * Aan het einde van de loop, vermenigvuldig die teller met de normale lengte van de weg om de 'gewogen' lengte te krijgen
-             * Gebruik deze lengte voor het bepalen van de route
-             * (note: voorlopig nog erg simpele manier. Moet nog rekening houden met of een vliegtuig al langs een weg is geweest, en kijken wanneer een weg ong bezet wordt)
-            */
-            bool useSmartChoice = false;
-            foreach (Way way in airport.ways)
-            {
-                way.weightedLength = 1;
-                // Zet eerst alle weightedLengths op 1. We gebruiken de weightedLength als een teller voor het eerste gedeelte van de loop
-            }
-            if (useSmartChoice)
-            {
-                foreach (Airplane ap in airport.airplanes)
-                {
-                    if (ap.navigator != this && ap.navigator != null) // We moeten deze navigator niet meerekenen en voorkomen nullpointer
-                    {
-                        int current = ap.navigator.waypoints.IndexOf(ap.navigator.currentWay);
-                        if (current < 0) // Zodra een vliegtuig landt, telt hij zijn huidige way niet mee in zijn waypoints. 
-                            current = 0; // Dus als hij op 0,1000 landt, is de way 0,1000 > 1000,0 niet in zijn waypoints en returnt hij -1 voor current. Daarom min 0
-                        for (int t = 0; t < ap.navigator.waypoints.Count; t++)
-                        {
-                            if (t >= current)
-                                ap.navigator.waypoints[t].weightedLength++;
-                            // Als een weg zich bevindt in de wayList van een navigator, dan wordt zijn gewogen lengte met 1 verhoogd
-                        }
-                    }
-                }
-            }
+
             foreach (Way w in airport.ways)
-            {
-                double length = w.length; // Length opslaan in variabele hier omdat weightedLength direct met way.Length vermenigvuldigen niet werkt for some reason
-                w.weightedLength = w.weightedLength * length;
-                // En vermenigvuldig uiteindelijk zijn gewogen lengte met zijn eigenlijke lengte. Hoe meer vliegtuigen over een bepaalde weg rijden, hoe minder aantrekkelijk die weg wordt
-            }
-            //-------------------------------------------------------------------------------------
-            //Todo: wanneer je een way bekijkt, check hoeveel vliegtuigen van plan zijn om op die weg te rijden.
-            //Bekijk welke vliegtuigen in zelfde richting rijden als jij (en dus oponthoud kunnen veroorzaken)
-            //Voor ieder van die vliegtuigen, maak schatting van wanneer ze op die bepaalde weg zullen komen, vergelijk met eigen verwachtte aankomsttijd
-            //Als ander vliegtuig op zelfde tijd op way lijkt te gaan rijden, vermenigvuldig lengte van die way met significant getal (5?)
-            //Nodig: methode estimatedTimeToArrival, methode voor kijken welke vliegtuigen op een weg rijden in zelfde richting (in Airport)
+                w.weightedLength = w.length;
             
             Stack<Route> routes = new Stack<Route>();
             Route bestRoute = null;
@@ -253,7 +211,16 @@ namespace Introductieproject.Airplanes
                         if (route.local.isDirectionAllowed(connection))
                         {
                             //Schat tijd tot aankomst bij way
+                            DateTime estimatedArrival = TimeKeeper.currentSimTime;
+                            estimatedArrival.AddSeconds(route.length / 20); // t = s / v : schat de tijd van aankomst op connection
                             //Vergelijk met andere vliegtuigen
+                            List<Airplane> airplanesOnWay = airport.planesOnWayInDirection(connection, route.local, airplane);
+                            foreach (Airplane ap in airplanesOnWay)
+                            {
+                                DateTime[] timeframe = ap.navigator.estimatedArrivalTime(connection);
+                                if (timeframe[0] <= estimatedArrival && estimatedArrival <= timeframe[1])
+                                    connection.weightedLength *= 5;
+                            }
                             double length = connection.weightedLength;
                             if (bestRoute == null || route.length + length <= bestRoute.length)
                             {
@@ -265,15 +232,10 @@ namespace Introductieproject.Airplanes
                                     routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
                                 }
                             }
+                            connection.weightedLength = connection.length;
                         }
                     }
                 }
-            }
-
-            foreach (Way way in airport.ways)
-            {
-                way.weightedLength = 1;
-                // Niet noodzakelijk, maar wel zo netjes lijkt me on na het gebruik de weightedLength weer te resetten
             }
 
             return bestRoute;

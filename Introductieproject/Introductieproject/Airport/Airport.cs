@@ -538,21 +538,24 @@ namespace Introductieproject.Airport
             return occupiedGates;
         }
 
-        public List<Airplane> planesOnWayInDirection(Way targetway, Node startnode)
+        public List<Airplane> planesOnWayInDirection(Way targetway, Node startnode, Airplane source)
         {
             //Maakt een lijst aan met alle vliegtuigen die op een bepaalde weg gaan rijden, en waarbij ze in de richting rijden van startnode > andere node
             List<Airplane> returnlist = new List<Airplane>();
 
             foreach (Airplane airplane in airplanes)
             {
-                if (airplane.navigator.hasWay(targetway))
+                if (source != airplane && airplane.navigator != null)
                 {
-                    Node othernode;
-                    if (targetway.nodeConnections[0] == startnode)
-                        othernode = targetway.nodeConnections[1];
-                    else othernode = targetway.nodeConnections[0];
-                    if (airplane.navigator.nodepoints.IndexOf(startnode) < airplane.navigator.nodepoints.IndexOf(othernode))
-                        returnlist.Add(airplane);
+                    if (airplane.navigator.hasWay(targetway))
+                    {
+                        Node othernode;
+                        if (targetway.nodeConnections[0] == startnode)
+                            othernode = targetway.nodeConnections[1];
+                        else othernode = targetway.nodeConnections[0];
+                        if (airplane.navigator.nodepoints.IndexOf(startnode) < airplane.navigator.nodepoints.IndexOf(othernode))
+                            returnlist.Add(airplane);
+                    }
                 }
             }
 

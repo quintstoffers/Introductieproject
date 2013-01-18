@@ -394,11 +394,11 @@ namespace Introductieproject.Airplanes
                 }
             }
         }
-        public void getTargetWay()
+        public Way getTargetWay()
         {
             if (targetNodeNumber == nodepoints.Count - 1)   // Targetway is de huidige weg
             {
-                return;
+                return currentWay;
             }
 
             Node targetNode = nodepoints[targetNodeNumber];
@@ -411,10 +411,11 @@ namespace Introductieproject.Airplanes
                     if (targetConnectedWay.Equals(previousConnectedWay))
                     {
                         targetWay = targetConnectedWay;
-                        return;
+                        return targetWay;
                     }
                 }
             }
+            return targetWay;
         }
 
 

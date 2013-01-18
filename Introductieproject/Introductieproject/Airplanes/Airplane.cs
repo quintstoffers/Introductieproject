@@ -160,7 +160,7 @@ namespace Introductieproject.Objects
                         airport.requestNavigator(this);
                         standingStill = false;
                     }
-                    timeStopped.Add(TimeSpan.FromSeconds(TimeKeeper.elapsedSimTime.TotalSeconds));
+                    timeStopped = timeStopped.Add(TimeKeeper.elapsedSimTime);
                 }
             }
 
@@ -242,11 +242,12 @@ namespace Introductieproject.Objects
                     navigator.location = this.location;
 
                     //TODO collision test
-                    if (distanceToTarget < 0.5)
+                    if (distanceToTarget <= 0.5)
                     {
                         if (this.hasDocked && navigator.targetWay is Runway)
                         {
-                            airport.requestWayAccess(this, navigator.wayList[navigator.wayList.Count - 1], navigator.getTargetNode());
+                            //airport.requestWayAccess(this, navigator.wayList[navigator.wayList.Count - 1], navigator.getTargetNode());
+                            airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
                             prepareTakeOff();
                         }
                         else if (navigator.hasNextTarget())
@@ -304,11 +305,11 @@ namespace Introductieproject.Objects
                         rotate(targetAngle);
                     }
 
-                    if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
+                    else if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
                     {
                         accelerate(maxSpeed);
                     }
-                    else if (speed > cornerSpeed && distanceToTarget <= 50 && angle == targetAngle)
+                    else if ((speed > cornerSpeed || speed < cornerSpeed) && distanceToTarget <= 50 && angle == targetAngle)
                     {
                         accelerate(cornerSpeed);
                     }
@@ -548,7 +549,11 @@ namespace Introductieproject.Objects
 
             double averageSpeed = (oldSpeed + speed) / 2;
             double distanceTraveled = TimeKeeper.elapsedSimTime.Seconds * averageSpeed;
-            moveBy(distanceTraveled);
+            double distanceToTarget = navigator.getDistanceToTargetNode(location);
+            if (distanceTraveled <= distanceToTarget)
+                moveBy(distanceTraveled);
+            else if (distanceTraveled > distanceToTarget)
+                moveBy(distanceToTarget);
 
 
             // Hier kan eventueel ook nog wel ergens de landing/takeoff snelheid bij komen?

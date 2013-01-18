@@ -305,7 +305,7 @@ namespace Introductieproject.Objects
                         rotate(targetAngle);
                     }
 
-                    else if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
+                    if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
                     {
                         accelerate(maxSpeed);
                     }

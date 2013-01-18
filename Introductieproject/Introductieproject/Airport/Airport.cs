@@ -212,7 +212,7 @@ namespace Introductieproject.Airport
                             return true;
                     return false;
                 }
-                else
+                else if (!(way is Gate))
                 {
                     List<Airplane> sameNodeList = new List<Airplane>();
                     foreach (Airplane currentAirplaneListAirplane in currentAirplaneList)
@@ -519,6 +519,12 @@ namespace Introductieproject.Airport
                         }
                     }
                 */
+                }
+
+                else if (way is Gate)
+                {
+                    if (currentAirplaneList.Count == 0)
+                        return true;
                 }
 
                 return false;

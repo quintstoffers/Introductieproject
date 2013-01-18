@@ -1,5 +1,6 @@
 ﻿using Introductieproject.Airport;
 using Introductieproject.Objects;
+using Introductieproject.Simulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -181,7 +182,7 @@ namespace Introductieproject.Airplanes
             */
             Console.WriteLine("Finding route to " + endNode.ToString());
             Console.WriteLine("            from " + startNode.ToString());
-
+            //-----------------------------------------------------------------------------------------
             /*
              * Voor het rekening houden met de routes van andere vliegtuigen, maak een lijst aan met de wegen.
              * Ga voor all Navigators die niet deze navigator zijn na welke wegen ze langsgaan mbv hun waypoints
@@ -220,7 +221,13 @@ namespace Introductieproject.Airplanes
                 w.weightedLength = w.weightedLength * length;
                 // En vermenigvuldig uiteindelijk zijn gewogen lengte met zijn eigenlijke lengte. Hoe meer vliegtuigen over een bepaalde weg rijden, hoe minder aantrekkelijk die weg wordt
             }
-
+            //-------------------------------------------------------------------------------------
+            //Todo: wanneer je een way bekijkt, check hoeveel vliegtuigen van plan zijn om op die weg te rijden.
+            //Bekijk welke vliegtuigen in zelfde richting rijden als jij (en dus oponthoud kunnen veroorzaken)
+            //Voor ieder van die vliegtuigen, maak schatting van wanneer ze op die bepaalde weg zullen komen, vergelijk met eigen verwachtte aankomsttijd
+            //Als ander vliegtuig op zelfde tijd op way lijkt te gaan rijden, vermenigvuldig lengte van die way met significant getal (5?)
+            //Nodig: methode estimatedTimeToArrival, methode voor kijken welke vliegtuigen op een weg rijden in zelfde richting (in Airport)
+            
             Stack<Route> routes = new Stack<Route>();
             Route bestRoute = null;
             routes.Push(new Route(startNode, null, 0));
@@ -241,17 +248,22 @@ namespace Introductieproject.Airplanes
                 foreach (Way connection in connections)
                 {
                     Console.WriteLine("Checking connection: " + connection.ToString());
-                    double length = connection.weightedLength;
-                    if (!route.hasNode(endNode) && (bestRoute == null || route.length + length <= bestRoute.length))
+                    if (!route.hasNode(endNode))
                     {
                         if (route.local.isDirectionAllowed(connection))
                         {
-                            Node connectedNode = route.local.getConnectedNode(connection);
-
-                            if (!route.hasNode(connectedNode))
+                            //Schat tijd tot aankomst bij way
+                            //Vergelijk met andere vliegtuigen
+                            double length = connection.weightedLength;
+                            if (bestRoute == null || route.length + length <= bestRoute.length)
                             {
-                                Route newRoute = new Route(connectedNode, route, connection.weightedLength);
-                                routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
+                                Node connectedNode = route.local.getConnectedNode(connection);
+
+                                if (!route.hasNode(connectedNode))
+                                {
+                                    Route newRoute = new Route(connectedNode, route, connection.weightedLength);
+                                    routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
+                                }
                             }
                         }
                     }
@@ -265,6 +277,36 @@ namespace Introductieproject.Airplanes
             }
 
             return bestRoute;
+        }
+
+        public DateTime[] estimatedArrivalTime(Way targetway)
+        {
+            //Deze methode maakt een schatting van 2 tijden: 1 = aankomsttijd op een Way, 2 = vertrektijd van Way
+            //Schatting wordt gedaan op basis van een gemiddelde snelheid van 20 = Airplane.maxSpeed
+
+            double distanceTotal = 0; //Het bepalen van de nog af te leggen afstand
+            int current = waypoints.IndexOf(currentWay); //De huidige weg
+            if (current < 0)
+                current = 0;
+            int max = waypoints.IndexOf(targetway); //De doelweg
+            if (max < 0)
+                max = 0;
+            for (int t = 0; t < waypoints.Count; t++)
+            {
+                if (t >= current && t < max)
+                    distanceTotal += waypoints[t].length;
+            }
+
+            double speed = 20; //Gemiddelde snelheid (echte snelheid zal iets lager liggen door het draaien)
+
+            double timeElapsing = distanceTotal / speed; //Geschatte tijd tot aankomst
+            double timeTravelling = targetway.length / speed; //Geschatte tijd dat het duurt om de weg over te rijden
+            DateTime arrivalTime = TimeKeeper.currentSimTime;
+            arrivalTime.AddSeconds(timeElapsing); //Huidige tijd + reistijd
+            DateTime leavingTime = arrivalTime;
+            leavingTime.AddSeconds(timeTravelling); //Arriveertijd + tijd over weg
+            DateTime[] times = { arrivalTime, leavingTime };
+            return times;
         }
 
         private Node findStartNode(Way w, Airplane a)
@@ -663,6 +705,22 @@ namespace Introductieproject.Airplanes
         public double getAngleToTarget(double[] location)
         {
             return Utils.getAngleBetweenPoints(location, nodepoints[targetNodeNumber].location);
+        }
+
+        public bool hasWay(Way way)
+        {
+            //Methode om te kijken of een navigator een weg nog niet heeft afgelegd
+            if (waypoints.Contains(way))
+            {
+                int target = waypoints.IndexOf(currentWay);
+                for (int t = 0; t < waypoints.Count; t++)
+                {
+                    if (t >= target)
+                        if (waypoints[t] == way)
+                            return true;
+                }
+            }
+            return false;
         }
     }
 }

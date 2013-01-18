@@ -142,6 +142,31 @@ namespace Introductieproject.Airport
             return true;
         }
 
+        //Collision Detection
+        //True = collision, false = geen collision
+        public bool collisionDetection(Airplane airplane, Way way, Node targetNode)
+        {
+            foreach (Airplane collisionAirplane in airplanes)
+            {
+                collisionAirplane.hasCollision = false;
+                if (!collisionAirplane.Equals(airplane) && collisionAirplane.isOnAirport()) // Eigen vliegtuig niet meerekenen & vliegtuig moet in bereik van Airport zijn.
+                {
+                    if (collisionAirplane.navigator.currentWay.Equals(way))   // Een ander vliegtuig rijdt op dit moment op de weg
+                    {
+                        if (airplane.navigator.getTargetNode() == collisionAirplane.navigator.getTargetNode())
+                        {
+                            if (airplane.navigator.getDistanceToTargetNode(airplane.location) - collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) < 150)
+                            {
+                                airplane.hasCollision = true;
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
         /*
          * Permission requesters
          */

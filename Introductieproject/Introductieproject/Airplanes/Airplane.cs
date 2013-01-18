@@ -59,6 +59,7 @@ namespace Introductieproject.Objects
         public double speed;                // Snelheid van het vliegtuig
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
+        public bool hasCollision = false;   // Houdt bij of er collision is
 
         public Status status;
 
@@ -237,7 +238,6 @@ namespace Introductieproject.Objects
                         //this.accelerate(0);
 
                     //TODO collision test
-                    //TODO permission check
                     if (distanceToTarget < 0.5)
                     {
                         if (this.hasDocked && navigator.targetWay is Runway)
@@ -306,6 +306,10 @@ namespace Introductieproject.Objects
                     else if (speed > cornerSpeed && distanceToTarget <= 50 && angle == targetAngle)
                     {
                         accelerate(cornerSpeed);
+                    }
+                    else if (airport.collisionDetection(this, navigator.currentWay, navigator.getTargetNode()))
+                    {
+                        accelerate(0);
                     }
                     else if (angle == targetAngle)  //alleen move als hij in de goede richting staat
                     {
@@ -511,7 +515,12 @@ namespace Introductieproject.Objects
 
         public void accelerate(double targetSpeed)
         {
-            double acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
+            double acceleration;
+            if (hasCollision == false)
+                acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
+            else
+                acceleration = 50;
+
             if (targetSpeed < speed)
                 acceleration = -10; // in het geval dat je moet afremmen
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;

@@ -49,6 +49,7 @@ namespace Introductieproject.Objects
         public TimeSpan arrivalDifference;
         public TimeSpan landingDifference;
         public int priority;
+        Stopwatch timer = new Stopwatch();
 
         public int passengers;              // Aantal passagiers
         public int luggage;                 // Aantal stukken baggage
@@ -127,7 +128,8 @@ namespace Introductieproject.Objects
         }
         public void setStateVariables(double speed, int angle, int passengers, int luggage, int luggageKg)
         {
-            this.speed = speed;
+            this.speed = 90;
+            this.angle = navigator.getAngleToTarget(this.location);
             this.passengers = passengers;
             this.luggage = luggage;
             this.luggageKg = luggageKg;
@@ -209,9 +211,30 @@ namespace Introductieproject.Objects
                     Console.WriteLine("     target angle: " + targetAngle);
 
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
-                    double maxSpeed = 20;
+                    maxSpeed = 20;
+                    //if (navigator.getCurrentWay() is Gateway)
+                    //    maxSpeed = 5;
+
                     double cornerSpeed = 1;
                     navigator.location = this.location;
+                    
+                    bool hasWayAccess = false;
+
+                    if (distanceToTarget < 50 && navigator.hasNextTarget())
+                    {
+                        if (airport.requestWayAccess(this, navigator.targetWay, targetNode))
+                        {
+                            hasWayAccess = true;
+                        }
+                    }
+
+                    if (hasWayAccess)
+                    {
+                        navigator.setNextTarget();
+                        //blijf rijden
+                    }
+                    else if (hasWayAccess && angle != targetAngle)
+                        //this.accelerate(0);
 
                     //TODO collision test
                     //TODO permission check
@@ -224,16 +247,14 @@ namespace Introductieproject.Objects
                         }
                         else if (navigator.hasNextTarget())
                         {
-                            if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode())) // Toestemming verzoeken voor volgende way
+                            if (hasWayAccess) // Toestemming verzoeken voor volgende way
                             {
-                                navigator.setNextTarget();
                                 return;                     // Volgende simtik gaan we weer verder
                             }
                             else
                             {
                                 //this.accelerate(0);
                                 this.speed = 0;
-                                Stopwatch timer = new Stopwatch();
                                 if (timer == null)
                                 {
                                     timer.Reset();
@@ -241,7 +262,7 @@ namespace Introductieproject.Objects
                                 }
                                 else
                                 {
-                                    if (timer.ElapsedMilliseconds >= 30000)
+                                    if (timer.ElapsedMilliseconds >= 30000 / TimeKeeper.currentScale) // Na 30 seconde SimTime vast te staan, krijgt vliegtuig een nieuwe navigator.
                                     {
                                         requestNavigator(airport);
                                         timer = null;
@@ -266,6 +287,11 @@ namespace Introductieproject.Objects
                     {
                         moveBy(distanceToTarget);
                         speed = 0;
+                    }
+
+                    if (speed > maxSpeed)
+                    {
+                        accelerate(maxSpeed);
                     }
 
                     if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
@@ -487,7 +513,7 @@ namespace Introductieproject.Objects
         {
             double acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
             if (targetSpeed < speed)
-                acceleration = -1; // in het geval dat je moet afremmen
+                acceleration = -10; // in het geval dat je moet afremmen
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
 
             double oldSpeed = speed;

@@ -157,7 +157,7 @@ namespace Introductieproject.Airport
                         {
                             if (targetNode == collisionAirplane.navigator.getTargetNode())
                             {
-                                if (airplane.navigator.getDistanceToTargetNode(airplane.location) - collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) < 150)
+                                if (airplane.navigator.getDistanceToTargetNode(airplane.location) > collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) && airplane.navigator.getDistanceToTargetNode(airplane.location) - collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) < 150)
                                 {
                                     airplane.hasCollision = true;
                                     Console.WriteLine("COLLISION");
@@ -167,7 +167,7 @@ namespace Introductieproject.Airport
                         }
                         if (collisionAirplane.navigator.currentWay.direction != 0)
                         {
-                            if (airplane.navigator.getDistanceToTargetNode(airplane.location) - collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) < 150)
+                            if (airplane.navigator.getDistanceToTargetNode(airplane.location) > collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) && airplane.navigator.getDistanceToTargetNode(airplane.location) - collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) < 150)
                             {
                                 airplane.hasCollision = true;
                                 return true;

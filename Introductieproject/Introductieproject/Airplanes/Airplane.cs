@@ -229,9 +229,9 @@ namespace Introductieproject.Objects
                     double distanceToTarget = navigator.getDistanceToTargetNode(location);
                     double targetAngle = navigator.getAngleToTarget(location);
 
-                    Console.WriteLine("Airplane target  : " + targetNode.ToString());
-                    Console.WriteLine("  target distance: " + distanceToTarget);
-                    Console.WriteLine("     target angle: " + targetAngle);
+                    //Console.WriteLine("Airplane target  : " + targetNode.ToString());
+                    //Console.WriteLine("  target distance: " + distanceToTarget);
+                    //Console.WriteLine("     target angle: " + targetAngle);
 
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
                     maxSpeed = 20;
@@ -322,9 +322,6 @@ namespace Introductieproject.Objects
                     {
                         move();
                     }
-
-                    Console.WriteLine(this.ToString());
-                    Console.WriteLine("");
                 }
             }
         }

@@ -134,7 +134,7 @@ namespace Introductieproject.Simulation
 
                 long elapsedMillis = stopwatch.ElapsedMilliseconds;
                 Console.WriteLine("Sleep: " + (updateInterval - elapsedMillis));
-                if (elapsedMillis < updateInterval)
+                if (elapsedMillis <= updateInterval)
                 {
                     Thread.Sleep((int) (updateInterval - elapsedMillis));
                     TimeKeeper.tuneScale(true);

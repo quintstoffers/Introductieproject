@@ -19,7 +19,7 @@ namespace Introductieproject
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Program started");
+            Console.WriteLine("Program Started");
             
             airport = createAirport();
 
@@ -30,7 +30,7 @@ namespace Introductieproject
             mainForm = new MainForm(airport);
             mainForm.Show();
 
-            Simulation.Simulation.initSimulation(airport, false);
+            Simulation.Simulation.initSimulation(airport, true);
             Simulation.Simulation.startSimulation();
 
             Application.Run(mainForm);

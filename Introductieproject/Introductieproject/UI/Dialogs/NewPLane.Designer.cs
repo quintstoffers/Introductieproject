@@ -1,6 +1,6 @@
 ﻿namespace Introductieproject.UI.Dialogs
 {
-    partial class NewPLane
+    partial class NewPlane
     {
         /// <summary>
         /// Required designer variable.

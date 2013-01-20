@@ -1,10 +1,12 @@
 ﻿using Introductieproject.Airplanes;
 using Introductieproject.Airport;
+using Introductieproject.Forms;
 using Introductieproject.Simulation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 using System.Diagnostics;
 
 namespace Introductieproject.Objects
@@ -60,6 +62,7 @@ namespace Introductieproject.Objects
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
         public bool hasCollision = false;   // Houdt bij of er collision is
+        public bool askAgain = true;
 
         private bool standingStill = false;
         private TimeSpan timeStopped;
@@ -163,8 +166,11 @@ namespace Introductieproject.Objects
                     timeStopped = timeStopped.Add(TimeKeeper.elapsedSimTime);
                 }
             }
-
-            if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
+            if (status == Status.CANCELLED)
+            {
+                // Ga niet landen en ga geen route zoeken.
+            }
+            else if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
             {
             }
             else if (status == Status.DEPARTED)
@@ -252,40 +258,58 @@ namespace Introductieproject.Objects
                         }
                         else if (navigator.hasNextTarget())
                         {
-                            if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
+                        }
+                        if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
+                        {
+                            navigator.setNextTarget();
+                            return;                     // Volgende simtik gaan we weer verder
+                        }
+                        else
+                        {
+                            //this.accelerate(0);
+                            this.speed = 0;
+                        }
+                    }
+                    else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode())) // Toestemming verzoeken voor volgende way
+                    {
+                        if (!hasDocked)
+                        {
+                            dock();
+                        }
+                        //else
+                        //{
+                        //    prepareTakeOff();
+                        //}                 // Volgende simtik gaan we weer verder
+                    }
+                    else if (!airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
+                    {
+                        if (askAgain)
+                        {
+                            foreach (Airplane dockedPlane in airport.airplanes)
                             {
-                                navigator.setNextTarget();
-                                return;                     // Volgende simtik gaan we weer verder
-                            }
-                            else
-                            {
-                                //this.accelerate(0);
-                                this.speed = 0;
-                                if (timer == null)
+                                // Als er al een vliegtuig staat bij de gate waar dit vliegtuig naartoe wilt, en de vertrektijd ligt na de verwachtte aankomst tijd: Open edit scherm voor nieuwe gate.
+                                if (dockedPlane.gate == this.gate && dockedPlane.isOnAirport() && dockedPlane.navigator.currentWay is Gate)
                                 {
-                                    timer.Reset();
-                                    timer.Start();
-                                }
-                                else
-                                {
-                                    if (timer.ElapsedMilliseconds >= 30000 / TimeKeeper.currentScale) // Na 30 seconde SimTime vast te staan, krijgt vliegtuig een nieuwe navigator.
+                                    if (this.arrivalDate < dockedPlane.departureDate)
                                     {
-                                        requestNavigator(airport);
-                                        timer = null;
+                                        ScheduleForm scheduleForm = new ScheduleForm(airport);
+                                        Simulation.Simulation.pauseSimulationToggle();
+                                        DialogResult res = MessageBox.Show("vliegtuig met registratie " + this.registration + " komt eerder aan bij een gate dan dat deze vrij is, wilt u de gate veranderen?", "Gate bezet", MessageBoxButtons.YesNo);
+
+                                        if (res == DialogResult.Yes)
+                                        {
+                                            scheduleForm.loadPLanes();
+                                            Program.mainForm.Invoke((Action)(() => scheduleForm.ShowDialog()));
+                                            scheduleForm.listView1.Items[1].Selected = true;
+                                        }
+                                        if (res == DialogResult.No)
+                                        {
+                                            askAgain = false;
+                                            Simulation.Simulation.pauseSimulationToggle();
+                                        }
                                     }
                                 }
                             }
-                        }
-                        else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode())) // Toestemming verzoeken voor volgende way
-                        {
-                            if (!hasDocked)
-                            {
-                                dock();
-                            }
-                            //else
-                            //{
-                            //    prepareTakeOff();
-                            //}                 // Volgende simtik gaan we weer verder
                         }
                     }
 

@@ -43,7 +43,7 @@ namespace Introductieproject.Forms
 
         void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult res = MessageBox.Show("Je bent nog bezig met een Simulatie. Weet je zeker dat je wilt afsluiten?", "Waarschuwing", MessageBoxButtons.YesNo);
+            DialogResult res = MessageBox.Show("Je bent nog bezig met een Simulatie. Weet je zeker dat je wilt afsluiten?", "Waarschuwing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (res == DialogResult.No)
             {
                 e.Cancel = true;
@@ -96,6 +96,7 @@ namespace Introductieproject.Forms
 
         private void planningToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Simulation.Simulation.pauseSimulationToggle();
             ScheduleForm scheduleForm = new ScheduleForm(airport);
             scheduleForm.loadPLanes();
             scheduleForm.Show();

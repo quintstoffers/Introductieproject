@@ -11,14 +11,14 @@ using Introductieproject.Simulation;
 namespace Introductieproject.UI.Dialogs
 {
 
-    public partial class NewPLane : Form
+    public partial class NewPlane : Form
     {
         Parser parser = new Parser();
         Introductieproject.Objects.Airplane airplane;
         Introductieproject.Airport.Airport airport;
         Airport.Runway selectedRunway;
         Airport.Gate selectedGate;
-        public NewPLane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport)
+        public NewPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport)
         {
             InitializeComponent();
             this.airplane = airplane;
@@ -68,7 +68,6 @@ namespace Introductieproject.UI.Dialogs
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             airplane.registration = registration.Text;
             airplane.carrier = carrier.Text;
             airplane.flight = flight.Text;
@@ -81,8 +80,6 @@ namespace Introductieproject.UI.Dialogs
             airplane.location = selectedRunway.nodeConnections[0].location;
             airplane.gate = selectedGate.ToString();
             this.Close();
-
-
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

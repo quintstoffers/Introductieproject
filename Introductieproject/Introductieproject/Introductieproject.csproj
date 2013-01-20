@@ -63,11 +63,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UI\Dialogs\NewPLane.cs">
+    <Compile Include="UI\Dialogs\EditPlane.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UI\Dialogs\NewPLane.Designer.cs">
-      <DependentUpon>NewPLane.cs</DependentUpon>
+    <Compile Include="UI\Dialogs\EditPlane.Designer.cs">
+      <DependentUpon>EditPlane.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Dialogs\NewPlane.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\NewPlane.Designer.cs">
+      <DependentUpon>NewPlane.cs</DependentUpon>
     </Compile>
     <Compile Include="Simulation\Parser.cs" />
     <Compile Include="Simulation\Simulation.cs" />
@@ -140,9 +146,13 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Dialogs\NewPLane.resx">
-      <DependentUpon>NewPLane.cs</DependentUpon>
+    <EmbeddedResource Include="UI\Dialogs\EditPlane.resx">
+      <DependentUpon>EditPlane.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\NewPlane.resx">
+      <DependentUpon>NewPlane.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\AirplaneStatsControl.resx">
       <DependentUpon>AirplaneStatsControl.cs</DependentUpon>

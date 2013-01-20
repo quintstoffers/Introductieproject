@@ -23,9 +23,9 @@ namespace Introductieproject
             
             airport = createAirport();
 
-            TimeKeeper.targetScale = 10;                   // Verhouding tussen real en simtime is 1, dus gelijk.
+            TimeKeeper.targetScale = 10;                    // Verhouding tussen real en simtime is 1, dus gelijk.
             DateTime simStartTime = new DateTime(2013, 1, 1, 21, 59, 55);
-            TimeKeeper.init(simStartTime, true);      // TimeKeeper instellen op vaste starttijd
+            TimeKeeper.init(simStartTime, true);            // TimeKeeper instellen op vaste starttijd
 
             mainForm = new MainForm(airport);
             mainForm.Show();

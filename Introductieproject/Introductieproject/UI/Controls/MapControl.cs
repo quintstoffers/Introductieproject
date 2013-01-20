@@ -23,6 +23,7 @@ namespace Introductieproject.UI.Controls
         double drawingScale = 1;
         double maxXCoord = 0;
         double maxYCoord = 0;
+        int maxScreenPixels = 0;
 
         int zoomlevelX;
         int zoomlevelY;
@@ -139,7 +140,9 @@ namespace Introductieproject.UI.Controls
             double xScale = this.Width / (maxXCoord * 2);
             double yScale = this.Height / (maxYCoord * 2);
 
-            drawingScale = Math.Min(xScale, yScale);
+            maxScreenPixels = Math.Max(this.Width, this.Height);
+
+            drawingScale = Math.Min(xScale, yScale) * 2;
         }
 
         public void zoom(int zoomLevel)
@@ -162,7 +165,7 @@ namespace Introductieproject.UI.Controls
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            bmpAirport = new Bitmap((int)maxXCoord, (int)maxYCoord);
+            bmpAirport = new Bitmap(maxScreenPixels * 2, maxScreenPixels * 2);
 
             Graphics graphics = Graphics.FromImage(bmpAirport);
             graphics.Clear(Color.DarkBlue);
@@ -177,6 +180,7 @@ namespace Introductieproject.UI.Controls
                     int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
                     Point point1 = new Point(x1, y1);
                     Point point2 = new Point(x2, y2);
+                    Pen pen = new Pen(Color.Red, 2);
                     drawWay(graphics, Color.Red, point1, point2, way.name);
                 }
                 else if(way is Taxiway)
@@ -197,8 +201,7 @@ namespace Introductieproject.UI.Controls
                     int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
                     Point point1 = new Point(x1, y1);
                     Point point2 = new Point(x2, y2);
-                    Pen pen = new Pen(Color.Green, 7);
-                    graphics.DrawLine(pen, point1, point2);
+                    drawGateWay(graphics, Color.Green, point1, point2, "");
                 }
                 else if (way is Gate)
                 {
@@ -216,6 +219,7 @@ namespace Introductieproject.UI.Controls
             {
                zoomlevelX = bmpAirport.Width;
                zoomlevelY = bmpAirport.Height;
+               mapLocation = new Point(this.Width / 4, this.Height / 4);
                firstPaint = false;
             }
             airportDirty = false;
@@ -223,7 +227,7 @@ namespace Introductieproject.UI.Controls
 
         public void drawWay(Graphics g, Color color, Point start, Point end, String name)
         {
-            Pen pen = new Pen(color,7);
+            Pen pen = new Pen(color,2);
             g.DrawLine(pen, start, end);
             Point namePos = new Point();
             namePos.Y = (int)(start.Y + 0.5 * (end.Y - start.Y) - 10);
@@ -232,8 +236,21 @@ namespace Introductieproject.UI.Controls
             else
                 namePos.X = start.X - 10;
             g.DrawString(name, SystemFonts.DefaultFont, Brushes.White, namePos);
-        }
 
+            g.FillEllipse(Brushes.Gray, start.X - 5, start.Y - 5, 10, 10);
+            g.FillEllipse(Brushes.Gray, end.X - 5, end.Y - 5, 10, 10);
+        }
+        public void drawGateWay(Graphics g, Color color, Point start, Point end, String name)
+        {
+            Pen pen = new Pen(color, 2);
+            g.DrawLine(pen, start, end);
+            Point namePos = new Point();
+            namePos.Y = (int)(start.Y + 0.5 * (end.Y - start.Y) - 10);
+            if (Math.Min(start.X, end.X) == start.X)
+                namePos.X = start.X + 10;
+            else
+                namePos.X = start.X - 10;
+        }
         public void drawGate(Graphics g, Color color, Point start, Point end, String name)
         {
             Pen pen = new Pen(color, 2);
@@ -249,12 +266,13 @@ namespace Introductieproject.UI.Controls
             }
             namePos.X = start.X;
             g.DrawString(name, SystemFonts.DefaultFont, Brushes.White, namePos);
+            g.FillEllipse(Brushes.Gray, start.X - 3, start.Y - 3, 6, 6);
         }
 
         private void drawAirplanesToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
-            bmpAirplanes = new Bitmap((int)maxXCoord, (int)maxYCoord);
+            bmpAirplanes = new Bitmap(maxScreenPixels * 2, maxScreenPixels * 2);
             Graphics graphics = Graphics.FromImage(bmpAirplanes);
 
             graphics.Clear(Color.Transparent);

@@ -79,7 +79,6 @@ namespace Introductieproject.Forms
         void reschedule(object sender, EventArgs e)
         {
             Parser.refreshAirplanes(airport.airplanes);
-            selectedAirplane.requestNavigator(airport);
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)

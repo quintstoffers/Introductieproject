@@ -74,6 +74,7 @@ namespace Introductieproject.UI.Dialogs
             airplane.destination = destination.Text;
             airplane.departureDate = departuredate.Value;
             airplane.gate = gateBox.SelectedItem.ToString();
+            airplane.navigator = null;
             this.Close();
         }
 

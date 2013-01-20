@@ -258,54 +258,57 @@ namespace Introductieproject.Objects
                         }
                         else if (navigator.hasNextTarget())
                         {
-                        }
-                        if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
-                        {
-                            navigator.setNextTarget();
-                            return;                     // Volgende simtik gaan we weer verder
-                        }
-                        else
-                        {
-                            //this.accelerate(0);
-                            this.speed = 0;
-                        }
-                    }
-                    else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode())) // Toestemming verzoeken voor volgende way
-                    {
-                        if (!hasDocked)
-                        {
-                            dock();
-                        }
-                        //else
-                        //{
-                        //    prepareTakeOff();
-                        //}                 // Volgende simtik gaan we weer verder
-                    }
-                    else if (!airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
-                    {
-                        if (askAgain)
-                        {
-                            foreach (Airplane dockedPlane in airport.airplanes)
-                            {
-                                // Als er al een vliegtuig staat bij de gate waar dit vliegtuig naartoe wilt, en de vertrektijd ligt na de verwachtte aankomst tijd: Open edit scherm voor nieuwe gate.
-                                if (dockedPlane.gate == this.gate && dockedPlane.isOnAirport() && dockedPlane.navigator.currentWay is Gate)
-                                {
-                                    if (this.arrivalDate < dockedPlane.departureDate)
-                                    {
-                                        ScheduleForm scheduleForm = new ScheduleForm(airport);
-                                        Simulation.Simulation.pauseSimulationToggle();
-                                        DialogResult res = MessageBox.Show("vliegtuig met registratie " + this.registration + " komt eerder aan bij een gate dan dat deze vrij is, wilt u de gate veranderen?", "Gate bezet", MessageBoxButtons.YesNo);
 
-                                        if (res == DialogResult.Yes)
+                            if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
+                            {
+                                navigator.setNextTarget();
+                                return;                     // Volgende simtik gaan we weer verder
+                            }
+                            else
+                            {
+                                //this.accelerate(0);
+                                this.speed = 0;
+                            }
+                        }
+
+                        else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode())) // Toestemming verzoeken voor volgende way
+                        {
+                            if (!hasDocked)
+                            {
+                                dock();
+                            }
+                            //else
+                            //{
+                            //    prepareTakeOff();
+                            //}                 // Volgende simtik gaan we weer verder
+                        }
+
+                        else if (!airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
+                        {
+                            if (askAgain)
+                            {
+                                foreach (Airplane dockedPlane in airport.airplanes)
+                                {
+                                    // Als er al een vliegtuig staat bij de gate waar dit vliegtuig naartoe wilt, en de vertrektijd ligt na de verwachtte aankomst tijd: Open edit scherm voor nieuwe gate.
+                                    if (dockedPlane.gate == this.gate && dockedPlane.isOnAirport() && dockedPlane.navigator.currentWay is Gate)
+                                    {
+                                        if (this.arrivalDate < dockedPlane.departureDate)
                                         {
-                                            scheduleForm.loadPLanes();
-                                            Program.mainForm.Invoke((Action)(() => scheduleForm.ShowDialog()));
-                                            scheduleForm.listView1.Items[1].Selected = true;
-                                        }
-                                        if (res == DialogResult.No)
-                                        {
-                                            askAgain = false;
+                                            ScheduleForm scheduleForm = new ScheduleForm(airport);
                                             Simulation.Simulation.pauseSimulationToggle();
+                                            DialogResult res = MessageBox.Show("vliegtuig met registratie " + this.registration + " komt eerder aan bij een gate dan dat deze vrij is, wilt u de gate veranderen?", "Gate bezet", MessageBoxButtons.YesNo);
+
+                                            if (res == DialogResult.Yes)
+                                            {
+                                                scheduleForm.loadPLanes();
+                                                Program.mainForm.Invoke((Action)(() => scheduleForm.ShowDialog()));
+                                                scheduleForm.listView1.Items[1].Selected = true;
+                                            }
+                                            if (res == DialogResult.No)
+                                            {
+                                                askAgain = false;
+                                                Simulation.Simulation.pauseSimulationToggle();
+                                            }
                                         }
                                     }
                                 }

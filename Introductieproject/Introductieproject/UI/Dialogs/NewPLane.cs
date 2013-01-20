@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Introductieproject.Simulation;
+using Introductieproject.Forms;
 
 namespace Introductieproject.UI.Dialogs
 {
@@ -18,11 +19,14 @@ namespace Introductieproject.UI.Dialogs
         Introductieproject.Airport.Airport airport;
         Airport.Runway selectedRunway;
         Airport.Gate selectedGate;
-        public NewPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport)
+        ScheduleForm sch;
+
+        public NewPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport, ScheduleForm sch)
         {
             InitializeComponent();
             this.airplane = airplane;
             this.airport = airport;
+            this.sch = sch;
             loadRunways();
             loadGates();
             loadTypes();
@@ -79,6 +83,7 @@ namespace Introductieproject.UI.Dialogs
             airplane.typeName = typeBox.SelectedItem.ToString();
             airplane.location = selectedRunway.nodeConnections[0].location;
             airplane.gate = selectedGate.ToString();
+            sch.loadPLanes();
             this.Close();
         }
 

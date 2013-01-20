@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Introductieproject.Simulation;
 using Introductieproject.Airport;
 using Introductieproject.Objects;
+using Introductieproject.Forms;
 
 namespace Introductieproject.UI.Dialogs
 {
@@ -17,12 +18,14 @@ namespace Introductieproject.UI.Dialogs
         Parser parser = new Parser();
         Airplane airplane;
         Introductieproject.Airport.Airport airport;
+        ScheduleForm sch;
 
-        public EditPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport)
+        public EditPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport, ScheduleForm sch)
         {
             InitializeComponent();
             this.airplane = airplane;
             this.airport = airport;
+            this.sch = sch;
             loadGates();
             loadAirplane();
         }
@@ -53,6 +56,7 @@ namespace Introductieproject.UI.Dialogs
                 flight.Text = airplane.Flight;
                 origin.Text = airplane.origin;
                 destination.Text = airplane.destination;
+                departuredate.Text = airplane.departureDate.ToShortTimeString();
             }
             catch (NullReferenceException) 
             {
@@ -76,6 +80,7 @@ namespace Introductieproject.UI.Dialogs
             airplane.departureDate = departuredate.Value;
             airplane.gate = gateBox.SelectedItem.ToString();
             airplane.requestNavigator(airport);
+            sch.loadPLanes();
             this.Close();
         }
 

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using System.Windows.Forms;
 using Introductieproject.Objects;
+using Introductieproject.Forms;
 
 
 namespace Introductieproject.Simulation
@@ -16,6 +18,7 @@ namespace Introductieproject.Simulation
         private static bool runSimulation;                  // of de simulatie draait of niet
         private static bool pauseSimulation;                // of de simulatie gepauzeert is
         private static bool leaping = false;
+        private static bool popup = false;
 
         private static bool multiThreadingEnabled;
 
@@ -153,6 +156,33 @@ namespace Introductieproject.Simulation
             while (runSimulation)
             {
                 updateNonUrgent();
+                foreach (Airplane airplane in airport.airplanes)
+                {
+                    if (airplane.isWaiting && (!popup && airplane.askAgain))
+                    {
+                        ScheduleForm scheduleForm = new ScheduleForm(airport);
+                        //pauseSimulationToggle();
+                        popup = true;
+                        DialogResult res = MessageBox.Show("Vliegtuig met registratie " + airplane.registration + " komt eerder aan bij een gate dan dat deze vrij is, wilt u de gate veranderen?", "Gate bezet", MessageBoxButtons.YesNo);
+                        if (res == DialogResult.Yes)
+                        {
+                            scheduleForm.selectedAirplane = airplane;
+                            scheduleForm.loadPLanes();
+                            Program.mainForm.Invoke((Action)(() => scheduleForm.ShowDialog()));
+                            //scheduleForm.ShowDialog();
+                            scheduleForm.Focus();
+                            
+                            popup = false;
+                        }
+                        if (res == DialogResult.No)
+                        {
+                            popup = false;
+                            airplane.askAgain = false;
+                            //pauseSimulationToggle();
+                        }
+
+                    }
+                }
 
                 Thread.Sleep(1000);
             }

@@ -62,7 +62,8 @@ namespace Introductieproject.Objects
         public double angle;                // hoek van het vliegtuig ten opzichte van noord
         public bool hasDocked = false;      // Houdt bij of een vliegtuig al bij een gate is geweest
         public bool hasCollision = false;   // Houdt bij of er collision is
-        public bool askAgain = true;
+        public bool isWaiting = false;      // Houdt bij of deze voor de gate wacht
+        public bool askAgain = true;        // Houdt bij of er opnieuw gevraagd moet worden voor rescheduling
 
         private bool standingStill = false;
         private TimeSpan timeStopped;
@@ -244,7 +245,7 @@ namespace Introductieproject.Objects
                     //if (navigator.getCurrentWay() is Gateway)
                     //    maxSpeed = 5;
 
-                    double cornerSpeed = 1;
+                    double cornerSpeed = 3;
                     navigator.location = this.location;
 
                     //TODO collision test
@@ -256,7 +257,7 @@ namespace Introductieproject.Objects
                             airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
                             prepareTakeOff();
                         }
-                        else if (navigator.hasNextTarget())
+                        if (navigator.hasNextTarget())
                         {
 
                             if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
@@ -264,10 +265,26 @@ namespace Introductieproject.Objects
                                 navigator.setNextTarget();
                                 return;                     // Volgende simtik gaan we weer verder
                             }
+                            else if (!airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
+                            {
+
+                                foreach (Airplane dockedPlane in airport.airplanes)
+                                {
+                                    // Als er al een vliegtuig staat bij de gate waar dit vliegtuig naartoe wilt, en de vertrektijd ligt na de verwachtte aankomst tijd: Open edit scherm voor nieuwe gate.
+                                    if (dockedPlane.gate == this.gate && dockedPlane.isOnAirport() && dockedPlane.status == Status.DOCKING)
+                                    {
+                                        if (this.arrivalDate < dockedPlane.actualDepartureDate)
+                                        {
+                                            this.isWaiting = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
                             else
                             {
                                 //this.accelerate(0);
-                                this.speed = 0;
+                                speed = 0;
                             }
                         }
 
@@ -283,37 +300,6 @@ namespace Introductieproject.Objects
                             //}                 // Volgende simtik gaan we weer verder
                         }
 
-                        else if (!airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
-                        {
-                            if (askAgain)
-                            {
-                                foreach (Airplane dockedPlane in airport.airplanes)
-                                {
-                                    // Als er al een vliegtuig staat bij de gate waar dit vliegtuig naartoe wilt, en de vertrektijd ligt na de verwachtte aankomst tijd: Open edit scherm voor nieuwe gate.
-                                    if (dockedPlane.gate == this.gate && dockedPlane.isOnAirport() && dockedPlane.navigator.currentWay is Gate)
-                                    {
-                                        if (this.arrivalDate < dockedPlane.departureDate)
-                                        {
-                                            ScheduleForm scheduleForm = new ScheduleForm(airport);
-                                            Simulation.Simulation.pauseSimulationToggle();
-                                            DialogResult res = MessageBox.Show("vliegtuig met registratie " + this.registration + " komt eerder aan bij een gate dan dat deze vrij is, wilt u de gate veranderen?", "Gate bezet", MessageBoxButtons.YesNo);
-
-                                            if (res == DialogResult.Yes)
-                                            {
-                                                scheduleForm.loadPLanes();
-                                                Program.mainForm.Invoke((Action)(() => scheduleForm.ShowDialog()));
-                                                scheduleForm.listView1.Items[1].Selected = true;
-                                            }
-                                            if (res == DialogResult.No)
-                                            {
-                                                askAgain = false;
-                                                Simulation.Simulation.pauseSimulationToggle();
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
                     }
 
                     if (distanceToTarget <= speed)
@@ -336,7 +322,7 @@ namespace Introductieproject.Objects
                     {
                         accelerate(maxSpeed);
                     }
-                    else if ((speed > cornerSpeed || speed < cornerSpeed) && distanceToTarget <= 50 && angle == targetAngle)
+                    else if ((speed > cornerSpeed) || speed < cornerSpeed && distanceToTarget <= 50 && angle == targetAngle && !standingStill)
                     {
                         accelerate(cornerSpeed);
                     }
@@ -452,7 +438,7 @@ namespace Introductieproject.Objects
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + delay + oude vertrektijd.
             Console.WriteLine("DEPARTUREDATE: " + departureDate);
-            actualDepartureDate = departureDate.Add(landingDifference + arrivalDifference); //+ delay
+            actualDepartureDate = departureDate.Add(landingDifference + arrivalDifference + delay); //+ delay
             Console.WriteLine("actualDepartureDate: " + actualDepartureDate);
 
             // Zet hasDocked op true voor de navigator.
@@ -549,8 +535,8 @@ namespace Introductieproject.Objects
             double acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
 
             if (targetSpeed < speed)
-                acceleration = -1; // in het geval dat je moet afremmen
-            if (hasCollision == true)
+                acceleration = -5; // in het geval dat je moet afremmen
+            if (hasCollision == true || maxSpeed < speed)
                 acceleration = -10;
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
 

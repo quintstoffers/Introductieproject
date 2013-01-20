@@ -16,7 +16,7 @@ namespace Introductieproject.Forms
         Airplane airplane = new Airplane();
         Parser parser = new Parser();
         Airport.Airport airport;
-        Airplane selectedAirplane;
+        public Airplane selectedAirplane;
 
         public ScheduleForm(Airport.Airport airport)
         {
@@ -25,7 +25,6 @@ namespace Introductieproject.Forms
             this.FormClosing += new FormClosingEventHandler(ScheduleForm_FormClosing);
             listView1.ItemSelectionChanged += new ListViewItemSelectionChangedEventHandler(selectionChange);
             loadPLanes();
-            listView1.Items[0].Selected = true;
         }
         public void loadPLanes()
         {
@@ -49,7 +48,7 @@ namespace Introductieproject.Forms
                     plane.ForeColor = Color.Red;
                 }
             }
-
+            selectedAirplaneItem();
         }
         public void addplane()
         {
@@ -64,8 +63,6 @@ namespace Introductieproject.Forms
         {
             EditPlane editPlane = new EditPlane(selectedAirplane, airport);
             loadPLanes();
-            listView1.Items[1].Selected = true;
-            listView1.Select();
             editPlane.ShowDialog(this);
             editPlane.button1.Click += reschedule;
             Parser.refreshAirplanes(airport.airplanes);
@@ -79,6 +76,7 @@ namespace Introductieproject.Forms
         void reschedule(object sender, EventArgs e)
         {
             Parser.refreshAirplanes(airport.airplanes);
+            this.loadPLanes();
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -92,7 +90,6 @@ namespace Introductieproject.Forms
         }
         private void ScheduleForm_FormClosing(Object sender, FormClosingEventArgs e)
         {
-            airplane.askAgain = false;
             this.Hide();
             e.Cancel = true;
             Simulation.Simulation.pauseSimulationToggle();
@@ -121,6 +118,22 @@ namespace Introductieproject.Forms
             }
         }
 
+        public void selectedAirplaneItem()
+        {
+            int i,j = 0;
+            if (selectedAirplane != null)
+            {
+                for (i = 0; i < airport.airplanes.Count; i++)
+                {
+                    if (selectedAirplane.registration == airport.airplanes[i].registration && selectedAirplane != null)
+                    {
+                        j = i;
+                        break;
+                    }
+                }
+            }
+            listView1.Items[j].Selected = true;
+        }
 
         private void refreshToolStripMenuItem_Click(object sender, EventArgs e)
         {

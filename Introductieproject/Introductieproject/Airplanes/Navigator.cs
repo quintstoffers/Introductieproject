@@ -213,18 +213,18 @@ namespace Introductieproject.Airplanes
                         if (route.local.isDirectionAllowed(connection))
                         {
                             //Schat tijd tot aankomst bij way
-                            DateTime estimatedArrival = TimeKeeper.currentSimTime;
-                            estimatedArrival.AddSeconds(route.length / 20); // t = s / v : schat de tijd van aankomst op connection
-                            //Vergelijk met andere vliegtuigen
-                            List<Airplane> airplanesOnWay = airport.planesOnWayInDirection(connection, route.local, airplane);
-                            foreach (Airplane ap in airplanesOnWay)
-                            {
-                                DateTime[] timeframe = ap.navigator.estimatedArrivalTime(connection);
-                                if (timeframe[0] <= estimatedArrival && estimatedArrival <= timeframe[1])
-                                    connection.weightedLength *= 5;
-                            }
-                            double length = connection.weightedLength;
-                            if (bestRoute == null || route.length + length <= bestRoute.length)
+                            //DateTime estimatedArrival = TimeKeeper.currentSimTime;
+                            //estimatedArrival.AddSeconds(route.length / 20); // t = s / v : schat de tijd van aankomst op connection
+                            ////Vergelijk met andere vliegtuigen
+                            //List<Airplane> airplanesOnWay = airport.planesOnWayInDirection(connection, route.local, airplane);
+                            //foreach (Airplane ap in airplanesOnWay)
+                            //{
+                            //    DateTime[] timeframe = ap.navigator.estimatedArrivalTime(connection);
+                            //    if (timeframe[0] <= estimatedArrival && estimatedArrival <= timeframe[1])
+                            //        connection.weightedLength *= 5;
+                            //}
+                            //double length = connection.weightedLength;
+                            if (bestRoute == null || route.length /*+ length */ <= bestRoute.length)
                             {
                                 Node connectedNode = route.local.getConnectedNode(connection);
 

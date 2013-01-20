@@ -23,8 +23,8 @@ namespace Introductieproject.UI.Dialogs
             InitializeComponent();
             this.airplane = airplane;
             this.airport = airport;
-            loadAirplane();
             loadGates();
+            loadAirplane();
         }
 
         private void loadGates()
@@ -33,6 +33,7 @@ namespace Introductieproject.UI.Dialogs
             {
                 gateBox.Items.Add(gate.name);
                 gateBox.SelectedItem = gateBox.Items[0];
+                gateBox.Sorted = true;
             }
             foreach (Airplane ap in airport.airplanes)
             {
@@ -74,7 +75,7 @@ namespace Introductieproject.UI.Dialogs
             airplane.destination = destination.Text;
             airplane.departureDate = departuredate.Value;
             airplane.gate = gateBox.SelectedItem.ToString();
-            airplane.navigator = null;
+            airplane.requestNavigator(airport);
             this.Close();
         }
 

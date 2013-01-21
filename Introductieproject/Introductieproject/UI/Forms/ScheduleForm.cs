@@ -52,7 +52,7 @@ namespace Introductieproject.Forms
         }
         public void addplane()
         {
-            NewPlane newPlane = new NewPlane(airplane, airport);
+            NewPlane newPlane = new NewPlane(airplane, airport, this);
             newPlane.button1.Click += button1_Click;
             newPlane.ShowDialog(this);
             Parser.refreshAirplanes(airport.airplanes);
@@ -61,7 +61,7 @@ namespace Introductieproject.Forms
 
         public void editplane()
         {
-            EditPlane editPlane = new EditPlane(selectedAirplane, airport);
+            EditPlane editPlane = new EditPlane(selectedAirplane, airport, this);
             loadPLanes();
             editPlane.ShowDialog(this);
             editPlane.button1.Click += reschedule;
@@ -101,11 +101,14 @@ namespace Introductieproject.Forms
 
         private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //MessageBox.Show("nog niet geimplementeerd");
-            selectedAirplane.status = Airplane.Status.CANCELLED;
-            loadPLanes();
-            
+            DialogResult res = MessageBox.Show("Weet u zeker dat u deze vlucht wilt annuleren?", "Waarschuwing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (res == System.Windows.Forms.DialogResult.Yes)
+            {
+                selectedAirplane.status = Airplane.Status.CANCELLED;
+                loadPLanes();
+            }            
         }
+
         private void selectionChange(object sender, ListViewItemSelectionChangedEventArgs e)
         {
             string registration = e.Item.Text;

@@ -45,8 +45,6 @@
             this.departuredate = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.landing = new System.Windows.Forms.DateTimePicker();
-            this.landingdate = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.runwaybox = new System.Windows.Forms.ComboBox();
             this.gateBox = new System.Windows.Forms.ComboBox();
@@ -56,9 +54,10 @@
             // 
             // registration
             // 
-            this.registration.Location = new System.Drawing.Point(106, 37);
+            this.registration.Location = new System.Drawing.Point(141, 46);
+            this.registration.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.registration.Name = "registration";
-            this.registration.Size = new System.Drawing.Size(100, 20);
+            this.registration.Size = new System.Drawing.Size(132, 22);
             this.registration.TabIndex = 0;
             this.registration.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
@@ -66,9 +65,10 @@
             // 
             this.label1.AccessibleName = "registration";
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 40);
+            this.label1.Location = new System.Drawing.Point(16, 49);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(63, 13);
+            this.label1.Size = new System.Drawing.Size(84, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Registration";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -76,93 +76,104 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 70);
+            this.label2.Location = new System.Drawing.Point(16, 86);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(32, 13);
+            this.label2.Size = new System.Drawing.Size(42, 17);
             this.label2.TabIndex = 3;
             this.label2.Text = "Flight";
             // 
             // flight
             // 
-            this.flight.Location = new System.Drawing.Point(106, 70);
+            this.flight.Location = new System.Drawing.Point(141, 86);
+            this.flight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.flight.Name = "flight";
-            this.flight.Size = new System.Drawing.Size(100, 20);
+            this.flight.Size = new System.Drawing.Size(132, 22);
             this.flight.TabIndex = 2;
             this.flight.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 100);
+            this.label3.Location = new System.Drawing.Point(16, 123);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(37, 13);
+            this.label3.Size = new System.Drawing.Size(51, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "Carrier";
             // 
             // carrier
             // 
-            this.carrier.Location = new System.Drawing.Point(106, 96);
+            this.carrier.Location = new System.Drawing.Point(141, 118);
+            this.carrier.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.carrier.Name = "carrier";
-            this.carrier.Size = new System.Drawing.Size(100, 20);
+            this.carrier.Size = new System.Drawing.Size(132, 22);
             this.carrier.TabIndex = 4;
             this.carrier.TextChanged += new System.EventHandler(this.carrier_TextChanged);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 130);
+            this.label4.Location = new System.Drawing.Point(16, 160);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(31, 13);
+            this.label4.Size = new System.Drawing.Size(40, 17);
             this.label4.TabIndex = 7;
             this.label4.Text = "Type";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(11, 160);
+            this.label5.Location = new System.Drawing.Point(15, 197);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.Size = new System.Drawing.Size(46, 17);
             this.label5.TabIndex = 9;
             this.label5.Text = "Origin";
             // 
             // origin
             // 
-            this.origin.Location = new System.Drawing.Point(105, 155);
+            this.origin.Location = new System.Drawing.Point(140, 191);
+            this.origin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.origin.Name = "origin";
-            this.origin.Size = new System.Drawing.Size(100, 20);
+            this.origin.Size = new System.Drawing.Size(132, 22);
             this.origin.TabIndex = 8;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(11, 190);
+            this.label6.Location = new System.Drawing.Point(15, 234);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(60, 13);
+            this.label6.Size = new System.Drawing.Size(79, 17);
             this.label6.TabIndex = 11;
             this.label6.Text = "Destination";
             // 
             // destination
             // 
-            this.destination.Location = new System.Drawing.Point(105, 187);
+            this.destination.Location = new System.Drawing.Point(140, 230);
+            this.destination.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.destination.Name = "destination";
-            this.destination.Size = new System.Drawing.Size(100, 20);
+            this.destination.Size = new System.Drawing.Size(132, 22);
             this.destination.TabIndex = 10;
             // 
             // arrivaldate
             // 
             this.arrivaldate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.arrivaldate.Location = new System.Drawing.Point(105, 263);
+            this.arrivaldate.Location = new System.Drawing.Point(140, 335);
+            this.arrivaldate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.arrivaldate.Name = "arrivaldate";
-            this.arrivaldate.Size = new System.Drawing.Size(200, 20);
+            this.arrivaldate.Size = new System.Drawing.Size(265, 22);
             this.arrivaldate.TabIndex = 12;
             this.arrivaldate.ValueChanged += new System.EventHandler(this.arrivaldate_ValueChanged);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(11, 263);
+            this.label7.Location = new System.Drawing.Point(15, 335);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(62, 13);
+            this.label7.Size = new System.Drawing.Size(82, 17);
             this.label7.TabIndex = 13;
             this.label7.Text = "Arrival Date";
             this.label7.Click += new System.EventHandler(this.label7_Click);
@@ -170,9 +181,10 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(11, 293);
+            this.label8.Location = new System.Drawing.Point(15, 366);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(80, 13);
+            this.label8.Size = new System.Drawing.Size(106, 17);
             this.label8.TabIndex = 14;
             this.label8.Text = "Departure Date";
             this.label8.Click += new System.EventHandler(this.label8_Click);
@@ -180,17 +192,19 @@
             // departuredate
             // 
             this.departuredate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.departuredate.Location = new System.Drawing.Point(105, 286);
+            this.departuredate.Location = new System.Drawing.Point(140, 366);
+            this.departuredate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.departuredate.Name = "departuredate";
-            this.departuredate.Size = new System.Drawing.Size(200, 20);
+            this.departuredate.Size = new System.Drawing.Size(265, 22);
             this.departuredate.TabIndex = 15;
             this.departuredate.ValueChanged += new System.EventHandler(this.departuredate_ValueChanged);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(41, 335);
+            this.button1.Location = new System.Drawing.Point(55, 412);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 28);
             this.button1.TabIndex = 16;
             this.button1.Text = "Add";
             this.button1.UseVisualStyleBackColor = true;
@@ -198,39 +212,22 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(174, 335);
+            this.button2.Location = new System.Drawing.Point(232, 412);
+            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(100, 28);
             this.button2.TabIndex = 17;
             this.button2.Text = "Cancel";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // landing
-            // 
-            this.landing.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.landing.Location = new System.Drawing.Point(105, 312);
-            this.landing.Name = "landing";
-            this.landing.Size = new System.Drawing.Size(200, 20);
-            this.landing.TabIndex = 19;
-            this.landing.ValueChanged += new System.EventHandler(this.landing_ValueChanged);
-            // 
-            // landingdate
-            // 
-            this.landingdate.AutoSize = true;
-            this.landingdate.Location = new System.Drawing.Point(11, 319);
-            this.landingdate.Name = "landingdate";
-            this.landingdate.Size = new System.Drawing.Size(71, 13);
-            this.landingdate.TabIndex = 18;
-            this.landingdate.Text = "Landing Date";
-            this.landingdate.Click += new System.EventHandler(this.landingdate_Click);
-            // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(11, 215);
+            this.label9.Location = new System.Drawing.Point(15, 265);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(46, 13);
+            this.label9.Size = new System.Drawing.Size(58, 17);
             this.label9.TabIndex = 20;
             this.label9.Text = "Runway";
             // 
@@ -238,9 +235,10 @@
             // 
             this.runwaybox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.runwaybox.FormattingEnabled = true;
-            this.runwaybox.Location = new System.Drawing.Point(105, 215);
+            this.runwaybox.Location = new System.Drawing.Point(140, 265);
+            this.runwaybox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.runwaybox.Name = "runwaybox";
-            this.runwaybox.Size = new System.Drawing.Size(121, 21);
+            this.runwaybox.Size = new System.Drawing.Size(160, 24);
             this.runwaybox.TabIndex = 21;
             this.runwaybox.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -248,17 +246,19 @@
             // 
             this.gateBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.gateBox.FormattingEnabled = true;
-            this.gateBox.Location = new System.Drawing.Point(105, 242);
+            this.gateBox.Location = new System.Drawing.Point(140, 298);
+            this.gateBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.gateBox.Name = "gateBox";
-            this.gateBox.Size = new System.Drawing.Size(121, 21);
+            this.gateBox.Size = new System.Drawing.Size(160, 24);
             this.gateBox.TabIndex = 23;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(11, 242);
+            this.label10.Location = new System.Drawing.Point(15, 298);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(30, 13);
+            this.label10.Size = new System.Drawing.Size(39, 17);
             this.label10.TabIndex = 22;
             this.label10.Text = "Gate";
             // 
@@ -266,24 +266,23 @@
             // 
             this.typeBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.typeBox.FormattingEnabled = true;
-            this.typeBox.Location = new System.Drawing.Point(105, 122);
+            this.typeBox.Location = new System.Drawing.Point(140, 150);
+            this.typeBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.typeBox.Name = "typeBox";
-            this.typeBox.Size = new System.Drawing.Size(121, 21);
+            this.typeBox.Size = new System.Drawing.Size(160, 24);
             this.typeBox.TabIndex = 24;
             this.typeBox.SelectedIndexChanged += new System.EventHandler(this.gateBox_SelectedIndexChanged);
             // 
-            // NewPLane
+            // NewPlane
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(317, 463);
+            this.ClientSize = new System.Drawing.Size(423, 570);
             this.Controls.Add(this.typeBox);
             this.Controls.Add(this.gateBox);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.runwaybox);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.landing);
-            this.Controls.Add(this.landingdate);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.departuredate);
@@ -301,7 +300,8 @@
             this.Controls.Add(this.flight);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.registration);
-            this.Name = "NewPLane";
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Name = "NewPlane";
             this.Text = "Add flight";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
@@ -327,8 +327,6 @@
         private System.Windows.Forms.Button button2;
         public System.Windows.Forms.TextBox registration;
         public System.Windows.Forms.TextBox flight;
-        private System.Windows.Forms.DateTimePicker landing;
-        private System.Windows.Forms.Label landingdate;
         private System.Windows.Forms.Label label9;
         public System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox runwaybox;

@@ -158,15 +158,19 @@ namespace Introductieproject.Simulation
                 Thread.Sleep(1000);
 
                 updateNonUrgent();
-                foreach (Airplane airplane in airport.airplanes)
+                if(!popup )
                 {
-                    if (airplane.isWaiting && (!popup && airplane.askAgain))
+                    foreach (Airplane airplane in airport.airplanes)
                     {
-                        popup = true;
-                        Thread newThread = new Thread(() => showAsyncPopup(airplane));
-                        newThread.Start();
+                        if (airplane.isWaiting && airplane.askAgain)
+                        {
+                            popup = true;
+                            Thread newThread = new Thread(() => showAsyncPopup(airplane));
+                            newThread.Start();
+                            break;
+                        }
                     }
-                }
+             }
             }
         }
 

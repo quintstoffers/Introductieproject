@@ -60,6 +60,7 @@ namespace Introductieproject.UI.Dialogs
                 flight.Text = airplane.Flight;
                 origin.Text = airplane.origin;
                 destination.Text = airplane.destination;
+                departuredate.Text = airplane.departureDate.ToString();
             }
             catch (NullReferenceException) 
             {
@@ -84,6 +85,7 @@ namespace Introductieproject.UI.Dialogs
             airplane.gate = gateBox.SelectedItem.ToString();
             airplane.requestNavigator(airport);
             sch.loadPLanes();
+            airplane.isWaiting = false;
             this.Close();
         }
 

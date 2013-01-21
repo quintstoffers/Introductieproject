@@ -164,7 +164,7 @@
             // 
             // departuredate
             // 
-            this.departuredate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.departuredate.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.departuredate.Location = new System.Drawing.Point(141, 299);
             this.departuredate.Margin = new System.Windows.Forms.Padding(4);
             this.departuredate.Name = "departuredate";

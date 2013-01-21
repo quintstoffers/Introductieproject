@@ -49,7 +49,8 @@ namespace Introductieproject.UI.Controls
                 label2.Text = Math.Round(currentAirplane.location[1]).ToString();
                 label9.Text = Math.Round(currentAirplane.angle).ToString();
             }
-            catch (Exception) { }
+            catch (ArgumentOutOfRangeException e) { }
+
         }
 
         private void dataGrid_RowEnter(object sender, DataGridViewCellEventArgs e)

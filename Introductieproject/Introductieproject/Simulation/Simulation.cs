@@ -155,37 +155,40 @@ namespace Introductieproject.Simulation
         {
             while (runSimulation)
             {
+                Thread.Sleep(1000);
+
                 updateNonUrgent();
                 foreach (Airplane airplane in airport.airplanes)
                 {
                     if (airplane.isWaiting && (!popup && airplane.askAgain))
                     {
-                        ScheduleForm scheduleForm = new ScheduleForm(airport);
-                        //pauseSimulationToggle();
                         popup = true;
-                        DialogResult res = MessageBox.Show("Vliegtuig met registratie " + airplane.registration + " komt eerder aan bij een gate dan dat deze vrij is, wilt u de gate veranderen?", "Gate bezet", MessageBoxButtons.YesNo);
-                        if (res == DialogResult.Yes)
-                        {
-                            scheduleForm.selectedAirplane = airplane;
-                            scheduleForm.loadPLanes();
-                            Program.mainForm.Invoke((Action)(() => scheduleForm.ShowDialog()));
-                            //scheduleForm.ShowDialog();
-                            scheduleForm.Focus();
-                            
-                            popup = false;
-                        }
-                        if (res == DialogResult.No)
-                        {
-                            popup = false;
-                            airplane.askAgain = false;
-                            //pauseSimulationToggle();
-                        }
-
+                        Thread newThread = new Thread(() => showAsyncPopup(airplane));
+                        newThread.Start();
                     }
                 }
-
-                Thread.Sleep(1000);
             }
+        }
+
+        private static void showAsyncPopup(Airplane airplane)
+        {
+            //pauseSimulationToggle();
+            DialogResult res = MessageBox.Show("Vliegtuig met registratie " + airplane.registration + " komt eerder aan bij een gate dan dat deze vrij is, wilt u de gate veranderen?", "Gate bezet", MessageBoxButtons.YesNo);
+            if (res == DialogResult.Yes)
+            {
+                ScheduleForm scheduleForm = new ScheduleForm(airport);
+                scheduleForm.selectedAirplane = airplane;
+                scheduleForm.loadPLanes();
+                Program.mainForm.Invoke((Action)(() => scheduleForm.ShowDialog()));
+                scheduleForm.Focus();
+            }
+            if (res == DialogResult.No)
+            {
+                airplane.askAgain = false;
+                //pauseSimulationToggle();
+            }
+
+            popup = false;
         }
 
         private static int tasksDone;

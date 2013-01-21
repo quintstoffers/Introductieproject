@@ -14,12 +14,13 @@ namespace Introductieproject
     class Program
     {
         public static MainForm mainForm;
+        public static Airport.Airport airport;
 
         static void Main(string[] args)
         {
             Console.WriteLine("Program Started");
             
-            Airport.Airport airport = createAirport();
+            airport = createAirport();
 
             TimeKeeper.targetScale = 10;                    // Verhouding tussen real en simtime is 1, dus gelijk.
             DateTime simStartTime = new DateTime(2013, 1, 1, 22, 00, 00);

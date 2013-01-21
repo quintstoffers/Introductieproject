@@ -350,23 +350,7 @@ namespace Introductieproject.Airplanes
         }
         public void setNextTarget()
         {
-            //Voeg huidige navigator toe aan nieuwe wayList en verhoog currentTargetNode voor volgende keer
-            //Ik voeg hem niet toe bij gate, want dat gaat nog fout want hij komt er dan 2x in.
-            if (wayList[targetNodeNumber] is Gate)
-            {
-                // wayList[currentTargetNode].addNavigator(this);
-            }
-            else
-            {
-                // wayList[currentTargetNode].addNavigator(this);
-            }
             targetNodeNumber++;
-
-            /*if(wayList[0] is Gate && runWays[0].runwayHasAirplane == false && currentTargetNode == (nodepoints.Count - 1))
-            {
-                Console.WriteLine("GEKKE RUNWAYTEST!");
-                runWays[0].runwayHasAirplane = true;
-            }*/
 
             getCurrentWay();
             getTargetWay();

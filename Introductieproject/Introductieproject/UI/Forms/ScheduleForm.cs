@@ -99,6 +99,14 @@ namespace Introductieproject.Forms
 
         }
 
+        void ScheduleForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+
         private void deleteSelectedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DialogResult res = MessageBox.Show("Weet u zeker dat u deze vlucht wilt annuleren?", "Waarschuwing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);

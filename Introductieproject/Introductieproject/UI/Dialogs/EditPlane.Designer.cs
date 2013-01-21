@@ -55,6 +55,7 @@
             this.registration.ReadOnly = true;
             this.registration.Size = new System.Drawing.Size(132, 22);
             this.registration.TabIndex = 0;
+            this.registration.KeyPress += EditPlane_KeyPress;
             // 
             // label1
             // 
@@ -170,6 +171,7 @@
             this.departuredate.Name = "departuredate";
             this.departuredate.Size = new System.Drawing.Size(265, 22);
             this.departuredate.TabIndex = 15;
+            this.departuredate.KeyPress += EditPlane_KeyPress;
             // 
             // button1
             // 
@@ -203,6 +205,7 @@
             this.gateBox.Size = new System.Drawing.Size(160, 24);
             this.gateBox.TabIndex = 23;
             this.gateBox.SelectedIndexChanged += new System.EventHandler(this.gateBox_SelectedIndexChanged);
+            this.gateBox.KeyPress += EditPlane_KeyPress;
             // 
             // label10
             // 

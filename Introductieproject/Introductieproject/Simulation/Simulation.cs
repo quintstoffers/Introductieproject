@@ -158,7 +158,7 @@ namespace Introductieproject.Simulation
                 Thread.Sleep(1000);
 
                 updateNonUrgent();
-                if(!popup )
+                if(!popup)
                 {
                     foreach (Airplane airplane in airport.airplanes)
                     {

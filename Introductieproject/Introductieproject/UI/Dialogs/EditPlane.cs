@@ -30,6 +30,18 @@ namespace Introductieproject.UI.Dialogs
             loadAirplane();
         }
 
+        void EditPlane_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                button1.PerformClick();
+            }
+            else if (e.KeyChar == (char)Keys.Escape)
+            {
+                button2.PerformClick();
+            }
+        }
+
         private void loadGates()
         {
             foreach(Way way in airport.ways)

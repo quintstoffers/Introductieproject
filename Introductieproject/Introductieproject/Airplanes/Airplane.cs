@@ -249,14 +249,8 @@ namespace Introductieproject.Objects
                     navigator.location = this.location;
 
                     //TODO collision test
-                    if (distanceToTarget <= 0.5)
+                    if (distanceToTarget < 40)
                     {
-                        if (this.hasDocked && navigator.targetWay is Runway)
-                        {
-                            //airport.requestWayAccess(this, navigator.wayList[navigator.wayList.Count - 1], navigator.getTargetNode());
-                            airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
-                            prepareTakeOff();
-                        }
                         if (navigator.hasNextTarget())
                         {
 
@@ -267,7 +261,6 @@ namespace Introductieproject.Objects
                             }
                             else if (!airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
                             {
-
                                 foreach (Airplane dockedPlane in airport.airplanes)
                                 {
                                     // Als er al een vliegtuig staat bij de gate waar dit vliegtuig naartoe wilt, en de vertrektijd ligt na de verwachtte aankomst tijd: Open edit scherm voor nieuwe gate.
@@ -283,12 +276,22 @@ namespace Introductieproject.Objects
                             }
                             else
                             {
-                                //this.accelerate(0);
-                                speed = 0;
+                                this.accelerate(cornerSpeed);
+                                //speed = 0;
                             }
                         }
+                    }
+                    if (distanceToTarget <= 0.5)
+                    {
+                        if (this.hasDocked && navigator.targetWay is Runway)
+                        {
+                            //airport.requestWayAccess(this, navigator.wayList[navigator.wayList.Count - 1], navigator.getTargetNode());
+                            airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
+                            prepareTakeOff();
+                        }
+                        
 
-                        else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode())) // Toestemming verzoeken voor volgende way
+                        else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.currentWay is Gate) // Toestemming verzoeken voor volgende way
                         {
                             if (!hasDocked)
                             {
@@ -299,7 +302,6 @@ namespace Introductieproject.Objects
                             //    prepareTakeOff();
                             //}                 // Volgende simtik gaan we weer verder
                         }
-
                     }
 
                     if (distanceToTarget <= speed)

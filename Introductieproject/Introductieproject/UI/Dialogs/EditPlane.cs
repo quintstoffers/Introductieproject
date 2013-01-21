@@ -56,7 +56,7 @@ namespace Introductieproject.UI.Dialogs
 
             foreach (Airplane ap in airport.airplanes)
             {
-                if (ap.status == Airplane.Status.DOCKING)
+                if (ap.status == Airplane.Status.DOCKING || (ap.status == Airplane.Status.CANCELLED && ap.navigator.currentWay is Gate))
                 {
                     gateBox.Items.Remove(ap.gate);
                 }

@@ -267,7 +267,7 @@ namespace Introductieproject.Objects
                                 foreach (Airplane dockedPlane in airport.airplanes)
                                 {
                                     // Als er al een vliegtuig staat bij de gate waar dit vliegtuig naartoe wilt, en de vertrektijd ligt na de verwachtte aankomst tijd: Open edit scherm voor nieuwe gate.
-                                    if (dockedPlane.gate == this.gate && dockedPlane.isOnAirport() && dockedPlane.status == Status.DOCKING)
+                                    if (dockedPlane.gate == this.gate && dockedPlane.isOnAirport() && (dockedPlane.status == Status.DOCKING || dockedPlane.status == Status.CANCELLED))
                                     {
                                         if (this.arrivalDate < dockedPlane.actualDepartureDate)
                                         {
@@ -472,17 +472,6 @@ namespace Introductieproject.Objects
             if (status == Status.APPROACHING || status == Status.DEPARTED)
             {
                 return false;
-            }
-            if (status == Status.CANCELLED && navigator != null)
-            {
-                if (navigator.location == null)
-                {
-                    return false;
-                }
-                else 
-                {
-                    return true; 
-                }
             }
             else { return true; }
         }

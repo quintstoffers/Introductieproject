@@ -40,9 +40,12 @@ namespace Introductieproject.Forms
                 plane.SubItems.Add(airplane.arrivalDate.ToString());
                 plane.SubItems.Add(airplane.departureDate.ToString());
                 plane.SubItems.Add(airplane.gate);
-                plane.SubItems.Add(airplane.status.ToString());
+                if (airplane.cancelled)
+                    plane.SubItems.Add("CANCELLED");
+                else
+                    plane.SubItems.Add(airplane.status.ToString());
                 listView1.Items.Add(plane);
-                if (airplane.status == Airplane.Status.CANCELLED)
+                if (airplane.cancelled)
                 {
                     plane.Checked = true;
                     plane.ForeColor = Color.Red;
@@ -114,7 +117,7 @@ namespace Introductieproject.Forms
             {
                 selectedAirplane.cancelled = true;
                 loadPLanes();
-            }            
+            }
         }
 
         private void selectionChange(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -131,7 +134,7 @@ namespace Introductieproject.Forms
 
         public void selectedAirplaneItem()
         {
-            int i,j = 0;
+            int i, j = 0;
             if (selectedAirplane != null)
             {
                 for (i = 0; i < airport.airplanes.Count; i++)

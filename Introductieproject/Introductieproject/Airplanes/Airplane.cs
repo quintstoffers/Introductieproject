@@ -58,6 +58,7 @@ namespace Introductieproject.Objects
         public bool isWaiting = false;      // Houdt bij of deze voor de gate wacht
         public bool askAgain = true;        // Houdt bij of er opnieuw gevraagd moet worden voor rescheduling
         private bool standingStill = false;
+        private bool cancelled = false;
         private TimeSpan timeStopped;
 
         public Status status;
@@ -158,7 +159,26 @@ namespace Introductieproject.Objects
             }
             if (status == Status.CANCELLED)
             {
-                // Ga niet landen en ga geen route zoeken.
+                cancelled = true;
+                if (TimeKeeper.currentSimTime >= this.landingDate)
+                {
+                    if (this.navigator == null)
+                    {
+                        requestNavigator(airport);
+                    }
+                    if (airport.requestWayAccess(this, this.navigator.currentWay, this.navigator.getTargetNode()))
+                    {
+                        this.land();
+                        cancelled = true;
+                    }
+                }
+                if (navigator == null)
+                    requestNavigator(airport);
+                if (navigator.currentWay is Gate)
+                {
+                    departureDate = departureDate.Add(TimeSpan.FromDays(7));
+                    dock();
+                }
             }
             else if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
             {
@@ -213,9 +233,9 @@ namespace Introductieproject.Objects
             {
                 requestNavigator(airport);
             }
-            else
+            else if (status == Status.IDLE || cancelled)
             {
-                status = Status.IDLE;
+                //status = Status.IDLE;
 
                 Node targetNode = navigator.getTargetNode();
 
@@ -289,7 +309,7 @@ namespace Introductieproject.Objects
                             airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
                             prepareTakeOff();
                         }
-                        
+
 
                         else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.currentWay is Gate) // Toestemming verzoeken voor volgende way
                         {
@@ -357,8 +377,8 @@ namespace Introductieproject.Objects
         public void land()
         {
             this.setStateVariables(0, 0);
-
-            this.status = Status.IDLE;
+            if (status != Status.CANCELLED)
+                this.status = Status.IDLE;
         }
 
         /*
@@ -469,6 +489,17 @@ namespace Introductieproject.Objects
             if (status == Status.APPROACHING || status == Status.DEPARTED)
             {
                 return false;
+            }
+            if (status == Status.CANCELLED && navigator != null)
+            {
+                if (navigator.location == null)
+                {
+                    return false;
+                }
+                else 
+                {
+                    return true; 
+                }
             }
             else { return true; }
         }

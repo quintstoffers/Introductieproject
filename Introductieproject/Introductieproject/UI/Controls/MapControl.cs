@@ -279,7 +279,7 @@ namespace Introductieproject.UI.Controls
 
             foreach (Airplane currentAirplane in airport.airplanes)
             {
-                if (currentAirplane.status != Airplane.Status.APPROACHING && currentAirplane.status != Airplane.Status.DEPARTED)
+                if (currentAirplane.isOnAirport())
                 {
                     int drawingLocationX = (int)(currentAirplane.location[0] * drawingScale);
                     int drawingLocationY = (int)(currentAirplane.location[1] * drawingScale);

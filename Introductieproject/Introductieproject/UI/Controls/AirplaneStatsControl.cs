@@ -49,7 +49,7 @@ namespace Introductieproject.UI.Controls
                 label2.Text = Math.Round(currentAirplane.location[1]).ToString();
                 label9.Text = Math.Round(currentAirplane.angle).ToString();
             }
-            catch (ArgumentOutOfRangeException e) { }
+            catch (ArgumentOutOfRangeException) { }
 
         }
 

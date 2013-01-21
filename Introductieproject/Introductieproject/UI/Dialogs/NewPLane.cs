@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Introductieproject.Simulation;
-using Introductieproject.Forms;
+using Introductieproject.Airport;
 
 namespace Introductieproject.UI.Dialogs
 {
@@ -19,14 +19,11 @@ namespace Introductieproject.UI.Dialogs
         Introductieproject.Airport.Airport airport;
         Airport.Runway selectedRunway;
         Airport.Gate selectedGate;
-        ScheduleForm sch;
-
-        public NewPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport, ScheduleForm sch)
+        public NewPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport)
         {
             InitializeComponent();
             this.airplane = airplane;
             this.airport = airport;
-            this.sch = sch;
             loadRunways();
             loadGates();
             loadTypes();
@@ -36,20 +33,27 @@ namespace Introductieproject.UI.Dialogs
         }
         private void loadRunways()
         {
-            foreach (Introductieproject.Airport.Runway runway in airport.runways)
+            foreach (Way way in airport.ways)
             {
-                runwaybox.Items.Add(runway.name);
-                runwaybox.SelectedItem = runwaybox.Items[0];
+                if (way is Runway)
+                {
+                    runwaybox.Items.Add(way.name);
+                }
             }
+            runwaybox.SelectedItem = runwaybox.Items[0];
         }
         private void loadGates()
         {
-            foreach (Introductieproject.Airport.Gate gate in airport.gates)
+            foreach (Way way in airport.ways)
             {
-                gateBox.Items.Add(gate.name);
-                gateBox.SelectedItem = gateBox.Items[0];
+                if (way is Gate)
+                {
+                    gateBox.Items.Add(way.name);
+                }
             }
+            gateBox.SelectedItem = gateBox.Items[0];
         }
+
         private void loadTypes()
         {
             typeBox.Items.Add("BO_747");
@@ -83,7 +87,6 @@ namespace Introductieproject.UI.Dialogs
             airplane.typeName = typeBox.SelectedItem.ToString();
             airplane.location = selectedRunway.nodeConnections[0].location;
             airplane.gate = selectedGate.ToString();
-            sch.loadPLanes();
             this.Close();
         }
 
@@ -114,19 +117,23 @@ namespace Introductieproject.UI.Dialogs
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Introductieproject.Airport.Runway runway in airport.runways)
+            foreach (Way way in airport.ways)
             {
-                if (runway.name == runwaybox.SelectedItem.ToString())
-                    selectedRunway = runway;
+                if(way is Runway && way.name.Equals(runwaybox.SelectedItem.ToString()))
+                {
+                    selectedRunway = (Runway) way;
+                }
             }
         }
 
         private void gateBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Introductieproject.Airport.Gate gate in airport.gates)
+            foreach (Way way in airport.ways)
             {
-                if (gate.name == gateBox.SelectedItem.ToString())
-                    selectedGate = gate;
+                if(way is Gate && way.name.Equals(gateBox.SelectedItem.ToString()))
+                {
+                    selectedGate = (Gate) way;
+                }
             }
         }
 

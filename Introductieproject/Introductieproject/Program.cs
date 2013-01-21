@@ -14,17 +14,15 @@ namespace Introductieproject
     class Program
     {
         public static MainForm mainForm;
-        private static Airport.Airport airport;
-        
 
         static void Main(string[] args)
         {
             Console.WriteLine("Program Started");
             
-            airport = createAirport();
+            Airport.Airport airport = createAirport();
 
             TimeKeeper.targetScale = 10;                    // Verhouding tussen real en simtime is 1, dus gelijk.
-            DateTime simStartTime = new DateTime(2013, 1, 1, 21, 59, 55);
+            DateTime simStartTime = new DateTime(2013, 1, 1, 22, 00, 00);
             TimeKeeper.init(simStartTime, true);            // TimeKeeper instellen op vaste starttijd
 
             mainForm = new MainForm(airport);
@@ -38,7 +36,8 @@ namespace Introductieproject
 
         static Airport.Airport createAirport()
         {
-            airport = new Airport.Airport();
+            Airport.Airport airport = new Airport.Airport();
+
             Parser parser = new Parser();
             List<Taxiway> taxiWayList = new List<Taxiway>();
             List<Runway> runWayList = new List<Runway>();
@@ -52,10 +51,6 @@ namespace Introductieproject
             airport.ways.AddRange(gateWayList);
             airport.ways.AddRange(taxiWayList);
             airport.nodes.AddRange(nodeList);
-            airport.taxiways.AddRange(taxiWayList);
-            airport.runways.AddRange(runWayList);
-            airport.gateways.AddRange(gateWayList);
-            airport.gates.AddRange(gateList);
 
             return airport;
         }

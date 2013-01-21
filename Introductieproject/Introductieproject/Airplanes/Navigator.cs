@@ -10,8 +10,8 @@ namespace Introductieproject.Airplanes
 {
     public class Navigator
     {
-        public IList<Node> nodepoints;      // De lijst met toekomstige nodepoints voor het vliegtuig
-        public IList<Way> waypoints;        // De lijst met toekomstige waypoints voor het vliegtuig
+        public IList<Node> nodes;      // De lijst met toekomstige nodepoints voor het vliegtuig
+        public IList<Way> wayPoints;        // De lijst met toekomstige waypoints voor het vliegtuig
         public IList<Way> wayList = new List<Way>();
         public int targetNodeNumber = 0;
 
@@ -152,13 +152,13 @@ namespace Introductieproject.Airplanes
                 Node startNode = findStartNode(startWay, airplane);
                 Node endNode = endWay.nodeConnections[1]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
                 Route bestRoute = findRoute(startNode, endNode, airplane, airport);
-                this.nodepoints = bestRoute.RouteList();
+                this.nodes = bestRoute.RouteList();
                 Console.WriteLine("Created list of Nodes");
-                foreach (Node node in nodepoints)
+                foreach (Node node in nodes)
                 {
                     Console.WriteLine(node.ToString());
                 }
-                waypoints = convertNodesToWaypoints(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
+                wayPoints = convertNodesToWaypoints(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
                 
                 Console.WriteLine("Created new list of waypoints");
                 /*foreach (Way way in waypoints)
@@ -249,16 +249,16 @@ namespace Introductieproject.Airplanes
             //Schatting wordt gedaan op basis van een gemiddelde snelheid van 20 = Airplane.maxSpeed
 
             double distanceTotal = 0; //Het bepalen van de nog af te leggen afstand
-            int current = waypoints.IndexOf(currentWay); //De huidige weg
+            int current = wayPoints.IndexOf(currentWay); //De huidige weg
             if (current < 0)
                 current = 0;
-            int max = waypoints.IndexOf(targetway); //De doelweg
+            int max = wayPoints.IndexOf(targetway); //De doelweg
             if (max < 0)
                 max = 0;
-            for (int t = 0; t < waypoints.Count; t++)
+            for (int t = 0; t < wayPoints.Count; t++)
             {
                 if (t >= current && t < max)
-                    distanceTotal += waypoints[t].length;
+                    distanceTotal += wayPoints[t].length;
             }
 
             double speed = 20; //Gemiddelde snelheid (echte snelheid zal iets lager liggen door het draaien)
@@ -321,9 +321,9 @@ namespace Introductieproject.Airplanes
         {
             Console.WriteLine("Current way: " + currentWay);
             Console.WriteLine("Target way : " + targetWay);
-            if (nodepoints.Count != targetNodeNumber)
+            if (nodes.Count != targetNodeNumber)
             {
-                return nodepoints[targetNodeNumber];
+                return nodes[targetNodeNumber];
             }
             else
             {
@@ -333,13 +333,13 @@ namespace Introductieproject.Airplanes
 
         public double getDistanceToTargetNode(double[] location)
         {
-            return Utils.getDistanceBetweenPoints(location, nodepoints[targetNodeNumber].location);
+            return Utils.getDistanceBetweenPoints(location, nodes[targetNodeNumber].location);
         }
 
 
         public Boolean hasNextTarget()
         {
-            if (targetNodeNumber + 1 >= nodepoints.Count)
+            if (targetNodeNumber + 1 >= nodes.Count)
             {
                 return false;
             }
@@ -379,8 +379,8 @@ namespace Introductieproject.Airplanes
                 return;
             }
 
-            Node targetNode = nodepoints[targetNodeNumber];
-            Node previousNode = nodepoints[targetNodeNumber - 1]; ;
+            Node targetNode = nodes[targetNodeNumber];
+            Node previousNode = nodes[targetNodeNumber - 1]; ;
 
             foreach (Way targetConnectedWay in targetNode.connections)
             {
@@ -396,13 +396,13 @@ namespace Introductieproject.Airplanes
         }
         public Way getTargetWay()
         {
-            if (targetNodeNumber == nodepoints.Count - 1)   // Targetway is de huidige weg
+            if (targetNodeNumber == nodes.Count - 1)   // Targetway is de huidige weg
             {
                 return currentWay;
             }
 
-            Node targetNode = nodepoints[targetNodeNumber];
-            Node nextTargetNode = nodepoints[targetNodeNumber + 1]; ;
+            Node targetNode = nodes[targetNodeNumber];
+            Node nextTargetNode = nodes[targetNodeNumber + 1]; ;
 
             foreach (Way targetConnectedWay in targetNode.connections)
             {
@@ -669,19 +669,19 @@ namespace Introductieproject.Airplanes
 
         public double getAngleToTarget(double[] location)
         {
-            return Utils.getAngleBetweenPoints(location, nodepoints[targetNodeNumber].location);
+            return Utils.getAngleBetweenPoints(location, nodes[targetNodeNumber].location);
         }
 
         public bool hasWay(Way way)
         {
             //Methode om te kijken of een navigator een weg nog niet heeft afgelegd
-            if (waypoints.Contains(way))
+            if (wayPoints.Contains(way))
             {
-                int target = waypoints.IndexOf(currentWay);
-                for (int t = 0; t < waypoints.Count; t++)
+                int target = wayPoints.IndexOf(currentWay);
+                for (int t = 0; t < wayPoints.Count; t++)
                 {
                     if (t >= target)
-                        if (waypoints[t] == way)
+                        if (wayPoints[t] == way)
                             return true;
                 }
             }

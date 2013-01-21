@@ -10,12 +10,6 @@ namespace Introductieproject.Airport
     public class Airport
     {
         public BindingList<Airplane> airplanes = new BindingList<Airplane>();
-        public List<Airplane> airplanesTakenOff = new List<Airplane>();
-
-        public List<Gate> gates = new List<Gate>();
-        public List<Runway> runways = new List<Runway>();
-        public List<Taxiway> taxiways = new List<Taxiway>();
-        public List<Gateway> gateways = new List<Gateway>();
 
         public List<Way> ways = new List<Way>();
         public List<Node> nodes = new List<Node>();
@@ -31,42 +25,6 @@ namespace Introductieproject.Airport
             {
                 if (currentAirplane.status == Airplane.Status.APPROACHING)
                 {
-                    if (TimeKeeper.currentSimTime >= currentAirplane.landingDate)
-                    {
-                        /*
-                        //TODO runway bezet ja of nee
-                        if (currentAirplane.actualLandingDate == null)
-                        {
-
-                            if (!requestWayAccess(currentAirplane, currentAirplane.navigator.targetWay))
-                            {
-                                // Wacht een extra minuut
-                                TimeSpan wait = new TimeSpan(0, 1, 0);
-                                currentAirplane.actualLandingDate = TimeKeeper.currentSimTime + wait;
-                            }
-                        }
-                        else if (TimeKeeper.currentSimTime >= currentAirplane.actualLandingDate)   // Vliegtuig is geland, maar nog niet setup
-                        {
-                            if (!requestWayAccess(currentAirplane, currentAirplane.navigator.targetWay))
-                            {
-                                // Wacht een extra 30 seconden.
-                                TimeSpan wait = new TimeSpan(0, 1, 0);
-                                currentAirplane.actualLandingDate = TimeKeeper.currentSimTime + wait;
-                            }
-                            else
-                            {
-                                Console.WriteLine("New airplane landed (" + currentAirplane.Registration + ")");
-                                currentAirplane.land();
-                            }
-                        }*/
-                        if (currentAirplane.navigator == null)
-                            currentAirplane.navigator = new Navigator(currentAirplane, this.ways, this);
-                        if (requestWayAccess(currentAirplane, currentAirplane.navigator.currentWay, currentAirplane.navigator.getTargetNode()))
-                        {
-                            currentAirplane.land();
-                        }
-                    }
-                    continue;
                 }
                 else if (currentAirplane.status == Airplane.Status.IDLE)
                 {
@@ -563,7 +521,7 @@ namespace Introductieproject.Airport
                         if (targetway.nodeConnections[0] == startnode)
                             othernode = targetway.nodeConnections[1];
                         else othernode = targetway.nodeConnections[0];
-                        if (airplane.navigator.nodepoints.IndexOf(startnode) < airplane.navigator.nodepoints.IndexOf(othernode))
+                        if (airplane.navigator.nodes.IndexOf(startnode) < airplane.navigator.nodes.IndexOf(othernode))
                             returnlist.Add(airplane);
                     }
                 }

@@ -14,12 +14,8 @@ namespace Introductieproject.Airport
         public const int DIRECTION_ENDTOSTART = -1;
         public const int DIRECTION_STARTTOEND = 1;
         public string name;
-        public bool isReserved = false;
-        public IList<Navigator> reservations = new List<Navigator>();
 
-        public IList<Node> nodeConnections = new List<Node>();
-
-        public int numAirplanesOnWay;
+        public Node[] nodeConnections = new Node[2];
 
         //Bepalen in welke richting gereden moet worden
         public int direction;
@@ -29,7 +25,7 @@ namespace Introductieproject.Airport
 
         //public List<Navigator> navigatorList = new List<Navigator>();
 
-        public Airplane airplane;
+       // public Airplane airplane;
 
         long timeOccupiedTicks = 0;
         double Occupancy
@@ -46,8 +42,8 @@ namespace Introductieproject.Airport
 
         public Way(Node node1, Node node2, int dir, string name)
         {
-            this.nodeConnections.Add(node1);
-            this.nodeConnections.Add(node2);
+            this.nodeConnections[0] = node1;
+            this.nodeConnections[1] = node2;
             node1.connections.Add(this); 
             node2.connections.Add(this);
             this.direction = dir;
@@ -56,10 +52,7 @@ namespace Introductieproject.Airport
 
         public void simulate()
         {
-            if (airplane != null)
-            {
-                timeOccupiedTicks += TimeKeeper.elapsedSimTime.Ticks;
-            }
+           //TODO update timeOccupied (probs in Airport) timeOccupiedTicks += TimeKeeper.elapsedSimTime.Ticks;
         }
 
         public double length
@@ -83,61 +76,5 @@ namespace Introductieproject.Airport
             }
             return returnStr;
         }
-
-        //public void removeNavigator(Navigator navigator)
-        //{
-        //    //Verwijdert een specifieke navigator uit de lijst en update de hasAirplane
-        //    this.navigatorList.Remove(navigator);
-        //    /*for (int t = 0; t < this.navigatorList.Count; t++)
-        //    {
-        //        if (this.navigatorList[t] == navigator)
-        //        {
-        //            navigatorList.RemoveAt(t);
-        //            break;
-        //        }
-        //    }
-        //    */
-        //    if (navigatorList.Count > 0)
-        //        hasAirplane = true;
-        //    else hasAirplane = false;
-        //}
-    
-
-        /*public void addNavigator(Navigator navigator)
-        {
-            this.navigatorList.Add(navigator);
-            if (navigatorList.Count > 0)
-                hasAirplane = true;
-            else hasAirplane = false;
-        }*/
-
-        public void addReservation(Navigator navigator)
-        {
-            this.reservations.Add(navigator);
-            this.isReserved = true;
-        }
-
-        public void removeReservation(Navigator navigator)
-        {
-            if (this.reservations.Contains(navigator))
-                this.reservations.Remove(navigator);
-            if (this.reservations.Count == 0)
-                this.isReserved = false;
-        }
-
-        /*public bool checkTurn(Navigator navigator)
-        {
-            if (this.reservations[0] == navigator && !this.hasAirplane)
-            {
-                return true;
-            }
-            return false;
-        }*/
-
-        /*public void resetNavigators()
-        {
-            this.navigatorList = new List<Navigator>();
-            this.hasAirplane = false;
-        }*/
     }
 }

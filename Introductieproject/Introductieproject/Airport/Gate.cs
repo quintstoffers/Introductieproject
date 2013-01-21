@@ -11,13 +11,5 @@ namespace Introductieproject.Airport
         public Gate(Node node1, Node node2, int dir, string name) : base(node1, node2, dir, name)
         {
         }
-
-        //public int[] location = new int[2]; startlocation en endlocation ipv location want subklasse van Way. Consistentie
-
-        public int waitingPassengers;
-        public int waitingLuggage;
-        public double waitingLuggageKg;
-
-        public string gateName;
     }
 }

@@ -27,10 +27,8 @@ namespace Introductieproject.Objects
         // "Vaste" variabelen die per type vliegtuig zullen verschillen (defined in subclasse!)
         public String manufacturerName;     // Maker vliegtuig
         public String typeName;             // Leesbare string voor weergave
-        public int maxSpeed;                // Snelheden in m/s
-        public int cruisingSpeed;
+        public int taxiSpeed;                // Snelheden in m/s
         public int takeofSpeed;
-        public int taxiSpeed;
 
         // Hier variabelen die per individueel vliegtuig verschillen (defined in XML)
         public String registration;
@@ -51,11 +49,6 @@ namespace Introductieproject.Objects
         public TimeSpan arrivalDifference;
         public TimeSpan landingDifference;
         public int priority;
-        Stopwatch timer = new Stopwatch();
-
-        public int passengers;              // Aantal passagiers
-        public int luggage;                 // Aantal stukken baggage
-        public double luggageKg;            // Baggage in kilogram
 
         public double[] location;           // De huidige locatie van het vliegtuig
         public double speed;                // Snelheid van het vliegtuig
@@ -64,7 +57,6 @@ namespace Introductieproject.Objects
         public bool hasCollision = false;   // Houdt bij of er collision is
         public bool isWaiting = false;      // Houdt bij of deze voor de gate wacht
         public bool askAgain = true;        // Houdt bij of er opnieuw gevraagd moet worden voor rescheduling
-
         private bool standingStill = false;
         private TimeSpan timeStopped;
 
@@ -134,13 +126,10 @@ namespace Introductieproject.Objects
 
             this.status = Status.APPROACHING;
         }
-        public void setStateVariables(double speed, int angle, int passengers, int luggage, int luggageKg)
+        public void setStateVariables(double speed, int angle)
         {
             this.speed = 90;
             this.angle = navigator.getAngleToTarget(this.location);
-            this.passengers = passengers;
-            this.luggage = luggage;
-            this.luggageKg = luggageKg;
         }
 
         /*
@@ -173,6 +162,17 @@ namespace Introductieproject.Objects
             }
             else if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
             {
+                if (TimeKeeper.currentSimTime >= this.landingDate)
+                {
+                    if (this.navigator == null)
+                    {
+                        requestNavigator(airport);
+                    }
+                    if (airport.requestWayAccess(this, this.navigator.currentWay, this.navigator.getTargetNode()))
+                    {
+                        this.land();
+                    }
+                }
             }
             else if (status == Status.DEPARTED)
             {
@@ -241,7 +241,7 @@ namespace Introductieproject.Objects
                     //Console.WriteLine("     target angle: " + targetAngle);
 
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
-                    maxSpeed = 20;
+                    taxiSpeed = 20;
                     //if (navigator.getCurrentWay() is Gateway)
                     //    maxSpeed = 5;
 
@@ -308,9 +308,9 @@ namespace Introductieproject.Objects
                         speed = 0;
                     }
 
-                    if (speed > maxSpeed)
+                    if (speed > taxiSpeed)
                     {
-                        accelerate(maxSpeed);
+                        accelerate(taxiSpeed);
                     }
 
                     if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
@@ -318,9 +318,9 @@ namespace Introductieproject.Objects
                         rotate(targetAngle);
                     }
 
-                    if (speed < maxSpeed && distanceToTarget > 50 && angle == targetAngle)
+                    if (speed < taxiSpeed && distanceToTarget > 50 && angle == targetAngle)
                     {
-                        accelerate(maxSpeed);
+                        accelerate(taxiSpeed);
                     }
                     else if ((speed > cornerSpeed) || speed < cornerSpeed && distanceToTarget <= 50 && angle == targetAngle && !standingStill)
                     {
@@ -354,7 +354,7 @@ namespace Introductieproject.Objects
 
         public void land()
         {
-            this.setStateVariables(0, 0, 200, 210, 2000);
+            this.setStateVariables(0, 0);
 
             this.status = Status.IDLE;
         }
@@ -536,7 +536,7 @@ namespace Introductieproject.Objects
 
             if (targetSpeed < speed)
                 acceleration = -5; // in het geval dat je moet afremmen
-            if (hasCollision == true || maxSpeed < speed)
+            if (hasCollision == true || taxiSpeed < speed)
                 acceleration = -10;
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
 

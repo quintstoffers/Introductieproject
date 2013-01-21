@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using Introductieproject.Simulation;
 using Introductieproject.Airport;
 using Introductieproject.Objects;
-using Introductieproject.Forms;
 
 namespace Introductieproject.UI.Dialogs
 {
@@ -18,26 +17,28 @@ namespace Introductieproject.UI.Dialogs
         Parser parser = new Parser();
         Airplane airplane;
         Introductieproject.Airport.Airport airport;
-        ScheduleForm sch;
 
-        public EditPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport, ScheduleForm sch)
+        public EditPlane(Introductieproject.Objects.Airplane airplane, Introductieproject.Airport.Airport airport)
         {
             InitializeComponent();
             this.airplane = airplane;
             this.airport = airport;
-            this.sch = sch;
             loadGates();
             loadAirplane();
         }
 
         private void loadGates()
         {
-            foreach (Gate gate in airport.gates)
+            foreach(Way way in airport.ways)
             {
-                gateBox.Items.Add(gate.name);
-                gateBox.SelectedItem = gateBox.Items[0];
-                gateBox.Sorted = true;
+                if(way is Gate)
+                {
+                    gateBox.Items.Add(way.name);
+                    gateBox.Sorted = true;
+                }
             }
+            gateBox.SelectedItem = gateBox.Items[0];
+
             foreach (Airplane ap in airport.airplanes)
             {
                 if (ap.status == Airplane.Status.DOCKING)
@@ -56,7 +57,6 @@ namespace Introductieproject.UI.Dialogs
                 flight.Text = airplane.Flight;
                 origin.Text = airplane.origin;
                 destination.Text = airplane.destination;
-                departuredate.Text = airplane.departureDate.ToShortTimeString();
             }
             catch (NullReferenceException) 
             {
@@ -80,7 +80,6 @@ namespace Introductieproject.UI.Dialogs
             airplane.departureDate = departuredate.Value;
             airplane.gate = gateBox.SelectedItem.ToString();
             airplane.requestNavigator(airport);
-            sch.loadPLanes();
             this.Close();
         }
 

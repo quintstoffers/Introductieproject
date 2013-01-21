@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using Introductieproject.UI.Dialogs;
 using Introductieproject.Objects;
 using Introductieproject.Simulation;
-
 namespace Introductieproject.Forms
 {
     public partial class ScheduleForm : Form
@@ -53,7 +52,7 @@ namespace Introductieproject.Forms
         }
         public void addplane()
         {
-            NewPlane newPlane = new NewPlane(airplane, airport, this);
+            NewPlane newPlane = new NewPlane(airplane, airport);
             newPlane.button1.Click += button1_Click;
             newPlane.ShowDialog(this);
             Parser.refreshAirplanes(airport.airplanes);
@@ -62,7 +61,7 @@ namespace Introductieproject.Forms
 
         public void editplane()
         {
-            EditPlane editPlane = new EditPlane(selectedAirplane, airport, this);
+            EditPlane editPlane = new EditPlane(selectedAirplane, airport);
             loadPLanes();
             editPlane.ShowDialog(this);
             editPlane.button1.Click += reschedule;

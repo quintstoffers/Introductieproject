@@ -30,14 +30,14 @@ namespace Introductieproject.UI.Controls
             {
                 Airplane currentAirplane = airport.airplanes[currentSelectedRow];
 
-                if (currentAirplane.navigator != null && currentAirplane.navigator.nodepoints != null)
+                if (currentAirplane.navigator != null && currentAirplane.navigator.nodes != null)
                 {
-                    dgvNodes.DataSource = currentAirplane.navigator.nodepoints;
+                    dgvNodes.DataSource = currentAirplane.navigator.nodes;
                     Airport.Node targetNode = currentAirplane.navigator.getTargetNode();
-                    for (int i = 0; i < currentAirplane.navigator.nodepoints.Count; i++)
+                    for (int i = 0; i < currentAirplane.navigator.nodes.Count; i++)
                     {
                         dgvNodes.Rows[i].Selected = false;
-                        if (currentAirplane.navigator.nodepoints[i].Equals(targetNode))
+                        if (currentAirplane.navigator.nodes[i].Equals(targetNode))
                         {
                             dgvNodes.Rows[i].Selected = true;
                         }

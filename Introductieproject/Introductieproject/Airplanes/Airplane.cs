@@ -58,7 +58,7 @@ namespace Introductieproject.Objects
         public bool isWaiting = false;      // Houdt bij of deze voor de gate wacht
         public bool askAgain = true;        // Houdt bij of er opnieuw gevraagd moet worden voor rescheduling
         private bool standingStill = false;
-        private bool cancelled = false;
+        public bool cancelled = false;
         private TimeSpan timeStopped;
 
         public Status status;
@@ -159,26 +159,7 @@ namespace Introductieproject.Objects
             }
             if (status == Status.CANCELLED)
             {
-                cancelled = true;
-                if (TimeKeeper.currentSimTime >= this.landingDate)
-                {
-                    if (this.navigator == null)
-                    {
-                        requestNavigator(airport);
-                    }
-                    if (airport.requestWayAccess(this, this.navigator.currentWay, this.navigator.getTargetNode()))
-                    {
-                        this.land();
-                        cancelled = true;
-                    }
-                }
-                if (navigator == null)
-                    requestNavigator(airport);
-                if (navigator.currentWay is Gate)
-                {
-                    departureDate = departureDate.Add(TimeSpan.FromDays(7));
-                    dock();
-                }
+                //Hij doet niets meer als hij gecancelled is
             }
             else if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
             {
@@ -199,6 +180,8 @@ namespace Introductieproject.Objects
             }
             else if (status == Status.DOCKING)      // Vliegtuig staat bij gate
             {
+                if (cancelled)
+                    status = Status.CANCELLED;
                 if (TimeKeeper.currentSimTime >= actualDepartureDate)
                 {
                     leaveDock();
@@ -233,7 +216,7 @@ namespace Introductieproject.Objects
             {
                 requestNavigator(airport);
             }
-            else if (status == Status.IDLE || cancelled)
+            else if (status == Status.IDLE)
             {
                 //status = Status.IDLE;
 

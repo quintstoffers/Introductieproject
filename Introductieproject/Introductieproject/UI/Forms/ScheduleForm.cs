@@ -112,7 +112,7 @@ namespace Introductieproject.Forms
             DialogResult res = MessageBox.Show("Weet u zeker dat u deze vlucht wilt annuleren?", "Waarschuwing", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (res == System.Windows.Forms.DialogResult.Yes)
             {
-                selectedAirplane.status = Airplane.Status.CANCELLED;
+                selectedAirplane.cancelled = true;
                 loadPLanes();
             }            
         }

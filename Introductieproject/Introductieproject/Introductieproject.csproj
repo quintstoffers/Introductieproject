@@ -63,6 +63,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="UI\Dialogs\DatePicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\Dialogs\DatePicker.Designer.cs">
+      <DependentUpon>DatePicker.cs</DependentUpon>
+    </Compile>
     <Compile Include="UI\Dialogs\EditPlane.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,12 +90,6 @@
     <Compile Include="UI\Controls\AirplaneStatsControl.Designer.cs">
       <DependentUpon>AirplaneStatsControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\Controls\SimulationMapControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="UI\Controls\SimulationMapControl.Designer.cs">
-      <DependentUpon>SimulationMapControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="UI\Controls\MapControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -107,18 +107,6 @@
     </Compile>
     <Compile Include="UI\Controls\ZoomControl.Designer.cs">
       <DependentUpon>ZoomControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\DatePickerForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\DatePickerForm.Designer.cs">
-      <DependentUpon>DatePickerForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="UI\Forms\EditForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\Forms\EditForm.Designer.cs">
-      <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UI\Forms\MainForm.cs">
       <SubType>Form</SubType>
@@ -148,6 +136,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="UI\Dialogs\DatePicker.resx">
+      <DependentUpon>DatePicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UI\Dialogs\EditPlane.resx">
       <DependentUpon>EditPlane.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,14 +151,8 @@
     <EmbeddedResource Include="UI\Controls\MapControl.resx">
       <DependentUpon>MapControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UI\Controls\SimulationMapControl.resx">
-      <DependentUpon>SimulationMapControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="UI\Controls\ZoomControl.resx">
       <DependentUpon>ZoomControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UI\Forms\DatePickerForm.resx">
-      <DependentUpon>DatePickerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -354,7 +354,6 @@ namespace Introductieproject.Airplanes
             //Ik voeg hem niet toe bij gate, want dat gaat nog fout want hij komt er dan 2x in.
             if (wayList[targetNodeNumber] is Gate)
             {
-                wayList[targetNodeNumber].removeReservation(this);
                 // wayList[currentTargetNode].addNavigator(this);
             }
             else

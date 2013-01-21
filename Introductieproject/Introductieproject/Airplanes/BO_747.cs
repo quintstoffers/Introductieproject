@@ -13,7 +13,6 @@ namespace Introductieproject.Objects
             manufacturerName = "Boeing";
             typeName = "747-XXX";
             taxiSpeed = 270;
-            cruisingSpeed = 230;
             takeofSpeed = 90;
             taxiSpeed = 20;
         }

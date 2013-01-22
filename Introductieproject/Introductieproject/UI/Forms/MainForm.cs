@@ -94,6 +94,56 @@ namespace Introductieproject.Forms
             scheduleForm.loadPLanes();
             scheduleForm.Show();
         }
+
+        private void fastestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Simulation.Simulation.uiUpdateInterval = 250;
+            fastestToolStripMenuItem.Checked = true;
+            fastToolStripMenuItem.Checked = false;
+            normalToolStripMenuItem.Checked = false;
+            slowToolStripMenuItem.Checked = false;
+            slowestToolStripMenuItem.Checked = false;
+        }
+
+        private void fastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Simulation.Simulation.uiUpdateInterval = 500;
+            fastestToolStripMenuItem.Checked = false;
+            fastToolStripMenuItem.Checked = true;
+            normalToolStripMenuItem.Checked = false;
+            slowToolStripMenuItem.Checked = false;
+            slowestToolStripMenuItem.Checked = false;
+        }
+
+        private void normalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Simulation.Simulation.uiUpdateInterval = 1000;
+            fastestToolStripMenuItem.Checked = false;
+            fastToolStripMenuItem.Checked = false;
+            normalToolStripMenuItem.Checked = true;
+            slowToolStripMenuItem.Checked = false;
+            slowestToolStripMenuItem.Checked = false;
+        }
+
+        private void slowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Simulation.Simulation.uiUpdateInterval = 2000;
+            fastestToolStripMenuItem.Checked = false;
+            fastToolStripMenuItem.Checked = false;
+            normalToolStripMenuItem.Checked = false;
+            slowToolStripMenuItem.Checked = true;
+            slowestToolStripMenuItem.Checked = false;
+        }
+
+        private void slowestToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Simulation.Simulation.uiUpdateInterval = 4000;
+            fastestToolStripMenuItem.Checked = false;
+            fastToolStripMenuItem.Checked = false;
+            normalToolStripMenuItem.Checked = false;
+            slowToolStripMenuItem.Checked = false;
+            slowestToolStripMenuItem.Checked = true;
+        }
     }
 }
 

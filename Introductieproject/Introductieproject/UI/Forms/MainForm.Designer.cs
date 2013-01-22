@@ -41,14 +41,21 @@
             this.continueToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshIntervalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fastestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.slowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.slowestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsSimTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsCurrentScale = new System.Windows.Forms.ToolStripStatusLabel();
             this.nuScale = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
+            this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
@@ -63,7 +70,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuToolStripMenuItem,
             this.optionsToolStripMenuItem1,
-            this.simulationToolStripMenuItem});
+            this.simulationToolStripMenuItem,
+            this.uIToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
@@ -160,6 +168,63 @@
             this.editToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
             this.editToolStripMenuItem.Text = "Edit";
             // 
+            // uIToolStripMenuItem
+            // 
+            this.uIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.refreshIntervalToolStripMenuItem});
+            this.uIToolStripMenuItem.Name = "uIToolStripMenuItem";
+            this.uIToolStripMenuItem.Size = new System.Drawing.Size(30, 20);
+            this.uIToolStripMenuItem.Text = "UI";
+            // 
+            // refreshIntervalToolStripMenuItem
+            // 
+            this.refreshIntervalToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fastestToolStripMenuItem,
+            this.fastToolStripMenuItem,
+            this.normalToolStripMenuItem,
+            this.slowToolStripMenuItem,
+            this.slowestToolStripMenuItem});
+            this.refreshIntervalToolStripMenuItem.Name = "refreshIntervalToolStripMenuItem";
+            this.refreshIntervalToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.refreshIntervalToolStripMenuItem.Text = "Refresh interval";
+            // 
+            // fastestToolStripMenuItem
+            // 
+            this.fastestToolStripMenuItem.Name = "fastestToolStripMenuItem";
+            this.fastestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fastestToolStripMenuItem.Text = "Fastest";
+            this.fastestToolStripMenuItem.Click += new System.EventHandler(this.fastestToolStripMenuItem_Click);
+            // 
+            // fastToolStripMenuItem
+            // 
+            this.fastToolStripMenuItem.Name = "fastToolStripMenuItem";
+            this.fastToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fastToolStripMenuItem.Text = "Fast";
+            this.fastToolStripMenuItem.Click += new System.EventHandler(this.fastToolStripMenuItem_Click);
+            // 
+            // normalToolStripMenuItem
+            // 
+            this.normalToolStripMenuItem.Checked = true;
+            this.normalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.normalToolStripMenuItem.Text = "Normal";
+            this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
+            // 
+            // slowToolStripMenuItem
+            // 
+            this.slowToolStripMenuItem.Name = "slowToolStripMenuItem";
+            this.slowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.slowToolStripMenuItem.Text = "Slow";
+            this.slowToolStripMenuItem.Click += new System.EventHandler(this.slowToolStripMenuItem_Click);
+            // 
+            // slowestToolStripMenuItem
+            // 
+            this.slowestToolStripMenuItem.Name = "slowestToolStripMenuItem";
+            this.slowestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.slowestToolStripMenuItem.Text = "Slowest";
+            this.slowestToolStripMenuItem.Click += new System.EventHandler(this.slowestToolStripMenuItem_Click);
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -242,15 +307,6 @@
             this.splitContainer1.SplitterDistance = 454;
             this.splitContainer1.TabIndex = 10;
             // 
-            // airplaneStatsControl
-            // 
-            this.airplaneStatsControl.AutoSize = true;
-            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.airplaneStatsControl.Location = new System.Drawing.Point(0, 0);
-            this.airplaneStatsControl.Name = "airplaneStatsControl";
-            this.airplaneStatsControl.Size = new System.Drawing.Size(904, 570);
-            this.airplaneStatsControl.TabIndex = 9;
-            // 
             // mapControl
             // 
             this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -259,6 +315,15 @@
             this.mapControl.Name = "mapControl";
             this.mapControl.Size = new System.Drawing.Size(454, 570);
             this.mapControl.TabIndex = 0;
+            // 
+            // airplaneStatsControl
+            // 
+            this.airplaneStatsControl.AutoSize = true;
+            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.airplaneStatsControl.Location = new System.Drawing.Point(0, 0);
+            this.airplaneStatsControl.Name = "airplaneStatsControl";
+            this.airplaneStatsControl.Size = new System.Drawing.Size(904, 570);
+            this.airplaneStatsControl.TabIndex = 9;
             // 
             // MainForm
             // 
@@ -312,5 +377,12 @@
         private UI.Controls.AirplaneStatsControl airplaneStatsControl;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private UI.Controls.MapControl mapControl;
+        private System.Windows.Forms.ToolStripMenuItem uIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refreshIntervalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fastestToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fastToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem normalToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem slowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem slowestToolStripMenuItem;
     }
 }

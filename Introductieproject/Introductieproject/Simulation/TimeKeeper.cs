@@ -48,7 +48,7 @@ namespace Introductieproject.Simulation
             totalElapsedRealTimeTicks = 0;
             totalElapsedSimTimeTicks = 0;
 
-            //Scale = targetScale;
+            Scale = targetScale;
 
             Console.WriteLine("Timekeeper set: " + currentRealTime);
         }
@@ -62,8 +62,7 @@ namespace Introductieproject.Simulation
                 totalElapsedSimTimeTicks = 0;
             }
 
-
-            Scale = 10;
+            Scale = targetScale;
 
             Console.WriteLine("Timekeeper set        : " + currentRealTime);
             Console.WriteLine("Simulation starting on: " + currentRealTime);
@@ -83,7 +82,6 @@ namespace Introductieproject.Simulation
 
             totalElapsedRealTimeTicks += elapsedRealTimeTicks;
             totalElapsedSimTimeTicks += elapsedSimTimeTicks;
-
         }
 
         private static DateTime savedSimTime;
@@ -124,7 +122,7 @@ namespace Introductieproject.Simulation
             {
                 if (scale < targetScale)
                 {
-                    Scale += 0.5;
+                    Scale += 1;
                 }
                 else
                 {
@@ -133,7 +131,7 @@ namespace Introductieproject.Simulation
             }
             else
             {
-                scale -= 0.1;
+                scale -= 0.5;
             }
         }
     }

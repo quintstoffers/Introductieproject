@@ -23,18 +23,8 @@ namespace Introductieproject.Simulation
         private static bool multiThreadingEnabled;
 
         public static int updateInterval;                   // update interval van simulatie in milliseconden
-        public static int uiUpdateTicks;                    // aantal kloktiks voordat de UI geupdatet wordt
-        public static int uiUpdateInterval                  // "leesbare" ui update interval in milliseconden
-        {
-            get
-            {
-                return uiUpdateTicks * updateInterval;
-            }
-            set
-            {
-                uiUpdateTicks = value / updateInterval;
-            }
-        }
+        public static int uiUpdateInterval;                  // ui update interval in milliseconden
+
 
         private static Thread simulationThread;
         private static Thread uiUpdaterThread;
@@ -67,7 +57,9 @@ namespace Introductieproject.Simulation
                 if (uiUpdaterThread == null)
                 {
                     uiUpdaterThread = new Thread(uiUpdater);
+                    uiUpdaterThread.Priority = ThreadPriority.Lowest;
                 }
+                uiUpdateInterval = 1000;
                 runSimulation = true;
                 simulationThread.Start();
                 uiUpdaterThread.Start();
@@ -155,7 +147,7 @@ namespace Introductieproject.Simulation
         {
             while (runSimulation)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(uiUpdateInterval);
 
                 updateNonUrgent();
                 if(!popup)

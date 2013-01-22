@@ -32,7 +32,7 @@ namespace Introductieproject.UI.Controls
         public bool airplanesDirty = false;
         bool firstPaint = true;
 
-        public Point lastPanlocation;
+        public Point lastPanLocation;
         public Point mouseLocation;
         public Point mapLocation;
 
@@ -71,7 +71,7 @@ namespace Introductieproject.UI.Controls
         }
         private void MapControlMouseUp(object sender, MouseEventArgs e)
         {
-            this.lastPanlocation = this.mapLocation;
+            this.lastPanLocation = this.mapLocation;
         }
 
         public void update(Airport.Airport airport)
@@ -130,7 +130,7 @@ namespace Introductieproject.UI.Controls
             double xScale = (this.Width - zoomControl1.Width) / (maxXCoord * 2);
             double yScale = this.Height / (maxYCoord * 2);
 
-            maxScreenPixels = Math.Min(this.Width - zoomControl1.Width, this.Height);
+            maxScreenPixels = Math.Min(this.Width - zoomControl1.Width, this.Height) + 20;
 
             drawingScale = Math.Min(xScale, yScale) * 2;
         }
@@ -143,8 +143,8 @@ namespace Introductieproject.UI.Controls
 
         public void pan(Point panStart, Point mouseLocation)
         {
-            mapLocation.X = lastPanlocation.X +  (mouseLocation.X - panStart.X);
-            mapLocation.Y = lastPanlocation.Y +(mouseLocation.Y - panStart.Y);
+            mapLocation.X = lastPanLocation.X +  (mouseLocation.X - panStart.X);
+            mapLocation.Y = lastPanLocation.Y +(mouseLocation.Y - panStart.Y);
             panStart = mouseLocation;
             this.Invalidate();
         }
@@ -170,10 +170,10 @@ namespace Introductieproject.UI.Controls
             {
                 if (way is Runway)
                 {
-                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale);
-                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale);
-                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale);
-                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
+                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
+                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
+                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
+                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
                     Point point1 = new Point(x1, y1);
                     Point point2 = new Point(x2, y2);
                     Pen pen = new Pen(Color.Red, 2);
@@ -181,30 +181,30 @@ namespace Introductieproject.UI.Controls
                 }
                 else if(way is Taxiway)
                 {
-                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale);
-                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale);
-                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale);
-                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
+                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
+                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
+                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
+                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
                     Point point1 = new Point(x1, y1);
                     Point point2 = new Point(x2, y2);
                     drawWay(graphics, Color.Black, point1, point2, way.name);
                 }
                 else if (way is Gateway)
                 {
-                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale);
-                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale);
-                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale);
-                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
+                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
+                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
+                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
+                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
                     Point point1 = new Point(x1, y1);
                     Point point2 = new Point(x2, y2);
                     drawGateWay(graphics, Color.Green, point1, point2, "");
                 }
                 else if (way is Gate)
                 {
-                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale);
-                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale);
-                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale);
-                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
+                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
+                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
+                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
+                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
                     Point point1 = new Point(x1, y1);
                     Point point2 = new Point(x2, y2);
                     Pen pen = new Pen(Color.Yellow, 2);
@@ -215,7 +215,8 @@ namespace Introductieproject.UI.Controls
             {
                zoomlevelX = bmpAirport.Width;
                zoomlevelY = bmpAirport.Height;
-               mapLocation = new Point(0 / 4, this.Height / 4);
+               mapLocation = new Point(-10, this.Height / 4);
+               lastPanLocation = new Point(-10, this.Height / 4) ;
                firstPaint = false;
             }
             airportDirty = false;
@@ -284,8 +285,8 @@ namespace Introductieproject.UI.Controls
             {
                 if (currentAirplane.isOnAirport())
                 {
-                    int drawingLocationX = (int)(currentAirplane.location[0] * drawingScale);
-                    int drawingLocationY = (int)(currentAirplane.location[1] * drawingScale);
+                    int drawingLocationX = (int)(currentAirplane.location[0] * drawingScale + 10);
+                    int drawingLocationY = (int)(currentAirplane.location[1] * drawingScale + 10);
 
                     graphics.FillEllipse(Brushes.White, drawingLocationX-3, drawingLocationY-3, 6, 6);
                 }

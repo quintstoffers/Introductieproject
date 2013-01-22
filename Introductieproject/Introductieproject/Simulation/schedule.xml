@@ -149,12 +149,662 @@
       type="BO_747"
       carrier="Air France"
       gate="A1"
-      location="533,86"
+      location="3000,0"
       landingDate="01/01/13 22:15:00"
       arrivalDate="01/01/13 22:20:00"
       departureDate="01/01/13 23:00:00"
       origin="Charles de Gaulle Airport"
       destination="Amsterdam Airport Schiphol">
   </plane>
+  <plane
+      registration="G-STEF"
+      flight="D0CU-M3N7-3R"
+      type="BO_747"
+      carrier="Air France"
+      gate="C1"
+      location="0,1000"
+      landingDate="01/01/13 22:50:00"
+      arrivalDate="01/01/13 22:55:00"
+      departureDate="02/01/13 07:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="M-4ST3R-M1ND"
+      type="BO_747"
+      carrier="Air France"
+      gate="D1"
+      location="1000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 05:25:00"
+      departureDate="02/01/13 07:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-WILLIAM"
+      flight="W3B-S1T3-R"
+      type="BO_747"
+      carrier="Air France"
+      gate="D2"
+      location="0,1000"
+      landingDate="02/01/13 05:45:00"
+      arrivalDate="02/01/13 05:53:00"
+      departureDate="02/01/13 07:15:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-TIM"
+      flight="N-4V1G-4T0R"
+      type="BO_747"
+      carrier="Air France"
+      gate="A2"
+      location="1000,0"
+      landingDate="02/01/13 06:00:00"
+      arrivalDate="02/01/13 06:08:00"
+      departureDate="02/01/13 09:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-RHCP"
+      flight="H-AMM3R-F4LL"
+      type="BO_747"
+      carrier="Air France"
+      gate="C1"
+      location="3000,0"
+      landingDate="02/01/13 06:15:00"
+      arrivalDate="02/01/13 06:20:00"
+      departureDate="02/01/13 08:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-BFMV"
+      flight="A-AL3-H0US3"
+      type="BO_747"
+      carrier="Air France"
+      gate="D1"
+      location="1000,0"
+      landingDate="02/01/13 06:19:00"
+      arrivalDate="02/01/13 06:25:00"
+      departureDate="02/01/13 09:12:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-BMW"
+      flight="A-L4V4-L4MP"
+      type="BO_747"
+      carrier="Air France"
+      gate="A3"
+      location="3000,0"
+      landingDate="02/01/13 06:25:00"
+      arrivalDate="02/01/13 06:30:00"
+      departureDate="02/01/13 09:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-AUDI"
+      flight="A-P10N-33R"
+      type="BO_747"
+      carrier="Air France"
+      gate="D2"
+      location="1000,0"
+      landingDate="02/01/13 08:15:00"
+      arrivalDate="02/01/13 08:20:00"
+      departureDate="02/01/13 10:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-OPEL"
+      flight="A-8ULLY-M0NG"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 08:48:00"
+      arrivalDate="02/01/13 08:55:00"
+      departureDate="02/01/13 11:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-HFGY"
+      flight="A-G4M3-CUB3"
+      type="BO_747"
+      carrier="Air France"
+      gate="A2"
+      location="1000,0"
+      landingDate="02/01/13 09:15:00"
+      arrivalDate="02/01/13 09:20:00"
+      departureDate="02/01/13 14:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-GKGT"
+      flight="A-W3B-C4M"
+      type="BO_747"
+      carrier="Air France"
+      gate="C1"
+      location="3000,0"
+      landingDate="02/01/13 09:41:00"
+      arrivalDate="02/01/13 09:48:00"
+      departureDate="02/01/13 13:22:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-VMFC"
+      flight="I-KN0W-R1T3"
+      type="BO_747"
+      carrier="Air France"
+      gate="D2"
+      location="1000,0"
+      landingDate="02/01/13 10:05:00"
+      arrivalDate="02/01/13 10:11:00"
+      departureDate="02/01/13 15:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-YKGF"
+      flight="A-C4R3-F4C3"
+      type="BO_747"
+      carrier="Air France"
+      gate="D1"
+      location="3000,0"
+      landingDate="02/01/13 10:15:00"
+      arrivalDate="02/01/13 10:20:00"
+      departureDate="02/01/13 14:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+ <!-- <plane
+      registration="G-NKIY"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+      registration="G-QUINT"
+      flight="A-CH1PS-B4G"
+      type="BO_747"
+      carrier="Air France"
+      gate="A1"
+      location="3000,0"
+      landingDate="02/01/13 05:15:00"
+      arrivalDate="02/01/13 22:20:00"
+      departureDate="02/01/13 23:00:00"
+      origin="Charles de Gaulle Airport"
+      destination="Amsterdam Airport Schiphol">
+  </plane>-->
 
 </schedule>

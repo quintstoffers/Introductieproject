@@ -59,7 +59,6 @@
             this.registration.Name = "registration";
             this.registration.Size = new System.Drawing.Size(132, 22);
             this.registration.TabIndex = 0;
-            this.registration.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label1
             // 
@@ -71,7 +70,6 @@
             this.label1.Size = new System.Drawing.Size(84, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "Registration";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -90,7 +88,6 @@
             this.flight.Name = "flight";
             this.flight.Size = new System.Drawing.Size(132, 22);
             this.flight.TabIndex = 2;
-            this.flight.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label3
             // 
@@ -109,7 +106,6 @@
             this.carrier.Name = "carrier";
             this.carrier.Size = new System.Drawing.Size(132, 22);
             this.carrier.TabIndex = 4;
-            this.carrier.TextChanged += new System.EventHandler(this.carrier_TextChanged);
             // 
             // label4
             // 
@@ -165,7 +161,6 @@
             this.arrivaldate.Name = "arrivaldate";
             this.arrivaldate.Size = new System.Drawing.Size(265, 22);
             this.arrivaldate.TabIndex = 12;
-            this.arrivaldate.ValueChanged += new System.EventHandler(this.arrivaldate_ValueChanged);
             // 
             // label7
             // 
@@ -176,7 +171,6 @@
             this.label7.Size = new System.Drawing.Size(82, 17);
             this.label7.TabIndex = 13;
             this.label7.Text = "Arrival Date";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // label8
             // 
@@ -187,7 +181,6 @@
             this.label8.Size = new System.Drawing.Size(106, 17);
             this.label8.TabIndex = 14;
             this.label8.Text = "Departure Date";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // departuredate
             // 
@@ -197,7 +190,6 @@
             this.departuredate.Name = "departuredate";
             this.departuredate.Size = new System.Drawing.Size(265, 22);
             this.departuredate.TabIndex = 15;
-            this.departuredate.ValueChanged += new System.EventHandler(this.departuredate_ValueChanged);
             // 
             // button1
             // 
@@ -303,7 +295,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "NewPlane";
             this.Text = "Add flight";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

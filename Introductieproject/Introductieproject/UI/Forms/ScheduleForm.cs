@@ -139,7 +139,7 @@ namespace Introductieproject.Forms
             {
                 for (i = 0; i < airport.airplanes.Count; i++)
                 {
-                    if (selectedAirplane.registration == airport.airplanes[i].registration && selectedAirplane != null)
+                    if (selectedAirplane.registration == airport.airplanes[i].registration)
                     {
                         j = i;
                         break;

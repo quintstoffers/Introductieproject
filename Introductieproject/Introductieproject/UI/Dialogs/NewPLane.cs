@@ -63,20 +63,6 @@ namespace Introductieproject.UI.Dialogs
             typeBox.Items.Add("BO_747");
             typeBox.SelectedItem = typeBox.Items[0];
         }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -109,29 +95,9 @@ namespace Introductieproject.UI.Dialogs
             }
         }
 
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void carrier_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -154,41 +120,6 @@ namespace Introductieproject.UI.Dialogs
                     selectedGate = (Gate) way;
                 }
             }
-        }
-
-        private void typeBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void arrivaldate_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void departuredate_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void landing_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void landingdate_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

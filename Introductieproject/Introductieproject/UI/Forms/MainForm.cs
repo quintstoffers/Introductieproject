@@ -26,8 +26,6 @@ namespace Introductieproject.Forms
             airplaneStatsControl.init(airport);
 
             nuScale.Value = (Decimal) TimeKeeper.targetScale;
-
-            zoomControl1.zoom += new EventHandler(zoom);
         }
 
         public void updateUI()  // Update elementen zonder databinding
@@ -70,11 +68,6 @@ namespace Introductieproject.Forms
         {
 
         }
-        private void zoom(object sender, EventArgs e)
-        {
-            mapControl.zoom(zoomControl1.zoomLevel);
-        }
-
 
         private void nuScale_ValueChanged(object sender, EventArgs e)
         {

@@ -12,6 +12,7 @@ namespace Introductieproject.UI.Controls
 {
     public partial class AirplaneStatsControl : UserControl
     {
+        private Airport.Airport airport;
         int currentSelectedRow = 0;
 
         public AirplaneStatsControl()
@@ -21,11 +22,31 @@ namespace Introductieproject.UI.Controls
 
         public void init(Airport.Airport airport)
         {
-            this.dgvAirplanes.DataSource = airport.airplanes;
+            this.airport = airport;
         }
 
         public void update(Airport.Airport airport)
         {
+            if (airport.airplanes.Count != dgvAirplanes.Rows.Count)
+            {
+                dgvAirplanes.Rows.Clear();
+                dgvAirplanes.Rows.Add(airport.airplanes.Count);
+            }
+            for(int i = 0; i < airport.airplanes.Count; i++)
+            {
+                Airplane currentAirplane = airport.airplanes[i];
+                string[] columnValues = new string[]{currentAirplane.Flight, currentAirplane.Registration,
+                                                     currentAirplane.PlannedArrival, currentAirplane.PlannedDeparture, currentAirplane.CurrentDelay};
+                dgvAirplanes.Rows[i].SetValues(columnValues);
+
+                TimeSpan totalDelay = new TimeSpan();
+                totalDelay = currentAirplane.delay + currentAirplane.arrivalDifference + currentAirplane.landingDifference;
+                if (totalDelay.Ticks != 0)
+                {
+                    dgvAirplanes.Rows[i].Cells[0].Style.BackColor = Color.Red;
+                }
+            }
+
             try
             {
                 Airplane currentAirplane = airport.airplanes[currentSelectedRow];
@@ -56,6 +77,7 @@ namespace Introductieproject.UI.Controls
         private void dataGrid_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             currentSelectedRow = e.RowIndex;
+            update(airport);
         }
 
         private void label5_Click(object sender, EventArgs e)

@@ -45,6 +45,11 @@ namespace Introductieproject.UI.Controls
             MouseDown += new MouseEventHandler(MapControlClick);
             MouseMove += new MouseEventHandler(MapControlMouseMove);
             MouseUp += new MouseEventHandler(MapControlMouseUp);
+
+            this.Paint += MapControl_Paint;
+            this.DoubleBuffered = true;
+
+            zoomControl1.zoom += new EventHandler(zoomEvent);
         }
 
         public void init(Airport.Airport airport)
@@ -71,36 +76,25 @@ namespace Introductieproject.UI.Controls
 
         public void update(Airport.Airport airport)
         {
-            if (!isDrawing)
+            draw(airport);
+            this.Invalidate();
+        }
+                
+        void MapControl_Paint(object sender, PaintEventArgs e)
+        {
+            e.Graphics.Clear(Color.DarkGray);
+            if (bmpAirport != null)
             {
-                new Thread(() => draw(this.CreateGraphics(), airport)).Start();
+                e.Graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
+            }
+            if (bmpAirplanes != null)
+            {
+                e.Graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
             }
         }
-
-        Object drawLock = new Object();
-        public void drawBitmaps(Graphics graphics)
+        
+        public void draw(Airport.Airport airport)
         {
-            lock (drawLock)
-            {
-                graphics.Clear(Color.DarkBlue);
-                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-                graphics.DrawImage(bmpAirport, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
-                graphics.DrawImage(bmpAirplanes, mapLocation.X, mapLocation.Y, zoomlevelX, zoomlevelY);
-            }
-        }
-
-        bool isDrawing;
-        public void draw(Graphics graphics, Airport.Airport airport)
-        {
-            if (isDrawing)
-            {
-                return;
-            }
-            else isDrawing = true;
-
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
-            
             if (airportDirty)
             {
                 Thread airplanesDrawThread = new Thread(() => drawAirplanesToBitmap(airport));
@@ -114,10 +108,6 @@ namespace Introductieproject.UI.Controls
             {
                 drawAirplanesToBitmap(airport);
             }
-
-            drawBitmaps(graphics);
-
-            isDrawing = false;
         }
 
         /*
@@ -137,10 +127,10 @@ namespace Introductieproject.UI.Controls
                 }
             }
 
-            double xScale = this.Width / (maxXCoord * 2);
+            double xScale = (this.Width - zoomControl1.Width) / (maxXCoord * 2);
             double yScale = this.Height / (maxYCoord * 2);
 
-            maxScreenPixels = Math.Max(this.Width, this.Height);
+            maxScreenPixels = Math.Min(this.Width - zoomControl1.Width, this.Height);
 
             drawingScale = Math.Min(xScale, yScale) * 2;
         }
@@ -156,19 +146,25 @@ namespace Introductieproject.UI.Controls
             mapLocation.X = lastPanlocation.X +  (mouseLocation.X - panStart.X);
             mapLocation.Y = lastPanlocation.Y +(mouseLocation.Y - panStart.Y);
             panStart = mouseLocation;
-            drawBitmaps(this.CreateGraphics());
+            this.Invalidate();
         }
 
         private void drawAirportToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
-            Stopwatch stopwatch = new Stopwatch();
-            stopwatch.Start();
 
-            bmpAirport = new Bitmap(maxScreenPixels * 2, maxScreenPixels * 2);
-
-            Graphics graphics = Graphics.FromImage(bmpAirport);
-            graphics.Clear(Color.DarkBlue);
+            Graphics graphics = null;
+            if (bmpAirport == null || bmpAirport.Size.Width != maxScreenPixels)
+            {
+                bmpAirport = new Bitmap(maxScreenPixels, maxScreenPixels);
+                graphics = Graphics.FromImage(bmpAirport);
+            }
+            else
+            {
+                graphics = Graphics.FromImage(bmpAirport);
+            }
+            graphics.Clear(Color.DarkGray);
+            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
 
             foreach (Way way in airport.ways)
             {
@@ -191,7 +187,7 @@ namespace Introductieproject.UI.Controls
                     int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale);
                     Point point1 = new Point(x1, y1);
                     Point point2 = new Point(x2, y2);
-                    drawWay(graphics, Color.Gray, point1, point2, way.name);
+                    drawWay(graphics, Color.Black, point1, point2, way.name);
                 }
                 else if (way is Gateway)
                 {
@@ -219,7 +215,7 @@ namespace Introductieproject.UI.Controls
             {
                zoomlevelX = bmpAirport.Width;
                zoomlevelY = bmpAirport.Height;
-               mapLocation = new Point(this.Width / 4, this.Height / 4);
+               mapLocation = new Point(0 / 4, this.Height / 4);
                firstPaint = false;
             }
             airportDirty = false;
@@ -235,10 +231,10 @@ namespace Introductieproject.UI.Controls
                 namePos.X = start.X + 10;
             else
                 namePos.X = start.X - 10;
-            g.DrawString(name, SystemFonts.DefaultFont, Brushes.White, namePos);
+            g.DrawString(name, SystemFonts.DefaultFont, Brushes.Black, namePos);
 
-            g.FillEllipse(Brushes.Gray, start.X - 5, start.Y - 5, 10, 10);
-            g.FillEllipse(Brushes.Gray, end.X - 5, end.Y - 5, 10, 10);
+            g.FillEllipse(Brushes.Black, start.X - 5, start.Y - 5, 10, 10);
+            g.FillEllipse(Brushes.Black, end.X - 5, end.Y - 5, 10, 10);
         }
         public void drawGateWay(Graphics g, Color color, Point start, Point end, String name)
         {
@@ -265,17 +261,24 @@ namespace Introductieproject.UI.Controls
                 namePos.Y = start.Y + 20;
             }
             namePos.X = start.X;
-            g.DrawString(name, SystemFonts.DefaultFont, Brushes.White, namePos);
+            g.DrawString(name, SystemFonts.DefaultFont, Brushes.Black, namePos);
             g.FillEllipse(Brushes.Gray, start.X - 3, start.Y - 3, 6, 6);
         }
 
         private void drawAirplanesToBitmap(Airport.Airport airport)
         {
             calculateScaling(airport);
-            bmpAirplanes = new Bitmap(maxScreenPixels * 2, maxScreenPixels * 2);
-            Graphics graphics = Graphics.FromImage(bmpAirplanes);
-
-            graphics.Clear(Color.Transparent);
+            Graphics graphics = null;
+            if (bmpAirplanes == null || bmpAirplanes.Size.Width != maxScreenPixels)
+            {
+                bmpAirplanes = new Bitmap(maxScreenPixels, maxScreenPixels);
+                graphics = Graphics.FromImage(bmpAirplanes);
+            }
+            else
+            {
+                graphics = Graphics.FromImage(bmpAirplanes);
+                graphics.Clear(Color.Transparent);
+            }
 
             foreach (Airplane currentAirplane in airport.airplanes)
             {
@@ -284,7 +287,7 @@ namespace Introductieproject.UI.Controls
                     int drawingLocationX = (int)(currentAirplane.location[0] * drawingScale);
                     int drawingLocationY = (int)(currentAirplane.location[1] * drawingScale);
 
-                    graphics.FillEllipse(Brushes.White, drawingLocationX-2, drawingLocationY-2, 5, 5);
+                    graphics.FillEllipse(Brushes.White, drawingLocationX-3, drawingLocationY-3, 6, 6);
                 }
             }
             airplanesDirty = false;
@@ -300,6 +303,10 @@ namespace Introductieproject.UI.Controls
         {
 
         }
-        
+
+        private void zoomEvent(object sender, EventArgs e)
+        {
+            this.zoom(zoomControl1.zoomLevel);
+        }
     }
 }

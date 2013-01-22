@@ -46,12 +46,16 @@
             this.tsCurrentScale = new System.Windows.Forms.ToolStripStatusLabel();
             this.nuScale = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
-            this.zoomControl1 = new Introductieproject.UI.Controls.ZoomControl();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -221,48 +225,49 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Target scale";
             // 
-            // zoomControl1
+            // splitContainer1
             // 
-            this.zoomControl1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.zoomControl1.Location = new System.Drawing.Point(520, 24);
-            this.zoomControl1.Name = "zoomControl1";
-            this.zoomControl1.Size = new System.Drawing.Size(42, 570);
-            this.zoomControl1.TabIndex = 7;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.mapControl);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.airplaneStatsControl);
+            this.splitContainer1.Size = new System.Drawing.Size(1362, 570);
+            this.splitContainer1.SplitterDistance = 454;
+            this.splitContainer1.TabIndex = 10;
             // 
             // airplaneStatsControl
             // 
             this.airplaneStatsControl.AutoSize = true;
-            this.airplaneStatsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Right;
-            this.airplaneStatsControl.Location = new System.Drawing.Point(562, 24);
-            this.airplaneStatsControl.MinimumSize = new System.Drawing.Size(800, 400);
+            this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.airplaneStatsControl.Location = new System.Drawing.Point(0, 0);
             this.airplaneStatsControl.Name = "airplaneStatsControl";
-            this.airplaneStatsControl.Size = new System.Drawing.Size(800, 570);
-            this.airplaneStatsControl.TabIndex = 6;
+            this.airplaneStatsControl.Size = new System.Drawing.Size(904, 570);
+            this.airplaneStatsControl.TabIndex = 9;
             // 
             // mapControl
             // 
-            this.mapControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapControl.BackColor = System.Drawing.SystemColors.Control;
             this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.mapControl.Location = new System.Drawing.Point(0, 24);
+            this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapControl.Location = new System.Drawing.Point(0, 0);
             this.mapControl.Name = "mapControl";
-            this.mapControl.Size = new System.Drawing.Size(556, 570);
-            this.mapControl.TabIndex = 5;
-            this.mapControl.Load += new System.EventHandler(this.mapControl_Load);
+            this.mapControl.Size = new System.Drawing.Size(454, 570);
+            this.mapControl.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1362, 616);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.zoomControl1);
             this.Controls.Add(this.nuScale);
-            this.Controls.Add(this.airplaneStatsControl);
-            this.Controls.Add(this.mapControl);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
@@ -274,6 +279,11 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).EndInit();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -296,11 +306,11 @@
         private System.Windows.Forms.ToolStripMenuItem planningToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tsSimTime;
-        private UI.Controls.MapControl mapControl;
-        private UI.Controls.AirplaneStatsControl airplaneStatsControl;
-        private UI.Controls.ZoomControl zoomControl1;
         private System.Windows.Forms.NumericUpDown nuScale;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripStatusLabel tsCurrentScale;
+        private UI.Controls.AirplaneStatsControl airplaneStatsControl;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private UI.Controls.MapControl mapControl;
     }
 }

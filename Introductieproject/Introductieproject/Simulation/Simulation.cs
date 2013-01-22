@@ -219,8 +219,8 @@ namespace Introductieproject.Simulation
                 }
             }
             else
-            { 
-                Parser.refreshAirplanes(airport.airplanes)
+            {
+                Parser.refreshAirplanes(airport.airplanes);
                 airport.simulate();
 
                 foreach (Airplane currentAirplane in airport.airplanes)

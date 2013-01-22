@@ -43,7 +43,7 @@ namespace Introductieproject.UI.Controls
                 totalDelay = currentAirplane.delay + currentAirplane.arrivalDifference + currentAirplane.landingDifference;
                 if (totalDelay.Ticks != 0)
                 {
-                    dgvAirplanes.Rows[i].Cells[0].Style.BackColor = Color.Red;
+                    dgvAirplanes.Rows[i].Cells[4].Style.ForeColor = Color.Red;
                 }
             }
 

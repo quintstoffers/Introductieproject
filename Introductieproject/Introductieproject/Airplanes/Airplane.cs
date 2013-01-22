@@ -139,7 +139,7 @@ namespace Introductieproject.Objects
         public void simulate(Airport.Airport airport)
         {
             Console.WriteLine("SIMULATE: " + this.ToString());
-
+            /*
             if (speed == 0 && status != Status.DOCKING)
             {
                 if (!standingStill)
@@ -151,12 +151,13 @@ namespace Introductieproject.Objects
                 {
                     if (timeStopped >= TimeSpan.FromSeconds(30))
                     {
-                        airport.requestNavigator(this);
+                        //airport.requestNavigator(this);
                         standingStill = false;
                     }
                     timeStopped = timeStopped.Add(TimeKeeper.elapsedSimTime);
                 }
             }
+            */
             if (status == Status.CANCELLED)
             {
                 //Hij doet niets meer als hij gecancelled is
@@ -190,20 +191,15 @@ namespace Introductieproject.Objects
             }
             else if (status == Status.WAITING_TAKEOFF)    // Vliegtuig wacht voordat hij mag opstijgen
             {
+                speed = 0;
                 requestTakeOff(airport);
             }
             else if (status == Status.TAKINGOFF)
             {
                 double targetAngle = navigator.getAngleToTarget(location);
-                double var = 0.01;
-                //if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
-                if (angle - targetAngle > var || angle - targetAngle < -var) //vliegtuig staat niet in de juiste richting, met foutmarge
-                {
-                    speed = 0;
+                if (angle != targetAngle)
                     rotate(targetAngle);
-                }
-                //if (angle == targetAngle)
-                if (angle - targetAngle < var && angle - targetAngle > -var)
+                else if (angle == targetAngle)
                 {
                     this.accelerate(takeofSpeed);
                     if (this.speed == takeofSpeed)
@@ -224,15 +220,11 @@ namespace Introductieproject.Objects
 
                 if (targetNode == null)
                 {
-                    /*//wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
+                    //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                     if (!hasDocked)
                     {
                         dock();
                     }
-                    else
-                    {
-                        prepareTakeOff();
-                    }*/
                 }
                 else
                 {
@@ -252,9 +244,15 @@ namespace Introductieproject.Objects
                     navigator.location = this.location;
 
                     //TODO collision test
-                    if (distanceToTarget < 40)
+                    if (distanceToTarget < 20)
                     {
-                        if (navigator.hasNextTarget())
+                        if (this.hasDocked && navigator.targetWay is Runway)
+                        {
+                            airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
+                            prepareTakeOff();
+                        }
+
+                        else if (navigator.hasNextTarget())
                         {
 
                             if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
@@ -306,7 +304,7 @@ namespace Introductieproject.Objects
                         }
                     }
 
-                    if (distanceToTarget <= speed)
+                    if (distanceToTarget <= speed * TimeKeeper.elapsedSimTime.TotalSeconds)
                     {
                         moveBy(distanceToTarget);
                         speed = 0;
@@ -538,7 +536,7 @@ namespace Introductieproject.Objects
 
             if (targetSpeed < speed)
                 acceleration = -5; // in het geval dat je moet afremmen
-            if (hasCollision == true || taxiSpeed < speed)
+            if (hasCollision == true)
                 acceleration = -10;
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
 

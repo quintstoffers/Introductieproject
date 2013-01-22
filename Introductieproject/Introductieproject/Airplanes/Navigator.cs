@@ -357,7 +357,7 @@ namespace Introductieproject.Airplanes
         }
         public void getCurrentWay()
         {
-            if (targetNodeNumber == 0)  // als 0, dan staat de huidige weg al goed vanuit newRoute()
+            if (targetNodeNumber == 0 || targetNodeNumber >= nodes.Count)  // als 0, dan staat de huidige weg al goed vanuit newRoute()
             {
                 return;
             }
@@ -379,7 +379,7 @@ namespace Introductieproject.Airplanes
         }
         public Way getTargetWay()
         {
-            if (targetNodeNumber == nodes.Count - 1)   // Targetway is de huidige weg
+            if (targetNodeNumber >= nodes.Count - 1)   // Targetway is de huidige weg
             {
                 return currentWay;
             }

@@ -17,7 +17,7 @@ namespace Introductieproject.Simulation
         static XmlDocument AirportDocument = new XmlDocument();
         static XmlNodeList rawPlaneSchedule;
 
-        public static void refreshAirplanes(BindingList<Airplane> loadedAirplanes)
+        public static void refreshAirplanes(List<Airplane> loadedAirplanes)
         {
             try
             {
@@ -89,7 +89,7 @@ namespace Introductieproject.Simulation
                     Airplane newAirplane = (Airplane)Activator.CreateInstance(objectType);
                     newAirplane.setXMLVariables(landingLocation, landingDateTime, gate, arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
 
-                    Program.mainForm.Invoke((Action)(() => loadedAirplanes.Add(newAirplane)));
+                    loadedAirplanes.Add(newAirplane);
 
                     Console.WriteLine("Arrival: " + arrivalDateTime.ToString());
                     Console.WriteLine("XML: new airplane loaded (flight=" + flight + " registration=" + registration + ")");

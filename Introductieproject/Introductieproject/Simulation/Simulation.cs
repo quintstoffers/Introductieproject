@@ -176,7 +176,6 @@ namespace Introductieproject.Simulation
 
         private static void showAsyncPopup(Airplane airplane)
         {
-            //pauseSimulationToggle();
             DialogResult res = MessageBox.Show("Vliegtuig met registratie " + airplane.registration + " komt eerder aan bij een gate dan dat deze vrij is, wilt u de gate veranderen?", "Gate bezet", MessageBoxButtons.YesNo);
             if (res == DialogResult.Yes)
             {
@@ -189,7 +188,6 @@ namespace Introductieproject.Simulation
             if (res == DialogResult.No)
             {
                 airplane.askAgain = false;
-                //pauseSimulationToggle();
             }
 
             popup = false;
@@ -199,26 +197,30 @@ namespace Introductieproject.Simulation
         private static int tasksStarted;
         private static void updateSimulation()
         {
-            Parser.refreshAirplanes(airport.airplanes);
-
             if (multiThreadingEnabled)
             {
                 tasksDone = 0;
                 tasksStarted = 0;
-
-                new Thread(() => airport.simulate()).Start();
+                Thread parserThread = new Thread(() => Parser.refreshAirplanes(airport.airplanes));
+                parserThread.Start();
+                Thread airportThread = new Thread(() => airport.simulate());
+                airportThread.Start();
 
                 foreach (Airplane currentAirplane in airport.airplanes)
                 {
                     ThreadPool.QueueUserWorkItem(new WaitCallback(simulateAirplane), currentAirplane);
                     tasksStarted++;
                 }
+
+                parserThread.Join();
+                airportThread.Join();
                 while (tasksDone < tasksStarted)
                 {
                 }
             }
             else
-            {
+            { 
+                Parser.refreshAirplanes(airport.airplanes)
                 airport.simulate();
 
                 foreach (Airplane currentAirplane in airport.airplanes)

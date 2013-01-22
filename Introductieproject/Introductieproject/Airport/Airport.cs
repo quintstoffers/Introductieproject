@@ -9,7 +9,7 @@ namespace Introductieproject.Airport
 {
     public class Airport
     {
-        public BindingList<Airplane> airplanes = new BindingList<Airplane>();
+        public List<Airplane> airplanes = new List<Airplane>();
 
         public List<Way> ways = new List<Way>();
         public List<Node> nodes = new List<Node>();

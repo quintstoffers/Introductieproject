@@ -105,9 +105,9 @@ namespace Introductieproject.Objects
                 totaldelay = delay + arrivalDifference + landingDifference;
 
                 //afronden op seconden.
-                TimeSpan roundeddelay = new TimeSpan(totaldelay.Ticks - (totaldelay.Ticks % 10000000));
+                TimeSpan roundedDelay = new TimeSpan(totaldelay.Ticks - (totaldelay.Ticks % 10000000));
 
-                return roundeddelay.ToString();
+                return roundedDelay.ToString();
             }
         }
 
@@ -288,7 +288,6 @@ namespace Introductieproject.Objects
                     {
                         if (this.hasDocked && navigator.targetWay is Runway)
                         {
-                            //airport.requestWayAccess(this, navigator.wayList[navigator.wayList.Count - 1], navigator.getTargetNode());
                             airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
                             prepareTakeOff();
                         }
@@ -448,8 +447,6 @@ namespace Introductieproject.Objects
 
             // Zet hasDocked op true voor de navigator.
             hasDocked = true;
-
-            //this.navigator = null; // Verwijder de navigator
         }
 
         public void leaveDock()
@@ -572,7 +569,6 @@ namespace Introductieproject.Objects
 
 
             // Hier kan eventueel ook nog wel ergens de landing/takeoff snelheid bij komen?
-
         }
 
         private void move()

@@ -393,6 +393,7 @@ namespace Introductieproject.Objects
         public void dock()
         {
             status = Status.DOCKING;
+            isWaiting = false;
 
             //Check wanneer vliegtuig is aangekomen.
             actualArrivalDate = TimeKeeper.currentSimTime;

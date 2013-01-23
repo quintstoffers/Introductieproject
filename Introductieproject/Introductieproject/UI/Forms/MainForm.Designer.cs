@@ -49,9 +49,10 @@
             this.nuScale = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.showPopupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
-            this.showPopupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFlightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
@@ -85,7 +86,7 @@
             // planningToolStripMenuItem
             // 
             this.planningToolStripMenuItem.Name = "planningToolStripMenuItem";
-            this.planningToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.planningToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.planningToolStripMenuItem.Text = "Planning";
             this.planningToolStripMenuItem.Click += new System.EventHandler(this.planningToolStripMenuItem_Click);
             // 
@@ -124,7 +125,8 @@
             this.uIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.refreshIntervalToolStripMenuItem,
             this.mapModeToolStripMenuItem,
-            this.showPopupsToolStripMenuItem});
+            this.showPopupsToolStripMenuItem,
+            this.showFlightToolStripMenuItem});
             this.uIToolStripMenuItem.Name = "uIToolStripMenuItem";
             this.uIToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.uIToolStripMenuItem.Text = "Interface";
@@ -266,6 +268,15 @@
             this.splitContainer1.SplitterDistance = 454;
             this.splitContainer1.TabIndex = 10;
             // 
+            // showPopupsToolStripMenuItem
+            // 
+            this.showPopupsToolStripMenuItem.Checked = true;
+            this.showPopupsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showPopupsToolStripMenuItem.Name = "showPopupsToolStripMenuItem";
+            this.showPopupsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.showPopupsToolStripMenuItem.Text = "Show popups";
+            this.showPopupsToolStripMenuItem.Click += new System.EventHandler(this.showPopupsToolStripMenuItem_Click);
+            // 
             // mapControl
             // 
             this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
@@ -284,14 +295,12 @@
             this.airplaneStatsControl.Size = new System.Drawing.Size(904, 570);
             this.airplaneStatsControl.TabIndex = 9;
             // 
-            // showPopupsToolStripMenuItem
+            // showFlightToolStripMenuItem
             // 
-            this.showPopupsToolStripMenuItem.Checked = true;
-            this.showPopupsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showPopupsToolStripMenuItem.Name = "showPopupsToolStripMenuItem";
-            this.showPopupsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.showPopupsToolStripMenuItem.Text = "Show popups";
-            this.showPopupsToolStripMenuItem.Click += new System.EventHandler(this.showPopupsToolStripMenuItem_Click);
+            this.showFlightToolStripMenuItem.Name = "showFlightToolStripMenuItem";
+            this.showFlightToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.showFlightToolStripMenuItem.Text = "Show flight number";
+            this.showFlightToolStripMenuItem.Click += new System.EventHandler(this.showFlightToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -348,5 +357,6 @@
         private System.Windows.Forms.ToolStripMenuItem mapModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem planningToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showPopupsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showFlightToolStripMenuItem;
     }
 }

@@ -36,6 +36,8 @@ namespace Introductieproject.UI.Controls
         public Point mouseLocation;
         public Point mapLocation;
 
+        public static bool alwaysShowFlight = false;
+
         public MapControl()
         {
             InitializeComponent();
@@ -281,14 +283,27 @@ namespace Introductieproject.UI.Controls
                 graphics.Clear(Color.Transparent);
             }
 
-            foreach (Airplane currentAirplane in airport.airplanes)
+            for (int i = 0; i < airport.airplanes.Count; i++ )
             {
+                Airplane currentAirplane = airport.airplanes[i];
                 if (currentAirplane.isOnAirport())
                 {
                     int drawingLocationX = (int)(currentAirplane.location[0] * drawingScale + 10);
                     int drawingLocationY = (int)(currentAirplane.location[1] * drawingScale + 10);
 
-                    graphics.FillEllipse(Brushes.White, drawingLocationX-3, drawingLocationY-3, 6, 6);
+                    if (i == AirplaneStatsControl.currentSelectedRow)
+                    {
+                        graphics.FillEllipse(Brushes.LightBlue, drawingLocationX - 3, drawingLocationY - 3, 6, 6);
+                        graphics.DrawString(currentAirplane.flight, SystemFonts.DefaultFont, Brushes.Black, drawingLocationX + 2, drawingLocationY - 14);
+                    }
+                    else
+                    {
+                        graphics.FillEllipse(Brushes.White, drawingLocationX - 3, drawingLocationY - 3, 6, 6);
+                        if (alwaysShowFlight)
+                        {
+                            graphics.DrawString(currentAirplane.flight, SystemFonts.DefaultFont, Brushes.Black, drawingLocationX + 2, drawingLocationY - 14);
+                        }
+                    }
                 }
             }
             airplanesDirty = false;

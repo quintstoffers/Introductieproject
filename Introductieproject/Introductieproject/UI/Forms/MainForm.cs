@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using Introductieproject.Simulation;
 using Introductieproject.UI;
 using Introductieproject.UI.Forms;
+using Introductieproject.UI.Controls;
 
 namespace Introductieproject.Forms
 {
@@ -149,6 +150,12 @@ namespace Introductieproject.Forms
         {
             Simulation.Simulation.popup = !Simulation.Simulation.popup;
             showPopupsToolStripMenuItem.Checked = !Simulation.Simulation.popup;
+        }
+
+        private void showFlightToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.alwaysShowFlight = !MapControl.alwaysShowFlight;
+            showFlightToolStripMenuItem.Checked = MapControl.alwaysShowFlight;
         }
     }
 }

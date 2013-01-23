@@ -13,7 +13,7 @@ namespace Introductieproject.UI.Controls
     public partial class AirplaneStatsControl : UserControl
     {
         private Airport.Airport airport;
-        int currentSelectedRow = 0;
+        public static int currentSelectedRow = 0;
 
         public AirplaneStatsControl()
         {

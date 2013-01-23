@@ -118,7 +118,7 @@ namespace Introductieproject.Simulation
             {
                 if (scale < targetScale)
                 {
-                    Scale += 1;
+                    Scale += 0.5;
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace Introductieproject.Simulation
             }
             else
             {
-                scale -= 0.5;
+                Scale -= 1;
             }
         }
     }

@@ -144,6 +144,12 @@ namespace Introductieproject.Forms
             slowToolStripMenuItem.Checked = false;
             slowestToolStripMenuItem.Checked = true;
         }
+
+        private void showPopupsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Simulation.Simulation.popup = !Simulation.Simulation.popup;
+            showPopupsToolStripMenuItem.Checked = !Simulation.Simulation.popup;
+        }
     }
 }
 

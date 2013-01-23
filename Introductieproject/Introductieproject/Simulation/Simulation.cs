@@ -18,7 +18,7 @@ namespace Introductieproject.Simulation
         private static bool runSimulation;                  // of de simulatie draait of niet
         private static bool pauseSimulation;                // of de simulatie gepauzeert is
         private static bool leaping = false;
-        private static bool popup = false;
+        public static bool popup = false;
 
         private static bool multiThreadingEnabled;
 

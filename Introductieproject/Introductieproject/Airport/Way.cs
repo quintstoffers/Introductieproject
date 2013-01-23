@@ -28,12 +28,17 @@ namespace Introductieproject.Airport
        // public Airplane airplane;
 
         long timeOccupiedTicks = 0;
-        double Occupancy
+        public double Occupancy
         {
             get
             {
                 return timeOccupiedTicks / TimeKeeper.totalElapsedSimTimeTicks;
             }
+        }
+
+        public void updateOccupancy(long occupiedTicks)
+        {
+            timeOccupiedTicks += occupiedTicks;
         }
         
         public Way()

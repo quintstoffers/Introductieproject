@@ -18,8 +18,6 @@ namespace Introductieproject
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Program Started");
-            
             airport = createAirport();
 
             TimeKeeper.targetScale = 10;                    // Verhouding tussen real en simtime is 1, dus gelijk.

@@ -25,7 +25,6 @@ namespace Introductieproject.Simulation
             }
             catch (FileNotFoundException)
             {
-                Console.WriteLine("XML not found");
                 return;
             }
 

@@ -238,6 +238,18 @@ namespace Introductieproject.UI.Controls
 
             Pen pen = new Pen(color, 2);
             g.DrawLine(pen, x1, y1, x2, y2);
+
+            if (showEfficiency)
+            {
+                Console.WriteLine("WAY: " + way.Occupancy);
+                double occupancy = way.Occupancy;
+
+                Color efficiencyColor = Color.FromArgb((int) (occupancy * 255), 255 - (int) (occupancy * 255), 0);
+                Pen efficiencyPen = new Pen(efficiencyColor, (float) 0.01);
+                g.DrawLine(efficiencyPen, x1 - 3, y1, x2 - 3, y2);
+                g.DrawLine(efficiencyPen, x1 + 3, y1, x2 + 3, y2);
+            }
+
             if(!(way is Gateway))
             {
                 g.FillEllipse(Brushes.Black, x1 - 5, y1- 5, 10, 10);

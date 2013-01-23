@@ -34,6 +34,10 @@ namespace Introductieproject.Forms
             airplaneStatsControl.update(airport);
 
             MapControl.airplanesDirty = true;
+            if (MapControl.showEfficiency)
+            {
+                MapControl.airportDirty = true;
+            }
             mapControl.update();
 
             tsSimTime.Text = "Simulated time: " + TimeKeeper.currentSimTime.ToString();

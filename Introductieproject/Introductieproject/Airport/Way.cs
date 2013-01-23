@@ -27,12 +27,27 @@ namespace Introductieproject.Airport
 
        // public Airplane airplane;
 
-        long timeOccupiedTicks = 0;
+        public long timeOccupiedTicks = 0;
         public double Occupancy
         {
             get
             {
-                return timeOccupiedTicks / TimeKeeper.totalElapsedSimTimeTicks;
+                if (TimeKeeper.totalElapsedSimTimeTicks > 0)
+                {
+                    double occ = (double)timeOccupiedTicks / ((double)TimeKeeper.totalElapsedSimTimeTicks / 2);
+                    if (occ > 1)
+                    {
+                        return 1;
+                    }
+                    else
+                    {
+                        return occ;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 

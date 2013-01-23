@@ -73,6 +73,18 @@ namespace Introductieproject.UI.Controls
         private void MapControlClick(object sender, MouseEventArgs e)
         {
             this.mouseLocation = e.Location;
+            for (int i = 0; i < airport.airplanes.Count; i++)
+            {
+                Airplane currentAirplane = airport.airplanes[i];
+                int xDiff = (int)Math.Abs((currentAirplane.location[0] * drawingScale + 5) - (e.X - mapLocation.X));
+                int yDiff = (int)Math.Abs((currentAirplane.location[1] * drawingScale + 5) - (e.Y - mapLocation.Y));
+                if (xDiff < 13 && yDiff < 13)
+                {
+                    AirplaneStatsControl.currentSelectedRow = i;
+                    this.update();
+                    break;
+                }
+            }
         }
         private void MapControlMouseMove(object sender, MouseEventArgs e)
         {

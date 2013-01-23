@@ -305,6 +305,7 @@ namespace Introductieproject.Objects
                             }
                         }
                     }
+
                     if (distanceToTarget <= 0.5)
                     {
                         if (this.hasDocked && navigator.targetWay is Runway)
@@ -313,17 +314,14 @@ namespace Introductieproject.Objects
                             prepareTakeOff();
                         }
 
-
+                        
                         else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.currentWay is Gate) // Toestemming verzoeken voor volgende way
                         {
                             if (!hasDocked)
                             {
-                                dock();
+                                if (Utils.getDistanceBetweenPoints(location,navigator.getFinalNode().location) < 0.5)
+                                    dock();
                             }
-                            //else
-                            //{
-                            //    prepareTakeOff();
-                            //}                 // Volgende simtik gaan we weer verder
                         }
                     }
 
@@ -347,7 +345,7 @@ namespace Introductieproject.Objects
                     {
                         accelerate(taxiSpeed);
                     }
-                    else if ((speed > cornerSpeed) || speed < cornerSpeed && distanceToTarget <= 50 && angle == targetAngle && !standingStill)
+                    else if ((speed > cornerSpeed) || speed < cornerSpeed && distanceToTarget <= 50 && angle == targetAngle && !standingStill && distanceToTarget > 0)
                     {
                         accelerate(cornerSpeed);
                     }

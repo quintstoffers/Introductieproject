@@ -648,5 +648,10 @@ namespace Introductieproject.Airplanes
             }
             return false;
         }
+
+        public Node getFinalNode()
+        {
+            return (nodes[nodes.Count - 1]);
+        }
     }
 }

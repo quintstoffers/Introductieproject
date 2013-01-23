@@ -30,6 +30,7 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.planningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.continueToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +51,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
-            this.planningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showPopupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
@@ -80,6 +81,13 @@
             this.optionsToolStripMenuItem1.Name = "optionsToolStripMenuItem1";
             this.optionsToolStripMenuItem1.Size = new System.Drawing.Size(90, 20);
             this.optionsToolStripMenuItem1.Text = "Management";
+            // 
+            // planningToolStripMenuItem
+            // 
+            this.planningToolStripMenuItem.Name = "planningToolStripMenuItem";
+            this.planningToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.planningToolStripMenuItem.Text = "Planning";
+            this.planningToolStripMenuItem.Click += new System.EventHandler(this.planningToolStripMenuItem_Click);
             // 
             // simulationToolStripMenuItem
             // 
@@ -115,7 +123,8 @@
             // 
             this.uIToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.refreshIntervalToolStripMenuItem,
-            this.mapModeToolStripMenuItem});
+            this.mapModeToolStripMenuItem,
+            this.showPopupsToolStripMenuItem});
             this.uIToolStripMenuItem.Name = "uIToolStripMenuItem";
             this.uIToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
             this.uIToolStripMenuItem.Text = "Interface";
@@ -275,12 +284,14 @@
             this.airplaneStatsControl.Size = new System.Drawing.Size(904, 570);
             this.airplaneStatsControl.TabIndex = 9;
             // 
-            // planningToolStripMenuItem
+            // showPopupsToolStripMenuItem
             // 
-            this.planningToolStripMenuItem.Name = "planningToolStripMenuItem";
-            this.planningToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.planningToolStripMenuItem.Text = "Planning";
-            this.planningToolStripMenuItem.Click += new System.EventHandler(this.planningToolStripMenuItem_Click);
+            this.showPopupsToolStripMenuItem.Checked = true;
+            this.showPopupsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showPopupsToolStripMenuItem.Name = "showPopupsToolStripMenuItem";
+            this.showPopupsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.showPopupsToolStripMenuItem.Text = "Show popups";
+            this.showPopupsToolStripMenuItem.Click += new System.EventHandler(this.showPopupsToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -336,5 +347,6 @@
         private System.Windows.Forms.ToolStripMenuItem slowestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mapModeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem planningToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showPopupsToolStripMenuItem;
     }
 }

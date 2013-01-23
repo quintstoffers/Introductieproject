@@ -19,6 +19,8 @@ namespace Introductieproject.UI.Controls
         Bitmap bmpAirplanes;
         Bitmap bmpAirport;
 
+        Airport.Airport airport;
+
         Parser parser = new Parser();
         double drawingScale = 1;
         double maxXCoord = 0;
@@ -28,8 +30,8 @@ namespace Introductieproject.UI.Controls
         int zoomlevelX;
         int zoomlevelY;
 
-        public bool airportDirty;
-        public bool airplanesDirty = false;
+        public static bool airportDirty;
+        public static bool airplanesDirty = false;
         bool firstPaint = true;
 
         public Point lastPanLocation;
@@ -37,6 +39,12 @@ namespace Introductieproject.UI.Controls
         public Point mapLocation;
 
         public static bool alwaysShowFlight = false;
+        public static bool showLabels = true;
+        public static bool showEfficiency = true;
+        public static bool showRunways = true;
+        public static bool showTaxiways = true;
+        public static bool showGateways = true;
+        public static bool showGates = true;
 
         public MapControl()
         {
@@ -56,6 +64,8 @@ namespace Introductieproject.UI.Controls
 
         public void init(Airport.Airport airport)
         {
+            this.airport = airport;
+
             airportDirty = true;
             airplanesDirty = true;
         }
@@ -76,7 +86,7 @@ namespace Introductieproject.UI.Controls
             this.lastPanLocation = this.mapLocation;
         }
 
-        public void update(Airport.Airport airport)
+        public void update()
         {
             draw(airport);
             this.Invalidate();
@@ -132,7 +142,7 @@ namespace Introductieproject.UI.Controls
             double xScale = (this.Width - zoomControl1.Width) / (maxXCoord * 2);
             double yScale = this.Height / (maxYCoord * 2);
 
-            maxScreenPixels = Math.Min(this.Width - zoomControl1.Width, this.Height) + 20;
+            maxScreenPixels = Math.Min(this.Width - zoomControl1.Width, this.Height) + 100;
 
             drawingScale = Math.Min(xScale, yScale) * 2;
         }
@@ -141,6 +151,8 @@ namespace Introductieproject.UI.Controls
         {
             zoomlevelX = (int)(bmpAirport.Width * (1 + 0.1225 *zoomLevel));
             zoomlevelY = (int)(bmpAirport.Height * (1 + 0.1225 * zoomLevel));
+
+            update();
         }
 
         public void pan(Point panStart, Point mouseLocation)
@@ -170,102 +182,93 @@ namespace Introductieproject.UI.Controls
 
             foreach (Way way in airport.ways)
             {
-                if (way is Runway)
+                if (way is Runway && showRunways)
                 {
-                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
-                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
-                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
-                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
-                    Point point1 = new Point(x1, y1);
-                    Point point2 = new Point(x2, y2);
-                    Pen pen = new Pen(Color.Red, 2);
-                    drawWay(graphics, Color.Red, point1, point2, way.name);
+                    drawWay(graphics, Color.Red, way);
                 }
-                else if(way is Taxiway)
+                else if(way is Taxiway && showTaxiways)
                 {
-                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
-                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
-                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
-                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
-                    Point point1 = new Point(x1, y1);
-                    Point point2 = new Point(x2, y2);
-                    drawWay(graphics, Color.Black, point1, point2, way.name);
+                    drawWay(graphics, Color.Black, way);
                 }
-                else if (way is Gateway)
+                else if (way is Gateway && showGateways)
                 {
-                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
-                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
-                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
-                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
-                    Point point1 = new Point(x1, y1);
-                    Point point2 = new Point(x2, y2);
-                    drawGateWay(graphics, Color.Green, point1, point2, "");
+                    drawWay(graphics, Color.Green, way);
                 }
-                else if (way is Gate)
+                else if (way is Gate && showGates)
                 {
-                    int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
-                    int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
-                    int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
-                    int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
-                    Point point1 = new Point(x1, y1);
-                    Point point2 = new Point(x2, y2);
-                    Pen pen = new Pen(Color.Yellow, 2);
-                    drawGate(graphics, Color.Gray, point1, point2, way.name);
+                    drawGate(graphics, Color.Gray, (Gate) way, way.name);
                 }
             }
             if (firstPaint)
             {
                zoomlevelX = bmpAirport.Width;
                zoomlevelY = bmpAirport.Height;
-               mapLocation = new Point(-10, this.Height / 4);
-               lastPanLocation = new Point(-10, this.Height / 4) ;
+               mapLocation = new Point(-50, this.Height / 4);
+               lastPanLocation = new Point(-50, this.Height / 4) ;
                firstPaint = false;
             }
             airportDirty = false;
         }
 
-        public void drawWay(Graphics g, Color color, Point start, Point end, String name)
+        public void drawWay(Graphics g, Color color, Way way)
         {
-            Pen pen = new Pen(color,2);
-            g.DrawLine(pen, start, end);
-            Point namePos = new Point();
-            namePos.Y = (int)(start.Y + 0.5 * (end.Y - start.Y) - 10);
-            if (Math.Min(start.X, end.X) == start.X)
-                namePos.X = start.X + 10;
-            else
-                namePos.X = start.X - 10;
-            g.DrawString(name, SystemFonts.DefaultFont, Brushes.Black, namePos);
+            int x1 = (int)(way.nodeConnections[0].location[0] * drawingScale + 10);
+            int y1 = (int)(way.nodeConnections[0].location[1] * drawingScale + 10);
+            int y2 = (int)(way.nodeConnections[1].location[1] * drawingScale + 10);
+            int x2 = (int)(way.nodeConnections[1].location[0] * drawingScale + 10);
 
-            g.FillEllipse(Brushes.Black, start.X - 5, start.Y - 5, 10, 10);
-            g.FillEllipse(Brushes.Black, end.X - 5, end.Y - 5, 10, 10);
+            if (showLabels && !(way is Gateway))
+            {
+                int textYPos;
+                int textXPos;
+                int minY = Math.Min(y1, y2);
+                int maxY = Math.Max(y1, y2);
+                if (y1 >= y2)
+                {
+                    textYPos = (int)(y1 + 0.5 * (y2 - y1));
+                    textXPos = (int)(x1 + 0.5 * (x2 - x1) + 3);
+                }
+                else
+                {
+                    textYPos = (int)(y1 + 0.5 * (y2 - y1));
+                    textXPos = (int)(x1 + 0.5 * (x2 - x1) + 12);
+                }
+                g.DrawString(way.name, SystemFonts.DefaultFont, Brushes.Black, textXPos, textYPos);
+            }
+
+            Pen pen = new Pen(color, 2);
+            g.DrawLine(pen, x1, y1, x2, y2);
+            if(!(way is Gateway))
+            {
+                g.FillEllipse(Brushes.Black, x1 - 5, y1- 5, 10, 10);
+                g.FillEllipse(Brushes.Black, x2 - 5, y2 - 5, 10, 10);
+            }
         }
-        public void drawGateWay(Graphics g, Color color, Point start, Point end, String name)
+        public void drawGate(Graphics g, Color color, Gate gate, String name)
         {
             Pen pen = new Pen(color, 2);
-            g.DrawLine(pen, start, end);
-            Point namePos = new Point();
-            namePos.Y = (int)(start.Y + 0.5 * (end.Y - start.Y) - 10);
-            if (Math.Min(start.X, end.X) == start.X)
-                namePos.X = start.X + 10;
-            else
-                namePos.X = start.X - 10;
-        }
-        public void drawGate(Graphics g, Color color, Point start, Point end, String name)
-        {
-            Pen pen = new Pen(color, 2);
-            g.DrawLine(pen, start, end);
-            Point namePos = new Point();
-            if (start.Y >= end.Y)
+
+            int x1 = (int)(gate.nodeConnections[0].location[0] * drawingScale + 10);
+            int y1 = (int)(gate.nodeConnections[0].location[1] * drawingScale + 10);
+            int y2 = (int)(gate.nodeConnections[1].location[1] * drawingScale + 10);
+            int x2 = (int)(gate.nodeConnections[1].location[0] * drawingScale + 10);
+
+            g.DrawLine(pen, x1, y1, x2, y2);
+
+            if (showLabels)
             {
-                namePos.Y = end.Y - 10;
+                int textWidth = (int)g.MeasureString(gate.name, SystemFonts.DefaultFont).Width;
+                if (y1 > y2)
+                {
+                    g.DrawString(name, SystemFonts.DefaultFont, Brushes.Black, x1 - textWidth / 2, y2 - 15);
+                }
+                else
+                {
+                    g.DrawString(name, SystemFonts.DefaultFont, Brushes.Black, x1 - textWidth / 2, y1 + 15);
+                }
             }
-            else
-            {
-                namePos.Y = start.Y + 20;
-            }
-            namePos.X = start.X;
-            g.DrawString(name, SystemFonts.DefaultFont, Brushes.Black, namePos);
-            g.FillEllipse(Brushes.Gray, start.X - 3, start.Y - 3, 6, 6);
+
+            g.FillEllipse(Brushes.Gray, x1 - 3, y1 - 3, 6, 6);
         }
 
         private void drawAirplanesToBitmap(Airport.Airport airport)

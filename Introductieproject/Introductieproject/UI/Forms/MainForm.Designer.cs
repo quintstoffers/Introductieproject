@@ -43,16 +43,23 @@
             this.slowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.slowestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapModeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.waysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.runwaysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showEfficiencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showLabelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showPopupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showFlightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsSimTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsCurrentScale = new System.Windows.Forms.ToolStripStatusLabel();
             this.nuScale = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.showPopupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.taxiwaysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gatewaysToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
-            this.showFlightToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
@@ -140,51 +147,108 @@
             this.slowToolStripMenuItem,
             this.slowestToolStripMenuItem});
             this.refreshIntervalToolStripMenuItem.Name = "refreshIntervalToolStripMenuItem";
-            this.refreshIntervalToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
+            this.refreshIntervalToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
             this.refreshIntervalToolStripMenuItem.Text = "Refresh interval";
             // 
             // fastestToolStripMenuItem
             // 
             this.fastestToolStripMenuItem.Name = "fastestToolStripMenuItem";
-            this.fastestToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.fastestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fastestToolStripMenuItem.Text = "Fastest";
             this.fastestToolStripMenuItem.Click += new System.EventHandler(this.fastestToolStripMenuItem_Click);
             // 
             // fastToolStripMenuItem
             // 
+            this.fastToolStripMenuItem.Checked = true;
+            this.fastToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fastToolStripMenuItem.Name = "fastToolStripMenuItem";
-            this.fastToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.fastToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.fastToolStripMenuItem.Text = "Fast";
             this.fastToolStripMenuItem.Click += new System.EventHandler(this.fastToolStripMenuItem_Click);
             // 
             // normalToolStripMenuItem
             // 
-            this.normalToolStripMenuItem.Checked = true;
-            this.normalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-            this.normalToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.normalToolStripMenuItem.Text = "Normal";
             this.normalToolStripMenuItem.Click += new System.EventHandler(this.normalToolStripMenuItem_Click);
             // 
             // slowToolStripMenuItem
             // 
             this.slowToolStripMenuItem.Name = "slowToolStripMenuItem";
-            this.slowToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.slowToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.slowToolStripMenuItem.Text = "Slow";
             this.slowToolStripMenuItem.Click += new System.EventHandler(this.slowToolStripMenuItem_Click);
             // 
             // slowestToolStripMenuItem
             // 
             this.slowestToolStripMenuItem.Name = "slowestToolStripMenuItem";
-            this.slowestToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.slowestToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.slowestToolStripMenuItem.Text = "Slowest";
             this.slowestToolStripMenuItem.Click += new System.EventHandler(this.slowestToolStripMenuItem_Click);
             // 
             // mapModeToolStripMenuItem
             // 
+            this.mapModeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.waysToolStripMenuItem,
+            this.showEfficiencyToolStripMenuItem,
+            this.showLabelsToolStripMenuItem});
             this.mapModeToolStripMenuItem.Name = "mapModeToolStripMenuItem";
-            this.mapModeToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.mapModeToolStripMenuItem.Text = "Map mode";
+            this.mapModeToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.mapModeToolStripMenuItem.Text = "Map";
+            // 
+            // waysToolStripMenuItem
+            // 
+            this.waysToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.runwaysToolStripMenuItem,
+            this.taxiwaysToolStripMenuItem,
+            this.gatewaysToolStripMenuItem,
+            this.gatesToolStripMenuItem});
+            this.waysToolStripMenuItem.Name = "waysToolStripMenuItem";
+            this.waysToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.waysToolStripMenuItem.Text = "Ways";
+            // 
+            // runwaysToolStripMenuItem
+            // 
+            this.runwaysToolStripMenuItem.Checked = true;
+            this.runwaysToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.runwaysToolStripMenuItem.Name = "runwaysToolStripMenuItem";
+            this.runwaysToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.runwaysToolStripMenuItem.Text = "Runways";
+            this.runwaysToolStripMenuItem.Click += new System.EventHandler(this.runwaysToolStripMenuItem_Click);
+            // 
+            // showEfficiencyToolStripMenuItem
+            // 
+            this.showEfficiencyToolStripMenuItem.Checked = true;
+            this.showEfficiencyToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showEfficiencyToolStripMenuItem.Name = "showEfficiencyToolStripMenuItem";
+            this.showEfficiencyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showEfficiencyToolStripMenuItem.Text = "Efficiency";
+            // 
+            // showLabelsToolStripMenuItem
+            // 
+            this.showLabelsToolStripMenuItem.Checked = true;
+            this.showLabelsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showLabelsToolStripMenuItem.Name = "showLabelsToolStripMenuItem";
+            this.showLabelsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showLabelsToolStripMenuItem.Text = "Labels";
+            this.showLabelsToolStripMenuItem.Click += new System.EventHandler(this.showLabelsToolStripMenuItem_Click);
+            // 
+            // showPopupsToolStripMenuItem
+            // 
+            this.showPopupsToolStripMenuItem.Checked = true;
+            this.showPopupsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showPopupsToolStripMenuItem.Name = "showPopupsToolStripMenuItem";
+            this.showPopupsToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.showPopupsToolStripMenuItem.Text = "Show popups";
+            this.showPopupsToolStripMenuItem.Click += new System.EventHandler(this.showPopupsToolStripMenuItem_Click);
+            // 
+            // showFlightToolStripMenuItem
+            // 
+            this.showFlightToolStripMenuItem.Name = "showFlightToolStripMenuItem";
+            this.showFlightToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.showFlightToolStripMenuItem.Text = "Show flight number";
+            this.showFlightToolStripMenuItem.Click += new System.EventHandler(this.showFlightToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -268,14 +332,32 @@
             this.splitContainer1.SplitterDistance = 454;
             this.splitContainer1.TabIndex = 10;
             // 
-            // showPopupsToolStripMenuItem
+            // taxiwaysToolStripMenuItem
             // 
-            this.showPopupsToolStripMenuItem.Checked = true;
-            this.showPopupsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.showPopupsToolStripMenuItem.Name = "showPopupsToolStripMenuItem";
-            this.showPopupsToolStripMenuItem.Size = new System.Drawing.Size(155, 22);
-            this.showPopupsToolStripMenuItem.Text = "Show popups";
-            this.showPopupsToolStripMenuItem.Click += new System.EventHandler(this.showPopupsToolStripMenuItem_Click);
+            this.taxiwaysToolStripMenuItem.Checked = true;
+            this.taxiwaysToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.taxiwaysToolStripMenuItem.Name = "taxiwaysToolStripMenuItem";
+            this.taxiwaysToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.taxiwaysToolStripMenuItem.Text = "Taxiways";
+            this.taxiwaysToolStripMenuItem.Click += new System.EventHandler(this.taxiwaysToolStripMenuItem_Click);
+            // 
+            // gatewaysToolStripMenuItem
+            // 
+            this.gatewaysToolStripMenuItem.Checked = true;
+            this.gatewaysToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.gatewaysToolStripMenuItem.Name = "gatewaysToolStripMenuItem";
+            this.gatewaysToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gatewaysToolStripMenuItem.Text = "Gateways";
+            this.gatewaysToolStripMenuItem.Click += new System.EventHandler(this.gatewaysToolStripMenuItem_Click);
+            // 
+            // gatesToolStripMenuItem
+            // 
+            this.gatesToolStripMenuItem.Checked = true;
+            this.gatesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.gatesToolStripMenuItem.Name = "gatesToolStripMenuItem";
+            this.gatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gatesToolStripMenuItem.Text = "Gates";
+            this.gatesToolStripMenuItem.Click += new System.EventHandler(this.gatesToolStripMenuItem_Click);
             // 
             // mapControl
             // 
@@ -294,13 +376,6 @@
             this.airplaneStatsControl.Name = "airplaneStatsControl";
             this.airplaneStatsControl.Size = new System.Drawing.Size(904, 570);
             this.airplaneStatsControl.TabIndex = 9;
-            // 
-            // showFlightToolStripMenuItem
-            // 
-            this.showFlightToolStripMenuItem.Name = "showFlightToolStripMenuItem";
-            this.showFlightToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
-            this.showFlightToolStripMenuItem.Text = "Show flight number";
-            this.showFlightToolStripMenuItem.Click += new System.EventHandler(this.showFlightToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -358,5 +433,12 @@
         private System.Windows.Forms.ToolStripMenuItem planningToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showPopupsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showFlightToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem waysToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem runwaysToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showEfficiencyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showLabelsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem taxiwaysToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gatewaysToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gatesToolStripMenuItem;
     }
 }

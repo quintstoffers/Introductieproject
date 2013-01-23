@@ -55,7 +55,7 @@ namespace Introductieproject.Simulation
                     uiUpdaterThread = new Thread(uiUpdater);
                     uiUpdaterThread.Priority = ThreadPriority.Lowest;
                 }
-                uiUpdateInterval = 1000;
+                uiUpdateInterval = 500;
                 runSimulation = true;
                 simulationThread.Start();
                 uiUpdaterThread.Start();

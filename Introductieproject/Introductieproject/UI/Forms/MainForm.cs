@@ -33,8 +33,8 @@ namespace Introductieproject.Forms
         {
             airplaneStatsControl.update(airport);
 
-            mapControl.airplanesDirty = true;
-            mapControl.update(airport);
+            MapControl.airplanesDirty = true;
+            mapControl.update();
 
             tsSimTime.Text = "Simulated time: " + TimeKeeper.currentSimTime.ToString();
             tsCurrentScale.Text = "Current scale: " + TimeKeeper.currentScale.ToString();
@@ -156,6 +156,48 @@ namespace Introductieproject.Forms
         {
             MapControl.alwaysShowFlight = !MapControl.alwaysShowFlight;
             showFlightToolStripMenuItem.Checked = MapControl.alwaysShowFlight;
+            MapControl.airplanesDirty = true;
+            mapControl.update();
+        }
+
+        private void showLabelsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.showLabels = !MapControl.showLabels;
+            showLabelsToolStripMenuItem.Checked = MapControl.showLabels;
+            MapControl.airportDirty = true;
+            mapControl.update();
+        }
+
+        private void runwaysToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.showRunways = !MapControl.showRunways;
+            runwaysToolStripMenuItem.Checked = MapControl.showRunways;
+            MapControl.airportDirty = true;
+            mapControl.update();
+        }
+
+        private void taxiwaysToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.showTaxiways = !MapControl.showTaxiways;
+            taxiwaysToolStripMenuItem.Checked = MapControl.showTaxiways;
+            MapControl.airportDirty = true;
+            mapControl.update();
+        }
+
+        private void gatewaysToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.showGateways = !MapControl.showGateways;
+            gatewaysToolStripMenuItem.Checked = MapControl.showGateways;
+            MapControl.airportDirty = true;
+            mapControl.update();
+        }
+
+        private void gatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.showGates = !MapControl.showGates;
+            gatesToolStripMenuItem.Checked = MapControl.showGates;
+            MapControl.airportDirty = true;
+            mapControl.update();
         }
     }
 }

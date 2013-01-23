@@ -34,7 +34,7 @@ namespace Introductieproject.Forms
             airplaneStatsControl.update(airport);
 
             MapControl.airplanesDirty = true;
-            if (MapControl.showEfficiency)
+            if (MapControl.showEfficiency > -1)
             {
                 MapControl.airportDirty = true;
             }
@@ -200,6 +200,36 @@ namespace Introductieproject.Forms
         {
             MapControl.showGates = !MapControl.showGates;
             gatesToolStripMenuItem.Checked = MapControl.showGates;
+            MapControl.airportDirty = true;
+            mapControl.update();
+        }
+
+        private void offToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.showEfficiency = -1;
+            offToolStripMenuItem.Checked = true;
+            onToolStripMenuItem.Checked = false;
+            combinedToolStripMenuItem.Checked = false;
+            MapControl.airportDirty = true;
+            mapControl.update();
+        }
+
+        private void onToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.showEfficiency = 0;
+            offToolStripMenuItem.Checked = false;
+            onToolStripMenuItem.Checked = true;
+            combinedToolStripMenuItem.Checked = false;
+            MapControl.airportDirty = true;
+            mapControl.update();
+        }
+
+        private void combinedToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MapControl.showEfficiency = 1;
+            offToolStripMenuItem.Checked = false;
+            onToolStripMenuItem.Checked = false;
+            combinedToolStripMenuItem.Checked = true;
             MapControl.airportDirty = true;
             mapControl.update();
         }

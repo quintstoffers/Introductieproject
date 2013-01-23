@@ -40,7 +40,7 @@ namespace Introductieproject.UI.Controls
 
         public static bool alwaysShowFlight = false;
         public static bool showLabels = true;
-        public static bool showEfficiency = true;
+        public static int showEfficiency = 1;
         public static bool showRunways = true;
         public static bool showTaxiways = true;
         public static bool showGateways = true;
@@ -201,10 +201,10 @@ namespace Introductieproject.UI.Controls
             }
             if (firstPaint)
             {
-               zoomlevelX = bmpAirport.Width;
-               zoomlevelY = bmpAirport.Height;
-               mapLocation = new Point(-50, this.Height / 4);
-               lastPanLocation = new Point(-50, this.Height / 4) ;
+               zoomlevelX = bmpAirport.Width -25;
+               zoomlevelY = bmpAirport.Height -25;
+               mapLocation = new Point(0, this.Height / 4);
+               lastPanLocation = new Point(0, this.Height / 4) ;
                firstPaint = false;
             }
             airportDirty = false;
@@ -237,17 +237,26 @@ namespace Introductieproject.UI.Controls
             }
 
             Pen pen = new Pen(color, 2);
-            g.DrawLine(pen, x1, y1, x2, y2);
 
-            if (showEfficiency)
+            switch (showEfficiency)
             {
-                Console.WriteLine("WAY: " + way.Occupancy);
-                double occupancy = way.Occupancy;
-
-                Color efficiencyColor = Color.FromArgb((int) (occupancy * 255), 255 - (int) (occupancy * 255), 0);
-                Pen efficiencyPen = new Pen(efficiencyColor, (float) 0.01);
-                g.DrawLine(efficiencyPen, x1 - 3, y1, x2 - 3, y2);
-                g.DrawLine(efficiencyPen, x1 + 3, y1, x2 + 3, y2);
+                case -1:
+                    g.DrawLine(pen, x1, y1, x2, y2);
+                    break;
+                case 0:
+                    double occupancy = way.Occupancy;
+                    Color efficiencyColor = Color.FromArgb((int) (occupancy * 255), 255 - (int) (occupancy * 255), 0);
+                    Pen efficiencyPen = new Pen(efficiencyColor, (float) 2);
+                    g.DrawLine(efficiencyPen, x1, y1, x2, y2);
+                    break;
+                case 1:
+                    occupancy = way.Occupancy;
+                    efficiencyColor = Color.FromArgb((int) (occupancy * 255), 255 - (int) (occupancy * 255), 0);
+                    efficiencyPen = new Pen(efficiencyColor, (float) 0.01);
+                    g.DrawLine(pen, x1, y1, x2, y2);
+                    g.DrawLine(efficiencyPen, x1 - 3, y1, x2 - 3, y2);
+                    g.DrawLine(efficiencyPen, x1 + 3, y1, x2 + 3, y2);
+                    break;
             }
 
             if(!(way is Gateway))

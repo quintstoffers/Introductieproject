@@ -34,7 +34,7 @@ namespace Introductieproject.Airport
             {
                 if (TimeKeeper.totalElapsedSimTimeTicks > 0)
                 {
-                    double occ = (double)timeOccupiedTicks / ((double)TimeKeeper.totalElapsedSimTimeTicks / 2);
+                    double occ = (double)timeOccupiedTicks / ((double)TimeKeeper.totalElapsedSimTimeTicks / 6);
                     if (occ > 1)
                     {
                         return 1;

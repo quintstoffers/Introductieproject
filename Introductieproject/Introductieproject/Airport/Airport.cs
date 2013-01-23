@@ -14,11 +14,6 @@ namespace Introductieproject.Airport
         public List<Way> ways = new List<Way>();
         public List<Node> nodes = new List<Node>();
 
-        public Airport()
-        {
-            Console.WriteLine("Creating airport");
-        }
-
         public void simulate()
         {
             foreach (Airplane currentAirplane in airplanes)
@@ -26,7 +21,7 @@ namespace Introductieproject.Airport
                 if (currentAirplane.status == Airplane.Status.APPROACHING)
                 {
                 }
-                else if (currentAirplane.status == Airplane.Status.IDLE)
+                else if (currentAirplane.status == Airplane.Status.TAXIING)
                 {
                 }
                 else if (currentAirplane.status == Airplane.Status.DOCKING)
@@ -40,55 +35,16 @@ namespace Introductieproject.Airport
                 }
                 else if (currentAirplane.status == Airplane.Status.DEPARTED)
                 {
-                    continue;   // Vliegtuig is vertrokken, niet voor ons van toepassing
                 }
                 else if (currentAirplane.navigator == null)
                 {
                     if (currentAirplane.status != Airplane.Status.DOCKING)
                     {
-                        Console.WriteLine("Found airplane without navigator");
                         Navigator navigator = new Navigator(currentAirplane, ways, this);
                         currentAirplane.navigator = navigator;
                     }
                 }
-                /*else if (currentAirplane.hasDocked && isOnRunway(currentAirplane)) // Als vliegtuig al bij de gate is geweest, en op de runway staat -> versnellen en opstijgen
-                {
-                    currentAirplane.accelerate(currentAirplane.takeofSpeed);
-                    if (currentAirplane.speed == currentAirplane.takeofSpeed)
-                    {
-                        currentAirplane
-                        Runway currentRunway = getAirplanesRunway(currentAirplane);
-                        //currentRunway.resetNavigators();
-                       // currentRunway.runwayHasAirplane = false;
-                        airplanesTakenOff.Add(currentAirplane);
-                        Program.mainForm.Invoke((Action)(() => airplanes.Remove(currentAirplane)));
-                        break;
-                    }
-                }*/
-                else if (currentAirplane.navigator != null)
-                {
-                    /*if (currentAirplane.navigator.wayList[0] is Taxiway && currentAirplane.navigator.targetNodeNumber == 1 && runwayTracker == 0)
-                    {
-                        Console.WriteLine("RUNWAYTEST!");
-                    }
-                    else if (currentAirplane.navigator.wayList[0] is Gate && runwayTracker == 0)
-                    {
-                        Console.WriteLine("RUNWAYTEST!");
-                    }*/
-                }
             }
-
-            //Console.WriteLine(this.ToString());
-        }
-
-        public static bool isBetweenNodes(Way way, Node node1, Node node2)
-        {
-            //Als node 1 en 2 de way bevatten, dan is way een verbinding tussen de twee nodes
-            if (node1.checkConnection(way) && node2.checkConnection(way))
-            {
-                return true;
-            }
-            return false;
         }
 
         /*
@@ -118,7 +74,6 @@ namespace Introductieproject.Airport
                                 if (airplane.navigator.getDistanceToTargetNode(airplane.location) > collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) && airplane.navigator.getDistanceToTargetNode(airplane.location) - collisionAirplane.navigator.getDistanceToTargetNode(collisionAirplane.location) < 150)
                                 {
                                     airplane.hasCollision = true;
-                                    Console.WriteLine("COLLISION");
                                     return true;
                                 }
                             }

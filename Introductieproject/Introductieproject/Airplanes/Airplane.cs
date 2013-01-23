@@ -16,9 +16,9 @@ namespace Introductieproject.Objects
         public enum Status
         {
             APPROACHING = 0,
-            IDLE,
             DOCKING,
             WAITING_TAKEOFF,
+            TAXIING,
             TAKINGOFF,
             DEPARTED,
             CANCELLED
@@ -59,9 +59,32 @@ namespace Introductieproject.Objects
         public bool askAgain = true;        // Houdt bij of er opnieuw gevraagd moet worden voor rescheduling
         private bool standingStill = false;
         public bool cancelled = false;
-        private TimeSpan timeStopped;
 
         public Status status;
+        public String statusString
+        {
+            get
+            {
+                switch(status)
+                {
+                    case Status.APPROACHING:
+                        return "Approaching";
+                    case Status.CANCELLED:
+                        return "Cancelled";
+                    case Status.DEPARTED:
+                        return "Departed";
+                    case Status.DOCKING:
+                        return "Docking";
+                    case Status.TAXIING:
+                        return "Taxiing";
+                    case Status.TAKINGOFF:
+                        return "Taking off";
+                    case Status.WAITING_TAKEOFF:
+                        return "Waiting for takeoff";
+                }
+                return "Unknown";
+            }
+        }
 
         public Navigator navigator;         // Object dat aangeeft waar het vliegtuig heen moet
 
@@ -136,9 +159,14 @@ namespace Introductieproject.Objects
         /*
         * Simuleer een stap van grootte realTime milliseconden
         */
+        private Boolean isSimulating = false;
         public void simulate(Airport.Airport airport)
         {
-            Console.WriteLine("SIMULATE: " + this.ToString());
+            if (isSimulating)
+            {
+                return;
+            }
+            isSimulating = true;
             /*
             if (speed == 0 && status != Status.DOCKING)
             {
@@ -212,7 +240,7 @@ namespace Introductieproject.Objects
             {
                 requestNavigator(airport);
             }
-            else if (status == Status.IDLE)
+            else if (status == Status.TAXIING)
             {
                 //status = Status.IDLE;
 
@@ -230,10 +258,6 @@ namespace Introductieproject.Objects
                 {
                     double distanceToTarget = navigator.getDistanceToTargetNode(location);
                     double targetAngle = navigator.getAngleToTarget(location);
-
-                    //Console.WriteLine("Airplane target  : " + targetNode.ToString());
-                    //Console.WriteLine("  target distance: " + distanceToTarget);
-                    //Console.WriteLine("     target angle: " + targetAngle);
 
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
                     taxiSpeed = 20;
@@ -258,7 +282,6 @@ namespace Introductieproject.Objects
                             if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
                             {
                                 navigator.setNextTarget();
-                                return;                     // Volgende simtik gaan we weer verder
                             }
                             else if (!airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
                             {
@@ -339,6 +362,7 @@ namespace Introductieproject.Objects
                     }
                 }
             }
+            isSimulating = false;
         }
 
         public void requestNavigator(Airport.Airport airport)
@@ -358,7 +382,9 @@ namespace Introductieproject.Objects
         {
             this.setStateVariables(0, 0);
             if (status != Status.CANCELLED)
-                this.status = Status.IDLE;
+            {
+                this.status = Status.TAXIING;
+            }
         }
 
         /*
@@ -435,13 +461,10 @@ namespace Introductieproject.Objects
                 // Geen delay
             }
 
-            Console.WriteLine("DELAY: " + delay);
-
             //Tel absoluut verschil op bij de echte simulatietijd.
             //Nieuwe vertrektijd is difference + delay + oude vertrektijd.
-            Console.WriteLine("DEPARTUREDATE: " + departureDate);
             actualDepartureDate = departureDate.Add(landingDifference + arrivalDifference + delay); //+ delay
-            Console.WriteLine("actualDepartureDate: " + actualDepartureDate);
+
 
             // Zet hasDocked op true voor de navigator.
             hasDocked = true;
@@ -449,7 +472,7 @@ namespace Introductieproject.Objects
 
         public void leaveDock()
         {
-            status = Status.IDLE;
+            status = Status.TAXIING;
         }
 
         public void prepareTakeOff()
@@ -473,7 +496,6 @@ namespace Introductieproject.Objects
 
         private void rotate(double targetAngle)
         {
-            //Console.WriteLine("Airplane currentRot: " + angle + " targetRot: " + targetAngle);
             double rotation = getRotationSpeed(targetAngle, angle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
             if (targetAngle < angle)
             {
@@ -555,8 +577,6 @@ namespace Introductieproject.Objects
                 speed = targetSpeed;
             }
 
-            Console.WriteLine("Airplane accelerate to " + speed + " m/s");
-
             double averageSpeed = (oldSpeed + speed) / 2;
             double distanceTraveled = TimeKeeper.elapsedSimTime.Seconds * averageSpeed;
             double distanceToTarget = navigator.getDistanceToTargetNode(location);
@@ -583,8 +603,6 @@ namespace Introductieproject.Objects
 
             location[0] += movementX;
             location[1] += movementY;
-
-            Console.WriteLine("Airplane moved by: " + movement);
         }
 
         public override string ToString()

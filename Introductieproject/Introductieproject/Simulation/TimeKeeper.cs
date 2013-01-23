@@ -50,7 +50,6 @@ namespace Introductieproject.Simulation
 
             Scale = targetScale;
 
-            Console.WriteLine("Timekeeper set: " + currentRealTime);
         }
         public static void init(DateTime simulationStartTime, bool resetElapsedTime)   // Constructor die de simulatie op een bepaald tijdstip laat starten
         {
@@ -63,9 +62,6 @@ namespace Introductieproject.Simulation
             }
 
             Scale = targetScale;
-
-            Console.WriteLine("Timekeeper set        : " + currentRealTime);
-            Console.WriteLine("Simulation starting on: " + currentRealTime);
         }
 
         public static void update()

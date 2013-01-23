@@ -27,7 +27,6 @@ namespace Introductieproject.Airplanes
 
         public void newRoute(Airplane airplane, List<Way> ways, Airport.Airport airport)
         {
-            Console.WriteLine("Creating new navigator");
             /*
             Routeplanner zelf
             Om aan te roepen, geef een vliegtuig mee. Vliegtuig weet huidige coordinaten
@@ -153,20 +152,7 @@ namespace Introductieproject.Airplanes
                 Node endNode = endWay.nodeConnections[1]; //De endNode is de beginNode van een Way want: vliegtuig moet naar begin runway of gate
                 Route bestRoute = findRoute(startNode, endNode, airplane, airport);
                 this.nodes = bestRoute.RouteList();
-                Console.WriteLine("Created list of Nodes");
-                foreach (Node node in nodes)
-                {
-                    Console.WriteLine(node.ToString());
-                }
                 wayPoints = convertNodesToWaypoints(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
-                
-                Console.WriteLine("Created new list of waypoints");
-                /*foreach (Way way in waypoints)
-                {
-                    Console.WriteLine(way.ToString());
-                }
-                Console.WriteLine("End of waypoints");
-                */
 
                 // Ways initten
                 currentWay = startWay;
@@ -182,8 +168,6 @@ namespace Introductieproject.Airplanes
              * Anders kijk Ways bij Node. Als Node = Endnote of lengte Route > lengte beste Route niet opnieuw pushen. 
              * Anders nieuwe Route maken met Node andere kant van Way. Resultaat is kortste Route van beginNode naar endNode.
             */
-            Console.WriteLine("Finding route to " + endNode.ToString());
-            Console.WriteLine("            from " + startNode.ToString());
 
             foreach (Way w in airport.ways)
                 w.weightedLength = w.length;
@@ -193,21 +177,17 @@ namespace Introductieproject.Airplanes
             routes.Push(new Route(startNode, null, 0));
             while (routes.Count > 0)
             {
-                Console.WriteLine("Check route");
                 Route route = routes.Pop();
                 if (route.hasNode(endNode))
                 {
-                    Console.WriteLine("Route has endnode");
                     if (bestRoute == null || route.length < bestRoute.length)
                     {
-                        Console.WriteLine("New bestroute assigned");
                         bestRoute = route;
                     }
                 }
                 IList<Way> connections = route.local.connections;
                 foreach (Way connection in connections)
                 {
-                    Console.WriteLine("Checking connection: " + connection.ToString());
                     if (!route.hasNode(endNode))
                     {
                         if (route.local.isDirectionAllowed(connection))
@@ -319,8 +299,6 @@ namespace Introductieproject.Airplanes
 
         public Node getTargetNode()
         {
-            Console.WriteLine("Current way: " + currentWay);
-            Console.WriteLine("Target way : " + targetWay);
             if (nodes.Count != targetNodeNumber)
             {
                 return nodes[targetNodeNumber];

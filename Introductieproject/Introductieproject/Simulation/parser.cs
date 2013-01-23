@@ -90,10 +90,6 @@ namespace Introductieproject.Simulation
                     newAirplane.setXMLVariables(landingLocation, landingDateTime, gate, arrivalDateTime, departureDateTime, registration, flight, carrier, origin, destination);
 
                     loadedAirplanes.Add(newAirplane);
-
-                    Console.WriteLine("Arrival: " + arrivalDateTime.ToString());
-                    Console.WriteLine("XML: new airplane loaded (flight=" + flight + " registration=" + registration + ")");
-
                 }
             }
         }

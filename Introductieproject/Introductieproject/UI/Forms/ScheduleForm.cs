@@ -40,10 +40,7 @@ namespace Introductieproject.Forms
                 plane.SubItems.Add(airplane.arrivalDate.ToString());
                 plane.SubItems.Add(airplane.departureDate.ToString());
                 plane.SubItems.Add(airplane.gate);
-                if (airplane.cancelled)
-                    plane.SubItems.Add("CANCELLED");
-                else
-                    plane.SubItems.Add(airplane.status.ToString());
+                plane.SubItems.Add(airplane.statusString);
                 listView1.Items.Add(plane);
                 if (airplane.cancelled)
                 {

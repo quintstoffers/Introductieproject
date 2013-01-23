@@ -35,10 +35,10 @@ namespace Introductieproject.UI.Controls
             for(int i = 0; i < airport.airplanes.Count; i++)
             {
                 Airplane currentAirplane = airport.airplanes[i];
-                string[] columnValues = new string[]{currentAirplane.Flight, currentAirplane.Registration,
+                string[] columnValues = new string[]{currentAirplane.statusString, currentAirplane.Registration,
                                                      currentAirplane.PlannedArrival, currentAirplane.PlannedDeparture, currentAirplane.CurrentDelay};
                 dgvAirplanes.Rows[i].SetValues(columnValues);
-
+                dgvAirplanes.Rows[i].HeaderCell.Value = currentAirplane.flight;
                 TimeSpan totalDelay = new TimeSpan();
                 totalDelay = currentAirplane.delay + currentAirplane.arrivalDifference + currentAirplane.landingDifference;
                 if (totalDelay.Ticks != 0)

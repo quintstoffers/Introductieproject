@@ -37,8 +37,6 @@ namespace Introductieproject.Simulation
             Simulation.airport = airport;
             Simulation.multiThreadingEnabled = enableMultiThreading;
 
-            Console.WriteLine("Simulation created");
-
             Console.ForegroundColor = ConsoleColor.White;
         }
 
@@ -46,10 +44,8 @@ namespace Introductieproject.Simulation
         {
             if (!runSimulation)
             {
-                if (multiThreadingEnabled)
-                {
-                    ThreadPool.SetMaxThreads(Environment.ProcessorCount + 1, Environment.ProcessorCount + 1);
-                }
+                Parser.refreshAirplanes(airport.airplanes);
+                ThreadPool.SetMaxThreads(Environment.ProcessorCount + 1, Environment.ProcessorCount + 1);
                 if (simulationThread == null)
                 {
                     simulationThread = new Thread(simulation);
@@ -66,7 +62,6 @@ namespace Introductieproject.Simulation
             }
             else
             {
-                Console.WriteLine("Attempted to start already running simulationThread");
             }
         }
         
@@ -89,12 +84,10 @@ namespace Introductieproject.Simulation
             pauseSimulation = !pauseSimulation;
             if (pauseSimulation)
             {
-                Console.WriteLine("Simulation paused");
                 TimeKeeper.save();
             }
             else
             {
-                Console.WriteLine("Simulation unpaused");
                 TimeKeeper.restore();
             }
         }
@@ -139,8 +132,6 @@ namespace Introductieproject.Simulation
                     TimeKeeper.tuneScale(false);
                 }
             }
-
-            Console.WriteLine("Simulation stopped");
         }
 
         private static void uiUpdater()
@@ -185,34 +176,22 @@ namespace Introductieproject.Simulation
             popup = false;
         }
 
-        private static int tasksDone;
-        private static int tasksStarted;
         private static void updateSimulation()
         {
             if (multiThreadingEnabled)
             {
-                tasksDone = 0;
-                tasksStarted = 0;
-                Thread parserThread = new Thread(() => Parser.refreshAirplanes(airport.airplanes));
-                parserThread.Start();
                 Thread airportThread = new Thread(() => airport.simulate());
                 airportThread.Start();
 
                 foreach (Airplane currentAirplane in airport.airplanes)
                 {
                     ThreadPool.QueueUserWorkItem(new WaitCallback(simulateAirplane), currentAirplane);
-                    tasksStarted++;
                 }
-
-                parserThread.Join();
                 airportThread.Join();
-                while (tasksDone < tasksStarted)
-                {
-                }
+
             }
             else
             {
-                Parser.refreshAirplanes(airport.airplanes);
                 airport.simulate();
 
                 foreach (Airplane currentAirplane in airport.airplanes)
@@ -224,7 +203,6 @@ namespace Introductieproject.Simulation
         private static void simulateAirplane(object airplane)
         {
             ((Airplane)airplane).simulate(airport);
-            tasksDone++;
         }
 
         private static void updateNonUrgent()

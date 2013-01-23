@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvNodes = new System.Windows.Forms.DataGridView();
             this.Node = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NodeLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,12 +46,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lbSpeed = new System.Windows.Forms.Label();
             this.dgvAirplanes = new System.Windows.Forms.DataGridView();
-            this.Flight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Registration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Arrival = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Departure = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNodes)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAirplanes)).BeginInit();
@@ -225,10 +227,21 @@
             this.dgvAirplanes.AllowUserToAddRows = false;
             this.dgvAirplanes.AllowUserToDeleteRows = false;
             this.dgvAirplanes.AllowUserToOrderColumns = true;
+            this.dgvAirplanes.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGray;
+            this.dgvAirplanes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvAirplanes.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.WindowFrame;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAirplanes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvAirplanes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAirplanes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Flight,
+            this.Status,
             this.Registration,
             this.Arrival,
             this.Departure,
@@ -238,60 +251,12 @@
             this.dgvAirplanes.Margin = new System.Windows.Forms.Padding(0);
             this.dgvAirplanes.Name = "dgvAirplanes";
             this.dgvAirplanes.ReadOnly = true;
+            this.dgvAirplanes.RowHeadersWidth = 120;
             this.dgvAirplanes.RowTemplate.Height = 24;
             this.dgvAirplanes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvAirplanes.Size = new System.Drawing.Size(436, 350);
             this.dgvAirplanes.TabIndex = 0;
             this.dgvAirplanes.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_RowEnter);
-            // 
-            // Flight
-            // 
-            this.Flight.DataPropertyName = "Flight";
-            this.Flight.HeaderText = "Flight";
-            this.Flight.Name = "Flight";
-            this.Flight.ReadOnly = true;
-            this.Flight.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Flight.ToolTipText = "Flight numbers";
-            this.Flight.Width = 108;
-            // 
-            // Registration
-            // 
-            this.Registration.DataPropertyName = "Registration";
-            this.Registration.HeaderText = "Registration";
-            this.Registration.Name = "Registration";
-            this.Registration.ReadOnly = true;
-            this.Registration.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Registration.ToolTipText = "Airplane registration";
-            this.Registration.Width = 108;
-            // 
-            // Arrival
-            // 
-            this.Arrival.DataPropertyName = "PlannedArrival";
-            this.Arrival.HeaderText = "Arrival";
-            this.Arrival.Name = "Arrival";
-            this.Arrival.ReadOnly = true;
-            this.Arrival.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Arrival.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
-            this.Arrival.ToolTipText = "Planned date of arrival";
-            this.Arrival.Width = 107;
-            // 
-            // Departure
-            // 
-            this.Departure.DataPropertyName = "PlannedDeparture";
-            this.Departure.HeaderText = "Departure";
-            this.Departure.Name = "Departure";
-            this.Departure.ReadOnly = true;
-            this.Departure.ToolTipText = "Planned date of departure";
-            this.Departure.Width = 108;
-            // 
-            // Delay
-            // 
-            this.Delay.DataPropertyName = "CurrentDelay";
-            this.Delay.HeaderText = "Delay";
-            this.Delay.Name = "Delay";
-            this.Delay.ReadOnly = true;
-            this.Delay.ToolTipText = "Current delay";
-            this.Delay.Width = 108;
             // 
             // splitContainer1
             // 
@@ -311,6 +276,50 @@
             this.splitContainer1.Size = new System.Drawing.Size(900, 350);
             this.splitContainer1.SplitterDistance = 436;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // Status
+            // 
+            this.Status.HeaderText = "Status";
+            this.Status.Name = "Status";
+            this.Status.ReadOnly = true;
+            this.Status.Width = 80;
+            // 
+            // Registration
+            // 
+            this.Registration.DataPropertyName = "Registration";
+            this.Registration.HeaderText = "Registration";
+            this.Registration.Name = "Registration";
+            this.Registration.ReadOnly = true;
+            this.Registration.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Registration.ToolTipText = "Airplane registration";
+            this.Registration.Width = 70;
+            // 
+            // Arrival
+            // 
+            this.Arrival.DataPropertyName = "PlannedArrival";
+            this.Arrival.HeaderText = "Arrival";
+            this.Arrival.Name = "Arrival";
+            this.Arrival.ReadOnly = true;
+            this.Arrival.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Arrival.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
+            this.Arrival.ToolTipText = "Planned date of arrival";
+            // 
+            // Departure
+            // 
+            this.Departure.DataPropertyName = "PlannedDeparture";
+            this.Departure.HeaderText = "Departure";
+            this.Departure.Name = "Departure";
+            this.Departure.ReadOnly = true;
+            this.Departure.ToolTipText = "Planned date of departure";
+            // 
+            // Delay
+            // 
+            this.Delay.DataPropertyName = "CurrentDelay";
+            this.Delay.HeaderText = "Delay";
+            this.Delay.Name = "Delay";
+            this.Delay.ReadOnly = true;
+            this.Delay.ToolTipText = "Current delay";
+            this.Delay.Width = 60;
             // 
             // AirplaneStatsControl
             // 
@@ -351,12 +360,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lbSpeed;
         public System.Windows.Forms.DataGridView dgvAirplanes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Flight;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Status;
         private System.Windows.Forms.DataGridViewTextBoxColumn Registration;
         private System.Windows.Forms.DataGridViewTextBoxColumn Arrival;
         private System.Windows.Forms.DataGridViewTextBoxColumn Departure;
         private System.Windows.Forms.DataGridViewTextBoxColumn Delay;
-        private System.Windows.Forms.SplitContainer splitContainer1;
 
 
 

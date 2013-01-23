@@ -97,7 +97,7 @@ namespace Introductieproject.Forms
 
         private void fastestToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Simulation.Simulation.uiUpdateInterval = 250;
+            Simulation.Simulation.uiUpdateInterval = 100;
             fastestToolStripMenuItem.Checked = true;
             fastToolStripMenuItem.Checked = false;
             normalToolStripMenuItem.Checked = false;

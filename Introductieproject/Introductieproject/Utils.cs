@@ -65,5 +65,15 @@ namespace Introductieproject
             }
             return closestWay;
         }
+
+        public static bool isBetweenNodes(Way way, Node node1, Node node2)
+        {
+            //Als node 1 en 2 de way bevatten, dan is way een verbinding tussen de twee nodes
+            if (node1.checkConnection(way) && node2.checkConnection(way))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

@@ -118,7 +118,9 @@ namespace Introductieproject.Airport
                 if (way.direction != 0)
                 {
                     if (currentAirplaneList.Count == 0)
+                    {
                         return true;
+                    }
                     if (currentAirplaneList.Count == 1)
                         if (currentAirplaneList[0].navigator.getDistanceToTargetNode(currentAirplaneList[0].location) < 700)
                             return true;                                    // Ruw, maar het werkt net zoals hiervoor

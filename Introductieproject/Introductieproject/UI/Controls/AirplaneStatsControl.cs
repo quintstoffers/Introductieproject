@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Introductieproject.Objects;
+using Introductieproject.Airplanes;
 
 namespace Introductieproject.UI.Controls
 {
@@ -50,10 +51,34 @@ namespace Introductieproject.UI.Controls
             try
             {
                 Airplane currentAirplane = airport.airplanes[currentSelectedRow];
+                Navigator navi = currentAirplane.navigator;
 
-                if (currentAirplane.navigator != null && currentAirplane.navigator.nodes != null)
+
+                if (navi != null && navi.nodes != null)
                 {
-                    dgvNodes.DataSource = currentAirplane.navigator.nodes;
+
+                    if (navi.wayList.Count != dgvNodes.Rows.Count)
+                    {
+                        dgvNodes.Rows.Clear();
+                        dgvNodes.Rows.Add(navi.wayList.Count);
+                    }
+
+                    string completion = "100";
+                    for(int i = 0; i < navi.wayPoints.Count; i++)
+                    {
+                        Airport.Way currentWay = navi.wayPoints[i];
+
+                        String loc1 = currentWay.nodeConnections[0].location[0] + "," + currentWay.nodeConnections[0].location[1];
+                        String loc2 = currentWay.nodeConnections[1].location[0] + "," + currentWay.nodeConnections[1].location[1];
+
+                        string[] columnValues = new string[]{currentWay.name, "No",
+                                                         completion, loc1, loc2};
+
+                        dgvNodes.Rows[i].HeaderCell.Value = (i + 1).ToString();
+                        dgvNodes.Rows[i].SetValues(columnValues);
+                
+                    }
+
                     Airport.Node targetNode = currentAirplane.navigator.getTargetNode();
                     for (int i = 0; i < currentAirplane.navigator.nodes.Count; i++)
                     {

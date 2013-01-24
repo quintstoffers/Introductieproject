@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvNodes = new System.Windows.Forms.DataGridView();
-            this.Node = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NodeLocation = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -46,12 +44,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lbSpeed = new System.Windows.Forms.Label();
             this.dgvAirplanes = new System.Windows.Forms.DataGridView();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.Status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Registration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Arrival = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Departure = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.Way = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Access = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Completion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.From = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.To = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNodes)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvAirplanes)).BeginInit();
@@ -68,26 +71,17 @@
             this.dgvNodes.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvNodes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvNodes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Node,
-            this.NodeLocation});
+            this.Way,
+            this.Access,
+            this.Completion,
+            this.From,
+            this.To});
             this.dgvNodes.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvNodes.Location = new System.Drawing.Point(0, 0);
             this.dgvNodes.Margin = new System.Windows.Forms.Padding(0);
             this.dgvNodes.Name = "dgvNodes";
             this.dgvNodes.Size = new System.Drawing.Size(460, 350);
             this.dgvNodes.TabIndex = 0;
-            // 
-            // Node
-            // 
-            this.Node.HeaderText = "Node";
-            this.Node.Name = "Node";
-            // 
-            // NodeLocation
-            // 
-            this.NodeLocation.DataPropertyName = "Location";
-            this.NodeLocation.HeaderText = "Location";
-            this.NodeLocation.Name = "NodeLocation";
-            this.NodeLocation.Width = 150;
             // 
             // panel1
             // 
@@ -228,17 +222,17 @@
             this.dgvAirplanes.AllowUserToDeleteRows = false;
             this.dgvAirplanes.AllowUserToOrderColumns = true;
             this.dgvAirplanes.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.LightGray;
-            this.dgvAirplanes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightGray;
+            this.dgvAirplanes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvAirplanes.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.WindowFrame;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAirplanes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.WindowFrame;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAirplanes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvAirplanes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAirplanes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Status,
@@ -257,25 +251,6 @@
             this.dgvAirplanes.Size = new System.Drawing.Size(436, 350);
             this.dgvAirplanes.TabIndex = 0;
             this.dgvAirplanes.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGrid_RowEnter);
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.dgvAirplanes);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.panel1);
-            this.splitContainer1.Panel2.Controls.Add(this.dgvNodes);
-            this.splitContainer1.Size = new System.Drawing.Size(900, 350);
-            this.splitContainer1.SplitterDistance = 436;
-            this.splitContainer1.TabIndex = 2;
             // 
             // Status
             // 
@@ -321,6 +296,54 @@
             this.Delay.ToolTipText = "Current delay";
             this.Delay.Width = 60;
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.dgvAirplanes);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.panel1);
+            this.splitContainer1.Panel2.Controls.Add(this.dgvNodes);
+            this.splitContainer1.Size = new System.Drawing.Size(900, 350);
+            this.splitContainer1.SplitterDistance = 436;
+            this.splitContainer1.TabIndex = 2;
+            // 
+            // Way
+            // 
+            this.Way.FillWeight = 60F;
+            this.Way.HeaderText = "Way";
+            this.Way.Name = "Way";
+            // 
+            // Access
+            // 
+            this.Access.HeaderText = "Access";
+            this.Access.Name = "Access";
+            this.Access.Width = 60;
+            // 
+            // Completion
+            // 
+            this.Completion.FillWeight = 40F;
+            this.Completion.HeaderText = "%";
+            this.Completion.Name = "Completion";
+            this.Completion.Width = 40;
+            // 
+            // From
+            // 
+            this.From.HeaderText = "From";
+            this.From.Name = "From";
+            // 
+            // To
+            // 
+            this.To.HeaderText = "To";
+            this.To.Name = "To";
+            // 
             // AirplaneStatsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -345,8 +368,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dgvNodes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Node;
-        private System.Windows.Forms.DataGridViewTextBoxColumn NodeLocation;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
@@ -366,6 +387,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Arrival;
         private System.Windows.Forms.DataGridViewTextBoxColumn Departure;
         private System.Windows.Forms.DataGridViewTextBoxColumn Delay;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Way;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Access;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Completion;
+        private System.Windows.Forms.DataGridViewTextBoxColumn From;
+        private System.Windows.Forms.DataGridViewTextBoxColumn To;
 
 
 

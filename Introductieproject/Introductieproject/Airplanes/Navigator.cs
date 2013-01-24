@@ -10,8 +10,16 @@ namespace Introductieproject.Airplanes
 {
     public class Navigator
     {
+        public enum PermissionStatus
+        {
+            NONE,
+            REQUESTED,
+            GRANTED
+        }
+
         public IList<Node> nodes;      // De lijst met toekomstige nodepoints voor het vliegtuig
         public IList<Way> wayPoints;        // De lijst met toekomstige waypoints voor het vliegtuig
+        public IList<PermissionStatus> permissions = new List<PermissionStatus>();
         public IList<Way> wayList = new List<Way>();
         public int targetNodeNumber = 0;
 
@@ -153,7 +161,10 @@ namespace Introductieproject.Airplanes
                 Route bestRoute = findRoute(startNode, endNode, airplane, airport);
                 this.nodes = bestRoute.RouteList();
                 wayPoints = convertNodesToWaypoints(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
-
+                for (int i = 0; i < wayPoints.Count; i++)
+                {
+                    permissions.Add(PermissionStatus.NONE);
+                }
                 // Ways initten
                 currentWay = startWay;
                 getTargetWay();

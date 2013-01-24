@@ -50,6 +50,7 @@
             this.gatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showEfficiencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.offToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.onToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.combinedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showLabelsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showPopupsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,7 +63,6 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.mapControl = new Introductieproject.UI.Controls.MapControl();
             this.airplaneStatsControl = new Introductieproject.UI.Controls.AirplaneStatsControl();
-            this.onToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nuScale)).BeginInit();
@@ -81,7 +81,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.menuStrip1.Size = new System.Drawing.Size(1362, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1384, 24);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -208,7 +208,7 @@
             this.gatewaysToolStripMenuItem,
             this.gatesToolStripMenuItem});
             this.waysToolStripMenuItem.Name = "waysToolStripMenuItem";
-            this.waysToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.waysToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.waysToolStripMenuItem.Text = "Ways";
             // 
             // runwaysToolStripMenuItem
@@ -254,22 +254,29 @@
             this.onToolStripMenuItem,
             this.combinedToolStripMenuItem});
             this.showEfficiencyToolStripMenuItem.Name = "showEfficiencyToolStripMenuItem";
-            this.showEfficiencyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showEfficiencyToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.showEfficiencyToolStripMenuItem.Text = "Efficiency";
             // 
             // offToolStripMenuItem
             // 
             this.offToolStripMenuItem.Name = "offToolStripMenuItem";
-            this.offToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.offToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.offToolStripMenuItem.Text = "Off";
             this.offToolStripMenuItem.Click += new System.EventHandler(this.offToolStripMenuItem_Click);
+            // 
+            // onToolStripMenuItem
+            // 
+            this.onToolStripMenuItem.Name = "onToolStripMenuItem";
+            this.onToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
+            this.onToolStripMenuItem.Text = "On";
+            this.onToolStripMenuItem.Click += new System.EventHandler(this.onToolStripMenuItem_Click);
             // 
             // combinedToolStripMenuItem
             // 
             this.combinedToolStripMenuItem.Checked = true;
             this.combinedToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.combinedToolStripMenuItem.Name = "combinedToolStripMenuItem";
-            this.combinedToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.combinedToolStripMenuItem.Size = new System.Drawing.Size(130, 22);
             this.combinedToolStripMenuItem.Text = "Combined";
             this.combinedToolStripMenuItem.Click += new System.EventHandler(this.combinedToolStripMenuItem_Click);
             // 
@@ -278,7 +285,7 @@
             this.showLabelsToolStripMenuItem.Checked = true;
             this.showLabelsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.showLabelsToolStripMenuItem.Name = "showLabelsToolStripMenuItem";
-            this.showLabelsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showLabelsToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.showLabelsToolStripMenuItem.Text = "Labels";
             this.showLabelsToolStripMenuItem.Click += new System.EventHandler(this.showLabelsToolStripMenuItem_Click);
             // 
@@ -305,7 +312,7 @@
             this.tsCurrentScale});
             this.statusStrip1.Location = new System.Drawing.Point(0, 594);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1362, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(1384, 22);
             this.statusStrip1.TabIndex = 4;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -331,7 +338,7 @@
             0,
             0,
             65536});
-            this.nuScale.Location = new System.Drawing.Point(509, 598);
+            this.nuScale.Location = new System.Drawing.Point(520, 598);
             this.nuScale.Maximum = new decimal(new int[] {
             300,
             0,
@@ -357,7 +364,7 @@
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.label1.Location = new System.Drawing.Point(433, 599);
+            this.label1.Location = new System.Drawing.Point(444, 599);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 15);
             this.label1.TabIndex = 8;
@@ -365,7 +372,10 @@
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer1.Location = new System.Drawing.Point(0, 24);
             this.splitContainer1.Name = "splitContainer1";
             // 
@@ -377,39 +387,35 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.airplaneStatsControl);
             this.splitContainer1.Size = new System.Drawing.Size(1362, 570);
-            this.splitContainer1.SplitterDistance = 454;
+            this.splitContainer1.SplitterDistance = 540;
             this.splitContainer1.TabIndex = 10;
             // 
             // mapControl
             // 
+            this.mapControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.mapControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapControl.Location = new System.Drawing.Point(0, 0);
             this.mapControl.Name = "mapControl";
-            this.mapControl.Size = new System.Drawing.Size(454, 570);
+            this.mapControl.Size = new System.Drawing.Size(540, 570);
             this.mapControl.TabIndex = 0;
             // 
             // airplaneStatsControl
             // 
             this.airplaneStatsControl.AutoSize = true;
+            this.airplaneStatsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.airplaneStatsControl.Location = new System.Drawing.Point(0, 0);
             this.airplaneStatsControl.Name = "airplaneStatsControl";
-            this.airplaneStatsControl.Size = new System.Drawing.Size(904, 570);
+            this.airplaneStatsControl.Size = new System.Drawing.Size(818, 570);
             this.airplaneStatsControl.TabIndex = 9;
-            // 
-            // onToolStripMenuItem
-            // 
-            this.onToolStripMenuItem.Name = "onToolStripMenuItem";
-            this.onToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.onToolStripMenuItem.Text = "On";
-            this.onToolStripMenuItem.Click += new System.EventHandler(this.onToolStripMenuItem_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1362, 616);
+            this.ClientSize = new System.Drawing.Size(1384, 616);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.nuScale);

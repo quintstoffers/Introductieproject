@@ -120,6 +120,13 @@ namespace Introductieproject.Objects
                 return (departureDate + totaldelay).ToString();
             }
         }
+        public String Angle
+        {
+            get
+            {
+                return Math.Round(angle + 90).ToString();
+            }
+        }
         public String CurrentDelay
         {
             get

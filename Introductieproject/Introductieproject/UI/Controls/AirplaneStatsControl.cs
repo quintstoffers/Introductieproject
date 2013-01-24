@@ -35,6 +35,10 @@ namespace Introductieproject.UI.Controls
             }
             for(int i = 0; i < airport.airplanes.Count; i++)
             {
+                if (i == currentSelectedRow)
+                {
+                    dgvAirplanes.Rows[i].Selected = true;
+                }
                 Airplane currentAirplane = airport.airplanes[i];
                 string[] columnValues = new string[]{currentAirplane.statusString, currentAirplane.Registration,
                                                      currentAirplane.PlannedArrival, currentAirplane.PlannedDeparture, currentAirplane.CurrentDelay};
@@ -53,7 +57,6 @@ namespace Introductieproject.UI.Controls
                 Airplane currentAirplane = airport.airplanes[currentSelectedRow];
                 Navigator navi = currentAirplane.navigator;
 
-
                 if (navi != null && navi.nodes != null)
                 {
 
@@ -64,9 +67,14 @@ namespace Introductieproject.UI.Controls
                     }
 
                     string completion = "100";
-                    for(int i = 0; i < navi.wayPoints.Count; i++)
+                    for (int i = 0; i < navi.wayPoints.Count; i++)
                     {
                         Airport.Way currentWay = navi.wayPoints[i];
+
+                        if (currentWay.Equals(navi.currentWay))
+                        {
+                            dgvNodes.Rows[i].Selected = true;
+                        }
 
                         String loc1 = currentWay.nodeConnections[0].location[0] + "," + currentWay.nodeConnections[0].location[1];
                         String loc2 = currentWay.nodeConnections[1].location[0] + "," + currentWay.nodeConnections[1].location[1];
@@ -74,26 +82,23 @@ namespace Introductieproject.UI.Controls
                         string[] columnValues = new string[]{currentWay.name, "No",
                                                          completion, loc1, loc2};
 
-                        dgvNodes.Rows[i].HeaderCell.Value = (i + 1).ToString();
                         dgvNodes.Rows[i].SetValues(columnValues);
-                
-                    }
 
-                    Airport.Node targetNode = currentAirplane.navigator.getTargetNode();
-                    for (int i = 0; i < currentAirplane.navigator.nodes.Count; i++)
-                    {
-                        dgvNodes.Rows[i].Selected = false;
-                        if (currentAirplane.navigator.nodes[i].Equals(targetNode))
-                        {
-                            dgvNodes.Rows[i].Selected = true;
-                        }
                     }
+                }
+                else
+                {
+                    dgvNodes.Rows.Clear();
                 }
 
                 lbSpeed.Text = currentAirplane.speed.ToString();
-                label1.Text = Math.Round(currentAirplane.location[0]).ToString();
-                label2.Text = Math.Round(currentAirplane.location[1]).ToString();
-                label9.Text = Math.Round(currentAirplane.angle).ToString();
+                lbLocX.Text = Math.Round(currentAirplane.location[0]).ToString();
+                lbLocY.Text = Math.Round(currentAirplane.location[1]).ToString();
+                lbStatus.Text = currentAirplane.statusString;
+                lbGate.Text = "Gate " + currentAirplane.gate;
+                lbFlight.Text = currentAirplane.Flight;
+
+                pnAirplane.Invalidate();
             }
             catch (ArgumentOutOfRangeException) { }
 
@@ -105,9 +110,31 @@ namespace Introductieproject.UI.Controls
             update(airport);
         }
 
-        private void label5_Click(object sender, EventArgs e)
+        private void pnAirplane_Paint(object sender, PaintEventArgs e)
         {
+            try
+            {
+                Airplane currentAirplane = airport.airplanes[currentSelectedRow];
 
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+
+                SizeF textSize = e.Graphics.MeasureString(currentAirplane.Angle, SystemFonts.DefaultFont);
+                int textWidth = (int) textSize.Width;
+                int textHeight = (int) textSize.Height;
+
+
+                e.Graphics.TranslateTransform(pnAirplane.Width / 2, pnAirplane.Height / 2);
+
+                e.Graphics.DrawString(currentAirplane.Angle, SystemFonts.DefaultFont, Brushes.Black, 0 - (textWidth / 2), 0 - (textHeight / 2));
+
+
+                e.Graphics.RotateTransform((float)(currentAirplane.angle + 270));
+                e.Graphics.DrawEllipse(Pens.Black, -15, -15, 30, 30);
+                e.Graphics.DrawLine(Pens.Black, 0, 15, 0, 60);
+                e.Graphics.DrawLine(Pens.Black, 0, 60, 6, 56);
+                e.Graphics.DrawLine(Pens.Black, 0, 60, -6, 56);
+            }
+            catch (Exception) { }
         }
     }
 }

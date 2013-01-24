@@ -315,7 +315,7 @@ namespace Introductieproject.Objects
                         }
 
                         
-                        else if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.currentWay is Gate) // Toestemming verzoeken voor volgende way
+                        if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.currentWay is Gate) // Toestemming verzoeken voor volgende way
                         {
                             if (!hasDocked)
                             {

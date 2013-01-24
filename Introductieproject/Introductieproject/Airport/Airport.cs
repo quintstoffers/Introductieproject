@@ -129,6 +129,8 @@ namespace Introductieproject.Airport
                 }
                 else if (!(way is Gate))
                 {
+                    if (!(way is Runway))
+                    {
                     List<Airplane> sameNodeList = new List<Airplane>();
                     foreach (Airplane currentAirplaneListAirplane in currentAirplaneList)
                     {
@@ -144,6 +146,13 @@ namespace Introductieproject.Airport
                     if (sameNodeList.Count == 2)
                         if (Math.Max(sameNodeList[0].navigator.getDistanceToTargetNode(sameNodeList[0].location), sameNodeList[1].navigator.getDistanceToTargetNode(sameNodeList[1].location)) < 700)
                             return true;
+                    }
+                    else if (way is Runway)
+                    {
+                        if (currentAirplaneList.Count == 0)
+                            return true;
+                        return false;
+                    }
                 }
 
                 else if (way is Gate)

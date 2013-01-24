@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <schedule>
   <plane
-    registration="G-ABCD"
-    flight="A-1337-101"
+    registration="D-YUIL"
+    flight="AB-D34L"
     type="BO_747"
     carrier="British Airways"
     gate="A1"
@@ -14,11 +14,50 @@
     destination="Amsterdam Airport Schiphol">
   </plane>
   <plane
+  registration="D-HJK"
+  flight="CD-W1TH"
+  type="BO_747"
+  carrier="British Airways"
+  gate="B1"
+  location="0,1000"
+  landingDate="01/01/13 22:02:00"
+  arrivalDate="01/01/13 22:07:00"
+  departureDate="01/01/13 22:10:00"
+  origin="John F. Kennedy Intl. Airport"
+  destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+    registration="D-OIY"
+    flight="EFG-1T"
+    type="BO_747"
+    carrier="British Airways"
+    gate="A2"
+    location="0,1000"
+    landingDate="01/01/13 22:03:00"
+    arrivalDate="01/01/13 22:07:00"
+    departureDate="01/01/13 22:10:00"
+    origin="John F. Kennedy Intl. Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
+    registration="G-ABCD"
+    flight="A-1337-101"
+    type="BO_747"
+    carrier="British Airways"
+    gate="A1"
+    location="0,1000"
+    landingDate="01/01/13 22:04:00"
+    arrivalDate="01/01/13 22:07:00"
+    departureDate="01/01/13 22:10:00"
+    origin="John F. Kennedy Intl. Airport"
+    destination="Amsterdam Airport Schiphol">
+  </plane>
+  <plane
     registration="G-BCDE"
     flight="I-D0N7-C4R3"
     type="BO_747"
     carrier="KLM"
-    gate="A1"
+    gate="C1"
     location="3000,0"
     landingDate="01/01/13 22:02:15"
     arrivalDate="01/01/13 22:05:00"

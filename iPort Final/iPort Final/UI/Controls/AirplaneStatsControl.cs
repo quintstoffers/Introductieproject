@@ -149,16 +149,12 @@ namespace Introductieproject.UI.Controls
                 Airplane currentAirplane = airport.airplanes[currentSelectedRow];
 
                 e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
-
-                SizeF textSize = e.Graphics.MeasureString(currentAirplane.Angle, SystemFonts.DefaultFont);
-                int textWidth = (int) textSize.Width;
-                int textHeight = (int) textSize.Height;
-
-
                 e.Graphics.TranslateTransform(pnAirplane.Width / 2, pnAirplane.Height / 2);
 
+                SizeF textSize = e.Graphics.MeasureString(currentAirplane.Angle, SystemFonts.DefaultFont);
+                int textWidth = (int)textSize.Width;
+                int textHeight = (int)textSize.Height;
                 e.Graphics.DrawString(currentAirplane.Angle, SystemFonts.DefaultFont, Brushes.Black, 0 - (textWidth / 2), 0 - (textHeight / 2));
-
 
                 e.Graphics.RotateTransform((float)(currentAirplane.angle + 270));
                 e.Graphics.DrawEllipse(Pens.Black, -15, -15, 30, 30);

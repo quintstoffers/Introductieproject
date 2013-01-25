@@ -23,7 +23,7 @@ namespace Introductieproject.Simulation
         private static bool multiThreadingEnabled;
 
         public static int updateInterval;                   // update interval van simulatie in milliseconden
-        public static int uiUpdateInterval;                  // ui update interval in milliseconden
+        public static int uiUpdateInterval;                 // ui update interval in milliseconden
 
 
         private static Thread simulationThread;
@@ -79,7 +79,7 @@ namespace Introductieproject.Simulation
         }
 
         // De lokale (simulatie) tijd moet hier worden opgeslagen, en op deze tijd moet ook weer worden hervat.
-        public static void pauseSimulationToggle()  // Pauzeert of hervat de simulatie
+        public static void pauseSimulationToggle()      // Pauzeert of hervat de simulatie
         {
             pauseSimulation = !pauseSimulation;
             if (pauseSimulation)
@@ -214,7 +214,6 @@ namespace Introductieproject.Simulation
             {
                 runSimulation = false;
             }
-     
         }
     }
 }

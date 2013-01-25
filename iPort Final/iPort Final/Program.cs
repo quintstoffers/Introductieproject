@@ -20,7 +20,7 @@ namespace Introductieproject
         {
             airport = createAirport();
 
-            TimeKeeper.targetScale = 10;                    // Verhouding tussen real en simtime is 1, dus gelijk.
+            TimeKeeper.targetScale = 10;
             DateTime simStartTime = new DateTime(2013, 1, 1, 22, 00, 00);
             TimeKeeper.init(simStartTime, true);            // TimeKeeper instellen op vaste starttijd
 

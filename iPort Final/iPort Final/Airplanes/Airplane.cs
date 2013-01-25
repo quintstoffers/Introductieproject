@@ -27,7 +27,7 @@ namespace Introductieproject.Objects
         // "Vaste" variabelen die per type vliegtuig zullen verschillen (defined in subclasse!)
         public String manufacturerName;     // Maker vliegtuig
         public String typeName;             // Leesbare string voor weergave
-        public int taxiSpeed;                // Snelheden in m/s
+        public int taxiSpeed;               // Snelheden in m/s
         public int takeofSpeed;
 
         // Hier variabelen die per individueel vliegtuig verschillen (defined in XML)
@@ -134,7 +134,6 @@ namespace Introductieproject.Objects
                 TimeSpan totaldelay = new TimeSpan();
                 totaldelay = delay + arrivalDifference + landingDifference;
 
-                //afronden op seconden.
                 TimeSpan roundedDelay = new TimeSpan(totaldelay.Ticks - (totaldelay.Ticks % 10000000));
 
                 return roundedDelay.ToString();
@@ -174,30 +173,11 @@ namespace Introductieproject.Objects
                 return;
             }
             isSimulating = true;
-            /*
-            if (speed == 0 && status != Status.DOCKING)
-            {
-                if (!standingStill)
-                {
-                    timeStopped = new TimeSpan();
-                    standingStill = true;
-                }
-                else if (standingStill)
-                {
-                    if (timeStopped >= TimeSpan.FromSeconds(30))
-                    {
-                        //airport.requestNavigator(this);
-                        standingStill = false;
-                    }
-                    timeStopped = timeStopped.Add(TimeKeeper.elapsedSimTime);
-                }
-            }
-            */
+
             if (status == Status.CANCELLED)
             {
-                //Hij doet niets meer als hij gecancelled is
             }
-            else if (status == Status.APPROACHING)       // Vliegtuig is nog niet aangekomen
+            else if (status == Status.APPROACHING)
             {
                 if (TimeKeeper.currentSimTime >= this.landingDate)
                 {
@@ -214,7 +194,7 @@ namespace Introductieproject.Objects
             else if (status == Status.DEPARTED)
             {
             }
-            else if (status == Status.DOCKING)      // Vliegtuig staat bij gate
+            else if (status == Status.DOCKING)
             {
                 if (cancelled)
                     status = Status.CANCELLED;
@@ -224,7 +204,7 @@ namespace Introductieproject.Objects
                     requestNavigator(airport);
                 }
             }
-            else if (status == Status.WAITING_TAKEOFF)    // Vliegtuig wacht voordat hij mag opstijgen
+            else if (status == Status.WAITING_TAKEOFF)
             {
                 speed = 0;
                 requestTakeOff(airport);
@@ -249,13 +229,11 @@ namespace Introductieproject.Objects
             }
             else if (status == Status.TAXIING)
             {
-                //status = Status.IDLE;
 
                 Node targetNode = navigator.getTargetNode();
 
-                if (targetNode == null)
+                if (targetNode == null)     //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                 {
-                    //wanneer de targetnode null is, betekent het dat de navigator bij zijn eindpunt is aangekomen
                     if (!hasDocked)
                     {
                         dock();
@@ -266,15 +244,11 @@ namespace Introductieproject.Objects
                     double distanceToTarget = navigator.getDistanceToTargetNode(location);
                     double targetAngle = navigator.getAngleToTarget(location);
 
-                    //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
-                    taxiSpeed = 20;
-                    //if (navigator.getCurrentWay() is Gateway)
-                    //    maxSpeed = 5;
+                    taxiSpeed = 10;
 
                     double cornerSpeed = 3;
                     navigator.location = this.location;
 
-                    //TODO collision test
                     if (distanceToTarget < 20)
                     {
                         if (this.hasDocked && navigator.targetWay is Runway)
@@ -308,7 +282,6 @@ namespace Introductieproject.Objects
                             else
                             {
                                 this.accelerate(cornerSpeed);
-                                //speed = 0;
                             }
                         }
                     }
@@ -342,7 +315,7 @@ namespace Introductieproject.Objects
                         accelerate(taxiSpeed);
                     }
 
-                    if (angle != targetAngle)  // Vliegtuig staat niet in de goede richting, roteren
+                    if (angle != targetAngle)
                     {
                         rotate(targetAngle);
                     }
@@ -360,7 +333,7 @@ namespace Introductieproject.Objects
                         accelerate(0);
                     }
 
-                    else if (angle == targetAngle)  //alleen move als hij in de goede richting staat
+                    else if (angle == targetAngle)
                     {
                         move();
                     }
@@ -434,11 +407,11 @@ namespace Introductieproject.Objects
             {
                 arrivalDifference = actualArrivalDate.Subtract(arrivalDate);
             }
-            //Vliegtuig is te vroeg/op tijd, dus alles via planning
             else if (actualArrivalDate <= arrivalDate)
             {
                 arrivalDifference = new TimeSpan();
             }
+
             // Random delay van 0-100.
             // Statistieken van http://www.flightstats.com/go/FlightRating/flightRatingByRoute.do
             // Meeste vliegtuigmaatschappijen zitten 4% veel te laat; ~3% te laat; ~10% iets te laat; ~80% op tijd.
@@ -485,7 +458,6 @@ namespace Introductieproject.Objects
             //Nieuwe vertrektijd is difference + delay + oude vertrektijd.
             actualDepartureDate = departureDate.Add(landingDifference + arrivalDifference + delay); //+ delay
 
-
             // Zet hasDocked op true voor de navigator.
             hasDocked = true;
         }
@@ -519,7 +491,7 @@ namespace Introductieproject.Objects
             double rotation = getRotationSpeed(targetAngle, angle) * (TimeKeeper.elapsedSimTime.Ticks / 1000000);           // Rotatie per seconde in graden
             if (targetAngle < angle)
             {
-                if (angle - targetAngle > 180) //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien
+                if (angle - targetAngle > 180)      //Als het verschil meer dan 180 is, dan is het korter om de andere kant om te draaien
                 {
                     angle += rotation;
                 }
@@ -537,7 +509,7 @@ namespace Introductieproject.Objects
             }
             else if (targetAngle > angle)
             {
-                if (targetAngle - angle > 180)  //Als angle = 10 && targetAngle = 350 bijv, wil je - draaien, niet +
+                if (targetAngle - angle > 180)      //Als angle = 10 && targetAngle = 350 bijv, wil je - draaien, niet +
                 {
                     angle -= rotation;
                 }
@@ -558,7 +530,7 @@ namespace Introductieproject.Objects
                 angle = targetAngle;
             }
             if (angle < 0)
-                angle = 360 + angle;    //Als je langs de 0 komt, dan ga je van bovenaf naar beneden
+                angle = 360 + angle;                //Als je langs de 0 komt, dan ga je van bovenaf naar beneden
             if (angle >= 360)
                 angle = angle - 360;
         }
@@ -574,10 +546,10 @@ namespace Introductieproject.Objects
 
         public void accelerate(double targetSpeed)
         {
-            double acceleration = 5;        // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
+            double acceleration = 5;                // 1 m/s2, acceleratie moet afhankelijk worden van target snelheid en max acceleratie. Eventueel van de weg waarop vliegtuig rijdt.
 
             if (targetSpeed < speed)
-                acceleration = -5; // in het geval dat je moet afremmen
+                acceleration = -5;                  // in het geval dat je moet afremmen
             if (hasCollision == true)
                 acceleration = -10;
             double totalAcceleration = acceleration * TimeKeeper.elapsedSimTime.Seconds;
@@ -604,9 +576,6 @@ namespace Introductieproject.Objects
                 moveBy(distanceTraveled);
             else if (distanceTraveled > distanceToTarget)
                 moveBy(distanceToTarget);
-
-
-            // Hier kan eventueel ook nog wel ergens de landing/takeoff snelheid bij komen?
         }
 
         private void move()
@@ -629,7 +598,5 @@ namespace Introductieproject.Objects
         {
             return "AIRPLANE: " + typeName + ". location=(" + location[0] + ", " + location[1] + "), speed=" + speed + ", angle=" + angle;
         }
-
     }
-
 }

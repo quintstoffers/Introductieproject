@@ -28,6 +28,7 @@
         /// </summary>
         public void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.optionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.planningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,10 +108,6 @@
             this.simulationToolStripMenuItem.Size = new System.Drawing.Size(92, 24);
             this.simulationToolStripMenuItem.Text = "Simulation";
             // 
-            // pauseToolStripMenuItem
-            // 
-            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
-            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
@@ -328,7 +325,7 @@
             0,
             65536});
             this.nuScale.Location = new System.Drawing.Point(693, 736);
-            this.nuScale.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.nuScale.Margin = new System.Windows.Forms.Padding(4);
             this.nuScale.Maximum = new decimal(new int[] {
             300,
             0,
@@ -368,7 +365,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel2;
             this.splitContainer1.Location = new System.Drawing.Point(0, 30);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -390,7 +387,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.mapControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.mapControl.Location = new System.Drawing.Point(0, 0);
-            this.mapControl.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.mapControl.Margin = new System.Windows.Forms.Padding(5);
             this.mapControl.Name = "mapControl";
             this.mapControl.Size = new System.Drawing.Size(993, 702);
             this.mapControl.TabIndex = 0;
@@ -401,7 +398,7 @@
             this.airplaneStatsControl.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.airplaneStatsControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.airplaneStatsControl.Location = new System.Drawing.Point(0, 0);
-            this.airplaneStatsControl.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.airplaneStatsControl.Margin = new System.Windows.Forms.Padding(5);
             this.airplaneStatsControl.Name = "airplaneStatsControl";
             this.airplaneStatsControl.Size = new System.Drawing.Size(818, 702);
             this.airplaneStatsControl.TabIndex = 9;
@@ -416,8 +413,9 @@
             this.Controls.Add(this.nuScale);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Airport Simulator";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;

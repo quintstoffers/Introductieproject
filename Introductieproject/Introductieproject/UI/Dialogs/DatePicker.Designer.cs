@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DatePickerForm));
             this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.btCancel = new System.Windows.Forms.Button();
             this.btApply = new System.Windows.Forms.Button();
@@ -111,8 +112,9 @@
             this.Controls.Add(this.btApply);
             this.Controls.Add(this.btCancel);
             this.Controls.Add(this.dateTimePicker);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DatePickerForm";
-            this.Text = "DatePickerForm";
+            this.Text = "Time Leap";
             ((System.ComponentModel.ISupportInitialize)(this.nmTargetLeap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

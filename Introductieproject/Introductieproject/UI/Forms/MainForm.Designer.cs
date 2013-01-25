@@ -32,7 +32,6 @@
             this.optionsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.planningToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.continueToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshIntervalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,12 +102,16 @@
             // simulationToolStripMenuItem
             // 
             this.simulationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+<<<<<<< HEAD
             this.continueToolStripMenuItem1,
+=======
+>>>>>>> AirplaneStats V3
             this.pauseToolStripMenuItem});
             this.simulationToolStripMenuItem.Name = "simulationToolStripMenuItem";
             this.simulationToolStripMenuItem.Size = new System.Drawing.Size(92, 24);
             this.simulationToolStripMenuItem.Text = "Simulation";
             // 
+<<<<<<< HEAD
             // continueToolStripMenuItem1
             // 
             this.continueToolStripMenuItem1.Name = "continueToolStripMenuItem1";
@@ -120,6 +123,12 @@
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
             this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
+=======
+            // pauseToolStripMenuItem
+            // 
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+>>>>>>> AirplaneStats V3
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
@@ -446,7 +455,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem simulationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem continueToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel tsSimTime;

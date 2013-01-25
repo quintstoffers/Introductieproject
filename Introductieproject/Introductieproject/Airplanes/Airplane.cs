@@ -205,7 +205,7 @@ namespace Introductieproject.Objects
                     {
                         requestNavigator(airport);
                     }
-                    if (airport.requestWayAccess(this, this.navigator.currentWay, this.navigator.getTargetNode()))
+                    if (requestWayAccess(airport, this.navigator.currentWay, this.navigator.getTargetNode()))
                     {
                         this.land();
                     }
@@ -279,18 +279,18 @@ namespace Introductieproject.Objects
                     {
                         if (this.hasDocked && navigator.targetWay is Runway)
                         {
-                            airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
+                            requestWayAccess(airport, navigator.targetWay, navigator.getTargetNode());
                             prepareTakeOff();
                         }
 
                         else if (navigator.hasNextTarget())
                         {
 
-                            if (airport.requestWayAccess(this, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
+                            if (requestWayAccess(airport, navigator.targetWay, targetNode)) // Toestemming verzoeken voor volgende way
                             {
                                 navigator.setNextTarget();
                             }
-                            else if (!airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
+                            else if (!requestWayAccess(airport, navigator.targetWay, navigator.getTargetNode()) && navigator.getTargetWay() is Gate)
                             {
                                 foreach (Airplane dockedPlane in airport.airplanes)
                                 {
@@ -317,12 +317,11 @@ namespace Introductieproject.Objects
                     {
                         if (this.hasDocked && navigator.targetWay is Runway)
                         {
-                            airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode());
+                            requestWayAccess(airport, navigator.targetWay, navigator.getTargetNode());
                             prepareTakeOff();
                         }
-
                         
-                        if (airport.requestWayAccess(this, navigator.targetWay, navigator.getTargetNode()) && navigator.currentWay is Gate) // Toestemming verzoeken voor volgende way
+                        if (requestWayAccess(airport, navigator.targetWay, navigator.getTargetNode()) && navigator.currentWay is Gate) // Toestemming verzoeken voor volgende way
                         {
                             if (!hasDocked)
                             {
@@ -380,6 +379,21 @@ namespace Introductieproject.Objects
             {
                 status = Status.TAKINGOFF;
                 navigator.setNextTarget();
+            }
+        }
+        public bool requestWayAccess(Airport.Airport airport, Way targetWay, Node targetNode)
+        {
+            if (airport.requestWayAccess(this, targetWay, targetNode))
+            {
+                navigator.permissions[navigator.targetNodeNumber] = Navigator.PermissionStatus.GRANTED;
+                navigator.permissionCounter++;
+                return true;
+            }
+            else
+            {
+                navigator.permissions[navigator.targetNodeNumber] = Navigator.PermissionStatus.REQUESTED;
+                navigator.permissionCounter++;
+                return false;
             }
         }
 

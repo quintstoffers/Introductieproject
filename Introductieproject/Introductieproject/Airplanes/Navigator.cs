@@ -22,6 +22,7 @@ namespace Introductieproject.Airplanes
         public IList<PermissionStatus> permissions = new List<PermissionStatus>();
         public IList<Way> wayList = new List<Way>();
         public int targetNodeNumber = 0;
+        public int permissionCounter = 0;
 
         public Way currentWay;
         public Way targetWay;
@@ -161,7 +162,7 @@ namespace Introductieproject.Airplanes
                 Route bestRoute = findRoute(startNode, endNode, airplane, airport);
                 this.nodes = bestRoute.RouteList();
                 wayPoints = convertNodesToWaypoints(bestRoute.RouteList()); // Geef de lijst met Ways door aan het vliegtuig. (Hier gekozen voor lijst van Ways, lijkt handiger ivm toestemming)
-                for (int i = 0; i < wayPoints.Count; i++)
+                for (int i = 0; i <= wayPoints.Count; i++)
                 {
                     permissions.Add(PermissionStatus.NONE);
                 }

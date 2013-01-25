@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Introductieproject.Objects;
 using Introductieproject.Airplanes;
+using Introductieproject.Airport;
 
 namespace Introductieproject.UI.Controls
 {
@@ -66,24 +67,55 @@ namespace Introductieproject.UI.Controls
                         dgvNodes.Rows.Add(navi.wayList.Count);
                     }
 
-                    string completion = "100";
+                    string completion;
+                    Boolean hadCurrentWay = false;
                     for (int i = 0; i < navi.wayPoints.Count; i++)
                     {
                         Airport.Way currentWay = navi.wayPoints[i];
 
+                        if (navi.currentWay is Runway)
+                        {
+                            completion = "0";
+                        }
+                        else
+                        {
+                            completion = "100";
+                        }
+
                         if (currentWay.Equals(navi.currentWay))
                         {
                             dgvNodes.Rows[i].Selected = true;
+                            double distanceLeft = Utils.getDistanceBetweenPoints(currentAirplane.location, navi.nodes[navi.targetNodeNumber - 1].location);
+                            double totalDistance = (int)Utils.getDistanceBetweenPoints(navi.nodes[navi.targetNodeNumber - 1].location, navi.nodes[navi.targetNodeNumber].location);
+                            completion = ((int)((distanceLeft / totalDistance) * 100)).ToString();
+                            hadCurrentWay = true;
+                        }
+                        else if (hadCurrentWay) 
+                        {
+                            completion = "0";
                         }
 
-                        String loc1 = currentWay.nodeConnections[0].location[0] + "," + currentWay.nodeConnections[0].location[1];
-                        String loc2 = currentWay.nodeConnections[1].location[0] + "," + currentWay.nodeConnections[1].location[1];
+                        string loc1 = currentWay.nodeConnections[0].location[0] + "," + currentWay.nodeConnections[0].location[1];
+                        string loc2 = currentWay.nodeConnections[1].location[0] + "," + currentWay.nodeConnections[1].location[1];
 
-                        string[] columnValues = new string[]{currentWay.name, "No",
+                        string permissionString = null;
+                        if (navi.permissions[i] == Navigator.PermissionStatus.GRANTED)
+                        {
+                            permissionString = "Granted";
+                        }
+                        else if (navi.permissions[i] == Navigator.PermissionStatus.REQUESTED)
+                        {
+                            permissionString = "Requested";
+                        }
+                        else
+                        {
+                            permissionString = "Denied";
+                        }
+
+                        string[] columnValues = new string[]{currentWay.name, permissionString,
                                                          completion, loc1, loc2};
 
                         dgvNodes.Rows[i].SetValues(columnValues);
-
                     }
                 }
                 else

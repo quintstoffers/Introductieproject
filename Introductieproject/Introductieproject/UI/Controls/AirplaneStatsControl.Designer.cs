@@ -28,26 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvNodes = new System.Windows.Forms.DataGridView();
-            this.Way = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Access = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Completion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.From = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.To = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1 = new System.Windows.Forms.Panel();
             this.lbGate = new System.Windows.Forms.Label();
             this.pnAirplane = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lbFlight = new System.Windows.Forms.Label();
+            this.lbStatus = new System.Windows.Forms.Label();
             this.lbLocY = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.lbStatus = new System.Windows.Forms.Label();
             this.lbLocX = new System.Windows.Forms.Label();
             this.lbSpeed = new System.Windows.Forms.Label();
             this.dgvAirplanes = new System.Windows.Forms.DataGridView();
@@ -58,6 +53,11 @@
             this.Delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.Way = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Access = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Completion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.From = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.To = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNodes)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -94,42 +94,6 @@
             this.dgvNodes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvNodes.Size = new System.Drawing.Size(296, 281);
             this.dgvNodes.TabIndex = 0;
-            // 
-            // Way
-            // 
-            this.Way.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Way.HeaderText = "Way";
-            this.Way.Name = "Way";
-            this.Way.ReadOnly = true;
-            // 
-            // Access
-            // 
-            this.Access.HeaderText = "Access";
-            this.Access.Name = "Access";
-            this.Access.ReadOnly = true;
-            this.Access.Width = 50;
-            // 
-            // Completion
-            // 
-            this.Completion.FillWeight = 40F;
-            this.Completion.HeaderText = "%";
-            this.Completion.Name = "Completion";
-            this.Completion.ReadOnly = true;
-            this.Completion.Width = 40;
-            // 
-            // From
-            // 
-            this.From.HeaderText = "From";
-            this.From.Name = "From";
-            this.From.ReadOnly = true;
-            this.From.Width = 70;
-            // 
-            // To
-            // 
-            this.To.HeaderText = "To";
-            this.To.Name = "To";
-            this.To.ReadOnly = true;
-            this.To.Width = 70;
             // 
             // panel1
             // 
@@ -194,6 +158,16 @@
             this.lbFlight.Text = "label11";
             this.lbFlight.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lbStatus
+            // 
+            this.lbStatus.AutoSize = true;
+            this.lbStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbStatus.Location = new System.Drawing.Point(16, 32);
+            this.lbStatus.Name = "lbStatus";
+            this.lbStatus.Size = new System.Drawing.Size(119, 24);
+            this.lbStatus.TabIndex = 4;
+            this.lbStatus.Text = "Approaching";
+            // 
             // lbLocY
             // 
             this.lbLocY.AutoSize = true;
@@ -255,16 +229,6 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Speed";
             // 
-            // lbStatus
-            // 
-            this.lbStatus.AutoSize = true;
-            this.lbStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbStatus.Location = new System.Drawing.Point(16, 32);
-            this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(119, 24);
-            this.lbStatus.TabIndex = 4;
-            this.lbStatus.Text = "Approaching";
-            // 
             // lbLocX
             // 
             this.lbLocX.AutoSize = true;
@@ -291,17 +255,17 @@
             this.dgvAirplanes.AllowUserToDeleteRows = false;
             this.dgvAirplanes.AllowUserToOrderColumns = true;
             this.dgvAirplanes.AllowUserToResizeRows = false;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.LightGray;
-            this.dgvAirplanes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.LightGray;
+            this.dgvAirplanes.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvAirplanes.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.WindowFrame;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvAirplanes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.WindowFrame;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvAirplanes.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvAirplanes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvAirplanes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Status,
@@ -403,6 +367,42 @@
             this.splitContainer2.Size = new System.Drawing.Size(296, 570);
             this.splitContainer2.SplitterDistance = 285;
             this.splitContainer2.TabIndex = 2;
+            // 
+            // Way
+            // 
+            this.Way.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Way.HeaderText = "Way";
+            this.Way.Name = "Way";
+            this.Way.ReadOnly = true;
+            // 
+            // Access
+            // 
+            this.Access.HeaderText = "Access";
+            this.Access.Name = "Access";
+            this.Access.ReadOnly = true;
+            this.Access.Width = 50;
+            // 
+            // Completion
+            // 
+            this.Completion.FillWeight = 40F;
+            this.Completion.HeaderText = "%";
+            this.Completion.Name = "Completion";
+            this.Completion.ReadOnly = true;
+            this.Completion.Width = 28;
+            // 
+            // From
+            // 
+            this.From.HeaderText = "From";
+            this.From.Name = "From";
+            this.From.ReadOnly = true;
+            this.From.Width = 70;
+            // 
+            // To
+            // 
+            this.To.HeaderText = "To";
+            this.To.Name = "To";
+            this.To.ReadOnly = true;
+            this.To.Width = 70;
             // 
             // AirplaneStatsControl
             // 

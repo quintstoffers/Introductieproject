@@ -29,7 +29,7 @@ namespace Introductieproject.Forms
             nuScale.Value = (Decimal) TimeKeeper.targetScale;
         }
 
-        public void updateUI()  // Update elementen zonder databinding
+        public void updateUI()
         {
             airplaneStatsControl.update(airport);
 
@@ -62,16 +62,14 @@ namespace Introductieproject.Forms
         private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Simulation.Simulation.pauseSimulationToggle();
-        }
-
-        private void continueToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Simulation.Simulation.pauseSimulationToggle();
-        }
-
-        private void mapControl_Load(object sender, EventArgs e)
-        {
-
+            if (pauseToolStripMenuItem.Text.Equals("Pause"))
+            {
+                pauseToolStripMenuItem.Text = "Continue";
+            }
+            else
+            {
+                pauseToolStripMenuItem.Text = "Pause";
+            }
         }
 
         private void nuScale_ValueChanged(object sender, EventArgs e)

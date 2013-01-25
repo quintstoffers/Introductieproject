@@ -174,25 +174,7 @@ namespace Introductieproject.Objects
                 return;
             }
             isSimulating = true;
-            /*
-            if (speed == 0 && status != Status.DOCKING)
-            {
-                if (!standingStill)
-                {
-                    timeStopped = new TimeSpan();
-                    standingStill = true;
-                }
-                else if (standingStill)
-                {
-                    if (timeStopped >= TimeSpan.FromSeconds(30))
-                    {
-                        //airport.requestNavigator(this);
-                        standingStill = false;
-                    }
-                    timeStopped = timeStopped.Add(TimeKeeper.elapsedSimTime);
-                }
-            }
-            */
+
             if (status == Status.CANCELLED)
             {
                 //Hij doet niets meer als hij gecancelled is
@@ -269,7 +251,6 @@ namespace Introductieproject.Objects
                     //maximumsnelheid staat nu vast op 10m/s, dat moet per baan verschillend worden. Snelheid in bochten staat vast op 3m/s
                     taxiSpeed = 20;
                     //if (navigator.getCurrentWay() is Gateway)
-                    //    maxSpeed = 5;
 
                     double cornerSpeed = 3;
                     navigator.location = this.location;
@@ -485,7 +466,6 @@ namespace Introductieproject.Objects
             //Nieuwe vertrektijd is difference + delay + oude vertrektijd.
             actualDepartureDate = departureDate.Add(landingDifference + arrivalDifference + delay); //+ delay
 
-
             // Zet hasDocked op true voor de navigator.
             hasDocked = true;
         }
@@ -604,9 +584,6 @@ namespace Introductieproject.Objects
                 moveBy(distanceTraveled);
             else if (distanceTraveled > distanceToTarget)
                 moveBy(distanceToTarget);
-
-
-            // Hier kan eventueel ook nog wel ergens de landing/takeoff snelheid bij komen?
         }
 
         private void move()

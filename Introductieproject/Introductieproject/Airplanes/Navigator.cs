@@ -64,13 +64,14 @@ namespace Introductieproject.Airplanes
 
                     //Utils.getClosestWay(airplane.location, airplane.gate);
 
-                       //Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
-                       //Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
-                       //Optie 2 leidt vrijwel altijd tot alle nieuwe vliegtuigen naar dezelfde gate -> file.
-                       //IList<Gate> availableGates = new List<Gate>();
-                       //IList<Gate> occupiedGates = new List<Gate>();
-                       //IList<Gate> reservedGates = new List<Gate>();
-                       //occupiedGates = airport.occupiedGates();
+                       /*Check de gates - open gate. Als geen gates open, zoek 1: dichtstbijzijnde gate of 2: langst bezette gate.
+                       * Optie 1 heeft waarschijnlijk iets kleinere kans op file voor 1 gate, vanwege meerdere Runways en vertraging tussen vliegtuigen landen op zelfde Runway.
+                       * Optie 2 leidt vrijwel altijd tot alle nieuwe vliegtuigen naar dezelfde gate -> file.
+                       * IList<Gate> availableGates = new List<Gate>();
+                       * IList<Gate> occupiedGates = new List<Gate>();
+                       * IList<Gate> reservedGates = new List<Gate>();
+                       * occupiedGates = airport.occupiedGates();
+                        */
                        foreach (Way w in ways)
                        {
                            if (w is Gate)
@@ -80,72 +81,8 @@ namespace Introductieproject.Airplanes
                                    endWay = (Gate)w;
                                    break;
                                }
-                               //if (newGate.isReserved)
-                               //{
-                               //    reservedGates.Add(newGate);
-                               //}
-                               //else if (!occupiedGates.Contains(newGate))
-                               //{
-                               //    availableGates.Add(newGate);
-                               //}
                            }
                        }
-                /*       if (availableGates.Count == 1)
-                       {
-                           //1 gate vrij, makkelijkste geval. Deze gate is doel
-                           endWay = availableGates[0];
-                           endWay.addReservation(this);
-                       }
-                       else if (availableGates.Count == 0)
-                       {
-                           //Geen gates vrij, occupiedGates heeft voorrang, dan reservedGates
-                           if (occupiedGates.Count > 0)
-                           {
-                               if (occupiedGates.Count == 1)
-                               {
-                                   endWay = occupiedGates[0];
-                                   endWay.addReservation(this);
-                               }
-                               else
-                               {
-                                   IList<Way> occupiedWays = new List<Way>();
-                                   foreach (Gate g in occupiedGates)
-                                   {
-                                       occupiedWays.Add(g);
-                                   }
-                                   endWay = Utils.getClosestWay(airplane.location, occupiedWays);
-                                   endWay.addReservation(this);
-                               }
-                           }
-                           else if (reservedGates.Count > 0)
-                           {
-                               if (reservedGates.Count == 1)
-                               {
-                                   endWay = reservedGates[0];
-                                   endWay.addReservation(this);
-                               }
-                               else
-                               {
-                                   IList<Way> reservedWays = new List<Way>();
-                                   foreach (Gate g in reservedGates)
-                                   {
-                                       reservedWays.Add(g);
-                                   }
-                                   endWay = Utils.getClosestWay(airplane.location, reservedWays);
-                                   endWay.addReservation(this);
-                               }
-                           }
-                       }
-                       else if (availableGates.Count > 1)
-                       {
-                           IList<Way> availableWays = new List<Way>();
-                           foreach (Gate g in availableGates)
-                           {
-                               availableWays.Add(g);
-                           }
-                           endWay = Utils.getClosestWay(airplane.location, availableWays);
-                           endWay.addReservation(this);
-                       }*/
                 } 
                 else if (airplane.hasDocked)
                 {
@@ -204,26 +141,14 @@ namespace Introductieproject.Airplanes
                     {
                         if (route.local.isDirectionAllowed(connection))
                         {
-                            //Schat tijd tot aankomst bij way
-                            //DateTime estimatedArrival = TimeKeeper.currentSimTime;
-                            //estimatedArrival.AddSeconds(route.length / 20); // t = s / v : schat de tijd van aankomst op connection
-                            ////Vergelijk met andere vliegtuigen
-                            //List<Airplane> airplanesOnWay = airport.planesOnWayInDirection(connection, route.local, airplane);
-                            //foreach (Airplane ap in airplanesOnWay)
-                            //{
-                            //    DateTime[] timeframe = ap.navigator.estimatedArrivalTime(connection);
-                            //    if (timeframe[0] <= estimatedArrival && estimatedArrival <= timeframe[1])
-                            //        connection.weightedLength *= 5;
-                            //}
-                            //double length = connection.weightedLength;
-                            if (bestRoute == null || route.length /*+ length */ <= bestRoute.length)
+                            if (bestRoute == null || route.length <= bestRoute.length)
                             {
                                 Node connectedNode = route.local.getConnectedNode(connection);
 
                                 if (!route.hasNode(connectedNode))
                                 {
                                     Route newRoute = new Route(connectedNode, route, connection.weightedLength);
-                                    routes.Push(newRoute);                                              //Zet nieuwe Route op stack met Node andere kant connection
+                                    routes.Push(newRoute);      //Zet nieuwe Route op stack met Node andere kant connection
                                 }
                             }
                             connection.weightedLength = connection.length;
@@ -233,36 +158,6 @@ namespace Introductieproject.Airplanes
             }
 
             return bestRoute;
-        }
-
-        public DateTime[] estimatedArrivalTime(Way targetway)
-        {
-            //Deze methode maakt een schatting van 2 tijden: 1 = aankomsttijd op een Way, 2 = vertrektijd van Way
-            //Schatting wordt gedaan op basis van een gemiddelde snelheid van 20 = Airplane.maxSpeed
-
-            double distanceTotal = 0; //Het bepalen van de nog af te leggen afstand
-            int current = wayPoints.IndexOf(currentWay); //De huidige weg
-            if (current < 0)
-                current = 0;
-            int max = wayPoints.IndexOf(targetway); //De doelweg
-            if (max < 0)
-                max = 0;
-            for (int t = 0; t < wayPoints.Count; t++)
-            {
-                if (t >= current && t < max)
-                    distanceTotal += wayPoints[t].length;
-            }
-
-            double speed = 20; //Gemiddelde snelheid (echte snelheid zal iets lager liggen door het draaien)
-
-            double timeElapsing = distanceTotal / speed; //Geschatte tijd tot aankomst
-            double timeTravelling = targetway.length / speed; //Geschatte tijd dat het duurt om de weg over te rijden
-            DateTime arrivalTime = TimeKeeper.currentSimTime;
-            arrivalTime.AddSeconds(timeElapsing); //Huidige tijd + reistijd
-            DateTime leavingTime = arrivalTime;
-            leavingTime.AddSeconds(timeTravelling); //Arriveertijd + tijd over weg
-            DateTime[] times = { arrivalTime, leavingTime };
-            return times;
         }
 
         private Node findStartNode(Way w, Airplane a)

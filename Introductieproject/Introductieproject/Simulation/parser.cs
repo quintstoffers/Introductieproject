@@ -194,7 +194,6 @@ namespace Introductieproject.Simulation
         }
         public void writePLane(Airplane airplane)
         {
-            //PlaneDocument.Load(@"Simulation\schedule.xml");
             XmlElement plane = PlaneDocument.CreateElement("plane");
             plane.SetAttribute("registration", airplane.registration);
             plane.SetAttribute("carrier", airplane.carrier);

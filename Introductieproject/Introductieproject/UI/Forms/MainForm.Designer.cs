@@ -102,33 +102,19 @@
             // simulationToolStripMenuItem
             // 
             this.simulationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-<<<<<<< HEAD
-            this.continueToolStripMenuItem1,
-=======
->>>>>>> AirplaneStats V3
             this.pauseToolStripMenuItem});
             this.simulationToolStripMenuItem.Name = "simulationToolStripMenuItem";
             this.simulationToolStripMenuItem.Size = new System.Drawing.Size(92, 24);
             this.simulationToolStripMenuItem.Text = "Simulation";
             // 
-<<<<<<< HEAD
-            // continueToolStripMenuItem1
-            // 
-            this.continueToolStripMenuItem1.Name = "continueToolStripMenuItem1";
-            this.continueToolStripMenuItem1.Size = new System.Drawing.Size(152, 24);
-            this.continueToolStripMenuItem1.Text = "Continue";
-            this.continueToolStripMenuItem1.Click += new System.EventHandler(this.continueToolStripMenuItem1_Click);
-            // 
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
             this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 24);
-=======
             // pauseToolStripMenuItem
             // 
             this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
             this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
->>>>>>> AirplaneStats V3
             this.pauseToolStripMenuItem.Text = "Pause";
             this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 

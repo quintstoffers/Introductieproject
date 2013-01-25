@@ -23,10 +23,6 @@ namespace Introductieproject.Airport
 
         public double weightedLength;
 
-        //public List<Navigator> navigatorList = new List<Navigator>();
-
-       // public Airplane airplane;
-
         public long timeOccupiedTicks = 0;
         public double Occupancy
         {
@@ -68,11 +64,6 @@ namespace Introductieproject.Airport
             node2.connections.Add(this);
             this.direction = dir;
             this.name = name;
-        }
-
-        public void simulate()
-        {
-           //TODO update timeOccupied (probs in Airport) timeOccupiedTicks += TimeKeeper.elapsedSimTime.Ticks;
         }
 
         public double length

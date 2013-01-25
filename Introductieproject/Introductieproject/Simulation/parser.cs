@@ -29,7 +29,7 @@ namespace Introductieproject.Simulation
             }
 
             rawPlaneSchedule = PlaneDocument.GetElementsByTagName("plane");
-            Assembly assembly = Assembly.Load("iPort Final");
+            Assembly assembly = Assembly.Load("Introductieproject");
 
             int planeCount = rawPlaneSchedule.Count;
             for (int i = 0; i < planeCount; i++)

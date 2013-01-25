@@ -45,9 +45,7 @@ namespace Introductieproject.Airport
                     }
                 }
                 if (currentAirplane.isOnAirport()) // Het updaten van de tijd dat een weg bezet is
-                {
                     currentAirplane.navigator.currentWay.updateOccupancy(TimeKeeper.elapsedSimTime.Ticks);
-                }
             }
         }
 
@@ -95,6 +93,8 @@ namespace Introductieproject.Airport
             }
             return false;
         }
+
+
 
         /*
          * Permission requesters

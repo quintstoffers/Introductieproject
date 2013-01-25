@@ -86,7 +86,6 @@ namespace Introductieproject.UI.Controls
                 }
             }
         }
-
         private void MapControlMouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -94,7 +93,6 @@ namespace Introductieproject.UI.Controls
                 pan(this.mouseLocation, e.Location);
             }
         }
-
         private void MapControlMouseUp(object sender, MouseEventArgs e)
         {
             this.lastPanLocation = this.mapLocation;
@@ -279,7 +277,6 @@ namespace Introductieproject.UI.Controls
                 g.FillEllipse(Brushes.Black, x2 - 5, y2 - 5, 10, 10);
             }
         }
-
         public void drawGate(Graphics g, Color color, Gate gate, String name)
         {
             Pen pen = new Pen(color, 2);
@@ -300,7 +297,7 @@ namespace Introductieproject.UI.Controls
                 }
                 else
                 {
-                    g.DrawString(name, SystemFonts.DefaultFont, Brushes.Black, x1 - textWidth / 2, y1 + 30);
+                    g.DrawString(name, SystemFonts.DefaultFont, Brushes.Black, x1 - textWidth / 2, y1 + 15);
                 }
             }
 
